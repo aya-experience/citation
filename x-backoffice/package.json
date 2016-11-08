@@ -1,0 +1,39 @@
+{
+	"name": "x-backoffice",
+	"version": "0.1.0",
+	"private": true,
+	"devDependencies": {
+		"babel-eslint": "^7.1.0",
+		"eslint": "^3.9.1",
+		"eslint-config-xo": "^0.17.0",
+		"eslint-config-xo-react": "^0.10.0",
+		"eslint-plugin-react": "^6.6.0",
+		"react-scripts": "0.7.0"
+	},
+	"dependencies": {
+		"react": "^15.3.2",
+		"react-dom": "^15.3.2",
+		"react-redux": "^4.4.5",
+		"react-router": "^4.0.0-alpha.5",
+		"redux": "^3.6.0",
+		"redux-act": "^1.1.0",
+		"redux-thunk": "^2.1.0"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test --env=jsdom",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"parser": "babel-eslint",
+		"extends": [
+			"xo/esnext",
+			"xo/browser",
+			"xo-react"
+		],
+		"env": {
+			"jasmine": true
+		}
+	}
+}
