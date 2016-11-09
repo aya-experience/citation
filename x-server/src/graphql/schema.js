@@ -7,9 +7,9 @@ import {
 
 import {readCollection, readObject} from '../nodegit/read';
 
-export const PageType = new GraphQLObjectType({
-	name: 'Page',
-	description: 'Page content',
+export const ObjectType = new GraphQLObjectType({
+	name: 'Object',
+	description: 'Object content',
 	fields: () => ({
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
@@ -29,7 +29,7 @@ export const ContentSchema = new GraphQLSchema({
 				resolve: (root, {type}) => readCollection(type)
 			},
 			object: {
-				type: PageType,
+				type: ObjectType,
 				args: {
 					type: {type: GraphQLString},
 					slug: {type: GraphQLString}

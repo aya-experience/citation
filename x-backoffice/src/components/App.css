@@ -7,13 +7,14 @@
 	height: 100%;
 }
 
-.App-header {
+.App-header>a {
 	height: 5rem;
 	padding: .5rem;
 	background-color: #222;
 	color: white;
 	display: flex;
 	align-items: center;
+	text-decoration: none;
 }
 
 .App-header h2 {
@@ -24,10 +25,6 @@
 .App-layout {
 	display: flex;
 	height: calc(100vh - 5rem);
-}
-
-.App-menu {
-	width: 15rem;
 }
 
 .App-content {
