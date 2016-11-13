@@ -5,7 +5,8 @@ import {
 	GraphQLString
 } from 'graphql';
 
-import {readCollection, readObject} from '../nodegit/read';
+import {readCollection, readObject} from '../gitasdb/read';
+import {writeObject} from '../gitasdb/write';
 
 export const ObjectType = new GraphQLObjectType({
 	name: 'Object',
@@ -35,6 +36,24 @@ export const ContentSchema = new GraphQLSchema({
 					slug: {type: GraphQLString}
 				},
 				resolve: (root, {type, slug}) => readObject(type, slug)
+			}
+		}
+	}),
+	mutation: new GraphQLObjectType({
+		name: 'Mutation',
+		fields: {
+			editObject: {
+				type: ObjectType,
+				args: {
+					type: {type: GraphQLString},
+					slug: {type: GraphQLString},
+					title: {type: GraphQLString},
+					content: {type: GraphQLString}
+				},
+				resolve: async (root, params) => {
+					const {type, slug, ...object} = params;
+					return writeObject(type, slug, object);
+				}
 			}
 		}
 	})

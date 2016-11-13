@@ -5,5 +5,8 @@
 				"node": 6
 			}
 		}]
+	],
+	"plugins": [
+		"transform-object-rest-spread"
 	]
 }
