@@ -1,7 +1,8 @@
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {reducer as form} from 'redux-form';
-import {reducer as collections} from './collections/collections';
+import {reducer as collections} from './collections';
+import {reducer as objects} from './objects';
 
 const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f;
 
@@ -14,6 +15,7 @@ const middlewares = compose(
 
 const reducers = combineReducers({
 	collections,
+	objects,
 	form
 });
 

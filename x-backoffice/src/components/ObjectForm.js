@@ -26,4 +26,7 @@ class ObjectForm extends Component {
 	}
 }
 
-export default reduxForm({form: 'object'})(ObjectForm);
+export default reduxForm({
+	form: 'object',
+	enableReinitialize: true
+})(ObjectForm);

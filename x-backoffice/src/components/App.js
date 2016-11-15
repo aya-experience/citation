@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {Match, Miss, Link} from 'react-router';
 import {connect} from 'react-redux';
+import {loadCollection} from '../logic/collections';
 import logo from './logo.svg';
-import {mapStateToProps, mapDispatchToProps} from '../logic/collections/collections';
 import Menu from './Menu';
 import Home from './Home';
 import ObjectComponent from './Object';
@@ -18,7 +18,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		return this.props.load('pages');
+		return this.props.load();
 	}
 
 	render() {
@@ -42,5 +42,17 @@ class App extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	return {
+		collections: state.collections
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		load: () => dispatch(loadCollection('pages'))
+	};
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
