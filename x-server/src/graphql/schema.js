@@ -14,7 +14,8 @@ export const ObjectType = new GraphQLObjectType({
 	fields: () => ({
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
-		content: {type: GraphQLString}
+		content: {type: GraphQLString},
+		children: {type: new GraphQLList(ObjectType)}
 	})
 });
 
