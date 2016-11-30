@@ -1,0 +1,6 @@
+{
+	"extends": [
+		"xo/browser",
+		"xo-react"
+	]
+}

@@ -1,5 +1,5 @@
-import _ from 'lodash';
 import path from 'path';
+import _ from 'lodash';
 import fs from 'mz/fs';
 
 import {workingDirectory} from './constants';

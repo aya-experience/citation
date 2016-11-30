@@ -14,6 +14,7 @@
 		"graphql": "^0.7.2",
 		"hapi": "^15.2.0",
 		"hapi-graphql": "^1.0.1",
+		"lodash": "^4.17.2",
 		"mz": "^2.5.0",
 		"nodegit": "^0.16.0"
 	},
@@ -22,13 +23,6 @@
 		"babel-cli": "^6.18.0",
 		"babel-plugin-transform-object-rest-spread": "^6.16.0",
 		"babel-preset-env": "0.0.7",
-		"eslint": "^3.9.1",
-		"eslint-config-xo": "^0.17.0",
 		"nodemon": "^1.11.0"
-	},
-	"eslintConfig": {
-		"extends": [
-			"xo/esnext"
-		]
 	}
 }

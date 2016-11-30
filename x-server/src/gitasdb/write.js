@@ -1,8 +1,8 @@
 import path from 'path';
 import fs from 'mz/fs';
 
-import {workingDirectory} from './constants';
 import {create} from '../nodegit/wrapper';
+import {workingDirectory} from './constants';
 import {readObject} from './read';
 
 export async function writeObject(type, slug, data) {
