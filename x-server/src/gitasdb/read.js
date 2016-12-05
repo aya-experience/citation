@@ -6,9 +6,9 @@ import {workingDirectory} from './constants';
 
 export async function readCollection(type) {
 	try {
+		console.log('read collection', type);
 		const collectionPath = path.resolve(workingDirectory, 'master', type);
 		const collectionFolders = await fs.readdir(collectionPath);
-		console.log('read collection', type);
 		return collectionFolders;
 	} catch (error) {
 		console.error('Gitasdb read collection error', error);
@@ -16,31 +16,22 @@ export async function readCollection(type) {
 	}
 }
 
-export async function readObject(type, slug) {
+export async function readObject(type, id) {
 	try {
-		const objectPath = path.resolve(workingDirectory, 'master', type, slug);
-		const objectFilesAndDirectories = await fs.readdir(objectPath);
-		const objectFieldsAndChildren = await Promise.all(objectFilesAndDirectories.map(async file => {
-			const stats = await fs.stat(path.join(objectPath, file));
-			if (stats.isFile()) {
-				return {
-					type: 'object',
-					key: path.basename(file, path.extname(file)),
-					content: (await fs.readFile(path.resolve(objectPath, file))).toString()
-				};
-			}
-			return {
-				type: 'child',
-				key: file
-			};
+		console.log('read object', type, id);
+		const objectPath = path.resolve(workingDirectory, 'master', type, id);
+		const objectFiles = await fs.readdir(objectPath);
+		const objectFields = await Promise.all(objectFiles.map(async file => {
+			const ext = path.extname(file);
+			const key = path.basename(file, ext);
+			const contentString = (await fs.readFile(path.resolve(objectPath, file))).toString();
+			const content = ext === '.json' ? JSON.parse(contentString) : contentString;
+			return {key, content};
 		}));
-		const [objectFields, objectChildren] = _.partition(objectFieldsAndChildren, element => element.type === 'object');
-
-		const object = {};
+		const object = {type, id};
 		objectFields.forEach(field => {
 			object[field.key] = field.content;
 		});
-		object.children = await Promise.all(objectChildren.map(child => readObject(type, path.join(slug, child.key))));
 		return object;
 	} catch (error) {
 		console.error('Gitasdb read object error', error);
