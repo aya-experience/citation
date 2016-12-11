@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-class Page extends Component {
+class NotDefault extends Component {
 	static propTypes = {
 		title: PropTypes.string.isRequired,
 		content: PropTypes.string.isRequired
@@ -10,7 +10,7 @@ class Page extends Component {
 		return (
 			<div className="Page">
 				<h1 className="Page-title">
-					Page Title: {this.props.title}
+					Other Page Title: {this.props.title}
 				</h1>
 				<p className="Page-content">
 					{this.props.content}
@@ -20,4 +20,4 @@ class Page extends Component {
 	}
 }
 
-export default Page;
+export default NotDefault;

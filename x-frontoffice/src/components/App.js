@@ -4,6 +4,11 @@ import XRouter from './XRouter';
 import logo from './logo.svg';
 import './App.css';
 
+import Default from './Default';
+import NotDefault from './NotDefault';
+
+const components = {Default, NotDefault};
+
 class App extends Component {
 	render() {
 		return (
@@ -13,7 +18,7 @@ class App extends Component {
 					<h2>Welcome to React</h2>
 				</div>
 				<div className="App-intro">
-					<XRouter/>
+					<XRouter serverUrl="http://localhost:4000/graphql" components={components}/>
 				</div>
 			</div>
 		);

@@ -1,27 +1,59 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Match} from 'react-router';
-import Page from './Page';
 
 class XRouter extends Component {
+	static propTypes = {
+		serverUrl: PropTypes.string.isRequired,
+		components: PropTypes.object.isRequired
+	}
+
 	constructor() {
 		super();
-		this.state = {children: []};
+		this.state = {pages: []};
+	}
+
+	requestPages() {
+		return fetch(this.props.serverUrl, {
+			method: 'POST',
+			body: `query RootQueryType {
+				collection(type:"pages") {
+					... on Page {
+						id,
+						slug,
+						title,
+						component {
+							id,
+							type,
+							title,
+							content
+						}
+					}
+				}
+			}`,
+			headers: new Headers({'Content-Type': 'application/graphql'})
+		}).then(response => response.json())
+			.then(response => response.data);
 	}
 
 	componentDidMount() {
-		setTimeout(() => {
-			console.log('XRouter setState');
-			this.setState({children: ['toto', 'titi']});
-		}, 1000);
+		this.requestPages().then(response => {
+			console.log('XRouter setState', response);
+			this.setState({pages: response.collection});
+		});
 	}
 
 	render() {
-		console.log('XRouter render', this.state.children);
+		console.log('XRouter render', this.state.pages);
 		return (
 			<div>
-				{this.state.children.map((child, i) => {
-					return <Match key={i} pattern={`/${child}`} component={Page}/>;
-				})}
+				{this.state.pages.map((page, i) => (
+					<Match key={i} pattern={`/${page.slug}`} render={matchProps => (
+						React.createElement(
+							this.props.components[page.component.type],
+							{...matchProps, ...page.component}
+						)
+					)}/>
+				))}
 			</div>
 		);
 	}

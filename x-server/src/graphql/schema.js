@@ -14,6 +14,7 @@ export const ComponentType = new GraphQLObjectType({
 	description: 'Object content',
 	fields: () => ({
 		id: {type: GraphQLString},
+		type: {type: GraphQLString},
 		title: {type: GraphQLString},
 		content: {type: GraphQLString}
 	})
@@ -49,7 +50,7 @@ export const ContentSchema = new GraphQLSchema({
 		name: 'RootQueryType',
 		fields: {
 			collection: {
-				type: new GraphQLList(GraphQLString),
+				type: new GraphQLList(ObjectType),
 				args: {
 					type: {type: GraphQLString}
 				},

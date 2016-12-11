@@ -9,7 +9,7 @@ export async function readCollection(type) {
 		console.log('read collection', type);
 		const collectionPath = path.resolve(workingDirectory, 'master', type);
 		const collectionFolders = await fs.readdir(collectionPath);
-		return collectionFolders;
+		return await Promise.all(collectionFolders.map(folder => readObject(type, folder)));
 	} catch (error) {
 		console.error('Gitasdb read collection error', error);
 		throw error;
@@ -25,7 +25,10 @@ export async function readObject(type, id) {
 			const ext = path.extname(file);
 			const key = path.basename(file, ext);
 			const contentString = (await fs.readFile(path.resolve(objectPath, file))).toString();
-			const content = ext === '.json' ? JSON.parse(contentString) : contentString;
+			let content = ext === '.json' ? JSON.parse(contentString) : contentString.trim();
+			if (key === 'component') {
+				content = await readObject('components', content);
+			}
 			return {key, content};
 		}));
 		const object = {type, id};
