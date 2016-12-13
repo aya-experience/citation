@@ -5,7 +5,7 @@
 X-CMS is a temporary name which I want to replace by something cool in a near future. Something without both X and CMS in the name, some kind of proper noun.
 
 Advanced proposition for a name: **Citation**
-- Pronounced like **site*-ation, not far from "website creation" which is the purpose of the solution
+- Pronounced like **site**-ation, not far from "website creation" which is the purpose of the solution
 - French reference meaning quotation (exist in english but less used)
 
 ## Purpose
