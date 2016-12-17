@@ -3,7 +3,6 @@
 import {
 	GraphQLSchema,
 	GraphQLObjectType,
-	GraphQLUnionType,
 	GraphQLInterfaceType,
 	GraphQLID,
 	GraphQLList,
@@ -11,64 +10,23 @@ import {
 } from 'graphql';
 
 import {readCollection, readObject} from '../gitasdb/read';
-import {writeObject} from '../gitasdb/write';
+// import {writeObject} from '../gitasdb/write';
 
 export const ObjectInterface = new GraphQLInterfaceType({
-	name: 'ObjectInterface',
-	fields: () => ({
-		id: {type: GraphQLID},
-		type: {type: GraphQLString}
-	}),
-	resolveType: resolveObject
-});
-
-export const ObjectType = new GraphQLUnionType({
 	name: 'Object',
-	types: () => [PageType, Component1Type, Component2Type],
-	resolveType: resolveObject
-});
-
-function resolveObject(value) {
-	console.log('resolveObject', value);
-	if (value.type === 'pages') {
-		return PageType;
-	}
-	if (value.type === 'components') {
-		return resolveComponent(value);
-	}
-}
-
-export const ComponentInterface = new GraphQLInterfaceType({
-	name: 'ComponentInterface',
 	fields: () => ({
-		componentType: {type: GraphQLString},
-		children: {type: new GraphQLList(ComponentType)},
-		__tree__: {type: GraphQLString}
-	}),
-	resolveType: resolveComponent
+		__id__: {type: GraphQLID},
+		__type__: {type: GraphQLString}
+	})
 });
-
-export const ComponentType = new GraphQLUnionType({
-	name: 'Component',
-	types: () => [Component1Type, Component2Type],
-	resolveType: resolveComponent
-});
-
-function resolveComponent(value) {
-	if (value.componentType === 'Component1') {
-		return Component1Type;
-	}
-	if (value.componentType === 'Component2') {
-		return Component2Type;
-	}
-}
 
 export const PageType = new GraphQLObjectType({
 	name: 'Page',
 	interfaces: [ObjectInterface],
+	isTypeOf: value => value.__type__ === 'Page',
 	fields: () => ({
-		id: {type: GraphQLID},
-		type: {type: GraphQLString},
+		__id__: {type: GraphQLID},
+		__type__: {type: GraphQLString},
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
 		children: {type: new GraphQLList(PageType)},
@@ -76,71 +34,74 @@ export const PageType = new GraphQLObjectType({
 	})
 });
 
-export const Component1Type = new GraphQLObjectType({
-	name: 'Component1',
-	interfaces: [ObjectInterface, ComponentInterface],
+export const ComponentType = new GraphQLObjectType({
+	name: 'Component',
+	interfaces: [ObjectInterface],
+	isTypeOf: value => value.__type__ === 'Component',
 	fields: () => ({
-		id: {type: GraphQLID},
-		type: {type: GraphQLString},
-		componentType: {type: GraphQLString},
-		children: {type: new GraphQLList(ComponentType)},
+		__id__: {type: GraphQLID},
+		__type__: {type: GraphQLString},
 		__tree__: {type: GraphQLString},
+		type: {type: GraphQLString},
+		children: {type: new GraphQLList(ComponentType)},
+		data: {type: new GraphQLList(ObjectInterface)}
+	})
+});
+
+export const ContentType = new GraphQLObjectType({
+	name: 'Content',
+	interfaces: [ObjectInterface],
+	isTypeOf: value => value.__type__ === 'Content',
+	fields: () => ({
+		__id__: {type: GraphQLID},
+		__type__: {type: GraphQLString},
 		title: {type: GraphQLString},
 		content: {type: GraphQLString}
 	})
 });
 
-export const Component2Type = new GraphQLObjectType({
-	name: 'Component2',
-	interfaces: [ObjectInterface, ComponentInterface],
-	fields: () => ({
-		id: {type: GraphQLID},
-		type: {type: GraphQLString},
-		componentType: {type: GraphQLString},
-		children: {type: new GraphQLList(ComponentType)},
-		__tree__: {type: GraphQLString},
-		title2: {type: GraphQLString},
-		content2: {type: GraphQLString}
-	})
-});
+function read(type, id = null) {
+	console.log('read', type, id);
+	return id === null ? readCollection(type) : [readObject(type, id)];
+}
 
 export const ContentSchema = new GraphQLSchema({
 	query: new GraphQLObjectType({
 		name: 'Query',
 		fields: {
-			collection: {
-				type: new GraphQLList(ObjectType),
-				args: {
-					type: {type: GraphQLString}
-				},
-				resolve: (root, {type}) => readCollection(type)
+			Page: {
+				type: new GraphQLList(PageType),
+				args: {id: {type: GraphQLID}},
+				resolve: (root, {id}) => read('Page', id)
 			},
-			object: {
-				type: ObjectType,
-				args: {
-					type: {type: GraphQLString},
-					id: {type: GraphQLString}
-				},
-				resolve: (root, {type, id}) => readObject(type, id)
+			Component: {
+				type: new GraphQLList(ComponentType),
+				args: {id: {type: GraphQLID}},
+				resolve: (root, {id}) => read('Component', id)
+			},
+			Content: {
+				type: new GraphQLList(ContentType),
+				args: {id: {type: GraphQLID}},
+				resolve: (root, {id}) => read('Content', id)
 			}
 		}
-	}),
-	mutation: new GraphQLObjectType({
-		name: 'Mutation',
-		fields: {
-			editObject: {
-				type: ObjectType,
-				args: {
-					type: {type: GraphQLString},
-					slug: {type: GraphQLString},
-					title: {type: GraphQLString},
-					content: {type: GraphQLString}
-				},
-				resolve: async (root, params) => {
-					const {type, slug, ...object} = params;
-					return writeObject(type, slug, object);
-				}
-			}
-		}
-	})
+	})// ,
+	// mutation: new GraphQLObjectType({
+	// 	name: 'Mutation',
+	// 	fields: {
+	// 		editObject: {
+	// 			type: ObjectType,
+	// 			args: {
+	// 				type: {type: GraphQLString},
+	// 				slug: {type: GraphQLString},
+	// 				title: {type: GraphQLString},
+	// 				content: {type: GraphQLString}
+	// 			},
+	// 			resolve: async (root, params) => {
+	// 				const {type, slug, ...object} = params;
+	// 				return writeObject(type, slug, object);
+	// 			}
+	// 		}
+	// 	}
+	// })
 });

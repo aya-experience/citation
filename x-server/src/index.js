@@ -22,7 +22,7 @@ server.register({
 		}
 	}
 }, () =>
-	server.start(() =>
-		console.log('Server running at:', server.info.uri)
-	)
+	server.start(() => {
+		console.log('Server running at:', server.info.uri);
+	})
 );
