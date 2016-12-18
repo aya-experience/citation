@@ -9,7 +9,8 @@ import {
 	GraphQLString
 } from 'graphql';
 
-import {readCollection, readObject, inspectObject, graphqlQuerySerialize} from '../gitasdb/read';
+import {readCollection, readObject} from '../gitasdb/read';
+import {inspectObject, graphqlQuerySerialize} from '../gitasdb/inspect';
 // import {writeObject} from '../gitasdb/write';
 
 export const ObjectInterface = new GraphQLInterfaceType({
@@ -29,8 +30,14 @@ export const PageType = new GraphQLObjectType({
 		__type__: {type: GraphQLString},
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
-		children: {type: new GraphQLList(PageType)},
-		component: {type: ComponentType}
+		children: {
+			type: new GraphQLList(PageType),
+			resolve: root => readChildren(root.children)
+		},
+		component: {
+			type: ComponentType,
+			resolve: root => readChild(root.component)
+		}
 	})
 });
 
@@ -43,14 +50,17 @@ export const ComponentType = new GraphQLObjectType({
 		__type__: {type: GraphQLString},
 		__tree__: {
 			type: GraphQLString,
-			resolve: async root => {
-				const inspection = await inspectObject('Component', root.__id__);
-				return graphqlQuerySerialize(inspection);
-			}
+			resolve: inspect
 		},
 		type: {type: GraphQLString},
-		children: {type: new GraphQLList(ComponentType)},
-		data: {type: new GraphQLList(ObjectInterface)}
+		children: {
+			type: new GraphQLList(ComponentType),
+			resolve: root => readChildren(root.children)
+		},
+		data: {
+			type: new GraphQLList(ObjectInterface),
+			resolve: root => readChildren(root.data)
+		}
 	})
 });
 
@@ -67,8 +77,24 @@ export const ContentType = new GraphQLObjectType({
 });
 
 function read(type, id = null) {
-	console.log('read', type, id);
 	return id === null ? readCollection(type) : [readObject(type, id)];
+}
+
+async function inspect(root) {
+	const inspection = await inspectObject(root.__type__, root.__id__);
+	return graphqlQuerySerialize(inspection);
+}
+
+function readChildren(links) {
+	return Promise.all(links.links.map(link => {
+		const {collection, id} = link;
+		return readObject(collection, id);
+	}));
+}
+
+function readChild(link) {
+	const {collection, id} = link.link;
+	return readObject(collection, id);
 }
 
 export const ContentSchema = new GraphQLSchema({
