@@ -26,13 +26,14 @@ It is an Open Source experiment aiming to build a next generation Open Source CM
 There is a lot of similar solutions in the wild. One of the key differences of this project will be the Open Source, downloadable, "not only SaaS" kind. Yet if anyone find a really similar Open Source solution, please let me know, I could have missed it.
 
 To trace all references, here is the list of considered solutions
-- Contentful https://www.contentful.com/ (CMS, Saas)
-- Prismic https://prismic.io/ (CMS, Saas)
+- Contentful https://www.contentful.com/ (CMS, Saas, Headless)
+- Prismic https://prismic.io/ (CMS, Saas, Headless)
 - Keystone http://keystonejs.com/ (CMS, OSS, Node, Express, MongoDb)
 - Next https://github.com/zeit/next.js (SSR, React, Babel, Webpack)
 - Nuxt https://nuxtjs.org/ (SSR, Vue)
 - Phenomic https://github.com/MoOx/phenomic (SSG, React, Babel, Webpack)
 - Ghost https://ghost.org/ (CMS, OSS & Saas, Node, Express, Ember, SQL)
+- GraphCMS https://graphcms.com/ (CMS, Saas, GraphQL, Headless)
 
 ## Packaging
 

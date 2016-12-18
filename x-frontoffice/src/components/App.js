@@ -4,10 +4,11 @@ import XRouter from './XRouter';
 import logo from './logo.svg';
 import './App.css';
 
-import Default from './Default';
-import NotDefault from './NotDefault';
+import Component1 from './Component1';
+import Component2 from './Component2';
+import Component3 from './Component3';
 
-const components = {Default, NotDefault};
+const components = {Component1, Component2, Component3};
 
 class App extends Component {
 	render() {
