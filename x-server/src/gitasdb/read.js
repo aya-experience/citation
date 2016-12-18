@@ -31,8 +31,6 @@ export async function readObject(type, id) {
 			if (content.__role__ === 'link') {
 				const {collection, id} = content.link;
 				content = await readObject(collection, id);
-				const inspection = await inspectObject(collection, id);
-				content.__tree__ = graphqlQuerySerialize(inspection);
 			}
 			if (content.__role__ === 'links') {
 				content = await Promise.all(content.links.map(link => {

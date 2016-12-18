@@ -9,7 +9,7 @@ import {
 	GraphQLString
 } from 'graphql';
 
-import {readCollection, readObject} from '../gitasdb/read';
+import {readCollection, readObject, inspectObject, graphqlQuerySerialize} from '../gitasdb/read';
 // import {writeObject} from '../gitasdb/write';
 
 export const ObjectInterface = new GraphQLInterfaceType({
@@ -41,7 +41,13 @@ export const ComponentType = new GraphQLObjectType({
 	fields: () => ({
 		__id__: {type: GraphQLID},
 		__type__: {type: GraphQLString},
-		__tree__: {type: GraphQLString},
+		__tree__: {
+			type: GraphQLString,
+			resolve: async root => {
+				const inspection = await inspectObject('Component', root.__id__);
+				return graphqlQuerySerialize(inspection);
+			}
+		},
 		type: {type: GraphQLString},
 		children: {type: new GraphQLList(ComponentType)},
 		data: {type: new GraphQLList(ObjectInterface)}
