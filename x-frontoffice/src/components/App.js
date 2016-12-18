@@ -1,14 +1,9 @@
 import React, {Component} from 'react';
-import XRouter from './XRouter';
+import XRouter from '../x-lib/router/XRouter';
 
 import logo from './logo.svg';
 import './App.css';
-
-import Component1 from './Component1';
-import Component2 from './Component2';
-import Component3 from './Component3';
-
-const components = {Component1, Component2, Component3};
+import components from './';
 
 class App extends Component {
 	render() {
