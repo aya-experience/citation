@@ -15,9 +15,28 @@ class XRouter extends Component {
 		this.matchRenderer = this.matchRenderer.bind(this);
 	}
 
+	buildPageTree(pages) {
+		const ref = {};
+		pages.forEach(page => {
+			ref[page.__id__] = page;
+		});
+
+		pages.forEach(page => {
+			if (Array.isArray(page.children)) {
+				page.children = page.children.map(({__id__}) => {
+					const child = ref[__id__];
+					child.__child__ = true;
+					return child;
+				});
+			}
+		});
+
+		return pages.filter(page => !page.__child__);
+	}
+
 	componentDidMount() {
 		XQueries.queryPages(this.props.serverUrl).then(response => {
-			this.setState({pages: response.Page});
+			this.setState({pages: this.buildPageTree(response.Page)});
 		});
 	}
 

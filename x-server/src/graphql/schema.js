@@ -1,5 +1,6 @@
 /* eslint no-use-before-define: 0 */
 
+import _ from 'lodash';
 import {
 	GraphQLSchema,
 	GraphQLObjectType,
@@ -28,6 +29,10 @@ export const PageType = new GraphQLObjectType({
 	fields: () => ({
 		__id__: {type: GraphQLID},
 		__type__: {type: GraphQLString},
+		__tree__: {
+			type: GraphQLString,
+			resolve: inspect
+		},
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
 		children: {
@@ -71,6 +76,10 @@ export const ContentType = new GraphQLObjectType({
 	fields: () => ({
 		__id__: {type: GraphQLID},
 		__type__: {type: GraphQLString},
+		__tree__: {
+			type: GraphQLString,
+			resolve: inspect
+		},
 		title: {type: GraphQLString},
 		content: {type: GraphQLString}
 	})
@@ -86,6 +95,9 @@ async function inspect(root) {
 }
 
 function readChildren(links) {
+	if (!_.isObject(links)) {
+		return null;
+	}
 	return Promise.all(links.links.map(link => {
 		const {collection, id} = link;
 		return readObject(collection, id);
@@ -93,6 +105,9 @@ function readChildren(links) {
 }
 
 function readChild(link) {
+	if (!_.isObject(link)) {
+		return null;
+	}
 	const {collection, id} = link.link;
 	return readObject(collection, id);
 }

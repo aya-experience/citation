@@ -7,8 +7,7 @@ class XRoutes extends Component {
 	static propTypes = {
 		serverUrl: PropTypes.string.isRequired,
 		components: PropTypes.object.isRequired,
-		pages: PropTypes.array.isRequired,
-		location: PropTypes.object.isRequired
+		pages: PropTypes.array.isRequired
 	}
 
 	constructor() {
@@ -17,50 +16,50 @@ class XRoutes extends Component {
 		this.matchRenderer = this.matchRenderer.bind(this);
 	}
 
-	loadPath(pathname, pages) {
-		const tree = this.state.trees[pathname];
-		const page = pages.filter(page => pathname === `/${page.slug}`)[0];
+	loadPath(pattern) {
+		const tree = this.state.trees[pattern];
+		const page = this.props.pages.filter(page => pattern === page.slug)[0];
 		if (tree === undefined && page !== undefined) {
-			this.setState({trees: {[pathname]: null}});
-			XQueries.queryComponentTree(this.props.serverUrl, page.component).then(response => {
-				this.setState({trees: {[pathname]: response.Component[0]}});
+			Promise.resolve().then(() => {
+				this.setState({trees: {[pattern]: null}});
+				XQueries.queryComponentTree(this.props.serverUrl, page.component).then(response => {
+					this.setState({trees: {[pattern]: response.Component[0]}});
+				});
 			});
 		}
 	}
 
-	componentDidMount() {
-		this.loadPath(this.props.location.pathname, this.props.pages);
-	}
-
-	componentWillReceiveProps(props) {
-		this.loadPath(props.location.pathname, props.pages);
-	}
-
-	createElement({type, data, children = []}) {
+	createElement(page, {type, data, children = []}, matchProps) {
 		let component = this.props.components[type];
 		if (component === undefined) {
 			component = Default;
 		}
+		let childPage;
+		if (Array.isArray(page.children)) {
+			childPage = <XRoutes {...this.props} {...matchProps} pages={page.children}/>;
+		}
 		return React.createElement(
 			component,
-			{data},
-			...children.map(child => this.createElement(child))
+			{data, childPage},
+			...children.map(child => this.createElement(page, child, matchProps))
 		);
 	}
 
 	matchRenderer(matchProps) {
-		const tree = this.state.trees[matchProps.pathname];
+		const tree = this.state.trees[matchProps.pattern];
+		const page = this.props.pages.filter(page => matchProps.pattern === page.slug)[0];
 		if (tree === undefined || tree === null) {
+			this.loadPath(matchProps.pattern);
 			return <span/>;
 		}
-		return this.createElement(tree);
+		return this.createElement(page, tree, matchProps);
 	}
 
 	render() {
 		return (
 			<div>
 				{this.props.pages.map((page, i) => (
-					<Match key={i} pattern={`/${page.slug}`} render={this.matchRenderer}/>
+					<Match key={i} pattern={page.slug} render={this.matchRenderer}/>
 				))}
 			</div>
 		);

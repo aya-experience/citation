@@ -3,7 +3,8 @@ import React, {Component, PropTypes} from 'react';
 class Component1 extends Component {
 	static propTypes = {
 		children: PropTypes.array,
-		data: PropTypes.array
+		data: PropTypes.array,
+		childPage: PropTypes.element
 	};
 
 	render() {
@@ -13,10 +14,13 @@ class Component1 extends Component {
 					Component1 Title: {this.props.data[0].title}
 				</h1>
 				<p className="Component1-content">
-					{this.props.data[0].content}
+					Component1 Content: {this.props.data[0].content}
 				</p>
 				<div className="Component1-children">
-					{this.props.children}
+					Chomponent1 Children: {this.props.children}
+				</div>
+				<div className="Component1-childPage">
+					Chomponent1 Child Page: {this.props.childPage}
 				</div>
 			</div>
 		);
