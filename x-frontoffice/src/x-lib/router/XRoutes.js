@@ -40,7 +40,7 @@ class XRoutes extends Component {
 		}
 		return React.createElement(
 			component,
-			{data, childPage},
+			{data, pages: this.props.pages, childPage},
 			...children.map(child => this.createElement(page, child, matchProps))
 		);
 	}

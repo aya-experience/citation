@@ -11,7 +11,7 @@ export default {
 	queryPages(url) {
 		return this.graphqlQuery(url, `query Query {
 			Page {
-				__id__, slug
+				__id__, slug, title,
 				children {
 					__id__
 				},
