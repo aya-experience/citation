@@ -16,16 +16,14 @@ class XRoutes extends Component {
 		this.matchRenderer = this.matchRenderer.bind(this);
 	}
 
-	loadPath(pattern) {
+	async loadPath(pattern) {
 		const tree = this.state.trees[pattern];
 		const page = this.props.pages.filter(page => pattern === page.slug)[0];
 		if (tree === undefined && page !== undefined) {
-			Promise.resolve().then(() => {
-				this.setState({trees: {[pattern]: null}});
-				XQueries.queryComponentTree(this.props.serverUrl, page.component).then(response => {
-					this.setState({trees: {[pattern]: response.Component[0]}});
-				});
-			});
+			await Promise.resolve();
+			this.setState({trees: {[pattern]: null}});
+			const tree = await XQueries.queryComponentTree(this.props.serverUrl, page.component);
+			this.setState({trees: {[pattern]: tree}});
 		}
 	}
 
