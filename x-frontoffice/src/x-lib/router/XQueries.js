@@ -43,10 +43,10 @@ export default {
 		return this.buildPageTree(response.Page);
 	},
 
-	async queryComponentTree(url, tree) {
+	async queryComponentTree(url, component) {
 		const response = await this.graphqlQuery(url, `query Query {
-			Component(id: "${tree.__id__}") {
-				${tree.__tree__}
+			Component(id: "${component.__id__}") {
+				${component.__tree__}
 			}
 		}`);
 		return response.Component[0];

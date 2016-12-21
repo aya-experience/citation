@@ -11,13 +11,19 @@ class XRouter extends Component {
 
 	constructor() {
 		super();
-		this.state = {pages: []};
 		this.matchRenderer = this.matchRenderer.bind(this);
+
+		this.state = {pages: []};
+		if (window && window.__pages__) {
+			this.state = {pages: window.__pages__};
+		}
 	}
 
 	async componentDidMount() {
-		const pages = await XQueries.queryPages(this.props.serverUrl);
-		this.setState({pages});
+		if (this.state.pages.length === 0) {
+			const pages = await XQueries.queryPages(this.props.serverUrl);
+			this.setState({pages});
+		}
 	}
 
 	matchRenderer(matchProps) {
@@ -25,6 +31,7 @@ class XRouter extends Component {
 	}
 
 	render() {
+		// console.log('XRouter render', this.props, this.state);
 		return <Match pattern="/" render={this.matchRenderer}/>;
 	}
 }
