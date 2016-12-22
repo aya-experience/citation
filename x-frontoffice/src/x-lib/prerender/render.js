@@ -1,10 +1,8 @@
 /* eslint-env node */
 
-import path from 'path';
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {ServerRouter, createServerRenderContext} from 'react-router';
-import fs from 'fs-promise';
 import XRouter from '../router/XRouter';
 
 export default async function render(url, context, options) {
@@ -13,24 +11,8 @@ export default async function render(url, context, options) {
 
 		global.window = {
 			__pages__: context.pages,
-			__contents__: {}
+			__contents__: context.preparedContents
 		};
-
-		url
-			.split('/')
-			.splice(1)
-			.map(path => `/${path}`)
-			.reduce((acc, path) => {
-				if (acc.length === 0) {
-					acc.push(path);
-				} else {
-					acc.push(acc[acc.length - 1] + path);
-				}
-				return acc;
-			}, [])
-			.forEach(path => {
-				global.window.__contents__[path] = context.contents[path];
-			});
 
 		console.log('renderToString', url);
 
@@ -50,11 +32,7 @@ export default async function render(url, context, options) {
 			</script>
 		`.replace(/[\t\n]/g, '');
 
-		const indexContent = context.indexContent.replace(options.selector, replacement);
-		const indexDir = path.join(options.renderDir, url);
-		const indexPath = path.join(indexDir, 'index.html');
-		await fs.mkdir(indexDir);
-		await fs.writeFile(indexPath, indexContent);
+		return context.indexContent.replace(options.selector, replacement);
 	} catch (error) {
 		console.error('Something went wrong while rendering', url, error);
 		throw error;

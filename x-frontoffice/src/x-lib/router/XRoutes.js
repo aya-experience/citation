@@ -18,18 +18,9 @@ class XRoutes extends Component {
 	}
 
 	componentWillMount() {
-		const contents = {...this.state.contents};
 		if (window && window.__contents__) {
-			const pathname = this.props.pathname === '/' ? '' : this.props.pathname;
-			Object.keys(window.__contents__)
-				.filter(path => path.split('/').length - 1 === pathname.split('/').length)
-				.forEach(path => {
-					const split = path.split('/');
-					const pattern = split[split.length - 1];
-					contents[pattern] = window.__contents__[path];
-				});
+			this.setState({contents: window.__contents__[this.props.pathname]});
 		}
-		this.setState({contents});
 	}
 
 	async loadPathContent(pattern) {
