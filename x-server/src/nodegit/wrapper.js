@@ -10,12 +10,10 @@ export async function create(repositoryPath) {
 	const repository = await Repository.open(repositoryPath);
 
 	return {
-		async add(files) {
+		async add(path) {
 			try {
 				const index = await repository.refreshIndex();
-				await Promise.all(files.map(file => {
-					return index.addByPath(file);
-				}));
+				await index.addAll(path);
 				await index.write();
 				const oid = await index.writeTree();
 				return oid;

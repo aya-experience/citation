@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "babel": "babel src -d lib",
-    "nodemon": "nodemon src/index --exec babel-node",
+    "nodemon": "nodemon src/index --exec babel-node --ignore work",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fs-promise": "^1.0.0",
     "graphql": "^0.7.2",
     "hapi": "^15.2.0",
     "hapi-graphql": "^1.0.1",
     "lodash": "^4.17.2",
     "merge-deep": "^3.0.0",
-    "mz": "^2.5.0",
     "nodegit": "^0.16.0"
   },
   "devDependencies": {

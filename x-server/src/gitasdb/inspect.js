@@ -1,6 +1,6 @@
 import path from 'path';
 import _ from 'lodash';
-import fs from 'mz/fs';
+import fs from 'fs-promise';
 
 import mergeDeep from 'merge-deep';
 
