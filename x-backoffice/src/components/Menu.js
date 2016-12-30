@@ -10,17 +10,19 @@ export default class Menu extends Component {
 	}
 
 	render() {
+		const pairs = _(this.props.collections).toPairs().sortBy(pair => pair[0]).value();
+
 		return (
 			<ul className="Menu-container">
-				{_.map(this.props.collections, (value, key) => (
-					<li key={key}>
-						<p className="Menu-collection">{key}</p>
+				{pairs.map(([type, objects]) => (
+					<li key={type}>
+						<p className="Menu-collection">{type}</p>
 						<ul className="Menu-object-container">
-							{value.collection.map(slug => (
-								<li key={slug}>
-									<Link to={`/object/${slug}`}>
+							{objects.map(object => (
+								<li key={object.__id__}>
+									<Link to={`/object/${type}/${object.__id__}`}>
 										<p className="Menu-object">
-											{slug}
+											{object.__id__}
 										</p>
 									</Link>
 								</li>

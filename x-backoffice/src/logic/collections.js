@@ -5,8 +5,8 @@ export const loadCollectionSuccess = createAction('load collection success');
 
 export function loadCollection(type) {
 	return dispatch => {
-		return query(`{collection(type: "${type}")}`)
-			.then(response => dispatch(loadCollectionSuccess({type, data: response.data})));
+		return query(`{${type} {__id__}}`)
+			.then(response => dispatch(loadCollectionSuccess({type, data: response.data[type]})));
 	};
 }
 

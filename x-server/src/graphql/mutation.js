@@ -15,7 +15,7 @@ import {PageType} from './query';
 export const LinkDataInputType = new GraphQLInputObjectType({
 	name: 'LinkDataInput',
 	fields: () => ({
-		type: {type: GraphQLString},
+		collection: {type: GraphQLString},
 		id: {type: GraphQLID}
 	})
 });

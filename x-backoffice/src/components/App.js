@@ -34,7 +34,7 @@ class App extends Component {
 					<Menu collections={this.props.collections}/>
 					<div className="App-content">
 						<Match exactly pattern="/" component={Home}/>
-						<Match pattern="/object/:slug" component={ObjectComponent}/>
+						<Match pattern="/object/:type/:id" component={ObjectComponent}/>
 						<Miss component={NoMatch}/>
 					</div>
 				</div>
@@ -51,7 +51,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		load: () => dispatch(loadCollection('pages'))
+		load: () => Promise.all([
+			dispatch(loadCollection('Page')),
+			dispatch(loadCollection('Component')),
+			dispatch(loadCollection('Content'))
+		])
 	};
 };
 
