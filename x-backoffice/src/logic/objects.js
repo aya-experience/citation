@@ -5,7 +5,7 @@ import {query, mutation} from './graphql-client';
 // Temporary fixed model
 const fields = {
 	Page: ['slug', 'title', 'children {__id__}', 'component {__id__}'].join(', '),
-	Component: ['type', 'children {__id__}', 'data {__id__}'].join(', '),
+	Component: ['type', 'children {__id__}', 'data {__id__, __type__}'].join(', '),
 	Content: ['title', 'content'].join(', ')
 };
 

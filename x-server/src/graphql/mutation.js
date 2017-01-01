@@ -10,7 +10,7 @@ import {
 } from 'graphql';
 
 import {writeObject} from '../gitasdb/write';
-import {PageType} from './query';
+import {PageType, ComponentType, ContentType} from './query';
 
 export const LinkDataInputType = new GraphQLInputObjectType({
 	name: 'LinkDataInput',
@@ -47,18 +47,53 @@ export const PageInputType = new GraphQLInputObjectType({
 	})
 });
 
+export const ComponentInputType = new GraphQLInputObjectType({
+	name: 'ComponentInput',
+	fields: () => ({
+		__id__: {type: GraphQLID},
+		type: {type: GraphQLString},
+		children: {type: LinksInputType},
+		data: {type: LinksInputType}
+	})
+});
+
+export const ContentInputType = new GraphQLInputObjectType({
+	name: 'ContentInput',
+	fields: () => ({
+		__id__: {type: GraphQLID},
+		title: {type: GraphQLString},
+		content: {type: GraphQLString}
+	})
+});
+
 export default new GraphQLObjectType({
 	name: 'Mutation',
 	fields: {
 		editPage: {
 			type: PageType,
-			args: {
-				page: {type: PageInputType}
-			},
+			args: {page: {type: PageInputType}},
 			resolve: async (root, params) => {
 				const {page} = params;
 				console.log('mutation', page);
 				return writeObject('Page', page);
+			}
+		},
+		editComponent: {
+			type: ComponentType,
+			args: {component: {type: ComponentInputType}},
+			resolve: async (root, params) => {
+				const {component} = params;
+				console.log('mutation', component);
+				return writeObject('Component', component);
+			}
+		},
+		editContent: {
+			type: ContentType,
+			args: {page: {type: ContentInputType}},
+			resolve: async (root, params) => {
+				const {content} = params;
+				console.log('mutation', content);
+				return writeObject('Content', content);
 			}
 		}
 	}

@@ -51,6 +51,11 @@ form.ObjectForm > div > ul.ObjectArray > li {
 	margin-bottom: .5rem;
 }
 
+form.ObjectForm > div > ul.ObjectArray > li > div {
+	width: 100%;
+	display: flex;
+}
+
 form.ObjectForm > div > ul.ObjectArray > li.ObjectArrayAdd {
 	flex-direction: row-reverse;
 }

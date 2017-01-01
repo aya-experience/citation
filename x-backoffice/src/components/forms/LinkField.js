@@ -2,29 +2,41 @@ import _ from 'lodash';
 import React, {Component, PropTypes} from 'react';
 import {Field} from 'redux-form';
 
-class LinksField extends Component {
+export function toLinkInput(link, type) {
+	return {
+		__role__: 'link',
+		link: {
+			collection: link.__type__ ? link.__type__ : type,
+			id: link.__id__
+		}
+	};
+}
+
+class LinkField extends Component {
 	static propTypes = {
 		input: PropTypes.object.isRequired,
-		values: PropTypes.array.isRequired
-	}
-
-	parseLink(value) {
-		return {__id__: value};
-	}
-
-	formatLink(value) {
-		return value.__id__;
+		collections: PropTypes.object.isRequired,
+		type: PropTypes.string
 	}
 
 	render() {
+		const type = this.props.type ? this.props.type : this.props.input.value.__type__;
+		const values = _.get(this.props.collections, type, []);
 		return (
-			<Field name={this.props.input.name} component="select" parse={this.parseLink} format={this.formatLink}>
-				{this.props.values.map((value, i) => (
-					<option key={i} value={value.__id__}>{value.__id__}</option>
-				))}
-			</Field>
+			<div>
+				{!this.props.type && <Field name={`${this.props.input.name}.__type__`} component="select">
+					{Object.keys(this.props.collections).map((type, i) => (
+						<option key={i} value={type}>{type}</option>
+					))}
+				</Field>}
+				<Field name={`${this.props.input.name}.__id__`} component="select">
+					{values.map((value, i) => (
+						<option key={i} value={value.__id__}>{value.__id__}</option>
+					))}
+				</Field>
+			</div>
 		);
 	}
 }
 
-export default LinksField;
+export default LinkField;

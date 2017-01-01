@@ -29,11 +29,11 @@ class ObjectForm extends Component {
 					<Field name="title" component="input" type="text"/>
 				</div>
 				<div>
-					<label htmlFor="title">Component</label>
+					<label htmlFor="component">Component</label>
 					<Field name="component" component={LinkField} props={{values: this.props.components}}/>
 				</div>
 				<div>
-					<label htmlFor="title">Children</label>
+					<label htmlFor="children">Children</label>
 					<FieldArray name="children" component={LinksField} props={{values: this.props.pages}}/>
 				</div>
 				<button type="submit">Submit</button>
@@ -43,6 +43,6 @@ class ObjectForm extends Component {
 }
 
 export default reduxForm({
-	form: 'object',
+	form: 'Page',
 	enableReinitialize: true
 })(ObjectForm);
