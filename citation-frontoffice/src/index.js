@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router';
 
-import XRouter from './x-lib/router/XRouter';
+import XRouter from './citation-lib/router/XRouter';
 import components from './components';
 import './index.css';
 

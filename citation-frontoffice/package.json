@@ -1,5 +1,5 @@
 {
-  "name": "x-frontoffice",
+  "name": "citation-frontoffice",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -30,6 +30,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prerender": "babel-node --presets es2015,stage-2,react src/x-lib/prerender/cli --serverUrl http://localhost:4000/graphql --components src/components"
+    "prerender": "babel-node --presets es2015,stage-2,react src/citation-lib/prerender/cli --serverUrl http://localhost:4000/graphql --components src/components"
   }
 }

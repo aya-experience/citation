@@ -31,7 +31,6 @@ class XRouter extends Component {
 	}
 
 	render() {
-		// console.log('XRouter render', this.props, this.state);
 		return <Match pattern="/" render={this.matchRenderer}/>;
 	}
 }

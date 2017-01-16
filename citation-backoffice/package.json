@@ -1,5 +1,5 @@
 {
-	"name": "x-backoffice",
+	"name": "citation-backoffice",
 	"version": "0.1.0",
 	"private": true,
 	"devDependencies": {

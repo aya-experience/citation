@@ -40,6 +40,6 @@ At this point, the project is not organized as a packaged solution. It would be 
 
 The project is organized in three sub projects.
 
-- [x-server](x-server) is a Node/Hapi server containing the storage layer in a Git repository (called GitAsDb) and the GraphQL API.
-- [x-backoffice](x-backoffice) is a React application of the Back Office. It uses the GraphQL API to read and write the content.
-- [x-frontoffice](x-frontoffice) is a React application of the Front Office. The target is to package a lib to help build such an app and not a package app. Waiting for the packaging step of the project it's one project containing both what will be the lib, and what will be the specific part of the app.
+- [citation-server](citation-server) is a Node/Hapi server containing the storage layer in a Git repository (called GitAsDb) and the GraphQL API.
+- [citation-backoffice](citation-backoffice) is a React application of the Back Office. It uses the GraphQL API to read and write the content.
+- [citation-frontoffice](citation-frontoffice) is a React application of the Front Office. The target is to package a lib to help build such an app and not a package app. Waiting for the packaging step of the project it's one project containing both what will be the lib, and what will be the specific part of the app.

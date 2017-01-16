@@ -1,10 +1,10 @@
-# X-CMS / X-FRONTOFFICE
+# Citation Frontoffice
 
-This project is a bit complicated. Currently it's a React application presenting data through the GraphQL API of x-server. But it aims to be a bigger and more structured project.
+This project is a bit complicated. Currently it's a React application presenting data through the GraphQL API of citation-server. But it aims to be a bigger and more structured project.
 
 - It will contains the [pre-rendering](#pre-rendering) of the application
-- It will contains a generic [routing](#routing) based on the x-server data
-- It will be split between the specific part of the application and the generic part provided by x-cms
+- It will contains a generic [routing](#routing) based on the citation-server data
+- It will be split between the specific part of the application and the generic part provided by citation-cms
 - The generic part will be declined not only for React but also for Angular 2 and Vue 2
 
 ## Tooling
@@ -17,7 +17,7 @@ Main library used in development is only React Router v4 for now.
 
 ## Routing
 
-The router is most obvious element which will be in the generic part of the project. The goal is to have a asynchronous routing based on the data of x-server.
+The router is most obvious element which will be in the generic part of the project. The goal is to have a asynchronous routing based on the data of citation-server.
 
 ## Default components
 

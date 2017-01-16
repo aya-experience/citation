@@ -1,4 +1,4 @@
-# X-CMS / X-SERVER
+# Citation Server
 
 An Hapi server publishing a GraphQL API reading and storing data in a Git repository.
 

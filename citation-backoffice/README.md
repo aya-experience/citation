@@ -1,6 +1,6 @@
-# X-CMS / X-BACKOFFICE
+# Citation Backoffice
 
-A React application allowing websites content administrators to consult, structure and modify all the contents through the x-server GraphQL API.
+A React application allowing websites content administrators to consult, structure and modify all the contents through the citation-server GraphQL API.
 
 ## Tooling
 
