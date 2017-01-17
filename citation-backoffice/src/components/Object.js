@@ -11,6 +11,7 @@ class ObjectComponent extends Component {
 	static propTypes = {
 		id: PropTypes.string.isRequired,
 		type: PropTypes.string.isRequired,
+		object: PropTypes.object.isRequired,
 		load: PropTypes.func.isRequired,
 		write: PropTypes.func.isRequired
 	}
@@ -21,6 +22,10 @@ class ObjectComponent extends Component {
 	}
 
 	componentDidMount() {
+		return this.props.load();
+	}
+
+	componentDidUpdate() {
 		return this.props.load();
 	}
 
@@ -35,7 +40,7 @@ class ObjectComponent extends Component {
 		return (
 			<div className="Object">
 				<h1>Edit {this.props.type} {this.props.id}</h1>
-				<Form type={this.props.type} id={this.props.id} onSubmit={this.handleSubmit}/>
+				<Form object={this.props.object} onSubmit={this.handleSubmit}/>
 			</div>
 		);
 	}
@@ -43,7 +48,9 @@ class ObjectComponent extends Component {
 
 export const mapStateToProps = (state, ownProps) => {
 	const {type, id} = ownProps.params;
-	return {type, id};
+	let object = _.get(state.objects, `${type}.${id}`, {});
+	object = object === null ? {} : object;
+	return {type, id, object};
 };
 
 export const mapDispatchToProps = (dispatch, ownProps) => {

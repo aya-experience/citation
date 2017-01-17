@@ -35,9 +35,8 @@ class ComponentComponent extends Component {
 }
 
 export const mapStateToProps = (state, ownProps) => {
-	const {type, id} = ownProps;
 	return {
-		object: _.get(state.objects, `${type}.${id}`, {}),
+		object: ownProps.object,
 		collections: state.collections
 	};
 };

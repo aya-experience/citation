@@ -9,11 +9,11 @@ import './ObjectForm.css';
 class ObjectForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
-		components: PropTypes.array.isRequired,
-		pages: PropTypes.array.isRequired
+		collections: PropTypes.object.isRequired
 	}
 
 	render() {
+		const collections = this.props.collections;
 		return (
 			<form className="ObjectForm" onSubmit={this.props.handleSubmit}>
 				<div>
@@ -30,11 +30,11 @@ class ObjectForm extends Component {
 				</div>
 				<div>
 					<label htmlFor="component">Component</label>
-					<Field name="component" component={LinkField} props={{values: this.props.components}}/>
+					<Field name="component" component={LinkField} props={{collections, type: 'Component'}}/>
 				</div>
 				<div>
 					<label htmlFor="children">Children</label>
-					<FieldArray name="children" component={LinksField} props={{values: this.props.pages}}/>
+					<FieldArray name="children" component={LinksField} props={{collections, type: 'Page'}}/>
 				</div>
 				<button type="submit">Submit</button>
 			</form>

@@ -9,10 +9,17 @@ const fields = {
 	Content: ['title', 'content'].join(', ')
 };
 
+export const loadObjectStarted = createAction('load object started');
 export const loadObjectSuccess = createAction('load object success');
 
 export function loadObject(type, id) {
-	return dispatch => {
+	return (dispatch, getState) => {
+		const stateObject = _.get(getState(), `objects.${type}.${id}`);
+		if (!_.isUndefined(stateObject)) {
+			return;
+		}
+
+		dispatch(loadObjectStarted({type, id}));
 		return query(`{${type}(id: "${id}") {__id__, ${fields[type]}}}`)
 			.then(response => dispatch(loadObjectSuccess({type, id, data: response.data[type][0]})));
 	};
@@ -44,6 +51,13 @@ export function writeObject(type, data) {
 }
 
 export const reducer = createReducer({
+	[loadObjectStarted]: (state, payload) => ({
+		...state,
+		[payload.type]: {
+			...state[payload.type],
+			[payload.id]: null
+		}
+	}),
 	[loadObjectSuccess]: (state, payload) => ({
 		...state,
 		[payload.type]: {

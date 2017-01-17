@@ -8,8 +8,7 @@ import {toLinksInput} from './LinksField';
 class PageComponent extends Component {
 	static propTypes = {
 		object: PropTypes.object.isRequired,
-		components: PropTypes.array.isRequired,
-		pages: PropTypes.array.isRequired,
+		collections: PropTypes.object.isRequired,
 		onSubmit: PropTypes.func.isRequired
 	}
 
@@ -29,8 +28,7 @@ class PageComponent extends Component {
 		const formProps = {
 			onSubmit: this.handleSubmit,
 			initialValues: this.props.object,
-			components: this.props.components,
-			pages: this.props.pages
+			collections: this.props.collections
 		};
 
 		return <PageForm {...formProps}/>;
@@ -38,11 +36,9 @@ class PageComponent extends Component {
 }
 
 export const mapStateToProps = (state, ownProps) => {
-	const {type, id} = ownProps;
 	return {
-		object: _.get(state.objects, `${type}.${id}`, {}),
-		components: _.get(state.collections, 'Component', []),
-		pages: _.get(state.collections, 'Page', [])
+		object: ownProps.object,
+		collections: state.collections
 	};
 };
 
