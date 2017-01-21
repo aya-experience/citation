@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {loadObject, writeObject} from '../logic/objects';
 import Page from './forms/Page';
 import ComponentComponent from './forms/Component';
+import Content from './forms/Content';
 
 import './Object.css';
 
@@ -34,7 +35,7 @@ class ObjectComponent extends Component {
 	}
 
 	render() {
-		const forms = {Page, Component: ComponentComponent};
+		const forms = {Page, Component: ComponentComponent, Content};
 		const Form = forms[this.props.type];
 
 		return (

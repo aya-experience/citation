@@ -89,7 +89,7 @@ export default new GraphQLObjectType({
 		},
 		editContent: {
 			type: ContentType,
-			args: {page: {type: ContentInputType}},
+			args: {content: {type: ContentInputType}},
 			resolve: async (root, params) => {
 				const {content} = params;
 				console.log('mutation', content);

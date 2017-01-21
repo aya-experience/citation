@@ -24,6 +24,16 @@ form.ObjectForm > div input {
 	height: 2rem;
 }
 
+form.ObjectForm > div textarea {
+	flex: 1;
+	max-width: 30rem;
+	position: relative;
+	font-size: 1rem;
+	padding: .4rem;
+	border: 1px solid #ccc;
+	height: 5rem;
+}
+
 form.ObjectForm > div select {
 	flex: 1;
 	max-width: 30rem;
