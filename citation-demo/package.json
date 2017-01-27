@@ -34,6 +34,6 @@
 		"babel": "BABEL_ENV=production babel src -d .tmp-prerender --presets react-app",
 		"prerender": "citation-prerender --serverUrl http://localhost:4000/graphql --components .tmp-prerender/components",
 		"citation": "citation-server",
-		"citation:dev": "nodemon ../citation-server/src/cli --exec babel-node --watch ../citation-server/src"
+		"citation:dev": "nodemon ../citation-server/src/cli --exec babel-node --ignore work --ignore prerender"
 	}
 }

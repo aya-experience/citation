@@ -1,3 +1,4 @@
 export default {
-	workDir: 'work'
+	workDir: 'work',
+	prerenderCmd: 'npm run babel && npm run prerender'
 };

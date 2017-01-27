@@ -7,7 +7,6 @@
 		"citation-server": "./lib/cli.js"
 	},
 	"scripts": {
-		"start": "babel src -d lib --watch",
 		"babel": "babel src -d lib",
 		"nodemon": "nodemon src/index --exec babel-node --ignore work",
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +18,7 @@
 		"graphql": "^0.7.2",
 		"hapi": "^15.2.0",
 		"hapi-graphql": "^1.0.1",
+		"inert": "^4.1.0",
 		"lodash": "^4.17.2",
 		"merge-deep": "^3.0.0",
 		"nodegit": "^0.16.0"
