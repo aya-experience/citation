@@ -1,9 +1,13 @@
 {
-  "name": "citation-server",
+  "name": "citation-react-prerender",
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
+  "bin": {
+    "citation-prerender": "./lib/cli.js"
+  },
   "scripts": {
+    "start": "babel src -d lib --watch",
     "babel": "babel src -d lib",
     "nodemon": "nodemon src/index --exec babel-node --ignore work",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,19 +15,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "citation-react-router": "^0.1.0",
     "fs-promise": "^1.0.0",
-    "graphql": "^0.7.2",
-    "hapi": "^15.2.0",
-    "hapi-graphql": "^1.0.1",
-    "lodash": "^4.17.2",
-    "merge-deep": "^3.0.0",
-    "nodegit": "^0.16.0"
+    "isomorphic-fetch": "^2.2.1",
+    "meow": "^3.7.0",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "react-router": "^4.0.0-alpha.6"
   },
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-cli": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
+    "babel-preset-react": "^6.22.0",
     "nodemon": "^1.11.0"
   }
 }

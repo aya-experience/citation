@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import {Match} from 'react-router';
-import XQueries from './XQueries';
+import queries from './queries';
 import Default from './Default';
 
-class XRoutes extends Component {
+class Routes extends Component {
 	static propTypes = {
 		serverUrl: PropTypes.string.isRequired,
 		components: PropTypes.object.isRequired,
@@ -29,7 +29,7 @@ class XRoutes extends Component {
 		if (content === undefined && page !== undefined) {
 			await Promise.resolve();
 			this.setState({contents: {[pattern]: null}});
-			const content = await XQueries.queryComponentTree(this.props.serverUrl, page.component);
+			const content = await queries.queryComponentTree(this.props.serverUrl, page.component);
 			this.setState({contents: {[pattern]: content}});
 		}
 	}
@@ -41,7 +41,7 @@ class XRoutes extends Component {
 		}
 		let childPage;
 		if (Array.isArray(page.children)) {
-			childPage = <XRoutes {...this.props} {...matchProps} pages={page.children}/>;
+			childPage = <Routes {...this.props} {...matchProps} pages={page.children}/>;
 		}
 		return (
 			<Component key={i} data={data} pages={this.props.pages} childPage={childPage}>
@@ -71,4 +71,4 @@ class XRoutes extends Component {
 	}
 }
 
-export default XRoutes;
+export default Routes;

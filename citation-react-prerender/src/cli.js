@@ -1,6 +1,6 @@
-/* eslint-env node */
+#!/usr/bin/env node
 
-import path from 'path';
+// import path from 'path';
 import meow from 'meow';
 import prerender from '.';
 
@@ -13,10 +13,7 @@ if (!cli.flags.serverUrl) {
 if (!cli.flags.components) {
 	throw new Error('components path is mandatory');
 }
-cli.flags.components = require(path.join(__dirname, '../../..', cli.flags.components)); // eslint-disable-line import/no-dynamic-require
-if (cli.flags.components.default) { // Handle ES2015 exports
-	cli.flags.components = cli.flags.components.default;
-}
+cli.flags.components = process.cwd() + '/' + cli.flags.components;
 
 if (!cli.flags.buildDir) {
 	cli.flags.buildDir = process.cwd() + '/build';

@@ -1,5 +1,5 @@
 {
-  "name": "citation-server",
+  "name": "citation-react-router",
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
@@ -11,19 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fs-promise": "^1.0.0",
-    "graphql": "^0.7.2",
-    "hapi": "^15.2.0",
-    "hapi-graphql": "^1.0.1",
-    "lodash": "^4.17.2",
-    "merge-deep": "^3.0.0",
-    "nodegit": "^0.16.0"
+    "babel-polyfill": "^6.22.0",
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "react-router": "^4.0.0-alpha.6"
   },
   "devDependencies": {
     "ava": "^0.16.0",
     "babel-cli": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
+    "babel-preset-react": "^6.22.0",
     "nodemon": "^1.11.0"
   }
 }

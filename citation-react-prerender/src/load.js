@@ -1,4 +1,4 @@
-import XQueries from '../router/XQueries';
+import {queries} from 'citation-react-router';
 
 export default async function load(serverUrl, pages, context = '') {
 	let result = {};
@@ -7,7 +7,7 @@ export default async function load(serverUrl, pages, context = '') {
 		const url = `${context}/${page.slug}`;
 		result = {
 			...result,
-			[url]: await XQueries.queryComponentTree(serverUrl, page.component),
+			[url]: await queries.queryComponentTree(serverUrl, page.component),
 			...await load(serverUrl, children, url)
 		};
 	}

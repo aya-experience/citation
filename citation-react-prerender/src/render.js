@@ -1,9 +1,7 @@
-/* eslint-env node */
-
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {ServerRouter, createServerRenderContext} from 'react-router';
-import XRouter from '../router/XRouter';
+import Router from 'citation-react-router';
 
 export default async function render(url, context, options) {
 	try {
@@ -18,7 +16,7 @@ export default async function render(url, context, options) {
 
 		const markup = renderToString(
 			<ServerRouter location={url} context={serverRenderContext}>
-				<XRouter serverUrl={options.serverUrl} components={options.components}/>
+				<Router serverUrl={options.serverUrl} components={context.components}/>
 			</ServerRouter>
 		);
 

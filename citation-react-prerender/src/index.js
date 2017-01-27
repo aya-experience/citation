@@ -1,7 +1,7 @@
 import path from 'path';
 import 'isomorphic-fetch';
 import fs from 'fs-promise';
-import XQueries from '../router/XQueries';
+import {queries} from 'citation-react-router';
 import urls from './urls';
 import load from './load';
 import prepare from './prepare';
@@ -9,7 +9,8 @@ import render from './render';
 
 export default async function prerender(options) {
 	const context = {};
-	context.pages = await XQueries.queryPages(options.serverUrl);
+	context.components = require(options.components); // eslint-disable-line import/no-dynamic-require
+	context.pages = await queries.queryPages(options.serverUrl);
 	context.urls = await urls(context.pages);
 	context.contents = await load(options.serverUrl, context.pages);
 	await fs.remove(options.renderDir);
