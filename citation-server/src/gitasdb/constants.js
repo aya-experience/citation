@@ -1,3 +1,4 @@
 import path from 'path';
+import conf from '../conf';
 
-export const workingDirectory = path.resolve(__dirname, '../../work');
+export const workingDirectory = path.resolve(process.cwd(), conf.workDir);

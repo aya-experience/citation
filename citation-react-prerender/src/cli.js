@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-// import path from 'path';
 import meow from 'meow';
 import prerender from '.';
 

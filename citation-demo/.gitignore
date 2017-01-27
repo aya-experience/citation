@@ -10,6 +10,7 @@ coverage
 build
 /prerender
 /.tmp-prerender
+/work
 
 # misc
 .DS_Store
