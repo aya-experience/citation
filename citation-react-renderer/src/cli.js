@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import meow from 'meow';
-import prerender from '.';
+import render from '.';
 
 const cli = meow();
 
@@ -19,15 +19,11 @@ if (!cli.flags.buildDir) {
 }
 
 if (!cli.flags.renderDir) {
-	cli.flags.renderDir = process.cwd() + '/prerender';
-}
-
-if (!cli.flags.renderDir) {
-	cli.flags.renderDir = process.cwd() + '/prerender';
+	cli.flags.renderDir = process.cwd() + '/render';
 }
 
 if (!cli.flags.selector) {
 	cli.flags.selector = '<div id="root"></div>';
 }
 
-prerender({...cli.flags});
+render({...cli.flags});

@@ -3,7 +3,7 @@ import {renderToString} from 'react-dom/server';
 import {ServerRouter, createServerRenderContext} from 'react-router';
 import Router from 'citation-react-router';
 
-export default async function render(url, context, options) {
+export default async function renderPage(url, context, options) {
 	try {
 		const serverRenderContext = createServerRenderContext();
 

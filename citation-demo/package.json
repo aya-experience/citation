@@ -9,7 +9,7 @@
 		"babel-preset-react": "^6.16.0",
 		"babel-preset-react-app": "^2.0.1",
 		"babel-preset-stage-2": "^6.18.0",
-		"citation-react-prerender": "^0.1.0",
+		"citation-react-renderer": "^0.1.0",
 		"citation-server": "^0.1.0",
 		"eslint": "^3.9.1",
 		"eslint-config-xo": "^0.17.0",
@@ -27,13 +27,13 @@
 		"react-router": "^4.0.0-alpha.6"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "citation-server",
+		"react-start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
-		"babel": "BABEL_ENV=production babel src -d .tmp-prerender --presets react-app",
-		"prerender": "citation-prerender --serverUrl http://localhost:4000/graphql --components .tmp-prerender/components",
-		"citation": "citation-server",
-		"citation:dev": "nodemon ../citation-server/src/cli --exec babel-node --ignore work --ignore prerender"
+		"compile": "BABEL_ENV=production babel src -d .tmp-render --presets react-app",
+		"render": "citation-render --serverUrl http://localhost:4000/graphql --components .tmp-render/components",
+		"citation:dev": "nodemon ../citation-server/src/cli --exec babel-node --watch ../citation-server/src"
 	}
 }

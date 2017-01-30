@@ -2,7 +2,7 @@ import path from 'path';
 import _ from 'lodash';
 import fs from 'fs-promise';
 
-import mergeDeep from 'merge-deep';
+import assignDeep from 'merge-deep';
 
 import {workingDirectory} from './constants';
 
@@ -28,7 +28,7 @@ export async function inspectObject(type, id) {
 						const inspection = await inspectObject(collection, id);
 						return {[key]: {[`... on ${collection}`]: inspection}};
 					}));
-					return mergeDeep({}, ...linksInspection);
+					return assignDeep({}, ...linksInspection);
 				}
 			}
 			return key;

@@ -1,10 +1,10 @@
 {
-  "name": "citation-react-prerender",
+  "name": "citation-react-renderer",
   "version": "0.1.0",
   "description": "",
   "main": "lib/index.js",
   "bin": {
-    "citation-prerender": "./lib/cli.js"
+    "citation-render": "./lib/cli.js"
   },
   "scripts": {
     "start": "babel src -d lib --watch",

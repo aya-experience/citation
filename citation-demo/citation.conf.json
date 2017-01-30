@@ -1,0 +1,21 @@
+{
+	"content": {
+		"repository": "git@github.com:aya-experience/citation-demo-content.git",
+		"directory": "work"
+	},
+	"build": {
+		"command": "npm run build && npm run compile",
+		"build-directory": "build",
+		"compile-directory": ".tmp-render",
+		"components": "components"
+	},
+	"render": {
+		"framework": "react",
+		"directory": "render",
+		"anchor": "<div id=\"root\"></div>"
+	},
+	"server": {
+		"port": 4000,
+		"graphql-context": "graphql"
+	}
+}

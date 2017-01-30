@@ -8,8 +8,8 @@ coverage
 
 # production
 build
-/prerender
-/.tmp-prerender
+/render
+/.tmp-render
 /work
 
 # misc
