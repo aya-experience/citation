@@ -1,3 +1,4 @@
+import path from 'path';
 import Hapi from 'hapi';
 import inert from 'inert';
 import GraphQL from 'hapi-graphql';
@@ -5,6 +6,9 @@ import GraphQL from 'hapi-graphql';
 import {ContentSchema} from './graphql/schema';
 import render from './rendering';
 import conf, {setConfig} from './conf';
+
+const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice/build');
+const boIndex = path.join(boDirectory, 'index.html');
 
 export default function start(inputConfig) {
 	setConfig(inputConfig);
@@ -34,12 +38,21 @@ export default function start(inputConfig) {
 		server.route({
 			method: 'GET',
 			path: '/{param*}',
-			handler: {
-				directory: {
-					path: conf.render.directory,
-					listing: true
-				}
+			handler: {directory: {path: conf.render.directory}}
+		});
+
+		server.route({
+			method: 'GET',
+			path: '/admin/{param*}',
+			handler: {directory: {path: boDirectory}}
+		});
+
+		server.ext('onPostHandler', (request, reply) => {
+			const response = request.response;
+			if (request.url.path.startsWith('/admin') && response.isBoom && response.output.statusCode === 404) {
+				return reply.file(boIndex, {confine: false});
 			}
+			return reply.continue();
 		});
 
 		server.start(() => {

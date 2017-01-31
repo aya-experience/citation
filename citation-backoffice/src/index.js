@@ -8,7 +8,7 @@ import {store} from './logic/store';
 import './index.css';
 
 ReactDOM.render(
-	<BrowserRouter>
+	<BrowserRouter basename="/admin">
 		<Provider store={store}>
 			<App/>
 		</Provider>

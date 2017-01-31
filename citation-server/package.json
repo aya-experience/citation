@@ -1,35 +1,36 @@
 {
-  "name": "citation-server",
-  "version": "0.1.0",
-  "description": "",
-  "main": "lib/index.js",
-  "bin": {
-    "citation-server": "./lib/cli.js"
-  },
-  "scripts": {
-    "babel": "babel src -d lib",
-    "nodemon": "nodemon src/index --exec babel-node --ignore work",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "assign-deep": "^0.4.5",
-    "citation-react-renderer": "^0.1.0",
-    "fs-promise": "^1.0.0",
-    "graphql": "^0.7.2",
-    "hapi": "^15.2.0",
-    "hapi-graphql": "^1.0.1",
-    "inert": "^4.1.0",
-    "lodash": "^4.17.2",
-    "meow": "^3.7.0",
-    "nodegit": "^0.16.0"
-  },
-  "devDependencies": {
-    "ava": "^0.16.0",
-    "babel-cli": "^6.18.0",
-    "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-preset-env": "0.0.7",
-    "nodemon": "^1.11.0"
-  }
+	"name": "citation-server",
+	"version": "0.1.0",
+	"description": "",
+	"main": "lib/index.js",
+	"bin": {
+		"citation-server": "./lib/cli.js"
+	},
+	"scripts": {
+		"babel": "babel src -d lib",
+		"nodemon": "nodemon src/index --exec babel-node --ignore work",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"assign-deep": "^0.4.5",
+		"citation-backoffice": "^0.1.0",
+		"citation-react-renderer": "^0.1.0",
+		"fs-promise": "^1.0.0",
+		"graphql": "^0.7.2",
+		"hapi": "^15.2.0",
+		"hapi-graphql": "^1.0.1",
+		"inert": "^4.1.0",
+		"lodash": "^4.17.2",
+		"meow": "^3.7.0",
+		"nodegit": "^0.16.0"
+	},
+	"devDependencies": {
+		"ava": "^0.16.0",
+		"babel-cli": "^6.18.0",
+		"babel-plugin-transform-object-rest-spread": "^6.16.0",
+		"babel-preset-env": "0.0.7",
+		"nodemon": "^1.11.0"
+	}
 }
