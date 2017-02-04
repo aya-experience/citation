@@ -1,4 +1,4 @@
-{
+	{
 	"name": "citation-demo",
 	"version": "0.1.0",
 	"private": true,
@@ -21,6 +21,7 @@
 		"react-scripts": "0.7.0"
 	},
 	"dependencies": {
+		"babel-polyfill": "^6.22.0",
 		"citation-react-router": "^0.1.0",
 		"react": "^15.4.0",
 		"react-dom": "^15.4.0",
@@ -28,12 +29,11 @@
 	},
 	"scripts": {
 		"start": "citation-server",
-		"react-start": "react-scripts start",
+		"react:start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test --env=jsdom",
 		"eject": "react-scripts eject",
 		"compile": "BABEL_ENV=production babel src -d .tmp-render --presets react-app",
-		"render": "citation-render --serverUrl http://localhost:4000/graphql --components .tmp-render/components",
-		"citation:dev": "nodemon ../citation-server/src/cli --exec babel-node --watch ../citation-server/src"
+		"render": "citation-render --serverUrl http://localhost:4000/graphql --components .tmp-render/components"
 	}
 }

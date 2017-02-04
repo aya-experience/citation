@@ -11,6 +11,7 @@ const conf = {
 		components: 'components'
 	},
 	render: {
+		disable: false,
 		directory: 'render',
 		anchor: '<div id="root"></div>'
 	},

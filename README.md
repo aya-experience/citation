@@ -31,6 +31,7 @@ To trace all references, here is the list of considered solutions
 - Phenomic https://github.com/MoOx/phenomic (SSG, React, Babel, Webpack)
 - Ghost https://ghost.org/ (CMS, OSS & Saas, Node, Express, Ember, SQL)
 - GraphCMS https://graphcms.com/ (CMS, Saas, GraphQL, Headless)
+- ABE https://github.com/abecms/abecms (CMS, OSS, SSG)
 
 ## Packaging
 

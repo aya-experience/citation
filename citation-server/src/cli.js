@@ -10,4 +10,6 @@ const filename = cli.flags.conf ? cli.flags.conf : 'citation.conf.json';
 const filepath = path.join(process.cwd(), filename);
 const conf = require(filepath); // eslint-disable-line import/no-dynamic-require
 
+conf.render.disable = !cli.flags.render;
+
 citation(conf);

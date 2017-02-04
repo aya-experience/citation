@@ -7,14 +7,17 @@
 		"citation-server": "./lib/cli.js"
 	},
 	"scripts": {
-		"babel": "babel src -d lib",
+		"start": "babel src -d lib --watch",
+		"build": "babel src -d lib",
 		"nodemon": "nodemon src/index --exec babel-node --ignore work",
+		"prepublish": "npm run build",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
 		"assign-deep": "^0.4.5",
+		"babel-polyfill": "^6.22.0",
 		"citation-backoffice": "^0.1.0",
 		"citation-react-renderer": "^0.1.0",
 		"fs-promise": "^1.0.0",

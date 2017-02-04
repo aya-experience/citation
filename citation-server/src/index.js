@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 import path from 'path';
 import Hapi from 'hapi';
 import inert from 'inert';
@@ -57,7 +59,10 @@ export default function start(inputConfig) {
 
 		server.start(() => {
 			console.log('Server running at:', server.info.uri);
-			render();
+
+			if (!conf.render.disable) {
+				render();
+			}
 		});
 	});
 }
