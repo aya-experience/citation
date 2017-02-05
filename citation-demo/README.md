@@ -1,32 +1,31 @@
-# Citation Frontoffice
+# Citation Demo
 
-This project is a bit complicated. Currently it's a React application presenting data through the GraphQL API of citation-server. But it aims to be a bigger and more structured project.
+This project is the prototype of what will be the user project. It has to be the more simple possible.
 
-- It will contains the [pre-rendering](#pre-rendering) of the application
-- It will contains a generic [routing](#routing) based on the citation-server data
-- It will be split between the specific part of the application and the generic part provided by citation-cms
-- The generic part will be declined not only for React but also for Angular 2 and Vue 2
+It's based on the citation-react-router for connecting the routing to the Citation server.
 
 ## Tooling
 
-At this point, the tooling is based on react-scripts using Babel, ESLint and Webpack.
+The tooling is based on react-scripts using Babel, ESLint and Webpack.
 
 ## Libraries
 
-Main library used in development is only React Router v4 for now.
+Citation does not force the user to use any specific library like Redux. To illustrate this point, the project use the minimum library possible.
 
 ## Routing
 
-The router is most obvious element which will be in the generic part of the project. The goal is to have a asynchronous routing based on the data of citation-server.
+The routing is fully managed by the CitationRouter from the citation-react-router lib. So it's a dependency of this project.
 
-## Default components
+## Usage
 
-There will be at least a Default component which will be used to render any pages where the component is set to Default or an unknown or undefined one. In the long term, it could exist more than one generic component.
+To run the development server with live-reload:
 
-## Pre rendering
+```shell
+npm react:start
+```
 
-The pre-rendering process will be a generic one too. It will be a process which will be able to list all urls possible and launch the server side rendering for each one in order to generate a dist folder with all pages pre-rendered.
+To run the Citation server with its API, backoffice app, and this project statically generated.
 
-## Specfic code
-
-This project will also contains a part of specific code of an example website which will be an alternative for http://aya-experience.com
+```shell
+npm start
+```
