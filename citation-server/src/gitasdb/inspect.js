@@ -2,7 +2,7 @@ import path from 'path';
 import _ from 'lodash';
 import fs from 'fs-promise';
 
-import assignDeep from 'merge-deep';
+import assignDeep from 'assign-deep';
 
 import {workingDirectory} from './constants';
 

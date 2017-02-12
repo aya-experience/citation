@@ -1,22 +1,23 @@
 {
-	"name": "citation",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & npm run nodemon:server",
-		"nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli --watch ../citation-server/lib -- --no-render",
-		"babel:react-router": "cd citation-react-router && npm start",
-		"babel:react-renderer": "cd citation-react-renderer && npm start",
-		"babel:server": "cd citation-server && npm start"
-	},
-	"devDependencies": {
-		"babel-eslint": "^7.1.0",
-		"eslint": "^3.9.1",
-		"eslint-config-xo": "^0.17.0",
-		"eslint-config-xo-react": "^0.10.0",
-		"eslint-plugin-import": "^2.2.0",
-		"eslint-plugin-jasmine": "^2.1.0",
-		"eslint-plugin-react": "^6.6.0",
-		"nodemon": "^1.11.0"
-	}
+  "name": "citation",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & npm run nodemon:server",
+    "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli --watch ../citation-server/lib -- --no-render",
+    "babel:react-router": "cd citation-react-router && npm start",
+    "babel:react-renderer": "cd citation-react-renderer && npm start",
+    "babel:server": "cd citation-server && npm start"
+  },
+  "devDependencies": {
+    "ava": "^0.18.1",
+    "babel-eslint": "^7.1.0",
+    "eslint": "^3.9.1",
+    "eslint-config-xo": "^0.17.0",
+    "eslint-config-xo-react": "^0.10.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jasmine": "^2.1.0",
+    "eslint-plugin-react": "^6.6.0",
+    "nodemon": "^1.11.0"
+  }
 }

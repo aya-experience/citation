@@ -1,7 +1,11 @@
 import path from 'path';
 import {spawn as spawnProcess} from 'child_process';
 import react from 'citation-react-renderer';
+import winston from 'winston';
+
 import conf from '../conf';
+
+const logger = winston.loggers.get('Renderer');
 
 export const renderers = {react};
 
@@ -24,6 +28,10 @@ export function spawn(cmd) {
 
 export default async function rendering() {
 	try {
+		if (conf.render.disable) {
+			logger.info('Skipped due to configuration');
+			return;
+		}
 		const host = conf.server.host ? conf.server.host : 'localhost';
 		await spawn(conf.build.command);
 		await renderers[conf.render.framework]({

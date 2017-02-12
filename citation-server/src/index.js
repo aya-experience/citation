@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import './conf/log';
 
 import path from 'path';
 import Hapi from 'hapi';
@@ -8,6 +9,7 @@ import GraphQL from 'hapi-graphql';
 import {ContentSchema} from './graphql/schema';
 import render from './rendering';
 import conf, {setConfig} from './conf';
+import {start as gitUpdaterStart} from './gitasdb/update';
 
 const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice/build');
 const boIndex = path.join(boDirectory, 'index.html');
@@ -57,12 +59,11 @@ export default function start(inputConfig) {
 			return reply.continue();
 		});
 
-		server.start(() => {
+		server.start(async () => {
 			console.log('Server running at:', server.info.uri);
 
-			if (!conf.render.disable) {
-				render();
-			}
+			await gitUpdaterStart();
+			await render();
 		});
 	});
 }
