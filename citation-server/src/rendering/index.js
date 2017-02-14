@@ -33,13 +33,13 @@ export default async function rendering() {
 			return;
 		}
 		const host = conf.server.host ? conf.server.host : 'localhost';
-		await spawn(conf.build.command);
+		// await spawn(conf.build.command);
 		await renderers[conf.render.framework]({
 			serverUrl: `http://${host}:${conf.server.port}/${conf.server['graphql-context']}`,
 			components: path.join(process.cwd(), conf.build['compile-directory'], conf.build.components),
 			buildDir: path.join(process.cwd(), conf.build['build-directory']),
 			renderDir: path.join(process.cwd(), conf.render.directory),
-			anchor: conf.build.anchor
+			anchor: conf.render.anchor
 		});
 	} catch (error) {
 		console.error('Error during prerendering', error);

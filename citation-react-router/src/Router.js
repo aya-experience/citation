@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react';
-import {Match} from 'react-router';
+import {Route} from 'react-router';
 import queries from './queries';
 import Routes from './Routes';
 
-class XRouter extends Component {
+export default class Router extends Component {
 	static propTypes = {
 		serverUrl: PropTypes.string.isRequired,
 		components: PropTypes.object.isRequired // eslint-disable-line react/no-unused-prop-types
@@ -27,12 +27,10 @@ class XRouter extends Component {
 	}
 
 	matchRenderer(matchProps) {
-		return <Routes {...matchProps} {...this.props} pages={this.state.pages}/>;
+		return <Routes pattern="/" {...matchProps} {...this.props} pages={this.state.pages}/>;
 	}
 
 	render() {
-		return <Match pattern="/" render={this.matchRenderer}/>;
+		return <Route pattern="/" render={this.matchRenderer}/>;
 	}
 }
-
-export default XRouter;

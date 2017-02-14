@@ -9,7 +9,6 @@ import renderPage from './render-page';
 
 export default async function render(options) {
 	const context = {};
-	console.log('coucou render', options);
 	context.components = require(options.components); // eslint-disable-line import/no-dynamic-require
 	context.pages = await queries.queryPages(options.serverUrl);
 	context.urls = await urls(context.pages);
@@ -19,11 +18,13 @@ export default async function render(options) {
 	const indexContentBuffer = await fs.readFile(path.join(options.renderDir, 'index.html'));
 	context.indexContent = indexContentBuffer.toString();
 	for (const url of context.urls) {
-		context.preparedContents = prepare(url, context.contents);
-		const markup = await renderPage(url, context, options);
-		const indexDir = path.join(options.renderDir, url);
-		const indexPath = path.join(indexDir, 'index.html');
-		await fs.mkdir(indexDir);
-		await fs.writeFile(indexPath, markup);
+		try {
+			context.preparedContents = prepare(url, context.contents);
+			const markup = await renderPage(url, context, options);
+			const indexDir = path.join(options.renderDir, url);
+			const indexPath = path.join(indexDir, 'index.html');
+			await fs.mkdir(indexDir);
+			await fs.writeFile(indexPath, markup);
+		} catch (error) {}
 	}
 }

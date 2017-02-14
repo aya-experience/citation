@@ -1,14 +1,14 @@
 import React, {Component, PropTypes} from 'react';
-import {Match} from 'react-router';
+import {Route} from 'react-router';
 import queries from './queries';
 import Default from './Default';
 
-class Routes extends Component {
+export default class Routes extends Component {
 	static propTypes = {
 		serverUrl: PropTypes.string.isRequired,
 		components: PropTypes.object.isRequired,
 		pages: PropTypes.array.isRequired,
-		pathname: PropTypes.string.isRequired
+		pattern: PropTypes.string.isRequired
 	}
 
 	constructor() {
@@ -19,7 +19,7 @@ class Routes extends Component {
 
 	componentWillMount() {
 		if (window && window.__contents__) {
-			this.setState({contents: window.__contents__[this.props.pathname]});
+			this.setState({contents: window.__contents__[this.props.pattern]});
 		}
 	}
 
@@ -36,12 +36,13 @@ class Routes extends Component {
 
 	createElement(page, {type, data, children = []}, i, matchProps) {
 		let Component = this.props.components[type];
+
 		if (Component === undefined) {
 			Component = Default;
 		}
 		let childPage;
 		if (Array.isArray(page.children)) {
-			childPage = <Routes {...this.props} {...matchProps} pages={page.children}/>;
+			childPage = <Routes pattern={page.slug} {...this.props} {...matchProps} pages={page.children}/>;
 		}
 		return (
 			<Component key={i} data={data} pages={this.props.pages} childPage={childPage}>
@@ -50,25 +51,25 @@ class Routes extends Component {
 		);
 	}
 
-	matchRenderer(matchProps) {
-		const content = this.state.contents[matchProps.pattern];
-		const page = this.props.pages.filter(page => matchProps.pattern === page.slug)[0];
-		if (content === undefined || content === null) {
-			this.loadPathContent(matchProps.pattern);
-			return <span/>;
-		}
-		return this.createElement(page, content, 0, matchProps);
+	matchRenderer(pattern) {
+		return matchProps => {
+			const content = this.state.contents[pattern];
+			const page = this.props.pages.filter(page => pattern === page.slug)[0];
+			if (content === undefined || content === null) {
+				this.loadPathContent(pattern);
+				return <span/>;
+			}
+			return this.createElement(page, content, 0, matchProps);
+		};
 	}
 
 	render() {
 		return (
 			<div>
 				{this.props.pages.map((page, i) => (
-					<Match key={i} pattern={page.slug} render={this.matchRenderer}/>
+					<Route key={i} pattern={page.slug} render={this.matchRenderer(page.slug)}/>
 				))}
 			</div>
 		);
 	}
 }
-
-export default Routes;

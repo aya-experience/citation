@@ -41,6 +41,9 @@
     "sinon": "^1.17.7"
   },
   "ava": {
+		"files": [
+			"src/**/*.test.js"
+		],
     "require": [
       "babel-register"
     ],

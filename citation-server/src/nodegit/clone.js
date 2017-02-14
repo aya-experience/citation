@@ -4,7 +4,6 @@ import {Cred, Clone} from 'nodegit';
 
 export default async function clone(repositoryUrl, repositoryPath) {
 	try {
-		console.log('coucoucou', repositoryUrl, repositoryPath);
 		return await Clone(repositoryUrl, repositoryPath, { // eslint-disable-line new-cap
 			fetchOpts: {
 				callbacks: {
