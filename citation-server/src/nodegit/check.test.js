@@ -1,26 +1,45 @@
-import path from 'path';
 import test from 'ava';
-import check from './check';
+import proxyquire from 'proxyquire';
+import sinon from 'sinon';
 
-const gitRemote = 'git@github.com:aya-experience/citation-test-check.git';
-const fixtureDirectory = path.resolve(__dirname, '../../test/fixtures/check');
+const directory = 'directory';
+const gitRemote = 'gitRemote';
+
+let check;
+let access;
+let open;
+let lookup;
+
+test.beforeEach(() => {
+	access = sinon.stub().returns(Promise.resolve());
+	open = sinon.stub().returns(Promise.resolve());
+	lookup = sinon.stub().returns(Promise.resolve({
+		url: () => Promise.resolve(gitRemote)
+	}));
+	check = proxyquire('./check', {
+		'fs-promise': {access},
+		nodegit: {Repository: {open}, Remote: {lookup}},
+		winston: {loggers: {get: () => ({debug: () => {}})}}
+	}).default;
+});
 
 test('Check return false for non existing directory', async t => {
-	const dir = path.resolve(fixtureDirectory, 'nonExisting');
-	t.false(await check(dir, gitRemote));
+	access.throws();
+	t.false(await check(directory, gitRemote));
 });
 
 test('Check return false for empty directory', async t => {
-	const dir = path.resolve(fixtureDirectory, 'empty');
-	t.false(await check(dir, gitRemote));
+	open.throws();
+	t.false(await check(directory, gitRemote));
 });
 
 test('Check return false for git directory with wrong remote', async t => {
-	const dir = path.resolve(fixtureDirectory, 'wrongRemote');
-	t.false(await check(dir, gitRemote));
+	lookup.returns(Promise.resolve({
+		url: () => Promise.resolve('wrong')
+	}));
+	t.false(await check(directory, gitRemote));
 });
 
 test('Check return true for git directory with right remote', async t => {
-	const dir = path.resolve(fixtureDirectory, 'ok');
-	t.true(await check(dir, gitRemote));
+	t.true(await check(directory, gitRemote));
 });
