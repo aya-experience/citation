@@ -8,7 +8,8 @@ export default class Routes extends Component {
 		serverUrl: PropTypes.string.isRequired,
 		components: PropTypes.object.isRequired,
 		pages: PropTypes.array.isRequired,
-		pattern: PropTypes.string.isRequired
+		pattern: PropTypes.string.isRequired,
+		match: PropTypes.object.isRequired
 	}
 
 	constructor() {
@@ -40,6 +41,7 @@ export default class Routes extends Component {
 		if (Component === undefined) {
 			Component = Default;
 		}
+
 		let childPage;
 		if (Array.isArray(page.children)) {
 			childPage = <Routes pattern={page.slug} {...this.props} {...matchProps} pages={page.children}/>;
@@ -66,9 +68,10 @@ export default class Routes extends Component {
 	render() {
 		return (
 			<div>
-				{this.props.pages.map((page, i) => (
-					<Route key={i} pattern={page.slug} render={this.matchRenderer(page.slug)}/>
-				))}
+				{this.props.pages.map((page, i) => {
+					const path = `${this.props.match.url}/${page.slug}`.replace(/\/\//g, '/');
+					return <Route key={i} path={path} render={this.matchRenderer(page.slug)}/>;
+				})}
 			</div>
 		);
 	}

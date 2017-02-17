@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-class Component2 extends Component {
+export default class Component2 extends Component {
 	static propTypes = {
 		children: PropTypes.array,
 		data: PropTypes.array
@@ -22,5 +22,3 @@ class Component2 extends Component {
 		);
 	}
 }
-
-export default Component2;

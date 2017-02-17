@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
-import {Link} from 'react-router';
+import {Link} from 'react-router-dom';
 
-class Component1 extends Component {
+export default class Component1 extends Component {
 	static propTypes = {
 		children: PropTypes.array,
 		data: PropTypes.array,
@@ -50,5 +50,3 @@ class Component1 extends Component {
 		);
 	}
 }
-
-export default Component1;

@@ -31,6 +31,6 @@ export default class Router extends Component {
 	}
 
 	render() {
-		return <Route pattern="/" render={this.matchRenderer}/>;
+		return <Route path="/" render={this.matchRenderer}/>;
 	}
 }

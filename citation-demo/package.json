@@ -25,7 +25,7 @@
 		"citation-react-router": "^0.1.0",
 		"react": "^15.4.0",
 		"react-dom": "^15.4.0",
-		"react-router": "^4.0.0-alpha.6"
+		"react-router-dom": "^4.0.0-beta.6"
 	},
 	"scripts": {
 		"start": "citation-server",
