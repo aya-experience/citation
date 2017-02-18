@@ -24,8 +24,8 @@ if (!cli.flags.renderDir) {
 	cli.flags.renderDir = process.cwd() + '/render';
 }
 
-if (!cli.flags.selector) {
-	cli.flags.selector = '<div id="root"></div>';
+if (!cli.flags.anchor) {
+	cli.flags.anchor = '<div id="root"></div>';
 }
 
 render({...cli.flags});
