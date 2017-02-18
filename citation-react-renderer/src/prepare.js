@@ -14,11 +14,11 @@ export default function prepareContents(url, contents) {
 				prevPath = prevDesc.path;
 				path = prevPath + '/' + pattern;
 			}
-			acc.push({prevPath, path, pattern});
+			acc.push({prevPath, path});
 			return acc;
 		}, [])
 		.forEach(desc => {
-			result[desc.prevPath] = {[desc.pattern]: contents[desc.path]};
+			result[desc.prevPath] = contents[desc.path];
 		});
 	return result;
 }

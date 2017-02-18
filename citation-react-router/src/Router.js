@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Route} from 'react-router';
+import {Route} from 'react-router-dom';
 import queries from './queries';
 import Routes from './Routes';
 
@@ -27,7 +27,7 @@ export default class Router extends Component {
 	}
 
 	matchRenderer(matchProps) {
-		return <Routes pattern="/" {...matchProps} {...this.props} pages={this.state.pages}/>;
+		return <Routes {...matchProps} {...this.props} pages={this.state.pages}/>;
 	}
 
 	render() {

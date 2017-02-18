@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Route} from 'react-router';
+import {Route} from 'react-router-dom';
 import queries from './queries';
 import Default from './Default';
 
@@ -8,30 +8,27 @@ export default class Routes extends Component {
 		serverUrl: PropTypes.string.isRequired,
 		components: PropTypes.object.isRequired,
 		pages: PropTypes.array.isRequired,
-		pattern: PropTypes.string.isRequired,
 		match: PropTypes.object.isRequired
 	}
 
 	constructor() {
 		super();
 		this.matchRenderer = this.matchRenderer.bind(this);
-		this.state = {contents: {}};
+		this.state = {};
 	}
 
 	componentWillMount() {
 		if (window && window.__contents__) {
-			this.setState({contents: window.__contents__[this.props.pattern]});
+			this.setState({content: window.__contents__[this.props.match.url]});
 		}
 	}
 
-	async loadPathContent(pattern) {
-		const content = this.state.contents[pattern];
-		const page = this.props.pages.filter(page => pattern === page.slug)[0];
-		if (content === undefined && page !== undefined) {
+	async loadPageContent(page) {
+		if (this.state.content === undefined && page !== undefined) {
 			await Promise.resolve();
-			this.setState({contents: {[pattern]: null}});
+			this.setState({content: null});
 			const content = await queries.queryComponentTree(this.props.serverUrl, page.component);
-			this.setState({contents: {[pattern]: content}});
+			this.setState({content});
 		}
 	}
 
@@ -44,7 +41,7 @@ export default class Routes extends Component {
 
 		let childPage;
 		if (Array.isArray(page.children)) {
-			childPage = <Routes pattern={page.slug} {...this.props} {...matchProps} pages={page.children}/>;
+			childPage = <Routes {...this.props} {...matchProps} pages={page.children}/>;
 		}
 		return (
 			<Component key={i} data={data} pages={this.props.pages} childPage={childPage}>
@@ -53,15 +50,13 @@ export default class Routes extends Component {
 		);
 	}
 
-	matchRenderer(pattern) {
+	matchRenderer(page) {
 		return matchProps => {
-			const content = this.state.contents[pattern];
-			const page = this.props.pages.filter(page => pattern === page.slug)[0];
-			if (content === undefined || content === null) {
-				this.loadPathContent(pattern);
+			if (this.state.content === undefined || this.state.content === null) {
+				this.loadPageContent(page);
 				return <span/>;
 			}
-			return this.createElement(page, content, 0, matchProps);
+			return this.createElement(page, this.state.content, 0, matchProps);
 		};
 	}
 
@@ -70,7 +65,7 @@ export default class Routes extends Component {
 			<div>
 				{this.props.pages.map((page, i) => {
 					const path = `${this.props.match.url}/${page.slug}`.replace(/\/\//g, '/');
-					return <Route key={i} path={path} render={this.matchRenderer(page.slug)}/>;
+					return <Route key={i} path={path} render={this.matchRenderer(page)}/>;
 				})}
 			</div>
 		);

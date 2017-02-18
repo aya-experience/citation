@@ -16,7 +16,7 @@
     "babel-polyfill": "^6.22.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
-    "react-router": "^4.0.0-alpha.6"
+    "react-router-dom": "^4.0.0-beta.6"
   },
   "devDependencies": {
     "ava": "^0.16.0",
@@ -25,7 +25,6 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
     "babel-preset-react": "^6.22.0",
-    "nodemon": "^1.11.0",
-    "react-router": "^4.0.0-beta.6"
+    "nodemon": "^1.11.0"
   }
 }

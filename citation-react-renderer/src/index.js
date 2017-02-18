@@ -10,6 +10,9 @@ import renderPage from './render-page';
 export default async function render(options) {
 	const context = {};
 	context.components = require(options.components); // eslint-disable-line import/no-dynamic-require
+	if (context.components.default) { // Handle ES2015 default export
+		context.components = context.components.default;
+	}
 	context.pages = await queries.queryPages(options.serverUrl);
 	context.urls = await urls(context.pages);
 	context.contents = await load(options.serverUrl, context.pages);
