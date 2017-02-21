@@ -1,6 +1,9 @@
 import {Cred, Clone} from 'nodegit';
+import winston from 'winston';
 
 // import {securityOptions} from './wrapper';
+
+const logger = winston.loggers.get('NodeGit');
 
 export default async function clone(repositoryUrl, repositoryPath) {
 	try {
@@ -17,7 +20,7 @@ export default async function clone(repositoryUrl, repositoryPath) {
 			}
 		});
 	} catch (error) {
-		console.error('Nodegit clone error', error);
+		logger.error(`Nodegit clone error ${error}`);
 		throw error;
 	}
 };

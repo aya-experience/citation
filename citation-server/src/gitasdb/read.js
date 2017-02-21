@@ -1,24 +1,28 @@
 import path from 'path';
+
 import _ from 'lodash';
 import fs from 'fs-promise';
+import winston from 'winston';
 
 import {workingDirectory} from './constants';
 
+const logger = winston.loggers.get('GitUpdater');
+
 export async function readCollection(type) {
 	try {
-		console.log('read collection', type);
+		logger.debug(`read collection ${type}`);
 		const collectionPath = path.resolve(workingDirectory, 'master', type);
 		const collectionFolders = await fs.readdir(collectionPath);
 		return await Promise.all(collectionFolders.map(folder => readObject(type, folder)));
 	} catch (error) {
-		console.error('Gitasdb read collection error', error);
+		logger.error(`Gitasdb read collection error ${error}`);
 		throw error;
 	}
 }
 
 export async function readObject(type, id) {
 	try {
-		console.log('read object', type, id);
+		logger.debug(`read object ${type} ${id}`);
 		const objectPath = path.resolve(workingDirectory, 'master', type, id);
 		const objectFiles = await fs.readdir(objectPath);
 		const objectFields = await Promise.all(objectFiles.map(async file => {
@@ -34,7 +38,7 @@ export async function readObject(type, id) {
 		});
 		return object;
 	} catch (error) {
-		console.error('Gitasdb read object error', error);
+		logger.error(`Gitasdb read object error ${error}`);
 		throw error;
 	}
 }

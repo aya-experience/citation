@@ -8,9 +8,12 @@ import {
 	GraphQLList,
 	GraphQLString
 } from 'graphql';
+import winston from 'winston';
 
 import {writeObject} from '../gitasdb/write';
 import {PageType, ComponentType, ContentType} from './query';
+
+const logger = winston.loggers.get('GraphQL');
 
 export const LinkDataInputType = new GraphQLInputObjectType({
 	name: 'LinkDataInput',
@@ -74,7 +77,7 @@ export default new GraphQLObjectType({
 			args: {page: {type: PageInputType}},
 			resolve: async (root, params) => {
 				const {page} = params;
-				console.log('mutation', page);
+				logger.debug(`mutation ${page}`);
 				return writeObject('Page', page);
 			}
 		},
@@ -83,7 +86,7 @@ export default new GraphQLObjectType({
 			args: {component: {type: ComponentInputType}},
 			resolve: async (root, params) => {
 				const {component} = params;
-				console.log('mutation', component);
+				logger.debug(`mutation ${component}`);
 				return writeObject('Component', component);
 			}
 		},
@@ -92,7 +95,7 @@ export default new GraphQLObjectType({
 			args: {content: {type: ContentInputType}},
 			resolve: async (root, params) => {
 				const {content} = params;
-				console.log('mutation', content);
+				logger.debug(`mutation ${content}`);
 				return writeObject('Content', content);
 			}
 		}

@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
 		"lerna:bootstrap": "lerna bootstrap",
-    "start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & sleep 2 && npm run nodemon:server",
-    "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli --watch ../citation-server/lib -- --no-render",
+    "start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & sleep 5 && npm run nodemon:server",
+    "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib -- --no-render",
     "babel:react-router": "cd citation-react-router && npm start",
     "babel:react-renderer": "cd citation-react-renderer && npm start",
     "babel:server": "cd citation-server && npm start"

@@ -2,10 +2,13 @@ import path from 'path';
 import 'isomorphic-fetch';
 import fs from 'fs-promise';
 import {queries} from 'citation-react-router';
+import winston from 'winston';
 import urls from './urls';
 import load from './load';
 import prepare from './prepare';
 import renderPage from './render-page';
+
+const logger = winston.loggers.get('ReactRenderer');
 
 export default async function render(options) {
 	const context = {};
@@ -20,6 +23,7 @@ export default async function render(options) {
 	await fs.copy(options.buildDir, options.renderDir);
 	const indexContentBuffer = await fs.readFile(path.join(options.renderDir, 'index.html'));
 	context.indexContent = indexContentBuffer.toString();
+	let loadedPage = 0;
 	for (const url of context.urls) {
 		try {
 			context.preparedContents = prepare(url, context.contents);
@@ -28,6 +32,8 @@ export default async function render(options) {
 			const indexPath = path.join(indexDir, 'index.html');
 			await fs.mkdir(indexDir);
 			await fs.writeFile(indexPath, markup);
+			loadedPage++;
 		} catch (error) {}
 	}
+	logger.debug(`Sucessfully loaded ${loadedPage} pages`);
 }

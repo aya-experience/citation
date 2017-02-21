@@ -42,6 +42,6 @@ export default async function rendering() {
 			anchor: conf.render.anchor
 		});
 	} catch (error) {
-		console.error('Error during prerendering', error);
+		logger.error(`Error during prerendering ${error}`);
 	}
 }

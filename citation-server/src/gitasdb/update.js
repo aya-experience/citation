@@ -1,4 +1,5 @@
 import path from 'path';
+
 import fs from 'fs-promise';
 import winston from 'winston';
 import cron from 'node-cron';
@@ -25,7 +26,7 @@ export async function stop() {
 
 export async function update() {
 	try {
-		logger.debug('Starting...');
+		logger.info('Starting...');
 
 		const masterPath = path.resolve(workingDirectory, 'master');
 		const ready = await check(masterPath, conf.content.repository);
@@ -45,9 +46,9 @@ export async function update() {
 			await render();
 		}
 
-		logger.debug('End');
+		logger.info('End');
 	} catch (error) {
-		console.warn('Something went wront when updating Git content', error);
+		logger.error(`Something went wront when updating Git content ${error}`);
 		throw error;
 	}
 }
