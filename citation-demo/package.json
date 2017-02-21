@@ -1,7 +1,6 @@
 	{
 	"name": "citation-demo",
 	"version": "0.1.0",
-	"private": true,
 	"devDependencies": {
 		"babel-cli": "^6.22.2",
 		"babel-eslint": "^7.1.0",

@@ -18,6 +18,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jasmine": "^2.1.0",
     "eslint-plugin-react": "^6.6.0",
+		"lerna": "2.0.0-beta.37",
     "nodemon": "^1.11.0"
   }
 }

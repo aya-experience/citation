@@ -1,7 +1,6 @@
 {
 	"name": "citation-backoffice",
 	"version": "0.1.0",
-	"private": true,
 	"homepage": "/admin",
 	"devDependencies": {
 		"babel-eslint": "^7.1.0",
