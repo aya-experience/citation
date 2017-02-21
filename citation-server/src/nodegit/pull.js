@@ -9,12 +9,11 @@ export default async function pull() {
 		const headCommit = await this.repository.getHeadCommit();
 		await this.repository.fetchAll(securityOptions);
 		const commitId = await this.repository.mergeBranches('master', 'origin/master');
-
-		logger.debug(`Pull commit id ${commitId} compared to previous head ${headCommit.id()}`);
-
-		return headCommit.id().toString() !== commitId.toString();
+		const pullResult = (headCommit.id().toString() !== commitId.toString());
+		logger.info(`With changes : ${pullResult}`);
+		return pullResult;
 	} catch (error) {
-		console.error('NodeGit pull error', error);
+		logger.error(`NodeGit pull error ${error}`);
 		throw error;
 	}
 }

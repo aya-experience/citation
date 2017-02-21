@@ -1,14 +1,17 @@
 import path from 'path';
+
 import _ from 'lodash';
 import fs from 'fs-promise';
-
 import mergeDeep from 'merge-deep';
+import winston from 'winston';
 
 import {workingDirectory} from './constants';
 
+const logger = winston.loggers.get('GitUpdater');
+
 export async function inspectObject(type, id) {
 	try {
-		console.log('inspect object', type, id);
+		logger.debug(`inspect object ${type} ${id}`);
 		const objectPath = path.resolve(workingDirectory, 'master', type, id);
 		const objectFiles = await fs.readdir(objectPath);
 		const objectFields = await Promise.all(objectFiles.map(async file => {
@@ -35,7 +38,7 @@ export async function inspectObject(type, id) {
 		}));
 		return objectFields;
 	} catch (error) {
-		console.error('Gitasdb inspect error', error);
+		logger.error(`Gitasdb inspect error ${error}`);
 		throw error;
 	}
 }
@@ -54,7 +57,7 @@ export function graphqlQuerySerialize(query) {
 
 		return query;
 	} catch (error) {
-		console.error('Gitasdb GraphQL Query Serialize error', error);
+		logger.error(`Gitasdb GraphQL Query Serialize error ${error}`);
 		throw error;
 	}
 }

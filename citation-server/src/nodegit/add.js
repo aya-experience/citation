@@ -1,3 +1,7 @@
+import winston from 'winston';
+
+const logger = winston.loggers.get('NodeGit');
+
 export default async function add(path) {
 	try {
 		const index = await this.repository.refreshIndex();
@@ -6,7 +10,7 @@ export default async function add(path) {
 		const oid = await index.writeTree();
 		return oid;
 	} catch (error) {
-		console.error('NodeGit add error', error);
+		logger.error(`NodeGit add error ${error}`);
 		throw error;
 	}
 }

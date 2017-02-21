@@ -2,6 +2,11 @@ import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {StaticRouter} from 'react-router';
 import Router from 'citation-react-router';
+import winston from 'winston';
+
+import './log';
+
+const logger = winston.loggers.get('ReactRenderer');
 
 export default async function renderPage(url, context, options) {
 	try {
@@ -11,8 +16,6 @@ export default async function renderPage(url, context, options) {
 			__pages__: context.pages,
 			__contents__: context.preparedContents
 		};
-
-		console.log('renderToString', url);
 
 		const markup = renderToString(
 			<StaticRouter location={url} context={serverRenderContext}>
@@ -32,7 +35,7 @@ export default async function renderPage(url, context, options) {
 
 		return context.indexContent.replace(options.anchor, replacement);
 	} catch (error) {
-		console.error('Something went wrong while rendering', url, error);
+		logger.error(`Error while rendering ${url} ${error}`);
 		throw error;
 	}
 }

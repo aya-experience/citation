@@ -1,4 +1,7 @@
 import {Reference, Signature} from 'nodegit';
+import winston from 'winston';
+
+const logger = winston.loggers.get('NodeGit');
 
 export default async function commit(oid) {
 	try {
@@ -8,7 +11,7 @@ export default async function commit(oid) {
 		const commitId = await this.repository.createCommit('HEAD', author, author, 'Update from Citation server', oid, [parent]);
 		return commitId;
 	} catch (error) {
-		console.error('NodeGit commit error', error);
+		logger.error(`NodeGit commit error ${error}`);
 		throw error;
 	}
 };

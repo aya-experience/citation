@@ -1,10 +1,14 @@
 import path from 'path';
+
 import _ from 'lodash';
 import fs from 'fs-promise';
+import winston from 'winston';
 
 import {create} from '../nodegit/wrapper';
 import {workingDirectory} from './constants';
 import {readObject} from './read';
+
+const logger = winston.loggers.get('GitUpdater');
 
 export async function writeObject(type, data) {
 	try {
@@ -38,7 +42,7 @@ export async function writeObject(type, data) {
 		// Return read object
 		return await readObject(type, id);
 	} catch (error) {
-		console.error('Gitasdb write error', error);
+		logger.error(`Gitasdb write error ${error}`);
 		throw error;
 	}
 }

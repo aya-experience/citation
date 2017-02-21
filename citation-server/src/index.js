@@ -5,6 +5,7 @@ import path from 'path';
 import Hapi from 'hapi';
 import inert from 'inert';
 import GraphQL from 'hapi-graphql';
+import winston from 'winston';
 
 import {ContentSchema} from './graphql/schema';
 import render from './rendering';
@@ -13,6 +14,7 @@ import {start as gitUpdaterStart} from './gitasdb/update';
 
 const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice/build');
 const boIndex = path.join(boDirectory, 'index.html');
+const logger = winston.loggers.get('Server');
 
 export default function start(inputConfig) {
 	setConfig(inputConfig);
@@ -60,8 +62,7 @@ export default function start(inputConfig) {
 		});
 
 		server.start(async () => {
-			console.log('Server running at:', server.info.uri);
-
+			logger.info(`Server running at: ${server.info.uri}`);
 			await gitUpdaterStart();
 			await render();
 		});

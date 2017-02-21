@@ -17,7 +17,7 @@ export default async function check(directory, expectedRemoteUrl) {
 
 		return originUrl === expectedRemoteUrl;
 	} catch (error) {
-		logger.debug('Check return false following error', error);
+		logger.error(`Check return false following error ${error}`);
 		return false;
 	}
 }
