@@ -60,6 +60,8 @@ The project is organized in several sub projects.
 
 ## Usage
 
+### From sources
+
 This is a meta project, there is nothing directly here.
 
 To install NPM dependencies of all projects, you can use Lerna :
@@ -78,3 +80,17 @@ npm start
 It will run Babel in watch mode on each submodule and run Citation server with nodemon from citation-demo.
 
 You still have to start both React app (demo and backoffice) by yourself.
+
+### Using Docker
+
+To start the demo inside of a Docker container, let's first build the image :
+
+```
+docker build -t citation .
+```
+
+And start the container using the matching port on 4000 :
+
+```
+docker run -p 4000:4000 citation
+```
