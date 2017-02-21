@@ -60,10 +60,21 @@ The project is organized in several sub projects.
 
 ## Usage
 
-This is a meta project, there is nothing directly here. Still, a meta command is available :
+This is a meta project, there is nothing directly here.
+
+To install NPM dependencies of all projects, you can use Lerna :
+
+```shell
+npm install
+npm run lerna:bootstrap
+```
+
+A meta command is available :
 
 ```shell
 npm start
 ```
 
 It will run Babel in watch mode on each submodule and run Citation server with nodemon from citation-demo.
+
+You still have to start both React app (demo and backoffice) by yourself.

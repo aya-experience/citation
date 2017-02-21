@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+		"lerna:bootstrap": "lerna bootstrap",
     "start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & sleep 2 && npm run nodemon:server",
     "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli --watch ../citation-server/lib -- --no-render",
     "babel:react-router": "cd citation-react-router && npm start",
