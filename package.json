@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-		"lerna:bootstrap": "lerna bootstrap",
+    "lerna:bootstrap": "lerna bootstrap",
     "start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & sleep 5 && npm run nodemon:server",
     "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib -- --no-render",
     "babel:react-router": "cd citation-react-router && npm start",
@@ -19,7 +19,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jasmine": "^2.1.0",
     "eslint-plugin-react": "^6.6.0",
-		"lerna": "2.0.0-beta.37",
+    "lerna": "2.0.0-beta.37",
     "nodemon": "^1.11.0"
   }
 }
