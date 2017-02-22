@@ -7,11 +7,11 @@
     "citation-server": "./lib/cli.js"
   },
   "scripts": {
-    "start": "babel src -d lib --watch",
+    "lint": "../node_modules/.bin/eslint src",
+    "watch": "babel src -d lib --watch",
     "build": "babel src -d lib",
-    "nodemon": "nodemon src/index --exec babel-node --ignore work",
-    "prepublish": "npm run build",
-    "test": "ava"
+    "postinstall": "npm run build",
+    "test": "ava --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -33,11 +33,10 @@
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "^0.18.0",
     "babel-cli": "^6.18.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
-    "nodemon": "^1.11.0",
     "proxyquire": "^1.7.11",
     "sinon": "^1.17.7"
   },

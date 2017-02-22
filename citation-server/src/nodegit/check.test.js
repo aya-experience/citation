@@ -19,7 +19,7 @@ test.beforeEach(() => {
 	check = proxyquire('./check', {
 		'fs-promise': {access},
 		nodegit: {Repository: {open}, Remote: {lookup}},
-		winston: {loggers: {get: () => ({debug: () => {}})}}
+		winston: {loggers: {get: () => ({debug: () => {}, error: () => {}})}}
 	}).default;
 });
 

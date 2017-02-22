@@ -7,11 +7,11 @@
     "citation-render": "./lib/cli.js"
   },
   "scripts": {
-    "start": "babel src -d lib --watch",
+    "lint": "../node_modules/.bin/eslint src",
+    "watch": "babel src -d lib --watch",
     "build": "babel src -d lib",
-    "prepublish": "npm run build",
-    "nodemon": "nodemon src/index --exec babel-node --ignore work",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "npm run build",
+    "test": "ava --verbose"
   },
   "author": "",
   "license": "ISC",
@@ -23,17 +23,24 @@
     "meow": "^3.7.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
-    "react-router": "^4.0.0-alpha.6",
+    "react-router": "^4.0.0-beta.6",
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "ava": "^0.16.0",
+    "ava": "0.18.1",
     "babel-cli": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
-    "babel-preset-react": "^6.22.0",
-    "nodemon": "^1.11.0",
-    "react-router": "^4.0.0-beta.6"
+    "babel-preset-react": "^6.22.0"
+  },
+  "ava": {
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
   }
 }

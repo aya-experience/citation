@@ -17,7 +17,7 @@ test.beforeEach(() => {
 	});
 });
 
-test.only('readCollection should map readObject on each folder of a type', async t => {
+test('readCollection should map readObject on each folder of a type', async t => {
 	const type = 'type';
 	const collectionPath = path.resolve(workingDirectory, 'master', type);
 	const folders = ['one', 'two', 'three'];
