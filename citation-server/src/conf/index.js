@@ -2,6 +2,7 @@ import assign from 'assign-deep';
 
 const conf = {
 	content: {
+		'password-env-var': 'GIT_PASSWORD',
 		directory: 'work'
 	},
 	build: {

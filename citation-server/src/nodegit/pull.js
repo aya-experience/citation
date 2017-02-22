@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-import {securityOptions} from './wrapper';
+import {securityOptions} from './security';
 
 const logger = winston.loggers.get('NodeGit');
 
