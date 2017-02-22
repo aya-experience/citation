@@ -10,12 +10,11 @@ WORKDIR ${HOMEDIR}
 
 # install all dependencies
 ADD package.json ./
-RUN npm install -g lerna@^2.0.0-beta.0
 RUN npm install
 
 # add node content initially
 ADD . .
-RUN npm run lerna:bootstrap
+RUN npm run bootstrap
 
 EXPOSE 4000
 

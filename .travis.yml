@@ -1,0 +1,35 @@
+language: node_js
+
+node_js: 'stable'
+
+services:
+  - docker
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libstdc++-4.9-dev
+
+cache:
+  directories:
+    - node_modules
+    - citation-backoffice/node_modules
+    - citation-demo/node_modules
+    - citation-react-renderer/node_modules
+    - citation-react-router/node_modules
+    - citation-server/node_modules
+
+script:
+  - npm run bootstrap
+  - npm run lint
+  - npm test
+  - npm run build
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker build -t ayaxp/citation .;
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push ayaxp/citation;
+    fi
