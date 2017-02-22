@@ -8,10 +8,10 @@
   },
   "scripts": {
     "start": "babel src -d lib --watch",
-    "build": "babel src -d lib",
+    "build": "BABEL_ENV=production babel src -d lib",
     "nodemon": "nodemon src/index --exec babel-node --ignore work",
     "prepublish": "npm run build",
-    "test": "ava"
+    "test": "nyc ava report --reporter=html --reporter=text --reporter=text-summary"
   },
   "author": "",
   "license": "ISC",
@@ -38,6 +38,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
     "nodemon": "^1.11.0",
+    "nyc": "^10.1.2",
     "proxyquire": "^1.7.11",
     "sinon": "^1.17.7"
   },
@@ -49,5 +50,18 @@
       "babel-register"
     ],
     "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      "transform-runtime"
+    ],
+    "env": {
+      "development": {
+        "sourceMaps": "inline"
+      }
+    }
   }
 }
