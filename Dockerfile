@@ -1,4 +1,4 @@
-FROM node:6.9
+FROM node:7.6
 
 # Enviroment variables
 ENV HOMEDIR /data

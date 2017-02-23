@@ -28,7 +28,13 @@ script:
   - npm run build
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+  - if [ "$TRAVIS_BRANCH" == "docker" ]; then
+    rm -rf node_modules;
+    rm -rf citation-backoffice/node_modules;
+    rm -rf citation-demo/node_modules;
+    rm -rf citation-react-renderer/node_modules;
+    rm -rf citation-react-router/node_modules;
+    rm -rf citation-server/node_modules;
     docker build -t ayaxp/citation .;
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker push ayaxp/citation;
