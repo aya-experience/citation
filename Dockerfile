@@ -15,6 +15,7 @@ RUN npm install
 # add node content initially
 ADD . .
 RUN npm run bootstrap
+RUN npm run build
 
 EXPOSE 4000
 
