@@ -9,7 +9,7 @@ coverage
 # production
 build
 /render
-/.tmp-render
+/compile
 /work
 
 # misc

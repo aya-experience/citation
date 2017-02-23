@@ -3,23 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-		"lerna:bootstrap": "lerna bootstrap",
-    "start": "npm run babel:react-router & npm run babel:react-renderer & npm run babel:server & sleep 5 && npm run nodemon:server",
-    "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib -- --no-render",
-    "babel:react-router": "cd citation-react-router && npm start",
-    "babel:react-renderer": "cd citation-react-renderer && npm start",
-    "babel:server": "cd citation-server && npm start"
+    "bootstrap": "lerna bootstrap",
+    "lint": "lerna run lint",
+    "build": "lerna run build",
+    "test": "npm run test:react-router && npm run test:react-renderer && npm run test:server && npm run test:backoffice && npm run test:demo",
+    "dev": "concurrently \"npm run watch:react-router\" \"npm run watch:react-renderer\" \"npm run watch:server\" \"sleep 5 && npm run nodemon:server\"",
+    "test:react-router": "cd citation-react-router && npm test",
+    "test:react-renderer": "cd citation-react-renderer && npm test",
+    "test:server": "cd citation-server && npm test",
+    "test:backoffice": "cd citation-backoffice && CI=true npm test",
+    "test:demo": "cd citation-demo && CI=true npm test",
+    "watch:react-router": "cd citation-react-router && npm run watch",
+    "watch:react-renderer": "cd citation-react-renderer && npm run watch",
+    "watch:server": "cd citation-server && npm run watch",
+    "nodemon:server": "cd citation-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib"
   },
   "devDependencies": {
     "ava": "^0.18.1",
     "babel-eslint": "^7.1.0",
+    "concurrently": "^3.3.0",
     "eslint": "^3.9.1",
     "eslint-config-xo": "^0.17.0",
     "eslint-config-xo-react": "^0.10.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jasmine": "^2.1.0",
     "eslint-plugin-react": "^6.6.0",
-		"lerna": "2.0.0-beta.37",
+    "lerna": "2.0.0-beta.37",
     "nodemon": "^1.11.0"
   }
 }

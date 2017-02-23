@@ -7,3 +7,11 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 indent_style = tab
+
+[package.json]
+indent_style = space
+indent_size = 2
+
+[.travis.yml]
+indent_style = space
+indent_size = 2

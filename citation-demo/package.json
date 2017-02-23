@@ -28,11 +28,12 @@
   },
   "scripts": {
     "start": "citation-server",
-    "react:start": "react-scripts start",
-    "build": "react-scripts build",
+    "dev": "react-scripts start",
+    "lint": "../node_modules/.bin/eslint src",
+    "build": "react-scripts build && npm run compile",
+    "postinstall": "npm run build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "compile": "BABEL_ENV=production babel src -d .tmp-render --presets react-app",
-    "render": "citation-render --serverUrl http://localhost:4000/graphql --components .tmp-render/components"
+    "compile": "BABEL_ENV=production babel src -d compile --presets react-app",
+    "render": "citation-render --serverUrl http://localhost:4000/graphql --components compile/components"
   }
 }

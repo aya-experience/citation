@@ -24,9 +24,10 @@
     "redux-thunk": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "lint": "../node_modules/.bin/eslint src",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "postinstall": "npm run build",
+    "test": "react-scripts test --env=jsdom"
   }
 }

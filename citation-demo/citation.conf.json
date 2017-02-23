@@ -7,7 +7,7 @@
 	"build": {
 		"command": "npm run build && npm run compile",
 		"build-directory": "build",
-		"compile-directory": ".tmp-render",
+		"compile-directory": "compile",
 		"components": "components"
 	},
 	"render": {
