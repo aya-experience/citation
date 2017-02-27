@@ -1,0 +1,7 @@
+version: "3"
+services:
+  citation:
+    image: citation
+    ports:
+      - "80:4000"
+    restart: always
