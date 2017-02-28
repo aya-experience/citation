@@ -48,6 +48,6 @@ before_deploy:
 
 deploy:
   provider: script
-  script: ssh lux-buisine.fr '/home/swiip/docker/deploy-citation.sh'
+  script: ssh swiip@lux-buisine.fr '/home/swiip/docker/deploy-citation.sh'
   on:
     branch: master
