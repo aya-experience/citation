@@ -35,5 +35,5 @@ export default async function render(options) {
 			loadedPage++;
 		} catch (error) {}
 	}
-	logger.debug(`Sucessfully loaded ${loadedPage} pages`);
+	logger.info(`Sucessfully rendered ${loadedPage} pages`);
 }

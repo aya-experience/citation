@@ -25,7 +25,17 @@ export default {
 			}
 		});
 
-		return pages.filter(page => !page.__child__);
+		pages = pages.filter(page => !page.__child__);
+		this.sanitizeTree(pages);
+
+		return pages;
+	},
+
+	sanitizeTree(pages, stack = []) {
+		pages.forEach(page => {
+			page.children = page.children.filter(page => !stack.includes(page));
+			this.sanitizeTree(page.children, [...stack, page]);
+		});
 	},
 
 	async queryPages(url) {
