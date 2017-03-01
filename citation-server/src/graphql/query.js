@@ -31,6 +31,7 @@ export const PageType = new GraphQLObjectType({
 			type: GraphQLString,
 			resolve: inspect
 		},
+		__newId__: {type: GraphQLID},
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
 		children: {
@@ -55,6 +56,7 @@ export const ComponentType = new GraphQLObjectType({
 			type: GraphQLString,
 			resolve: inspect
 		},
+		__newId__: {type: GraphQLID},
 		type: {type: GraphQLString},
 		children: {
 			type: new GraphQLList(ComponentType),
@@ -78,6 +80,7 @@ export const ContentType = new GraphQLObjectType({
 			type: GraphQLString,
 			resolve: inspect
 		},
+		__newId__: {type: GraphQLID},
 		title: {type: GraphQLString},
 		content: {type: GraphQLString}
 	})

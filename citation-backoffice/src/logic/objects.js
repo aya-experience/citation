@@ -4,7 +4,7 @@ import {query, mutation} from './graphql-client';
 
 // Temporary fixed model
 const fields = {
-	Page: ['slug', 'title', 'children {__id__}', 'component {__id__}'].join(', '),
+	Page: ['__id__', 'slug', 'title', 'children {__id__}', 'component {__id__}'].join(', '),
 	Component: ['type', 'children {__id__}', 'data {__id__, __type__}'].join(', '),
 	Content: ['title', 'content'].join(', ')
 };
@@ -25,7 +25,8 @@ export function loadObject(type, id) {
 	};
 }
 
-export function writeObject(type, data) {
+export function writeObject(type, id, data) {
+	const subType = type.toLowerCase();
 	function formatData(data) {
 		return _.map(data, (value, key) => {
 			let formatedData;
@@ -39,14 +40,17 @@ export function writeObject(type, data) {
 			return `${key}: ${formatedData}`;
 		});
 	}
-
+	data[subType].__newId__ = data[subType].__id__;
+	data[subType].__id__ = id;
 	return dispatch => {
 		return mutation(`{edit${type}(${formatData(data)}) {${fields[type]}}}`)
-			.then(response => dispatch(loadObjectSuccess({
-				type,
-				id: response.data.editObject.__id__,
-				data: response.data.editObject
-			})));
+			.then(response => {
+				dispatch(loadObjectSuccess({
+					type,
+					id: response.data[`edit${type}`].__id__,
+					data: response.data.editObject
+				}));
+			});
 	};
 }
 

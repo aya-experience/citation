@@ -57,7 +57,7 @@ export const mapStateToProps = (state, ownProps) => {
 export const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		load: () => dispatch(loadObject(ownProps.params.type, ownProps.params.id)),
-		write: data => dispatch(writeObject(ownProps.params.type, data))
+		write: data => dispatch(writeObject(ownProps.params.type, ownProps.params.id, data))
 	};
 };
 
