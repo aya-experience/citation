@@ -44,13 +44,11 @@ export function writeObject(type, id, data) {
 	data[subType].__id__ = id;
 	return dispatch => {
 		return mutation(`{edit${type}(${formatData(data)}) {${fields[type]}}}`)
-			.then(response => {
-				dispatch(loadObjectSuccess({
-					type,
-					id: response.data[`edit${type}`].__id__,
-					data: response.data.editObject
-				}));
-			});
+			.then(response => dispatch(loadObjectSuccess({
+				type,
+				id: response.data[`edit${type}`].__id__,
+				data: response.data.editObject
+			})));
 	};
 }
 
