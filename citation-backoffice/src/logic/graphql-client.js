@@ -1,4 +1,12 @@
-export const serverUrl = 'http://localhost:4000/graphql';
+/* global process */
+
+let serverUrl;
+
+if (process && process.env && process.env.NODE_ENV === 'development') {
+	serverUrl = 'http://localhost:4000/graphql';
+} else {
+	serverUrl = '/graphql';
+}
 
 export function query(query) {
 	return fetch(serverUrl, {
