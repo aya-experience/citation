@@ -43,6 +43,7 @@ export const PageInputType = new GraphQLInputObjectType({
 	name: 'PageInput',
 	fields: () => ({
 		__id__: {type: GraphQLID},
+		__newId__: {type: GraphQLID},
 		slug: {type: GraphQLString},
 		title: {type: GraphQLString},
 		children: {type: LinksInputType},
@@ -54,6 +55,7 @@ export const ComponentInputType = new GraphQLInputObjectType({
 	name: 'ComponentInput',
 	fields: () => ({
 		__id__: {type: GraphQLID},
+		__newId__: {type: GraphQLID},
 		type: {type: GraphQLString},
 		children: {type: LinksInputType},
 		data: {type: LinksInputType}
@@ -64,6 +66,7 @@ export const ContentInputType = new GraphQLInputObjectType({
 	name: 'ContentInput',
 	fields: () => ({
 		__id__: {type: GraphQLID},
+		__newId__: {type: GraphQLID},
 		title: {type: GraphQLString},
 		content: {type: GraphQLString}
 	})
