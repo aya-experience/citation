@@ -16,13 +16,18 @@ export default async function render(options) {
 	if (context.components.default) { // Handle ES2015 default export
 		context.components = context.components.default;
 	}
+	logger.debug(`${context.components.length} components loaded`);
 	context.pages = await queries.queryPages(options.serverUrl);
+	logger.debug(`${context.pages.length} root pages loaded`);
 	context.urls = await urls(context.pages);
+	logger.debug(`${context.urls.length} urls computed`);
 	context.contents = await load(options.serverUrl, context.pages);
+	logger.debug(`${context.contents.length} contents loaded`);
 	await fs.remove(options.renderDir);
 	await fs.copy(options.buildDir, options.renderDir);
 	const indexContentBuffer = await fs.readFile(path.join(options.renderDir, 'index.html'));
 	context.indexContent = indexContentBuffer.toString();
+	logger.debug(`Index content ready with ${context.indexContent.length} chars`);
 	let loadedPage = 0;
 	for (const url of context.urls) {
 		try {
@@ -32,6 +37,7 @@ export default async function render(options) {
 			const indexPath = path.join(indexDir, 'index.html');
 			await fs.mkdir(indexDir);
 			await fs.writeFile(indexPath, markup);
+			logger.debug(`Rendering success for ${url}`);
 			loadedPage++;
 		} catch (error) {}
 	}

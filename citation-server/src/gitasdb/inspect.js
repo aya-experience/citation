@@ -9,7 +9,11 @@ import {workingDirectory} from './constants';
 
 const logger = winston.loggers.get('GitUpdater');
 
-export async function inspectObject(type, id) {
+function includesLink(stack, link) {
+	return stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id).length > 0;
+}
+
+export async function inspectObject(type, id, stack = []) {
 	try {
 		logger.debug(`inspect object ${type} ${id}`);
 		const objectPath = path.resolve(workingDirectory, 'master', type, id);
@@ -21,22 +25,28 @@ export async function inspectObject(type, id) {
 				const contentBuffer = await fs.readFile(path.resolve(objectPath, file));
 				const content = JSON.parse(contentBuffer.toString());
 				if (content.__role__ === 'link') {
+					if (includesLink(stack, content.link)) {
+						return;
+					}
 					const {collection, id} = content.link;
-					const inspection = await inspectObject(collection, id);
+					const inspection = await inspectObject(collection, id, [...stack, content.link]);
 					return {[key]: inspection};
 				}
 				if (content.__role__ === 'links') {
-					const linksInspection = await Promise.all(content.links.map(async link => {
-						const {collection, id} = link;
-						const inspection = await inspectObject(collection, id);
-						return {[key]: {[`... on ${collection}`]: inspection}};
-					}));
+					const linksInspection = await Promise.all(content.links
+						.filter(link => !includesLink(stack, link))
+						.map(async link => {
+							const {collection, id} = link;
+							const inspection = await inspectObject(collection, id, [...stack, link]);
+							return {[key]: {[`... on ${collection}`]: inspection}};
+						})
+					);
 					return mergeDeep({}, ...linksInspection);
 				}
 			}
 			return key;
 		}));
-		return objectFields;
+		return objectFields.filter(x => !_.isEmpty(x));
 	} catch (error) {
 		logger.error(`Gitasdb inspect error ${error}`);
 		throw error;
