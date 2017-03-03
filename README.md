@@ -1,6 +1,8 @@
 # Citation
 
-![Build Status](https://travis-ci.org/aya-experience/citation.svg?branch=master)
+![Build Status](https://img.shields.io/travis/aya-experience/citation/master.svg)
+![NPM Version](https://img.shields.io/npm/v/citation-server.svg)
+![NPM Downloads](https://img.shields.io/npm/dm/citation-server.svg)
 
 ## Name
 
@@ -66,32 +68,60 @@ The project is organized in several sub projects.
 
 This is a meta project, there is nothing directly here.
 
-To install NPM dependencies of all projects, you can use Lerna :
+To install NPM dependencies of all projects
 
 ```shell
 npm install
-npm run lerna:bootstrap
+npm run bootstrap
 ```
 
-A meta command is available :
+There is a bunch of commands that you can run from each modules of the project or directly from here to run it on each module:
+
+Linting with ESLint
 
 ```shell
-npm start
+npm run lint
 ```
 
-It will run Babel in watch mode on each submodule and run Citation server with nodemon from citation-demo.
+Build with Babel for backend module and Webpack for frontend ones
+
+```shell
+npm run build
+```
+
+Test with AVA or Jest
+
+```shell
+npm test
+```
+
+Development mode
+
+```shell
+npm run dev
+```
+
+It will run Babel in watch mode on backend projects, launch a dev server on frontend projects.
+
+Launched here, it will run Babel in watch mode on each backend module and run Citation server with nodemon from the citation-demo folder.
 
 You still have to start both React app (demo and backoffice) by yourself.
 
 ### Using Docker
 
-To start the demo inside of a Docker container, let's first build the image :
+To start the demo inside of a Docker container, let's first build the image:
 
 ```
 docker build -t citation .
 ```
 
-And start the container using the matching port on 4000 :
+You can also pull the image on the Docker Hub with:
+
+```
+docker pull ayaxp/citation
+```
+
+And start the container using the matching port on 4000:
 
 ```
 docker run -p 4000:4000 citation
