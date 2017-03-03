@@ -2,7 +2,7 @@ import winston from 'winston';
 
 winston.loggers.add('ReactRenderer', {
 	console: {
-		level: 'info',
+		level: 'debug',
 		colorize: true,
 		label: 'ReactRenderer'
 	}

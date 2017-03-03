@@ -8,7 +8,7 @@
   },
   "scripts": {
     "lint": "../node_modules/.bin/eslint src",
-    "watch": "babel src -d lib --watch",
+    "dev": "babel src -d lib --watch",
     "build": "babel src -d lib",
     "test": "ava --verbose"
   },

@@ -15,7 +15,7 @@ Main libraries used in development are React Router v4 and Redux (with thunk, ac
 To run the development server with live-reload:
 
 ```shell
-npm start
+npm run dev
 ```
 
 To build the project and generate an optimized version:

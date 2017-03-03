@@ -2,7 +2,7 @@ import winston from 'winston';
 
 winston.loggers.add('GitUpdater', {
 	console: {
-		level: 'info',
+		level: 'debug',
 		colorize: true,
 		label: 'GitUpdater'
 	}
@@ -10,7 +10,7 @@ winston.loggers.add('GitUpdater', {
 
 winston.loggers.add('NodeGit', {
 	console: {
-		level: 'info',
+		level: 'debug',
 		colorize: true,
 		label: 'NodeGit'
 	}
@@ -18,7 +18,7 @@ winston.loggers.add('NodeGit', {
 
 winston.loggers.add('Renderer', {
 	console: {
-		level: 'info',
+		level: 'debug',
 		colorize: true,
 		label: 'Renderer'
 	}
@@ -26,7 +26,7 @@ winston.loggers.add('Renderer', {
 
 winston.loggers.add('GraphQL', {
 	console: {
-		level: 'info',
+		level: 'debug',
 		colorize: true,
 		label: 'GraphQL'
 	}
@@ -34,7 +34,7 @@ winston.loggers.add('GraphQL', {
 
 winston.loggers.add('Server', {
 	console: {
-		level: 'info',
+		level: 'debug',
 		colorize: true,
 		label: 'Server'
 	}

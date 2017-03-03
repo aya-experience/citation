@@ -21,7 +21,7 @@ The routing is fully managed by the CitationRouter from the citation-react-route
 To run the development server with live-reload:
 
 ```shell
-npm react:start
+npm run dev
 ```
 
 To run the Citation server with its API, backoffice app, and this project statically generated.

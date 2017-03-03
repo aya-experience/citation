@@ -13,7 +13,7 @@ Code is transpiled with Babel.
 To run Babel with watch mode:
 
 ```shell
-npm start
+npm run dev
 ```
 
 To run Babel:

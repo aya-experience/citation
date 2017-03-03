@@ -1,5 +1,7 @@
 # Citation
 
+![Build Status](https://travis-ci.org/aya-experience/citation.svg?branch=master)
+
 ## Name
 
 - Pronounced like **site**-ation, not far from "website creation" which is the purpose of the solution

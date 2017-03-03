@@ -24,7 +24,7 @@ A lot of question about perfs, concurency and conflicts are still opened and wil
 To run Babel with watch mode:
 
 ```shell
-npm start
+npm run dev
 ```
 
 To run Babel:
