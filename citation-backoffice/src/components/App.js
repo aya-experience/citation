@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Match, Miss, Link} from 'react-router';
+import {Route, Link, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loadCollection} from '../logic/collections';
 import logo from './logo.svg';
@@ -33,9 +33,11 @@ class App extends Component {
 				<div className="App-layout">
 					<Menu collections={this.props.collections}/>
 					<div className="App-content">
-						<Match exactly pattern="/" component={Home}/>
-						<Match pattern="/object/:type/:id" component={ObjectComponent}/>
-						<Miss component={NoMatch}/>
+						<Switch>
+							<Route exact path="/" component={Home}/>
+							<Route path="/object/:type/:id" component={ObjectComponent}/>
+							<Route component={NoMatch}/>
+						</Switch>
 					</div>
 				</div>
 			</div>
