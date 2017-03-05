@@ -2,16 +2,6 @@
   "name": "citation-backoffice",
   "version": "0.1.0",
   "homepage": "/admin",
-  "devDependencies": {
-    "babel-eslint": "^7.1.0",
-    "eslint": "^3.9.1",
-    "eslint-config-xo": "^0.17.0",
-    "eslint-config-xo-react": "^0.10.0",
-    "eslint-plugin-react": "^6.6.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jasmine": "^2.1.0",
-    "react-scripts": "0.7.0"
-  },
   "dependencies": {
     "lodash": "^4.16.6",
     "react": "^15.3.2",
@@ -23,10 +13,50 @@
     "redux-form": "^6.2.0",
     "redux-thunk": "^2.1.0"
   },
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "babel-eslint": "^7.1.0",
+    "babel-plugin-transform-require-ignore": "0.0.2",
+    "babel-preset-react-app": "^2.1.1",
+    "enzyme": "^2.7.1",
+    "eslint": "^3.9.1",
+    "eslint-config-xo": "^0.17.0",
+    "eslint-config-xo-react": "^0.10.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jasmine": "^2.1.0",
+    "eslint-plugin-react": "^6.6.0",
+    "react-addons-test-utils": "^15.4.2",
+    "react-scripts": "0.7.0",
+    "sinon": "^1.17.7"
+  },
   "scripts": {
     "dev": "react-scripts start",
     "lint": "../node_modules/.bin/eslint src",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom"
+    "test": "NODE_ENV=development ava --verbose"
+  },
+  "ava": {
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      [
+        "babel-plugin-transform-require-ignore",
+        {
+          "extensions": [
+            ".css"
+          ]
+        }
+      ]
+    ]
   }
 }

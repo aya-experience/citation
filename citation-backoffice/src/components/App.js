@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import {Route, Link, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loadCollection} from '../logic/collections';
-import logo from './logo.svg';
 import Menu from './Menu';
 import Home from './Home';
 import ObjectComponent from './Object';
@@ -26,8 +25,8 @@ class App extends Component {
 			<div className="App">
 				<div className="App-header">
 					<Link to="/">
-						<img src={logo} className="App-logo" alt="logo"/>
-						<h2>X CMS Admin</h2>
+						<img src="/logo.svg" className="App-logo" alt="logo"/>
+						<h2>Citation Admin</h2>
 					</Link>
 				</div>
 				<div className="App-layout">
