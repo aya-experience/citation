@@ -33,6 +33,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "lint": "../node_modules/.bin/eslint src",
+    "prettier": "../node_modules/.bin/prettier --write src/**/*.js",
     "build": "react-scripts build",
     "test": "NODE_ENV=development ava --verbose"
   },
