@@ -14,12 +14,12 @@ export default class Routes extends Component {
 	constructor() {
 		super();
 		this.matchRenderer = this.matchRenderer.bind(this);
-		this.state = {};
+		this.state = {contents: {}};
 	}
 
 	componentWillMount() {
 		if (window && window.__contents__) {
-			this.setState({content: window.__contents__[this.props.match.url]});
+			this.setState({contents: window.__contents__});
 		}
 	}
 
@@ -52,11 +52,12 @@ export default class Routes extends Component {
 
 	matchRenderer(page) {
 		return matchProps => {
-			if (this.state.content === undefined || this.state.content === null) {
+			const content = this.state.contents[page.component.id];
+			if (content === undefined || content === null) {
 				this.loadPageContent(page);
 				return <span/>;
 			}
-			return this.createElement(page, this.state.content, 0, matchProps);
+			return this.createElement(page, content, 0, matchProps);
 		};
 	}
 
