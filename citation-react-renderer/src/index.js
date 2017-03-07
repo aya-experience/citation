@@ -22,10 +22,12 @@ export default async function render(options) {
 	context.urls = await urls(context.pages);
 	logger.debug(`${context.urls.length} urls computed`);
 	context.contents = await load(options.serverUrl, context.pages);
-	logger.debug(`${context.contents.length} contents loaded`);
+	logger.debug(`${Object.keys(context.contents).length} contents loaded`);
 	await fs.remove(options.renderDir);
 	await fs.copy(options.buildDir, options.renderDir);
-	const indexContentBuffer = await fs.readFile(path.join(options.renderDir, 'index.html'));
+	const rootIndexPath = path.join(options.renderDir, 'index.html');
+	const indexContentBuffer = await fs.readFile(rootIndexPath);
+	await fs.remove(rootIndexPath);
 	context.indexContent = indexContentBuffer.toString();
 	logger.debug(`Index content ready with ${context.indexContent.length} chars`);
 	let loadedPage = 0;
@@ -33,13 +35,17 @@ export default async function render(options) {
 		try {
 			context.preparedContents = prepare(url, context.contents);
 			const markup = await renderPage(url, context, options);
-			const indexDir = path.join(options.renderDir, url);
+			const indexDir = path.join(options.renderDir, url.url);
 			const indexPath = path.join(indexDir, 'index.html');
-			await fs.mkdir(indexDir);
+			if (indexDir !== options.renderDir) {
+				await fs.mkdir(indexDir);
+			}
 			await fs.writeFile(indexPath, markup);
-			logger.debug(`Rendering success for ${url}`);
+			logger.debug(`Rendering success for ${url.url}`);
 			loadedPage++;
-		} catch (error) {}
+		} catch (error) {
+			logger.warn(`Something went wrong while writing rendered page`, error);
+		}
 	}
 	logger.info(`Sucessfully rendered ${loadedPage} pages`);
 }

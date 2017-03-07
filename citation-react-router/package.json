@@ -15,7 +15,8 @@
     "babel-polyfill": "^6.22.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
-    "react-router-dom": "^4.0.0-beta.6"
+    "react-router": "4.0.0-beta.6",
+    "react-router-dom": "4.0.0-beta.6"
   },
   "devDependencies": {
     "ava": "^0.18.0",
@@ -23,14 +24,17 @@
     "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
-    "babel-preset-react": "^6.22.0"
+    "babel-preset-react": "^6.22.0",
+    "enzyme": "^2.7.1",
+    "react-addons-test-utils": "^15.4.2"
   },
   "ava": {
     "files": [
       "src/**/*.test.js"
     ],
     "require": [
-      "babel-register"
+      "babel-register",
+      "babel-polyfill"
     ],
     "babel": "inherit"
   }
