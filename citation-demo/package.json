@@ -35,6 +35,7 @@
     "start": "citation-server",
     "dev": "react-scripts start",
     "lint": "../node_modules/.bin/eslint src",
+    "prettier": "../node_modules/.bin/prettier --write src/**/*.js",
     "build": "react-scripts build && npm run compile",
     "test": "NODE_ENV=development ava --verbose",
     "compile": "BABEL_ENV=production babel src -d compile --presets react-app",
