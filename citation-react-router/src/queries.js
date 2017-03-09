@@ -17,11 +17,13 @@ export default {
 
 		pages.forEach(page => {
 			if (Array.isArray(page.children)) {
-				page.children = page.children.map(({__id__}) => {
-					const child = ref[__id__];
-					child.__child__ = true;
-					return child;
-				});
+				page.children = page.children
+					.filter(page => page !== null)
+					.map(({__id__}) => {
+						const child = ref[__id__];
+						child.__child__ = true;
+						return child;
+					});
 			}
 		});
 
