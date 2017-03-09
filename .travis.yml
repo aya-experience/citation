@@ -28,6 +28,7 @@ script:
 - npm test
 
 after_success:
+- npm run codecov
 - if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   rm -rf node_modules;
   rm -rf citation-backoffice/node_modules;

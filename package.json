@@ -6,7 +6,8 @@
     "bootstrap": "lerna bootstrap",
     "lint": "lerna run lint",
     "build": "lerna run build",
-    "test": "npm run test:react-router && npm run test:react-renderer && npm run test:server && npm run test:backoffice && npm run test:demo",
+    "test": "nyc lerna run test && nyc report --reporter=text-lcov > coverage.lcov",
+    "codecov": "./node_modules/.bin/codecov",
     "dev": "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server\"",
     "test:react-router": "cd citation-react-router && npm test",
     "test:react-renderer": "cd citation-react-renderer && npm test",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "ava": "^0.18.1",
     "babel-eslint": "^7.1.0",
+    "codecov": "^1.0.1",
     "concurrently": "^3.3.0",
     "eslint": "^3.9.1",
     "eslint-config-xo": "^0.17.0",
@@ -29,6 +31,7 @@
     "eslint-plugin-jasmine": "^2.1.0",
     "eslint-plugin-react": "^6.6.0",
     "lerna": "2.0.0-beta.37",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "nyc": "^10.1.2"
   }
 }

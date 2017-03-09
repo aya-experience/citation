@@ -1,6 +1,7 @@
 # Citation
 
 ![Build Status](https://img.shields.io/travis/aya-experience/citation/master.svg)
+![Codecov](https://img.shields.io/codecov/c/github/aya-experience/citation.svg)
 ![NPM Version](https://img.shields.io/npm/v/citation-server.svg)
 ![NPM Downloads](https://img.shields.io/npm/dm/citation-server.svg)
 
