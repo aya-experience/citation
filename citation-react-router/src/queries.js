@@ -33,8 +33,10 @@ export default {
 
 	sanitizeTree(pages, stack = []) {
 		pages.forEach(page => {
-			page.children = page.children.filter(page => !stack.includes(page));
-			this.sanitizeTree(page.children, [...stack, page]);
+			if (Array.isArray(page.children)) {
+				page.children = page.children.filter(page => !stack.includes(page));
+				this.sanitizeTree(page.children, [...stack, page]);
+			}
 		});
 	},
 
