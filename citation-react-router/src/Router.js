@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react';
-import {Route} from 'react-router-dom';
 import queries from './queries';
 import Routes from './Routes';
 
@@ -11,7 +10,6 @@ export default class Router extends Component {
 
 	constructor() {
 		super();
-		this.matchRenderer = this.matchRenderer.bind(this);
 
 		this.state = {pages: []};
 		if (window && window.__pages__) {
@@ -26,11 +24,7 @@ export default class Router extends Component {
 		}
 	}
 
-	matchRenderer(matchProps) {
-		return <Routes {...matchProps} {...this.props} pages={this.state.pages}/>;
-	}
-
 	render() {
-		return <Route render={this.matchRenderer}/>;
+		return <Routes match={{url: ''}} {...this.props} pages={this.state.pages}/>;
 	}
 }
