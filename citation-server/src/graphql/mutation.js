@@ -95,7 +95,7 @@ export default new GraphQLObjectType({
 				const {component} = params;
 				logger.debug(`mutation ${component}`);
 				try {
-					return writeObject('Component', component);
+					return await writeObject('Component', component);
 				} catch (error) {
 					throw error;
 				}
@@ -108,7 +108,7 @@ export default new GraphQLObjectType({
 				const {content} = params;
 				logger.debug(`mutation ${content}`);
 				try {
-					return writeObject('Content', content);
+					return await writeObject('Content', content);
 				} catch (error) {
 					throw error;
 				}
