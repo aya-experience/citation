@@ -36,7 +36,7 @@ after_success:
   rm -rf citation-react-renderer/node_modules;
   rm -rf citation-react-router/node_modules;
   rm -rf citation-server/node_modules;
-  export REPO=ayaxp/citation
+  export REPO=ayaxp/citation;
   docker build -t $REPO .;
     if [ -n "$TRAVIS_TAG" ]; then
       docker tag $REPO $REPO:$TRAVIS_TAG;
