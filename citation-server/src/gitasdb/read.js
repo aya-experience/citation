@@ -6,7 +6,7 @@ import winston from 'winston';
 
 import {workingDirectory} from './constants';
 
-const logger = winston.loggers.get('GitUpdater');
+const logger = winston.loggers.get('GitAsDb');
 
 export async function readCollection(type) {
 	try {

@@ -7,7 +7,7 @@ import winston from 'winston';
 
 import {workingDirectory} from './constants';
 
-const logger = winston.loggers.get('GitUpdater');
+const logger = winston.loggers.get('GitAsDb');
 
 function includesLink(stack, link) {
 	return stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id).length > 0;

@@ -8,7 +8,7 @@ import {create} from '../nodegit/wrapper';
 import {workingDirectory} from './constants';
 import {readObject} from './read';
 
-const logger = winston.loggers.get('GitUpdater');
+const logger = winston.loggers.get('GitAsDb');
 
 export async function writeObject(type, data) {
 	try {

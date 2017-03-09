@@ -11,7 +11,7 @@ import {create} from '../nodegit/wrapper';
 import render from '../rendering';
 import {workingDirectory} from './constants';
 
-const logger = winston.loggers.get('GitUpdater');
+const logger = winston.loggers.get('GitAsDb');
 
 let task;
 

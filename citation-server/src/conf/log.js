@@ -4,7 +4,7 @@ winston.loggers.add('GitAsDb', {
 	console: {
 		level: 'info',
 		colorize: true,
-		label: 'GitUpdater'
+		label: 'GitAsDb'
 	}
 });
 
