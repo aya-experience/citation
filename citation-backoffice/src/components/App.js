@@ -34,6 +34,7 @@ class App extends Component {
 					<div className="App-content">
 						<Switch>
 							<Route exact path="/" component={Home}/>
+							<Route exact path="/object/:type" component={ObjectComponent}/>
 							<Route path="/object/:type/:id" component={ObjectComponent}/>
 							<Route component={NoMatch}/>
 						</Switch>

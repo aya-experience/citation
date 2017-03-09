@@ -81,7 +81,11 @@ export default new GraphQLObjectType({
 			resolve: async (root, params) => {
 				const {page} = params;
 				logger.debug(`mutation ${page}`);
-				return writeObject('Page', page);
+				try {
+					return await writeObject('Page', page);
+				} catch (error) {
+					throw error;
+				}
 			}
 		},
 		editComponent: {
@@ -90,7 +94,11 @@ export default new GraphQLObjectType({
 			resolve: async (root, params) => {
 				const {component} = params;
 				logger.debug(`mutation ${component}`);
-				return writeObject('Component', component);
+				try {
+					return writeObject('Component', component);
+				} catch (error) {
+					throw error;
+				}
 			}
 		},
 		editContent: {
@@ -99,7 +107,11 @@ export default new GraphQLObjectType({
 			resolve: async (root, params) => {
 				const {content} = params;
 				logger.debug(`mutation ${content}`);
-				return writeObject('Content', content);
+				try {
+					return writeObject('Content', content);
+				} catch (error) {
+					throw error;
+				}
 			}
 		}
 	}

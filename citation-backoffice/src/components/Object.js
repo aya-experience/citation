@@ -37,10 +37,10 @@ class ObjectComponent extends Component {
 	render() {
 		const forms = {Page, Component: ComponentComponent, Content};
 		const Form = forms[this.props.type];
-
+		const Title = this.props.id ? 'Edit' : 'Add';
 		return (
 			<div className="Object">
-				<h1>Edit {this.props.type} {this.props.id}</h1>
+				<h1>{Title} {this.props.type} {this.props.id}</h1>
 				<Form object={this.props.object} onSubmit={this.handleSubmit}/>
 			</div>
 		);

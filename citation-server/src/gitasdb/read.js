@@ -21,6 +21,9 @@ export async function readCollection(type) {
 }
 
 export async function readObject(type, id) {
+	if (id === 'undefined') {
+		return null;
+	}
 	try {
 		logger.debug(`read object ${type} ${id}`);
 		const objectPath = path.resolve(workingDirectory, 'master', type, id);
