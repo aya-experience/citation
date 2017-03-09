@@ -12,27 +12,32 @@ const logger = winston.loggers.get('GitUpdater');
 
 export async function writeObject(type, data) {
 	try {
-		let id = data.__id__;
-		delete data.__id__;
+		// Opening repository
 		const repositoryPath = path.resolve(workingDirectory, 'master');
-		let objectPath = path.resolve(repositoryPath, type, id);
 		const repository = await create(repositoryPath);
-
+		let id = data.__id__;
+		const newId = data.__newId__;
+		delete data.__id__;
+		delete data.__newId__;
+		let objectPath;
 		// FS delete
-		if (data.__newId__) {
-			if (data.__newId__ !== id) {
-				const newId = data.__newId__;
-				const newObjectPath = path.resolve(repositoryPath, type, newId);
-				if (!fs.existsSync(newObjectPath)) {
+		if (newId && newId !== id) {
+			const newObjectPath = path.resolve(repositoryPath, type, newId);
+			if (!fs.existsSync(newObjectPath)) {
+				if (id) {
+					objectPath = path.resolve(repositoryPath, type, id);
 					fs.remove(objectPath);
 					await repository.remove(path.join(type, id));
-					id = newId;
-					objectPath = newObjectPath;
 				}
+				id = newId;
+				objectPath = newObjectPath;
 			}
-			delete data.__newId__;
 		}
-
+		if (!id) {
+			const error = {code: 409, message: 'Unavailable ID'};
+			throw (error);
+		}
+		objectPath = objectPath || path.resolve(repositoryPath, type, id);
 		await fs.emptyDir(objectPath);
 		// FS write
 		const objectFields = Object.keys(data);
@@ -52,7 +57,7 @@ export async function writeObject(type, data) {
 		// Return read object
 		return await readObject(type, id);
 	} catch (error) {
-		logger.error(`Gitasdb write error ${error}`);
+		logger.error(`Gitasdb write error ${JSON.stringify(error)}`);
 		throw error;
 	}
 }

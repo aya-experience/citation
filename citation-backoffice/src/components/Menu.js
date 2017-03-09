@@ -16,7 +16,14 @@ export default class Menu extends Component {
 			<ul className="Menu-container">
 				{pairs.map(([type, objects]) => (
 					<li key={type}>
-						<p className="Menu-collection">{type}</p>
+						<p className="Menu-collection">
+							{type}
+							<Link to={`/object/${type}`}>
+								<button type="button" className="Button-object">
+									+
+								</button>
+							</Link>
+						</p>
 						<ul className="Menu-object-container">
 							{objects.map(object => (
 								<li key={object.__id__}>
