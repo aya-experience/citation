@@ -39,7 +39,7 @@ after_success:
   export REPO=ayaxp/citation
   docker build -t $REPO .;
     if [ -n "$TRAVIS_TAG" ]; then
-      docker tag $REPO $REPO:$TRAVIS_TAG
+      docker tag $REPO $REPO:$TRAVIS_TAG;
     fi
   docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
   docker push $REPO;
