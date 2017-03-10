@@ -1,9 +1,9 @@
 {
   "name": "citation-demo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "babel-polyfill": "^6.22.0",
-    "citation-react-router": "^0.1.0",
+    "citation-react-router": "^0.2.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
     "react-router": "4.0.0-beta.6",
@@ -18,8 +18,8 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-react-app": "^2.0.1",
     "babel-preset-stage-2": "^6.18.0",
-    "citation-react-renderer": "^0.1.0",
-    "citation-server": "^0.1.0",
+    "citation-react-renderer": "^0.2.0",
+    "citation-server": "^0.2.0",
     "enzyme": "^2.7.1",
     "eslint": "^3.9.1",
     "eslint-config-xo": "^0.17.0",

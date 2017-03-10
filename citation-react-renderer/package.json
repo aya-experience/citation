@@ -1,6 +1,6 @@
 {
   "name": "citation-react-renderer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "",
   "main": "lib/index.js",
   "bin": {
@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
-    "citation-react-router": "^0.1.0",
+    "citation-react-router": "^0.2.0",
     "fs-promise": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
