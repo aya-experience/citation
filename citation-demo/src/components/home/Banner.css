@@ -1,0 +1,20 @@
+.Banner {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 20rem;
+	font-size: 2rem;
+	font-family: 'Permanent Marker', cursive;
+	background-color: lightgray;
+}
+
+.Banner-column {
+	flex: 1;
+	width: 100%;
+	padding: 2rem;
+	text-align: center;
+}
+
+.Banner-column img {
+	height: 5rem;
+}
