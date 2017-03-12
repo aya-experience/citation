@@ -25,7 +25,7 @@ class ComponentForm extends Component {
 				</div>
 				<div>
 					<label htmlFor="children">Children</label>
-					<FieldArray name="children" component={LinksField} props={{collections, type: 'Page'}}/>
+					<FieldArray name="children" component={LinksField} props={{collections, type: 'Component'}}/>
 				</div>
 				<div>
 					<label htmlFor="data">Data</label>
