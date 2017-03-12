@@ -1,0 +1,33 @@
+.TopMenu {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	color: white;
+	background-color: black;
+}
+
+.TopMenu .logo {
+	font-family: 'Permanent Marker', cursive;
+	font-size: 2.5rem;
+	padding: 0 1rem;
+}
+
+.TopMenu .logo a {
+	text-decoration: none;
+}
+
+.TopMenu ul {
+	display: flex;
+	align-items: center;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.TopMenu li {
+	padding: .5rem;
+}
+
+.TopMenu a {
+	color: white;
+}
