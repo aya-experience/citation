@@ -24,11 +24,11 @@ export default class Routes extends Component {
 	}
 
 	async loadPageContent(page) {
-		if (page !== undefined && this.state.contents[page.component.id] === undefined) {
+		if (page !== undefined && this.state.contents[page.component.__id__] === undefined) {
 			await Promise.resolve();
-			this.setState({contents: {[page.component.id]: null}});
+			this.setState({contents: {[page.component.__id__]: null}});
 			const content = await queries.queryComponentTree(this.props.serverUrl, page.component);
-			this.setState({contents: {[page.component.id]: content}});
+			this.setState({contents: {[page.component.__id__]: content}});
 		}
 	}
 

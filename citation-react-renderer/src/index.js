@@ -38,7 +38,7 @@ export default async function render(options) {
 			const indexDir = path.join(options.renderDir, url.url);
 			const indexPath = path.join(indexDir, 'index.html');
 			if (indexDir !== options.renderDir) {
-				await fs.mkdir(indexDir);
+				await fs.mkdirs(indexDir);
 			}
 			await fs.writeFile(indexPath, markup);
 			logger.debug(`Rendering success for ${url.url}`);
