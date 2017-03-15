@@ -52,7 +52,7 @@ export default class Routes extends Component {
 
 	matchRenderer(page) {
 		return matchProps => {
-			const content = this.state.contents[page.component.id];
+			const content = this.state.contents[page.component.__id__];
 			if (content === undefined || content === null) {
 				this.loadPageContent(page);
 				return <span/>;
