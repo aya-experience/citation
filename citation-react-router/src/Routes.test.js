@@ -6,7 +6,7 @@ import {shallow} from 'enzyme';
 import Routes from './Routes';
 
 const componentId = 'componentId';
-const component = {id: 'componentId', data: []};
+const component = {__id__: 'componentId', data: []};
 const page = {slug: 'test', component, children: []};
 
 global.window = {
