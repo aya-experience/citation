@@ -22,10 +22,10 @@ export const ObjectInterface = new GraphQLInterfaceType({
 });
 
 export async function buildObjects() {
-	const ObjectType = {};
+	const ObjectTypes = {};
 	const model = await readModel();
 	for (const structure of model) {
-		ObjectType[structure.name] = new GraphQLObjectType({
+		ObjectTypes[structure.name] = new GraphQLObjectType({
 			name: structure.name,
 			interfaces: [ObjectInterface],
 			isTypeOf: value => value.__type__ === structure.name,
@@ -48,9 +48,9 @@ export async function buildObjects() {
 						}
 						default: {
 							if (field.type[0] === 'link' && field.type[1] !== '*') {
-								resultFields[field.name] = {type: ObjectType[`${field.type[1]}`], resolve: root => readChild(root[`${field.name}`])};
+								resultFields[field.name] = {type: ObjectTypes[field.type[1]], resolve: root => readChild(root[`${field.name}`])};
 							} else if (field.type[0] === 'links' && field.type[1] !== '*') {
-								resultFields[field.name] = {type: new GraphQLList(ObjectType[`${field.type[1]}`]), resolve: root => readChildren(root[`${field.name}`])};
+								resultFields[field.name] = {type: new GraphQLList(ObjectTypes[field.type[1]]), resolve: root => readChildren(root[`${field.name}`])};
 							} else if (field.type[0] === 'links' && field.type[1] === '*') {
 								resultFields[field.name] = {type: new GraphQLList(ObjectInterface), resolve: root => readChildren(root[`${field.name}`])};
 							} else if (field.type[0] === 'link' && field.type[1] === '*') {
@@ -66,7 +66,7 @@ export async function buildObjects() {
 			}
 		});
 	}
-	return ObjectType;
+	return ObjectTypes;
 }
 
 // export const PageType = new GraphQLObjectType({
@@ -183,14 +183,14 @@ function readChild(link) {
 // 	}
 // });
 
-export async function buildQuery() {
-	const ObjectType = await buildObjects();
-	const QueryObjects = {};
+export async function buildQuery(ObjectTypes) {
+	// const ObjectType = await buildObjects();
 	const query = new GraphQLObjectType({
 		name: 'Query',
 		fields: () => {
-			Object.keys(ObjectType).forEach(key => {
-				QueryObjects[key] = {type: new GraphQLList(ObjectType[key]),
+			const QueryObjects = {};
+			Object.keys(ObjectTypes).forEach(key => {
+				QueryObjects[key] = {type: new GraphQLList(ObjectTypes[key]),
 					args: {id: {type: GraphQLID}},
 					resolve: (root, {id}) => read(key, id)
 				};

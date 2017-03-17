@@ -11,7 +11,7 @@ import {
 import winston from 'winston';
 
 import {writeObject} from '../gitasdb/write';
-import {buildObjects} from './query';
+// import {buildObjects} from './query';
 import {readModel} from './model';
 
 const logger = winston.loggers.get('GraphQL');
@@ -110,9 +110,9 @@ async function buildInputs() {
 	return InputType;
 }
 
-export async function buildMutation() {
+export async function buildMutation(ObjectTypes) {
 	const InputType = await buildInputs();
-	const ObjectType = await buildObjects();
+	// const ObjectType = await buildObjects();
 	const MutationObjects = {};
 	const mutation = new GraphQLObjectType({
 		name: 'Mutation',
@@ -120,7 +120,7 @@ export async function buildMutation() {
 			Object.keys(InputType).forEach(key => {
 				const inputs = {};
 				inputs[`${key.toLowerCase()}`] = {type: InputType[key]};
-				MutationObjects[`edit${key}`] = {type: ObjectType[key],
+				MutationObjects[`edit${key}`] = {type: ObjectTypes[key],
 					args: {...inputs},
 					resolve: async (root, params) => {
 						logger.debug(`mutation ${params}`);

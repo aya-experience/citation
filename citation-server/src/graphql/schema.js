@@ -1,10 +1,14 @@
 /* eslint no-use-before-define: 0 */
 import {GraphQLSchema} from 'graphql';
-import {buildQuery} from './query';
+import {buildObjects, buildQuery} from './query';
 import {buildMutation} from './mutation';
 
 export async function buildSchema() {
-	const query = await buildQuery();
-	const mutation = await buildMutation();
-	return new GraphQLSchema({query, mutation});
+	const ObjectTypes = await buildObjects();
+	const QueryType = await buildQuery(ObjectTypes);
+	const MutationType = await buildMutation(ObjectTypes);
+	return new GraphQLSchema({
+		query: QueryType,
+		mutation: MutationType
+	});
 }
