@@ -7,7 +7,7 @@ import inert from 'inert';
 import GraphQL from 'hapi-graphql';
 import winston from 'winston';
 
-import {ContentSchema} from './graphql/schema';
+import {buildSchema} from './graphql/schema';
 import render from './rendering';
 import conf, {setConfig} from './conf';
 import {start as gitUpdaterStart} from './gitasdb/update';
@@ -16,11 +16,11 @@ const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice
 const boIndex = path.join(boDirectory, 'index.html');
 const logger = winston.loggers.get('Server');
 
-export default function start(inputConfig) {
+export default async function start(inputConfig) {
 	setConfig(inputConfig);
 
 	const server = new Hapi.Server();
-
+	const ContentSchema = await buildSchema();
 	server.connection({
 		host: conf.server.host,
 		port: conf.server.port,
