@@ -1,4 +1,4 @@
-FROM slashgear/citation-base
+FROM ayaxp/citation-base
 
 # install all dependencies
 ADD package.json ./
