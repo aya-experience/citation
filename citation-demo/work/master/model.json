@@ -1,0 +1,53 @@
+[
+	{
+		"name": "Page",
+		"fields": [
+			{
+				"name": "slug",
+				"type": "text"
+			},
+			{
+				"name": "title",
+				"type": "rich-text"
+			},
+			{
+				"name": "component",
+				"type": ["link", "Component"]
+			},
+			{
+				"name": "children",
+				"type": ["links", "Page"]
+			}
+		]
+	},
+	{
+		"name": "Component",
+		"fields": [
+			{
+				"name": "type",
+				"type": "text"
+			},
+			{
+				"name": "children",
+				"type": ["links", "Component"]
+			},
+			{
+				"name": "data",
+				"type": ["links", "*"]
+			}
+		]
+	},
+	{
+		"name": "Content",
+		"fields": [
+			{
+				"name": "title",
+				"type": "text"
+			},
+			{
+				"name": "content",
+				"type": "rich-text"
+			}
+		]
+	}
+]
