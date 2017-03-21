@@ -7,6 +7,5 @@ import {workingDirectory} from './../gitasdb/constants';
 
 export async function readModel() {
 	const modelPath = path.resolve(workingDirectory, 'master', 'model.json');
-	const test = await fs.readJson(modelPath);
-	return test;
+	return await fs.readJson(modelPath);
 }
