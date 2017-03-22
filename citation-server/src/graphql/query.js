@@ -40,9 +40,9 @@ export async function buildObjects() {
 					}
 				};
 				structure.fields.forEach(field => {
-					if (typeof field.type === 'string') {
+					if (_.isString(field.type)) {
 						resultFields[field.name] = {type: GraphQLString};
-					} else if (typeof field.type === 'object') {
+					} else if (_.isArray(field.type)) {
 						if (field.type[0] === 'link' && field.type[1] !== '*') {
 							resultFields[field.name] = {
 								type: ObjectTypes[field.type[1]],

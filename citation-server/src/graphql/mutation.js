@@ -51,22 +51,18 @@ async function buildInputs() {
 					__newId__: {type: GraphQLID}
 				};
 				structure.fields.forEach(field => {
-					switch (field.type) {
-						case ('text'):
-						case ('rich-text'): {
+					if (_.isString(field.type)) {
+						resultFields[field.name] = {type: GraphQLString};
+					} else if (_.isArray(field.type)) {
+						if (field.type[0] === 'link') {
+							resultFields[field.name] = {type: LinkInputType};
+						} else if (field.type[0] === 'links') {
+							resultFields[field.name] = {type: LinksInputType};
+						} else {
 							resultFields[field.name] = {type: GraphQLString};
-							break;
 						}
-						default: {
-							if (field.type[0] === 'link') {
-								resultFields[field.name] = {type: LinkInputType};
-							} else if (field.type[0] === 'links') {
-								resultFields[field.name] = {type: LinksInputType};
-							} else {
-								resultFields[field.name] = {type: GraphQLString};
-							}
-							break;
-						}
+					} else {
+						resultFields[field.name] = {type: GraphQLString};
 					}
 				});
 				return resultFields;
