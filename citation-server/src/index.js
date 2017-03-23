@@ -19,8 +19,11 @@ const logger = winston.loggers.get('Server');
 export default async function start(inputConfig) {
 	setConfig(inputConfig);
 
-	const server = new Hapi.Server();
+	await gitUpdaterStart();
 	const ContentSchema = await buildSchema();
+
+	const server = new Hapi.Server();
+
 	server.connection({
 		host: conf.server.host,
 		port: conf.server.port,
@@ -63,7 +66,6 @@ export default async function start(inputConfig) {
 
 		server.start(async () => {
 			logger.info(`Server running at: ${server.info.uri}`);
-			await gitUpdaterStart();
 			await render();
 		});
 	});
