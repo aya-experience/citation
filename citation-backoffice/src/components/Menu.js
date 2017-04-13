@@ -11,7 +11,6 @@ export default class Menu extends Component {
 
 	render() {
 		const pairs = _(this.props.collections).toPairs().sortBy(pair => pair[0]).value();
-
 		return (
 			<ul className="Menu-container">
 				{pairs.map(([type, objects]) => (
