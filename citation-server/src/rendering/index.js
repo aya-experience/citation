@@ -1,5 +1,7 @@
 import path from 'path';
 import {spawn as spawnProcess} from 'child_process';
+
+import _ from 'lodash';
 import react from 'citation-react-renderer';
 import winston from 'winston';
 
@@ -9,11 +11,12 @@ const logger = winston.loggers.get('Renderer');
 
 export const renderers = {react};
 
-export function spawn(cmd) {
+export function spawn(cmd, cwd) {
 	return new Promise((resolve, reject) => {
 		const process = spawnProcess(cmd, [], {
 			stdio: 'inherit',
-			shell: true
+			shell: true,
+			cwd
 		});
 
 		process.on('exit', code => {
@@ -32,12 +35,11 @@ export default async function rendering() {
 			logger.info('Skipped due to configuration');
 			return;
 		}
-		const host = conf.server.host ? conf.server.host : 'localhost';
-		// await spawn(conf.build.command);
+		const componentsConf = _.get(conf, 'components[0]', {});
 		await renderers[conf.render.framework]({
-			serverUrl: `http://${host}:${conf.server.port}/${conf.server['graphql-context']}`,
-			components: path.join(process.cwd(), conf.build['compile-directory'], conf.build.components),
-			buildDir: path.join(process.cwd(), conf.build['build-directory']),
+			serverUrl: `http://${conf.server.host}:${conf.server.port}/${conf.server['graphql-context']}`,
+			components: path.join(conf.work.components, '0', 'master', componentsConf['compile-directory'], componentsConf.components),
+			buildDir: path.join(conf.work.components, '0', 'master', componentsConf['build-directory']),
 			renderDir: path.join(process.cwd(), conf.render.directory),
 			anchor: conf.render.anchor
 		});

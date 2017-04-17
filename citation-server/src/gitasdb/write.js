@@ -5,7 +5,7 @@ import fs from 'fs-promise';
 import winston from 'winston';
 
 import {create} from '../nodegit/wrapper';
-import {workingDirectory} from './constants';
+import conf from '../conf';
 import {readObject} from './read';
 
 const logger = winston.loggers.get('GitAsDb');
@@ -13,7 +13,7 @@ const logger = winston.loggers.get('GitAsDb');
 export async function writeObject(type, data) {
 	try {
 		// Opening repository
-		const repositoryPath = path.resolve(workingDirectory, 'master');
+		const repositoryPath = path.resolve(conf.work.content, 'master');
 		const repository = await create(repositoryPath);
 		let id = data.__id__;
 		const newId = data.__newId__;

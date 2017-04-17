@@ -1,0 +1,13 @@
+{
+	"content": {
+		"repository": "https://github.com/aya-experience/citation-demo-content.git",
+		"username": "citation-server"
+	},
+	"components": [{
+		"repository": "https://github.com/aya-experience/citation-demo-react-components.git",
+		"username": "citation-server"
+	}],
+	"render": {
+		"framework": "react"
+	}
+}

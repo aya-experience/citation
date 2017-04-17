@@ -5,7 +5,7 @@ import fs from 'fs-promise';
 import mergeDeep from 'merge-deep';
 import winston from 'winston';
 
-import {workingDirectory} from './constants';
+import conf from '../conf';
 
 const logger = winston.loggers.get('GitAsDb');
 
@@ -16,7 +16,7 @@ function includesLink(stack, link) {
 export async function inspectObject(type, id, stack = []) {
 	try {
 		logger.debug(`inspect object ${type} ${id}`);
-		const objectPath = path.resolve(workingDirectory, 'master', type, id);
+		const objectPath = path.resolve(conf.work.content, 'master', type, id);
 		const objectFiles = await fs.readdir(objectPath);
 		const objectFields = await Promise.all(objectFiles.map(async file => {
 			const ext = path.extname(file);
