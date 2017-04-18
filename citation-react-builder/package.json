@@ -1,0 +1,21 @@
+{
+  "name": "citation-react-builder",
+  "version": "0.2.0",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.23.0",
+    "citation-react-router": "^0.2.0",
+    "prop-types": "^15.5.8",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-router-dom": "^4.1.1"
+  },
+  "devDependencies": {
+    "react-scripts": "0.9.5"
+  }
+}

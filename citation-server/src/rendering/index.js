@@ -6,6 +6,7 @@ import react from 'citation-react-renderer';
 import winston from 'winston';
 
 import conf from '../conf';
+import build from './build';
 
 const logger = winston.loggers.get('Renderer');
 
@@ -35,11 +36,15 @@ export default async function rendering() {
 			logger.info('Skipped due to configuration');
 			return;
 		}
+
+		const buildPath = await build();
+
 		const componentsConf = _.get(conf, 'components[0]', {});
 		await renderers[conf.render.framework]({
 			serverUrl: `http://${conf.server.host}:${conf.server.port}/${conf.server['graphql-context']}`,
 			components: path.join(conf.work.components, '0', 'master', componentsConf['compile-directory'], componentsConf.components),
-			buildDir: path.join(conf.work.components, '0', 'master', componentsConf['build-directory']),
+			// buildDir: path.join(conf.work.components, '0', 'master', componentsConf['build-directory']),
+			buildDir: buildPath,
 			renderDir: path.join(process.cwd(), conf.render.directory),
 			anchor: conf.render.anchor
 		});

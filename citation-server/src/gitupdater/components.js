@@ -17,7 +17,7 @@ export async function updateCallback() {
 	const masterPath = path.resolve(directory, 'master');
 	await spawn(componentsConf['install-command'], masterPath);
 	await spawn(componentsConf['build-command'], masterPath);
-	await spawn(componentsConf['compile-command'], masterPath);
+	// await spawn(componentsConf['compile-command'], masterPath);
 	await render();
 }
 
