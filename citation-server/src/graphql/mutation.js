@@ -11,7 +11,7 @@ import {
 import winston from 'winston';
 
 import {writeObject} from '../gitasdb/write';
-import {readModel} from './model';
+import {readModel, writeModel} from './model';
 
 const logger = winston.loggers.get('GraphQL');
 
@@ -38,6 +38,31 @@ export const LinksInputType = new GraphQLInputObjectType({
 		links: {type: new GraphQLList(LinkDataInputType)}
 	})
 });
+
+export const FieldType = new GraphQLInputObjectType({
+	name: 'FieldType',
+	fields: () => ({
+		name: {type: GraphQLString},
+		type: {type: new GraphQLList(GraphQLString)}
+	})
+});
+
+export const SchemaType = new GraphQLInputObjectType({
+	name: 'SchemaType',
+	fields: () => ({
+		name: {type: GraphQLString},
+		fields: {type: new GraphQLList(FieldType)}
+	})
+});
+
+function buildSchemaInput() {
+	return new GraphQLInputObjectType({
+		name: 'SchemaInput',
+		fields: () => ({
+			types: {type: new GraphQLList(SchemaType)}
+		})
+	});
+}
 
 async function buildInputs() {
 	const InputType = {};
@@ -69,6 +94,7 @@ async function buildInputs() {
 			}
 		});
 	}
+	InputType.Schema = buildSchemaInput();
 	return InputType;
 }
 
@@ -86,6 +112,9 @@ export async function buildMutation(ObjectTypes) {
 					resolve: async (root, params) => {
 						logger.debug(`mutation ${params}`);
 						try {
+							if (key === 'Schema') {
+								return await writeModel(params);
+							}
 							return await writeObject(key, params[key.toLowerCase()]);
 						} catch (error) {
 							throw error;
