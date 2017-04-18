@@ -9,3 +9,8 @@ export async function readModel() {
 	const modelPath = path.resolve(conf.work.content, 'master', 'model.json');
 	return await fs.readJson(modelPath);
 }
+
+export async function writeModel(newModel) {
+	const modelPath = path.resolve(workingDirectory, 'master', 'model.json');
+	return await fs.writeJSON(modelPath, newModel.schema.types);
+}
