@@ -12,7 +12,6 @@ const conf = {
 	render: {
 		framework: undefined, // no default value, keep undefined for documentation
 		disable: false,
-		directory: 'render',
 		anchor: '<div id="root"></div>'
 	},
 	server: {
@@ -23,7 +22,8 @@ const conf = {
 	work: {
 		root: 'work',
 		content: 'content',
-		components: 'components'
+		components: 'components',
+		render: 'render'
 	}
 };
 
@@ -33,9 +33,6 @@ const defaultComponents = {
 	'install-command': 'yarn install',
 	'build-command': 'yarn build',
 	'build-directory': 'build',
-	'compile-command': 'yarn compile',
-	'compile-directory': 'compile',
-	components: 'components',
 	cron: '*/5 * * * *'
 };
 
@@ -43,8 +40,11 @@ export default conf;
 
 export function setConfig(newConf) {
 	assign(conf, newConf);
-	conf.components = conf.components.map(components => assign(defaultComponents, components));
+	conf.components = conf.components.map(components =>
+		assign(defaultComponents, components)
+	);
 	conf.work.root = path.resolve(process.cwd(), conf.work.root);
-	conf.work.content = path.resolve(conf.work.root, conf.work.content);
-	conf.work.components = path.resolve(conf.work.root, conf.work.components);
+	['content', 'components', 'render'].forEach(directory => {
+		conf.work[directory] = path.resolve(conf.work.root, conf.work[directory]);
+	});
 }

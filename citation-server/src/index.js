@@ -47,7 +47,7 @@ export default async function start(inputConfig) {
 		server.route({
 			method: 'GET',
 			path: '/{param*}',
-			handler: {directory: {path: conf.render.directory}}
+			handler: {directory: {path: conf.work.render}}
 		});
 
 		server.route({

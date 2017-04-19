@@ -7,10 +7,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import CitationRouter from 'citation-react-router';
 
-import components from './components'; // eslint-disable-line
-console.log('components', components);
-
-// import './index.css';
+import components from './components';
 
 let serverUrl;
 
