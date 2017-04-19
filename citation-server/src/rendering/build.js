@@ -5,24 +5,25 @@ import conf from '../conf';
 import {spawn} from './';
 
 export default async function build() {
+	const builderLinkedPath = path.join(__dirname, '..', '..', 'node_modules', `citation-${conf.render.framework}-builder`);
+	const builderPath = await fs.realpath(builderLinkedPath);
+	const bulierSrcPath = path.join(builderPath, 'src');
+	const componentsJsPath = path.join(bulierSrcPath, 'components.js');
+
 	const imports = conf.components
 		.map((components, i) => path.join(conf.work.components, i.toString(), 'master'))
-		.map((path, i) => `import components${i} from '${path}';`)
+		.map(componentsPath => path.relative(bulierSrcPath, componentsPath))
+		.map((componentsPath, i) => `import components${i} from '${componentsPath}';`)
 		.join('\n');
 	const exports = conf.components
 		.map((_, i) => `...components${i}`)
 		.join(',\n	');
 
-	const componentsJs = `/* eslint-disable */
-
-${imports}
+	const componentsJs = `${imports}
 
 export default {
 	${exports}
 };`;
-
-	const builderPath = path.join(__dirname, '..', '..', 'node_modules', `citation-${conf.render.framework}-builder`);
-	const componentsJsPath = path.join(builderPath, 'src', 'components.js');
 
 	await fs.writeFile(componentsJsPath, componentsJs);
 

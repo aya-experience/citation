@@ -39,10 +39,11 @@ export default async function rendering() {
 
 		const buildPath = await build();
 
-		const componentsConf = _.get(conf, 'components[0]', {});
+		// const componentsConf = _.get(conf, 'components[0]', {});
 		await renderers[conf.render.framework]({
 			serverUrl: `http://${conf.server.host}:${conf.server.port}/${conf.server['graphql-context']}`,
-			components: path.join(conf.work.components, '0', 'master', componentsConf['compile-directory'], componentsConf.components),
+			// components: path.join(conf.work.components, '0', 'master', componentsConf['compile-directory'], componentsConf.components),
+			components: path.join(conf.work.components, '0', 'master'),
 			// buildDir: path.join(conf.work.components, '0', 'master', componentsConf['build-directory']),
 			buildDir: buildPath,
 			renderDir: path.join(process.cwd(), conf.render.directory),
