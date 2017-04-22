@@ -11,4 +11,4 @@ RUN npm run build
 
 EXPOSE 4000
 
-CMD cd ./citation-demo && npm start
+CMD cd ./citation-react-demo && npm start
