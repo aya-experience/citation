@@ -1,43 +1,69 @@
 import path from 'path';
 import fs from 'fs-promise';
+import {mapSeries} from 'bluebird';
 
 import conf from '../conf';
 import spawn from '../utils/spawn';
 
-export default async function build() {
-	const builderLinkedPath = path.join(
-		__dirname,
-		'..',
-		'..',
-		'node_modules',
-		`citation-${conf.render.framework}-builder`
-	);
-	const builderPath = await fs.realpath(builderLinkedPath);
-	const bulierSrcPath = path.join(builderPath, 'src');
-	const componentsJsPath = path.join(bulierSrcPath, 'components.js');
+const citationServerPath = path.join(__dirname, '..', '..');
 
-	const imports = conf.components
-		.map((components, i) =>
-			path.join(conf.work.components, i.toString(), 'master')
-		)
-		.map(componentsPath => path.relative(bulierSrcPath, componentsPath))
-		.map(
-			(componentsPath, i) => `import components${i} from '${componentsPath}';`
-		)
+export async function getBuilderPath() {
+	const builderLinkedPath = path.join(citationServerPath, conf.builder.directory);
+	return await fs.realpath(builderLinkedPath);
+}
+
+export async function getComponentsPaths() {
+	return mapSeries(conf.components, async (components, i) => {
+		if (components.repository) {
+			return path.join(conf.work.components, i.toString());
+		}
+		if (components.dependency) {
+			const dependencyLinkedPath = path.join(conf.work.root, '../node_modules', components.dependency);
+			return await fs.realpath(dependencyLinkedPath);
+		}
+		return components.directory;
+	});
+}
+
+async function createComponentsJs() {
+	const builderSrcPath = path.join(await getBuilderPath(), conf.builder['src-directory']);
+
+	const imports = (await getComponentsPaths())
+		.map(componentsPath => path.relative(builderSrcPath, componentsPath))
+		.map((componentsPath, i) => `import components${i} from '${componentsPath}';`)
 		.join('\n');
+
 	const exports = conf.components
 		.map((_, i) => `...components${i}`)
 		.join(',\n	');
 
-	const componentsJs = `${imports}
+	return `${imports}
 
 export default {
 	${exports}
 };`;
+}
+
+export async function updateComponentsJs() {
+	const componentsJsPath = path.join(
+		await getBuilderPath(),
+		conf.builder['src-directory'],
+		conf.builder['components-file']
+	);
+
+	const componentsJs = await createComponentsJs();
 
 	await fs.writeFile(componentsJsPath, componentsJs);
+}
+
+export async function build() {
+	const builderPath = await getBuilderPath();
 
 	await spawn('yarn build', builderPath);
+}
 
-	return path.join(builderPath, 'build');
+export async function start() {
+	const builderPath = await getBuilderPath();
+
+	await spawn('yarn start', builderPath);
 }

@@ -9,6 +9,7 @@
     "test": "nyc lerna run test && nyc report --reporter=text-lcov > coverage.lcov",
     "codecov": "./node_modules/.bin/codecov",
     "dev": "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server\"",
+    "dev-dev": "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server-dev\"",
     "test:react-router": "cd citation-react-router && npm test",
     "test:react-renderer": "cd citation-react-renderer && npm test",
     "test:server": "cd citation-server && npm test",
@@ -17,7 +18,8 @@
     "dev:react-router": "cd citation-react-router && npm run dev",
     "dev:react-renderer": "cd citation-react-renderer && npm run dev",
     "dev:server": "cd citation-server && npm run dev",
-    "nodemon:server": "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib"
+    "nodemon:server": "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib --watch ../citation-react-renderer/lib --watch ../citation-react-router/lib",
+    "nodemon:server-dev": "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib --watch ../citation-react-renderer/lib --watch ../citation-react-router/lib -- --conf citation.conf.dev.json"
   },
   "devDependencies": {
     "ava": "^0.18.1",

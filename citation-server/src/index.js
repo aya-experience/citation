@@ -9,8 +9,8 @@ import winston from 'winston';
 
 import {buildSchema} from './graphql/schema';
 import conf, {setConfig} from './conf';
-import {start as startUpdater} from './gitupdater';
-import {updateCallback as render} from './gitupdater/components';
+import {start as startUpdater, updateContent} from './gitupdater';
+import {start as startDevMode} from './rendering/build';
 
 const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice/build');
 const boIndex = path.join(boDirectory, 'index.html');
@@ -19,7 +19,8 @@ const logger = winston.loggers.get('Server');
 export default async function start(inputConfig) {
 	setConfig(inputConfig);
 
-	await startUpdater();
+	await updateContent();
+
 	const ContentSchema = await buildSchema();
 
 	const server = new Hapi.Server();
@@ -66,7 +67,11 @@ export default async function start(inputConfig) {
 
 		server.start(async () => {
 			logger.info(`Server running at: ${server.info.uri}`);
-			await render();
+
+			await startUpdater();
+			if (conf.dev) {
+				startDevMode();
+			}
 		});
 	});
 }

@@ -1,13 +1,13 @@
 {
+	"dev": true,
 	"content": {
 		"repository": "https://github.com/aya-experience/citation-demo-content.git",
 		"username": "citation-server"
 	},
 	"components": [{
-		"dependency": "citation-react-demo-components"
+		"directory": "../citation-react-demo-components"
 	}, {
-		"repository": "https://github.com/aya-experience/citation-demo-react-components.git",
-		"username": "citation-server"
+		"directory": "../../citation-demo-react-components"
 	}],
 	"render": {
 		"framework": "react"

@@ -17,6 +17,7 @@
   "dependencies": {
     "assign-deep": "^0.4.5",
     "babel-polyfill": "^6.22.0",
+    "bluebird": "^3.5.0",
     "citation-backoffice": "^0.2.0",
     "citation-react-builder": "^0.2.0",
     "citation-react-renderer": "^0.2.0",
