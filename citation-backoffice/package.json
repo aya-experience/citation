@@ -2,6 +2,12 @@
   "name": "citation-backoffice",
   "version": "0.2.0",
   "homepage": "/admin",
+  "scripts": {
+    "dev": "react-scripts start",
+    "lint": "../node_modules/.bin/eslint src",
+    "build": "react-scripts build",
+    "test": "NODE_ENV=development ava --verbose"
+  },
   "dependencies": {
     "lodash": "^4.16.6",
     "react": "^15.3.2",
@@ -29,12 +35,6 @@
     "react-addons-test-utils": "^15.4.2",
     "react-scripts": "0.7.0",
     "sinon": "^1.17.7"
-  },
-  "scripts": {
-    "dev": "react-scripts start",
-    "lint": "../node_modules/.bin/eslint src",
-    "build": "react-scripts build",
-    "test": "NODE_ENV=development ava --verbose"
   },
   "ava": {
     "files": [

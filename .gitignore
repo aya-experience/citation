@@ -2,5 +2,5 @@
 node_modules
 npm-debug.log*
 lerna-debug.log*
-coverage.lcov
+/coverage*
 .nyc_output
