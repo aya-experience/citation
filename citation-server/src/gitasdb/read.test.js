@@ -11,7 +11,7 @@ let readdir;
 test.beforeEach(() => {
 	readdir = sinon.stub().returns(Promise.resolve([]));
 	read = proxyquire('./read', {
-		'./constants': {workingDirectory},
+		'../conf': {default: {work: {content: workingDirectory}}},
 		'fs-promise': {readdir},
 		winston: {loggers: {get: () => ({debug: () => {}})}}
 	});

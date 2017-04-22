@@ -8,6 +8,14 @@ winston.loggers.add('GitAsDb', {
 	}
 });
 
+winston.loggers.add('GitUpdater', {
+	console: {
+		level: 'info',
+		colorize: true,
+		label: 'GitUpdater'
+	}
+});
+
 winston.loggers.add('NodeGit', {
 	console: {
 		level: 'info',

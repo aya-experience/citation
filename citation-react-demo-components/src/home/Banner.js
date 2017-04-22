@@ -7,7 +7,7 @@ const icons = ['js', 'content', 'deploy'];
 const Banner = ({data}) => (
 	<div className="Banner">
 		{data.map((data, i) => (
-			<div key={i} className="Banner-column">
+			<div key={icons[i]} className="Banner-column">
 				<img src={`/assets/${icons[i]}.svg`} alt={data.title}/>
 				<br/>
 				{data.content}

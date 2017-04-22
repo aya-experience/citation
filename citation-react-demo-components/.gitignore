@@ -11,6 +11,7 @@ build
 /render
 /compile
 /work
+/lib
 
 # misc
 .DS_Store
