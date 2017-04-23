@@ -24,7 +24,7 @@ const conf = {
 		anchor: '<div id="root"></div>'
 	},
 	server: {
-		host: 'localhost',
+		// host: no default value, keep for documentation
 		port: 4000,
 		'graphql-context': 'graphql'
 	},
