@@ -1933,6 +1933,10 @@ get-port@^2.1.0:
   dependencies:
     pinkie-promise "^2.0.0"
 
+get-port@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/get-port/-/get-port-3.1.0.tgz#ef01b18a84ca6486970ff99e54446141a73ffd3e"
+
 get-stdin@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/get-stdin/-/get-stdin-4.0.1.tgz#b968c6b0a04384324902e8bf1a5df32579a450fe"
@@ -2027,7 +2031,7 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-globby@^6.0.0:
+globby@^6.0.0, globby@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/globby/-/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
   dependencies:
@@ -2689,9 +2693,9 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
-lerna@2.0.0-rc.2:
-  version "2.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.0.0-rc.2.tgz#6c2191f6af2bf736bea4f49ba36e6576e204a13d"
+lerna@2.0.0-rc.3:
+  version "2.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.0.0-rc.3.tgz#49b312dc7bf965544b016943e3f621220d1982f6"
   dependencies:
     async "^1.5.0"
     chalk "^1.1.1"
@@ -2705,7 +2709,9 @@ lerna@2.0.0-rc.2:
     execa "^0.6.3"
     find-up "^2.1.0"
     fs-promise "^2.0.2"
+    get-port "^3.1.0"
     glob "^7.0.6"
+    globby "^6.1.0"
     graceful-fs "^4.1.11"
     inquirer "^3.0.6"
     load-json-file "^2.0.0"

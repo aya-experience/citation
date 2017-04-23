@@ -6,9 +6,9 @@ RUN npm install
 
 # add node content initially
 ADD . .
-RUN npm run bootstrap
-RUN npm run build
+RUN yarn bootstrap
+RUN yarn build
 
 EXPOSE 4000
 
-CMD cd ./citation-react-demo && npm start
+CMD cd ./citation-react-demo && yarn start

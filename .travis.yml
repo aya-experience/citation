@@ -26,9 +26,9 @@ before_scripts:
 - npm install --global yarn
 
 script:
-- yarn run bootstrap
-- yarn run build
-- yarn run lint
+- yarn bootstrap
+- yarn build
+- yarn lint
 - yarn test
 
 after_success:
