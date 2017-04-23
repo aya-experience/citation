@@ -13,6 +13,7 @@ addons:
     - libstdc++-4.9-dev
 
 cache:
+  yarn: true
   directories:
   - node_modules
   - citation-backoffice/node_modules
@@ -21,14 +22,17 @@ cache:
   - citation-react-router/node_modules
   - citation-server/node_modules
 
+before_scripts:
+- npm install --global yarn
+
 script:
-- npm run bootstrap
-- npm run build
-- npm run lint
-- npm test
+- yarn bootstrap
+- yarn build
+- yarn lint
+- yarn test
 
 after_success:
-- npm run codecov
+- yarn run codecov
 - if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   rm -rf node_modules;
   rm -rf citation-backoffice/node_modules;

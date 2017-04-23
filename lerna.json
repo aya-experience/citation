@@ -1,7 +1,8 @@
 {
-  "lerna": "2.0.0-beta.37",
+  "lerna": "2.0.0-rc.3",
   "packages": [
     "citation-*"
   ],
-  "version": "0.2.0"
+  "version": "0.2.0",
+  "npmClient": "yarn"
 }
