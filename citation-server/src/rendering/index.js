@@ -13,8 +13,10 @@ export const renderers = {react};
 
 export default async function rendering() {
 	try {
+		const host = conf.server.host ? conf.server.host : 'localhost';
+
 		await renderers[conf.render.framework]({
-			serverUrl: `http://${conf.server.host}:${conf.server.port}/${conf.server['graphql-context']}`,
+			serverUrl: `http://${host}:${conf.server.port}/${conf.server['graphql-context']}`,
 			components: await getComponentsPaths(),
 			buildDir: path.join(await getBuilderPath(), conf.builder['build-directory']),
 			renderDir: conf.work.render,
