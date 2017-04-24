@@ -1,12 +1,16 @@
 import {createAction, createReducer} from 'redux-act';
+import _ from 'lodash';
 import {query} from './graphql-client';
 
 export const loadCollectionSuccess = createAction('load collection success');
 
 export function loadCollection(type) {
 	return dispatch => {
-		return query(`{${type} {__id__}}`)
-			.then(response => dispatch(loadCollectionSuccess({type, data: response.data[type]})));
+		const types = type.map(field => `${field} {__id__}`);
+		return query(`{${types}}`)
+			.then(response => Object.keys(response.data)
+			.map(field => dispatch(loadCollectionSuccess({type: field, data: response.data[field]})))
+		);
 	};
 }
 

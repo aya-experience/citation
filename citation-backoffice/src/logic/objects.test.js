@@ -2,6 +2,8 @@ import test from 'ava';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
+import {winston} from './../winstonMock';
+
 let objects;
 let mutation;
 let query;
@@ -36,7 +38,7 @@ test.beforeEach(() => {
 	objects = proxyquire('./objects', {
 		'./graphql-client': {query, mutation},
 		lodash: {get, isUndefined},
-		winston: {loggers: {get: () => ({debug: () => {}, error: () => {}})}}
+		winston
 	});
 });
 

@@ -4,19 +4,18 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import {shallow} from 'enzyme';
 
-const store = {
-	subscribe: sinon.stub(),
-	dispatch: sinon.stub(),
-	getState: sinon.stub()
-};
+import {store} from './../reduxMock';
 
 let App;
 let loadCollection;
 let loadSchema;
 
+const collectionReturned = 'loadCollection returned';
+const schemaReturned = 'loadSchema returned';
+
 test.beforeEach(() => {
-	loadCollection = sinon.stub().returns('loadCollection returned');
-	loadSchema = sinon.stub().returns('loadSchema returned');
+	loadCollection = sinon.stub().returns(collectionReturned);
+	loadSchema = sinon.stub().returns(schemaReturned);
 	App = proxyquire('./App', {
 		'../logic/collections': {loadCollection},
 		'../logic/schema': {loadSchema}
@@ -53,7 +52,7 @@ test('mapDispatchToProps should dispatch loadSchema', t => {
 	store.getState.returns({collections});
 	const app = setup();
 	app.instance().props.loadSchema();
-	t.is(store.dispatch.args[0][0], 'loadSchema returned');
+	t.is(store.dispatch.args[0][0], schemaReturned);
 });
 
 test('mapDispatchToProps should dispatch loadCollections()', t => {
@@ -62,5 +61,5 @@ test('mapDispatchToProps should dispatch loadCollections()', t => {
 	store.getState.returns({collections});
 	const app = setup();
 	app.instance().props.loadCollections({data: [test]});
-	t.is(store.dispatch.args[0][0], 'loadCollection returned');
+	t.is(store.dispatch.args[0][0], collectionReturned);
 });
