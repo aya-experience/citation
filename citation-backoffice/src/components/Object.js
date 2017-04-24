@@ -54,10 +54,11 @@ export const mapStateToProps = (state, ownProps) => {
 };
 
 export const mapDispatchToProps = (dispatch, ownProps) => {
+	const {type, id} = ownProps.match.params;
 	return {
 		loadFields: type => Promise.all([dispatch(loadSchemaFields(type))]),
-		load: fields => dispatch(loadObject(ownProps.match.params.type, ownProps.match.params.id, fields)),
-		write: (data, fields) => dispatch(writeObject(ownProps.match.params.type, ownProps.match.params.id, data, fields))
+		load: fields => dispatch(loadObject(type, id, fields)),
+		write: (data, fields) => dispatch(writeObject(type, id, data, fields))
 	};
 };
 
