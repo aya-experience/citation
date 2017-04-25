@@ -42,7 +42,7 @@ async function askTypes() {
 	const objectNames = [];
 	Object.keys(existingTypes.data.__schema.types).forEach(key => {
 		const field = existingTypes.data.__schema.types[key];
-		if (field.kind === 'OBJECT' && field.name !== 'Query' && field.name !== 'Mutation' && !field.name.startsWith('__')) {
+		if (field.kind === 'OBJECT' && field.name !== 'Query' && field.name !== 'Mutation' && !/^__/.test(field.name)) {
 			objectNames.push(field.name);
 		}
 	});

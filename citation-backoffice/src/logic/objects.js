@@ -6,7 +6,7 @@ export const loadObjectStarted = createAction('load object started');
 export const loadObjectSuccess = createAction('load object success');
 
 export function generateTypes(fields) {
-	return Object.keys(fields.data).filter(field => !field.startsWith('__')).map(field => {
+	return Object.keys(fields.data).filter(field => !/^__/.test(field)).map(field => {
 		if (fields.data[field].kind === 'OBJECT' || fields.data[field].kind === 'LIST') {
 			if (fields.data[field].typeName === '*') {
 				return (`${field} {__id__, __type__}`);

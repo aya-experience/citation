@@ -18,7 +18,7 @@ class ObjectForm extends Component {
 		const fields = this.props.fields;
 		let customFields = [];
 		if (fields.data) {
-			customFields = Object.keys(fields.data).filter(field => !field.startsWith('__')).map(field => {
+			customFields = Object.keys(fields.data).filter(field => !/^__/.test(field)).map(field => {
 				const label = (<label htmlFor={field}>{field}</label>);
 				if (fields.data[field].kind === 'OBJECT') {
 					if (fields.data[field].typeName === '*') {
