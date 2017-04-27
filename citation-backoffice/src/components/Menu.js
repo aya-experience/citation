@@ -13,6 +13,11 @@ export default class Menu extends Component {
 		const pairs = _(this.props.collections).toPairs().sortBy(pair => pair[0]).value();
 		return (
 			<ul className="Menu-container">
+				<Link to={'/schema'}>
+					<p className="Menu-object">
+						Edit schema
+					</p>
+				</Link>
 				{pairs.map(([type, objects]) => (
 					<li key={type}>
 						<p className="Menu-collection">
