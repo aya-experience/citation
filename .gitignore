@@ -5,3 +5,4 @@ lerna-debug.log*
 /coverage*
 .nyc_output
 yarn-error.log
+*.orig
