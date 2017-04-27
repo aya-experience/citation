@@ -8,7 +8,7 @@ import {toLinksInput} from './LinksField';
 class GenericObject extends Component {
 	static propTypes = {
 		object: PropTypes.object.isRequired,
-		type: PropTypes.object.isRequired,
+		type: PropTypes.string.isRequired,
 		collections: PropTypes.object.isRequired,
 		fields: PropTypes.object.isRequired,
 		onSubmit: PropTypes.func.isRequired
