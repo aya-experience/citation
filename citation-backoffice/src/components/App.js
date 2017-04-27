@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react';
 import {Route, Link, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {loadCollection} from '../logic/collections';
+import {loadSchema} from '../logic/schema';
+
 import Menu from './Menu';
 import Home from './Home';
 import ObjectComponent from './Object';
@@ -12,12 +14,14 @@ const NoMatch = () => <div><h1>Oups!</h1></div>;
 
 class App extends Component {
 	static propTypes = {
+		schema: PropTypes.object.isRequired,
 		collections: PropTypes.object.isRequired,
-		load: PropTypes.func.isRequired
+		loadCollections: PropTypes.func.isRequired,
+		loadSchema: PropTypes.func.isRequired
 	}
 
 	componentDidMount() {
-		return this.props.load();
+		this.props.loadSchema().then(() => this.props.loadCollections(this.props.schema));
 	}
 
 	render() {
@@ -47,16 +51,18 @@ class App extends Component {
 
 const mapStateToProps = state => {
 	return {
-		collections: state.collections
+		collections: state.collections,
+		schema: state.schema
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		load: () => Promise.all([
-			dispatch(loadCollection('Page')),
-			dispatch(loadCollection('Component')),
-			dispatch(loadCollection('Content'))
+		loadSchema: () => Promise.all([
+			dispatch(loadSchema())
+		]),
+		loadCollections: schema => Promise.all([
+			dispatch(loadCollection(schema.data.filter(field => field !== 'Schema')))
 		])
 	};
 };

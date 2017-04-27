@@ -2,31 +2,35 @@ import _ from 'lodash';
 import {createAction, createReducer} from 'redux-act';
 import {query, mutation} from './graphql-client';
 
-// Temporary fixed model
-const fields = {
-	Page: ['__id__', 'slug', 'title', 'children {__id__}', 'component {__id__}'].join(', '),
-	Component: ['type', 'children {__id__}', 'data {__id__, __type__}'].join(', '),
-	Content: ['title', 'content'].join(', ')
-};
-
 export const loadObjectStarted = createAction('load object started');
 export const loadObjectSuccess = createAction('load object success');
 
-export function loadObject(type, id) {
+export function generateTypes(fields) {
+	return Object.keys(fields.data).filter(field => !/^__/.test(field)).map(field => {
+		if (fields.data[field].kind === 'OBJECT' || fields.data[field].kind === 'LIST') {
+			if (fields.data[field].typeName === '*') {
+				return (`${field} {__id__, __type__}`);
+			}
+			return (`${field} {__id__}`);
+		}
+		return (`${field}`);
+	});
+}
+
+export function loadObject(type, id, fields) {
+	const types = generateTypes(fields);
 	return (dispatch, getState) => {
 		const stateObject = _.get(getState(), `objects.${type}.${id}`);
 		if (!_.isUndefined(stateObject)) {
 			return;
 		}
-
 		dispatch(loadObjectStarted({type, id}));
-		return query(`{${type}(id: "${id}") {__id__, ${fields[type]}}}`)
+		return query(`{${type}(id: "${id}") {__id__, ${types.join(', ')}}}`)
 			.then(response => dispatch(loadObjectSuccess({type, id, data: response.data[type][0]})));
 	};
 }
 
-export function writeObject(type, id, data) {
-	const subType = type.toLowerCase();
+export function writeObject(type, id, data, fields) {
 	function formatData(data) {
 		return _.map(data, (value, key) => {
 			let formatedData;
@@ -37,17 +41,18 @@ export function writeObject(type, id, data) {
 			} else {
 				formatedData = JSON.stringify(value);
 			}
-			return `${key}: ${formatedData}`;
+			return key === type ? `${key.toLowerCase()}: ${formatedData}` : `${key}: ${formatedData}`;
 		});
 	}
-	data[subType].__newId__ = data[subType].__id__;
+	data[type].__newId__ = data[type].__id__;
 	if (id) {
-		data[subType].__id__ = id;
+		data[type].__id__ = id;
 	} else {
-		delete data[subType].__id__;
+		delete data[type].__id__;
 	}
+	const types = generateTypes(fields);
 	return dispatch => {
-		return mutation(`{edit${type}(${formatData(data)}) {${fields[type]}}}`)
+		return mutation(`{edit${type}(${formatData(data)}) {${types.join(', ')}}}`)
 			.then(response => dispatch(loadObjectSuccess({
 				type,
 				id: response.data[`edit${type}`].__id__,

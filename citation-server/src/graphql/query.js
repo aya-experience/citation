@@ -21,6 +21,15 @@ export const ObjectInterface = new GraphQLInterfaceType({
 	})
 });
 
+function buildSchemaObject() {
+	return new GraphQLObjectType({
+		name: 'Schema',
+		fields: () => {
+			return {name: {type: GraphQLString}};
+		}
+	});
+}
+
 export async function buildObjects() {
 	const ObjectTypes = {};
 	const model = await readModel();
@@ -42,7 +51,7 @@ export async function buildObjects() {
 				structure.fields.forEach(field => {
 					if (_.isString(field.type)) {
 						resultFields[field.name] = {type: GraphQLString};
-					} else if (_.isArray(field.type)) {
+					} else if (_.size(field.type) > 1) {
 						if (field.type[0] === 'link' && field.type[1] !== '*') {
 							resultFields[field.name] = {
 								type: ObjectTypes[field.type[1]],
@@ -74,6 +83,7 @@ export async function buildObjects() {
 			}
 		});
 	}
+	ObjectTypes.Schema = buildSchemaObject();
 	return ObjectTypes;
 }
 
