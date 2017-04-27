@@ -23,7 +23,7 @@ export const ObjectInterface = new GraphQLInterfaceType({
 
 function buildSchemaObject() {
 	return new GraphQLObjectType({
-		name: 'Success',
+		name: 'Schema',
 		fields: () => {
 			return {name: {type: GraphQLString}};
 		}
