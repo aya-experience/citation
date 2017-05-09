@@ -16,9 +16,6 @@ class SchemaForm extends Component {
 		let result = [];
 		if (this.props.fields) {
 			result = Object.keys(this.props.fields).filter(field => !(field === 'Schema' || field === 'Page' || field === 'Component' || field === 'Content')).map(key => {
-				// const inputName = `${key}.${field}.name`;
-				// const kindName = `${key}.${field}.kind`;
-				// const typeName = `${key}.${field}.typeName`;
 				const title = (<h2>{key}</h2>);
 				const content = <FieldArray name={key} component={Fields} props={{name: key, collections: this.props.schema}}/>;
 				return (<div key={key}>
