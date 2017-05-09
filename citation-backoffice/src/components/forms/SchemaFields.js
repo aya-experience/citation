@@ -17,16 +17,24 @@ class Fields extends Component {
 	}
 
 	handleAdd() {
+		let usedNames = this.props.fields.getAll().map(field => {
+			return field.name;
+		});
+		usedNames = _.values(usedNames);
+		let index = 1;
+		let name;
+		do {
+			name = `new ${index}`;
+			index++;
+		} while (usedNames.indexOf(name) > -1);
 		this.props.fields.push({
-			name: 'new',
+			name,
 			typeName: 'String',
 			kind: 'SCALAR'
 		});
 	}
 
 	render() {
-		console.log(this.props.fields);
-		console.log(this.props.collections);
 		const key = this.props.name;
 		return (
 			<ul className="SchemaArray">
