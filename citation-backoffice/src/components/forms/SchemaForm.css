@@ -1,11 +1,11 @@
-form.SchemaForm > div > div{
+form.SchemaForm > div {
 	display: flex;
 	flex-flow: row;
 	justify-content: center;
 	margin: 1rem .5rem;
 }
 
-form.SchemaForm > div > div > label {
+form.SchemaForm > div > label {
 	font-size: 1rem;
 	font-weight: 700;
 	margin-right: 1rem;
@@ -14,7 +14,7 @@ form.SchemaForm > div > div > label {
 	padding: .5rem 1rem;
 }
 
-form.SchemaForm > div > div input {
+form.SchemaForm > div input {
 	flex: 1;
 	max-width: 30rem;
 	position: relative;
@@ -24,7 +24,7 @@ form.SchemaForm > div > div input {
 	height: 2rem;
 }
 
-form.SchemaForm > div > div textarea {
+form.SchemaForm > div textarea {
 	flex: 1;
 	max-width: 30rem;
 	position: relative;
@@ -34,7 +34,7 @@ form.SchemaForm > div > div textarea {
 	height: 5rem;
 }
 
-form.SchemaForm > div > div select {
+form.SchemaForm > div select {
 	flex: 1;
 	max-width: 30rem;
 	font-size: 1rem;
@@ -43,7 +43,7 @@ form.SchemaForm > div > div select {
 	height: 2rem;
 }
 
-form.SchemaForm > div > div > ul.ObjectArray {
+form.SchemaForm > div > ul.SchemaArray {
 	flex: 1;
 	max-width: 30rem;
 	display: flex;
@@ -54,19 +54,19 @@ form.SchemaForm > div > div > ul.ObjectArray {
 	list-style: none;
 }
 
-form.SchemaForm > div > div > ul.ObjectArray > li {
+form.SchemaForm > div > ul.SchemaArray > li {
 	max-width: 30rem;
 	display: flex;
 	flex-flow: row;
 	margin-bottom: .5rem;
 }
 
-form.SchemaForm > div > div > ul.ObjectArray > li > div {
+form.SchemaForm > div > ul.SchemaArray > li > div {
 	width: 100%;
 	display: flex;
 }
 
-form.SchemaForm > div > div > ul.ObjectArray > li.ObjectArrayAdd {
+form.SchemaForm > div > ul.SchemaArray > li.SchemaArrayAdd {
 	flex-direction: row-reverse;
 }
 
