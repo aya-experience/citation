@@ -45,15 +45,11 @@ export const mapStateToProps = state => {
 
 export const mapDispatchToProps = dispatch => {
 	return {
-		loadFields: schema => Promise.all([
+		loadFields: schema => Promise.all(
 			schema.map(fieldName => dispatch(loadAllSchemaFields(fieldName)))
-		]),
-		loadSchema: () => Promise.all([
-			dispatch(loadSchema())
-		]),
-		write: schema => Promise.all([
-			dispatch(writeSchema(schema))
-		])
+		),
+		loadSchema: () => dispatch(loadSchema()),
+		write: schema => dispatch(writeSchema(schema))
 	};
 };
 
