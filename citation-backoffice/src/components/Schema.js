@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {loadAllSchemaFields, loadSchema} from '../logic/schema';
+import {loadAllSchemaFields, loadSchema, writeSchema} from '../logic/schema';
 import SchemaComponent from './forms/Schema';
 
 class Schema extends Component {
@@ -8,7 +8,8 @@ class Schema extends Component {
 		schema: PropTypes.array.isRequired,
 		schemaFields: PropTypes.object.isRequired,
 		loadFields: PropTypes.func.isRequired,
-		loadSchema: PropTypes.func.isRequired
+		loadSchema: PropTypes.func.isRequired,
+		write: PropTypes.func.isRequired
 	};
 
 	constructor() {
@@ -21,7 +22,7 @@ class Schema extends Component {
 	}
 
 	handleSubmit(values) {
-		console.log('submitted', values);
+		this.props.write(values);
 	}
 
 	render() {
@@ -49,6 +50,9 @@ export const mapDispatchToProps = dispatch => {
 		]),
 		loadSchema: () => Promise.all([
 			dispatch(loadSchema())
+		]),
+		write: schema => Promise.all([
+			dispatch(writeSchema(schema))
 		])
 	};
 };

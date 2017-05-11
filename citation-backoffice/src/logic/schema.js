@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import {createAction, createReducer} from 'redux-act';
-import {query} from './graphql-client';
+import {query, mutation} from './graphql-client';
 
 export const loadSchemaSuccess = createAction('load schema success');
 export const loadSchemaFieldsSuccess = createAction('load schema fields success');
@@ -73,6 +74,33 @@ export function loadAllSchemaFields(type) {
 		.then(response => {
 			dispatch(loadAllSchemaFieldsSuccess({type, data: response}));
 		});
+	};
+}
+
+export function writeSchema(schema) {
+	console.log(schema);
+	function formatData(data) {
+		return _.map(data, (value, key) => {
+			let formatedData;
+			if (_.isArray(value)) {
+				if (key === 'type' && (value[0] === 'links' || value[0] === 'link')) {
+					value = value.map(field => JSON.stringify(field));
+					formatedData = `[${value.join(', ')}]`;
+				} else {
+					formatedData = `[${value.map(x => `{${formatData(x)}}`).join(', ')}]`;
+				}
+			} else if (_.isObject(value)) {
+				formatedData = `{${formatData(value)}}`;
+			} else {
+				formatedData = JSON.stringify(value);
+			}
+			return `${key}: ${formatedData}`;
+		});
+	}
+	console.log(`{editSchema(${formatData(schema)}) {name}}`);
+	return dispatch => {
+		return mutation(`{editSchema(${formatData(schema)}) {name}}`)
+			.then(response => console.log(response));
 	};
 }
 

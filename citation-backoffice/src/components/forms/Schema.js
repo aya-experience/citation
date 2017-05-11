@@ -17,6 +17,22 @@ class SchemaComponent extends Component {
 
 	handleSubmit(values) {
 		console.log('firstSubmit', values);
+		const result = _.clone(values);
+		const schema = {schema: {}};
+		schema.schema.types = Object.keys(result).map(type => {
+			const field = {name: type};
+			field.fields = Object.keys(result[type]).map(key => {
+				const field = result[type][key];
+				if (field.kind === 'OBJECT') {
+					return {name: field.name, type: ['link', field.typeName]};
+				} else if (field.kind === 'LIST') {
+					return {name: field.name, type: ['links', field.typeName]};
+				}
+				return {name: field.name, type: 'text'};
+			});
+			return field;
+		});
+		this.props.onSubmit(schema);
 	}
 
 	render() {
@@ -29,7 +45,6 @@ class SchemaComponent extends Component {
 			});
 			return initialValues;
 		});
-		console.log('my initialValues', initialValues);
 		const formProps = {
 			onSubmit: this.handleSubmit,
 			fields: this.props.schemaFields,
