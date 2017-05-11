@@ -24,7 +24,7 @@ class Fields extends Component {
 		let index = 1;
 		let name;
 		do {
-			name = `new ${index}`;
+			name = `new${index}`;
 			index++;
 		} while (usedNames.indexOf(name) > -1);
 		this.props.fields.push({
