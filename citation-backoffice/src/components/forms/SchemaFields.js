@@ -34,6 +34,10 @@ class Fields extends Component {
 		});
 	}
 
+	handleRemove(index) {
+		return () => this.props.fields.remove(index);
+	}
+
 	render() {
 		const key = this.props.name;
 		return (
@@ -45,6 +49,9 @@ class Fields extends Component {
 					return (<li key={i}>
 						<Field component="input" type="text" name={inputName}/>
 						<Field name={kindName} component={FieldType} props={{kindName, typeName, collections: this.props.collections}}/>
+						<button type="button" onClick={this.handleRemove(i)}>
+							X
+						</button>
 					</li>);
 				})}
 				<li className="SchemaArrayAdd">
