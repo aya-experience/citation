@@ -7,7 +7,8 @@ import conf from '../conf';
 
 export async function readModel() {
 	const modelPath = path.resolve(conf.work.content, 'master', 'model.json');
-	return await fs.readJson(modelPath);
+	const sourcesPath = path.resolve(conf.work.content, 'master', 'sources.json');
+	return Array.prototype.concat(await fs.readJson(sourcesPath), await fs.readJson(modelPath));
 }
 
 export async function writeModel(newModel) {
