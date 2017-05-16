@@ -108,3 +108,9 @@ test('inspectObject should ignore loops in links', async t => {
 		}
 	}]);
 });
+
+test('inspectObject should not fail on a broken link', async t => {
+	readdir.throws();
+	const result = await inspect.inspectObject('Type', 'id');
+	t.is(result, null);
+});

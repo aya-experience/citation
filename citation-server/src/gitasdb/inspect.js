@@ -49,7 +49,7 @@ export async function inspectObject(type, id, stack = []) {
 		return objectFields.filter(x => !_.isEmpty(x));
 	} catch (error) {
 		logger.error(`Gitasdb inspect error ${error}`);
-		throw error;
+		return null;
 	}
 }
 
