@@ -12,13 +12,13 @@
 
 ## Purpose
 
-Citation is a new way of building websites. It brings to users as well as developers the ability to fully configure a website by specifying the routing and organizing all the components of each page.
+Citation is a new way of building websites. It brings users the ability to fully configure a website by specifying the routing and organizing all the components of each page.
 
-It's able to manage your website structure as well as all your contents through an easy to use administration interface which store every data in a Git repository which will you full control on your data: historic, branches, merges...
+It's able to manage your website structure as well as all your contents through an easy to use administration interface which store every data in a Git repository. It gives you full control on your data: historic, branches, merges...
 
 Developers will still be able to have a full control on the project. It's possible to use several frameworks, its own components and use the Web tooling of Citation or once again, use its own.
 
-Citation is able to operate from a fully packaged and configurable solution to a set of development tools helping developers to develop his very specific website.
+Citation can operate from a fully packaged and configurable solution to a set of development tools helping developers to create their very specific website.
 
 ## Start a new website
 
