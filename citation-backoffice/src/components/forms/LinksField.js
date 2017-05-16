@@ -29,10 +29,9 @@ class LinksField extends Component {
 
 	handleAdd() {
 		const keys = Object.keys(this.props.collections);
-		const type = this.props.type ? this.props.type : keys[0];
 		this.props.fields.push({
-			__type__: type,
-			__id__: this.props.collections[type][0]
+			__type__: keys[0],
+			__id__: this.props.collections[keys[0]][0].__id__
 		});
 	}
 

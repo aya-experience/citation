@@ -1,12 +1,12 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {loadAllSchemaFields, loadSchema, writeSchema} from '../logic/schema';
+import {loadSchemaFields, loadSchema, writeSchema} from '../logic/schema';
 import SchemaComponent from './forms/Schema';
 
 class Schema extends Component {
 	static propTypes = {
 		schema: PropTypes.array.isRequired,
-		schemaFields: PropTypes.object.isRequired,
+		fields: PropTypes.object.isRequired,
 		loadFields: PropTypes.func.isRequired,
 		loadSchema: PropTypes.func.isRequired,
 		write: PropTypes.func.isRequired
@@ -30,7 +30,7 @@ class Schema extends Component {
 		return (
 			<div className="Schema">
 				<h1>Edit Schema</h1>
-				<Form schema={this.props.schema} schemaFields={this.props.schemaFields} onSubmit={this.handleSubmit}/>
+				<Form schema={this.props.schema} fields={this.props.fields} onSubmit={this.handleSubmit}/>
 			</div>
 		);
 	}
@@ -39,15 +39,13 @@ class Schema extends Component {
 export const mapStateToProps = state => {
 	return {
 		schema: state.schema.data ? state.schema.data : [],
-		schemaFields: state.schemaFields
+		fields: state.fields
 	};
 };
 
 export const mapDispatchToProps = dispatch => {
 	return {
-		loadFields: schema => Promise.all(
-			schema.map(fieldName => dispatch(loadAllSchemaFields(fieldName)))
-		),
+		loadFields: schema => dispatch(loadSchemaFields(schema)),
 		loadSchema: () => dispatch(loadSchema()),
 		write: schema => dispatch(writeSchema(schema))
 	};

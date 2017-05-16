@@ -23,11 +23,11 @@ class ObjectComponent extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadFields(this.props.type).then(() => this.props.load(this.props.fields));
+		this.props.loadFields([this.props.type]).then(() => this.props.load(this.props.fields));
 	}
 
 	componentWillReceiveProps(nextProps) {
-		nextProps.loadFields(nextProps.type).then(() => nextProps.load(this.props.fields));
+		nextProps.loadFields([nextProps.type]).then(() => nextProps.load(this.props.fields));
 	}
 
 	handleSubmit(values) {
@@ -56,7 +56,7 @@ export const mapStateToProps = (state, ownProps) => {
 export const mapDispatchToProps = (dispatch, ownProps) => {
 	const {type, id} = ownProps.match.params;
 	return {
-		loadFields: type => Promise.all([dispatch(loadSchemaFields(type))]),
+		loadFields: type => dispatch(loadSchemaFields([type])),
 		load: fields => dispatch(loadObject(type, id, fields)),
 		write: (data, fields) => dispatch(writeObject(type, id, data, fields))
 	};

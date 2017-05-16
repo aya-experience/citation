@@ -8,7 +8,7 @@ import {toLinksInput} from './LinksField';
 class GenericObject extends Component {
 	static propTypes = {
 		object: PropTypes.object.isRequired,
-		type: PropTypes.string.isRequired,
+		type: PropTypes.object.isRequired,
 		collections: PropTypes.object.isRequired,
 		fields: PropTypes.object.isRequired,
 		onSubmit: PropTypes.func.isRequired
@@ -25,16 +25,16 @@ class GenericObject extends Component {
 		result[type] = _.clone(values);
 		Object.keys(result[type]).forEach(key => {
 			if (_.isArray(result[type][key])) {
-				if (this.props.fields[key] === '*') {
+				if (this.props.fields[type][key].typeName === '*') {
 					result[type][key] = toLinksInput(values[key]);
 				} else {
-					result[type][key] = toLinksInput(values[key], this.props.fields.data[key].typeName);
+					result[type][key] = toLinksInput(values[key], this.props.fields[type][key].typeName);
 				}
 			} else if (_.isObject(result[type][key])) {
-				if (this.props.fields[key] === '*') {
+				if (this.props.fields[type][key].typeName === '*') {
 					result[type][key] = toLinkInput(values[key]);
 				} else {
-					result[type][key] = toLinkInput(values[key], this.props.fields.data[key].typeName);
+					result[type][key] = toLinkInput(values[key], this.props.fields[type][key].typeName);
 				}
 			}
 		});
@@ -46,7 +46,8 @@ class GenericObject extends Component {
 			onSubmit: this.handleSubmit,
 			initialValues: this.props.object,
 			collections: this.props.collections,
-			fields: this.props.fields
+			fields: this.props.fields,
+			type: this.props.type
 		};
 		return <ObjectForm {...formProps}/>;
 	}

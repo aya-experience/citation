@@ -6,7 +6,7 @@ import SchemaForm from './SchemaForm';
 class SchemaComponent extends Component {
 	static propTypes = {
 		schema: PropTypes.array.isRequired,
-		schemaFields: PropTypes.object.isRequired,
+		fields: PropTypes.object.isRequired,
 		onSubmit: PropTypes.func.isRequired
 	}
 
@@ -16,7 +16,6 @@ class SchemaComponent extends Component {
 	}
 
 	handleSubmit(values) {
-		console.log('firstSubmit', values);
 		const result = _.clone(values);
 		const schema = {schema: {}};
 		schema.schema.types = Object.keys(result).map(type => {
@@ -36,7 +35,7 @@ class SchemaComponent extends Component {
 	}
 
 	render() {
-		const actualValues = _.cloneDeep(this.props.schemaFields);
+		const actualValues = _.cloneDeep(this.props.fields);
 		const initialValues = {};
 		Object.keys(actualValues).filter(key => key !== 'Page' && key !== 'Component' && key !== 'Content' && key !== 'Schema').map(key => {
 			initialValues[key] = Object.keys(actualValues[key]).filter(field => !/^__/.test(field)).map(field => {
@@ -47,7 +46,7 @@ class SchemaComponent extends Component {
 		});
 		const formProps = {
 			onSubmit: this.handleSubmit,
-			fields: this.props.schemaFields,
+			fields: this.props.fields,
 			initialValues,
 			schema: this.props.schema.filter(field => field !== 'Schema')
 		};
@@ -58,7 +57,7 @@ class SchemaComponent extends Component {
 export const mapStateToProps = (state, ownProps) => {
 	return {
 		schema: ownProps.schema,
-		schemaFields: ownProps.schemaFields
+		fields: ownProps.fields
 	};
 };
 

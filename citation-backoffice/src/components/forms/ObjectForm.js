@@ -10,18 +10,19 @@ class ObjectForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
 		collections: PropTypes.object.isRequired,
-		fields: PropTypes.object.isRequired
+		fields: PropTypes.object.isRequired,
+		type: PropTypes.string.isRequired
 	}
 
 	render() {
-		const collections = this.props.collections;
-		const fields = this.props.fields;
 		let customFields = [];
-		if (fields.data) {
-			customFields = Object.keys(fields.data).filter(field => !/^__/.test(field)).map(field => {
+		if (this.props.fields[this.props.type]) {
+			const collections = this.props.collections;
+			const fields = this.props.fields[this.props.type];
+			customFields = Object.keys(fields).filter(field => !/^__/.test(field)).map(field => {
 				const label = (<label htmlFor={field}>{field}</label>);
-				if (fields.data[field].kind === 'OBJECT') {
-					if (fields.data[field].typeName === '*') {
+				if (fields[field].kind === 'OBJECT') {
+					if (fields[field].typeName === '*') {
 						return (
 							<div key={field}>
 								{label}
@@ -32,11 +33,11 @@ class ObjectForm extends Component {
 					return (
 						<div key={field}>
 							{label}
-							<Field name={field} component={LinkField} props={{collections, type: fields.data[field].typeName}}/>
+							<Field name={field} component={LinkField} props={{collections, type: fields[field].typeName}}/>
 						</div>
 					);
-				} else if (fields.data[field].kind === 'LIST') {
-					if (fields.data[field].typeName === '*') {
+				} else if (fields[field].kind === 'LIST') {
+					if (fields[field].typeName === '*') {
 						return (
 							<div key={field}>
 								{label}
@@ -47,7 +48,7 @@ class ObjectForm extends Component {
 					return (
 						<div key={field}>
 							{label}
-							<FieldArray name={field} component={LinksField} props={{collections, type: fields.data[field].typeName}}/>
+							<FieldArray name={field} component={LinksField} props={{collections, type: fields[field].typeName}}/>
 						</div>
 					);
 				}
