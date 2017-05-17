@@ -1,14 +1,13 @@
 import _ from 'lodash';
 import React, {Component, PropTypes} from 'react';
-import {Field} from 'redux-form';
-import FieldType from './FieldType';
+import {Field, FieldArray} from 'redux-form';
+import SchemaFields from './SchemaFields';
 
 class Fields extends Component {
 	static propTypes = {
 		fields: PropTypes.object.isRequired,
 		meta: PropTypes.object.isRequired,
-		collections: PropTypes.object.isRequired,
-		name: PropTypes.string.isRequired
+		schema: PropTypes.object.isRequired
 	};
 
 	constructor() {
@@ -18,19 +17,21 @@ class Fields extends Component {
 
 	handleAdd() {
 		const usedNames = this.props.fields.getAll().map(field => {
-			return field.name;
+			return field.__name__;
 		});
 		let index = 1;
 		let name;
 		do {
-			name = `new${index}`;
+			name = `newType${index}`;
 			index++;
 		} while (usedNames.indexOf(name) > -1);
-		this.props.fields.push({
-			name,
-			typeName: 'String',
-			kind: 'SCALAR'
-		});
+		const newType = [{
+			kind: 'SCALAR',
+			name: 'new1',
+			typeName: 'String'
+		}];
+		newType.__name__ = name;
+		this.props.fields.push(newType);
 	}
 
 	handleRemove(index) {
@@ -38,20 +39,17 @@ class Fields extends Component {
 	}
 
 	render() {
-		const key = this.props.name;
 		return (
 			<ul className="SchemaArray">
 				{this.props.fields.map((link, i) => {
-					const inputName = `${key}[${i}].name`;
-					const kindName = `${key}[${i}].kind`;
-					const typeName = `${key}[${i}].typeName`;
-					return (<li key={i}>
-						<Field component="input" type="text" name={inputName}/>
-						<Field name={kindName} component={FieldType} props={{kindName, typeName, collections: this.props.collections}}/>
-						<button type="button" onClick={this.handleRemove(i)}>
-							X
-						</button>
-					</li>);
+					return (
+						<li key={i}>
+							<Field component="input" type="text" name={`${link}.__name__`}/>
+							<div key={i}>
+								<FieldArray name={link} component={SchemaFields} props={{name: link, collections: this.props.schema}}/>
+							</div>
+						</li>
+					);
 				})}
 				<li className="SchemaArrayAdd">
 					<button type="button" onClick={this.handleAdd}>+</button>

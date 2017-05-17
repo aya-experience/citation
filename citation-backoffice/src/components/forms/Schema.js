@@ -18,10 +18,11 @@ class SchemaComponent extends Component {
 	handleSubmit(values) {
 		const result = _.clone(values);
 		const schema = {schema: {}};
-		schema.schema.types = Object.keys(result).map(type => {
-			const field = {name: type};
-			field.fields = Object.keys(result[type]).map(key => {
-				const field = result[type][key];
+		schema.schema.types = Object.keys(result.data).map(type => {
+			const field = {name: result.data[type].__name__};
+			delete result.data[type].__name__;
+			field.fields = Object.keys(result.data[type]).map(key => {
+				const field = result.data[type][key];
 				if (field.kind === 'OBJECT') {
 					return {name: field.name, type: ['link', field.typeName]};
 				} else if (field.kind === 'LIST') {
@@ -37,12 +38,14 @@ class SchemaComponent extends Component {
 	render() {
 		const actualValues = _.cloneDeep(this.props.fields);
 		const initialValues = {};
-		Object.keys(actualValues).filter(key => key !== 'Page' && key !== 'Component' && key !== 'Content' && key !== 'Schema').map(key => {
-			initialValues[key] = Object.keys(actualValues[key]).filter(field => !/^__/.test(field)).map(field => {
+		initialValues.data = Object.keys(actualValues).filter(key => key !== 'Page' && key !== 'Component' && key !== 'Content' && key !== 'Schema').map(key => {
+			const tempValues = {};
+			tempValues[key] = Object.keys(actualValues[key]).filter(field => !/^__/.test(field)).map(field => {
 				actualValues[key][field].name = field;
 				return actualValues[key][field];
 			});
-			return initialValues;
+			tempValues[key].__name__ = key;
+			return tempValues[key];
 		});
 		const formProps = {
 			onSubmit: this.handleSubmit,
