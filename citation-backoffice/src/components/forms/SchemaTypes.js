@@ -48,6 +48,9 @@ class Fields extends Component {
 							<div key={i}>
 								<FieldArray name={link} component={SchemaFields} props={{name: link, collections: this.props.schema}}/>
 							</div>
+							<button type="button" onClick={this.handleRemove(i)}>
+								X
+							</button>
 						</li>
 					);
 				})}
