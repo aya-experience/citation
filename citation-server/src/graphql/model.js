@@ -12,6 +12,12 @@ export async function readModel() {
 }
 
 export async function writeModel(newModel) {
+	newModel.schema.types.forEach(type => {
+		const typePath = path.resolve(conf.work.content, 'master', type.name);
+		if (!fs.existsSync(typePath)) {
+			fs.mkdirSync(typePath);
+		}
+	});
 	const modelPath = path.resolve(conf.work.content, 'master', 'model.json');
 	return await fs.writeJSON(modelPath, newModel.schema.types);
 }
