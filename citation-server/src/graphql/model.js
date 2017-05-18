@@ -7,7 +7,7 @@ import conf from '../conf';
 
 export async function readModel() {
 	const modelPath = path.resolve(conf.work.content, 'master', 'model.json');
-	const sourcesPath = path.resolve(conf.work.content, 'master', 'sources.json');
+	const sourcesPath = path.resolve('../citation-server/src/sources/sources.json');
 	return Array.prototype.concat(await fs.readJson(sourcesPath), await fs.readJson(modelPath));
 }
 
