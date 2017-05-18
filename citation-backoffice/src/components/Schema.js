@@ -18,7 +18,7 @@ class Schema extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadSchema().then(this.props.loadFields(this.props.schema));
+		this.props.loadSchema().then(() => this.props.loadFields(this.props.schema));
 	}
 
 	handleSubmit(values) {
