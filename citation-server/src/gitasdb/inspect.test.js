@@ -112,5 +112,25 @@ test('inspectObject should ignore loops in links', async t => {
 test('inspectObject should not fail on a broken link', async t => {
 	readdir.throws();
 	const result = await inspect.inspectObject('Type', 'id');
-	t.is(result, null);
+	t.deepEqual(result, []);
+});
+
+test('graphqlQuerySerialize should serialize arrays', t => {
+	const result = inspect.graphqlQuerySerialize(['Test1', 'Test2']);
+	t.deepEqual(result, 'Test1, Test2');
+});
+
+test('graphqlQuerySerialize should serialize objects', t => {
+	const result = inspect.graphqlQuerySerialize({Test1: 'Value1', Test2: 'Value2'});
+	t.deepEqual(result, 'Test1 {Value1}, Test2 {Value2}');
+});
+
+test('graphqlQuerySerialize should recuse on object values', t => {
+	const result = inspect.graphqlQuerySerialize({Test1: ['Value1', 'Value2']});
+	t.deepEqual(result, 'Test1 {Value1, Value2}');
+});
+
+test('graphqlQuerySerialize should skip properties with empty values', t => {
+	const result = inspect.graphqlQuerySerialize({Test1: [], Test2: 'Value2'});
+	t.deepEqual(result, 'Test2 {Value2}');
 });

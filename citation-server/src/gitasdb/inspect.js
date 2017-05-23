@@ -49,7 +49,7 @@ export async function inspectObject(type, id, stack = []) {
 		return objectFields.filter(x => !_.isEmpty(x));
 	} catch (error) {
 		logger.error(`Gitasdb inspect error ${error}`);
-		return null;
+		return [];
 	}
 }
 
@@ -60,9 +60,10 @@ export function graphqlQuerySerialize(query) {
 		}
 
 		if (_.isObject(query)) {
-			return _.map(query, (value, key) => {
-				return `${key} {${graphqlQuerySerialize(value)}}`;
-			}).join(', ');
+			return _(query)
+				.pickBy(value => !_.isEmpty(value))
+				.map((value, key) => `${key} {${graphqlQuerySerialize(value)}}`)
+				.join(', ');
 		}
 
 		return query;
