@@ -10,7 +10,7 @@ let query;
 let get;
 let isUndefined;
 
-const unformatedData = {data: {
+const unformatedData = {TEST: {
 	field1: {
 		kind: 'OBJECT', typeName: '*'
 	},
@@ -28,7 +28,7 @@ const unformatedData = {data: {
 	}
 }
 };
-const formatedData = ['field1 {__id__, __type__}', 'field2 {__id__}', 'field3 {__id__, __type__}', 'field4 {__id__}', 'field5'];
+const formatedData = ['field1 {__id__, __type__}', 'field2 {__id__}', 'field3 {__id__, __type__}', 'field4 {__id__}', 'field5', '__id__'];
 
 test.beforeEach(() => {
 	mutation = sinon.stub();
@@ -43,7 +43,7 @@ test.beforeEach(() => {
 });
 
 test('generateTypes should return formatted custom fields only', async t => {
-	t.deepEqual(objects.generateTypes(unformatedData), formatedData);
+	t.deepEqual(objects.generateTypes(unformatedData.TEST), formatedData);
 });
 
 test('loadObject should dispatch result after querying the server ', async t => {
