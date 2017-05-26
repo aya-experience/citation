@@ -6,9 +6,7 @@
   },
   "dependencies": {
     "citation-server": "^0.2.0",
-    "citation-react-demo-components": "^0.2.0"
-  },
-  "devDependencies": {
-    "citation-server": "^0.2.0"
+    "citation-react-demo-components": "^0.2.0",
+    "react-particles-js": "^1.5.0"
   }
 }

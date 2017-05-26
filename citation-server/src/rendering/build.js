@@ -30,11 +30,21 @@ async function createComponentsJs() {
 
 	const imports = (await getComponentsPaths())
 		.map(componentsPath => path.relative(builderSrcPath, componentsPath))
-		.map((componentsPath, i) => `import components${i} from '${componentsPath}';`)
+		.map((componentsPath, i) => {
+			if (conf.components[i].default) {
+				return `import ${conf.components[i].default} from '${componentsPath}';`;
+			}
+			return `import components${i} from '${componentsPath}';`;
+		})
 		.join('\n');
 
 	const exports = conf.components
-		.map((_, i) => `...components${i}`)
+		.map((_, i) => {
+			if (conf.components[i].default) {
+				return conf.components[i].default;
+			}
+			return `...components${i}`;
+		})
 		.join(',\n	');
 
 	return `${imports}

@@ -16,7 +16,7 @@ function includesLink(stack, link) {
 export async function inspectObject(type, id, stack = []) {
 	try {
 		logger.debug(`inspect object ${type} ${id}`);
-		const objectPath = path.resolve(conf.work.content, 'master', type, id);
+		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
 		const objectFiles = await fs.readdir(objectPath);
 		const objectFields = await Promise.all(objectFiles.map(async file => {
 			const ext = path.extname(file);

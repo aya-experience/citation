@@ -1,20 +1,23 @@
 /* eslint no-use-before-define: 0 */
 
 import _ from 'lodash';
+import {mapSeries} from 'bluebird';
 import {
 	GraphQLObjectType,
 	GraphQLInterfaceType,
+	GraphQLUnionType,
 	GraphQLID,
 	GraphQLList,
 	GraphQLString
 } from 'graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 import {readCollection, readObject} from '../gitasdb/read';
 import {inspectObject, graphqlQuerySerialize} from '../gitasdb/inspect';
 import {readModel} from './model';
 
 export const ObjectInterface = new GraphQLInterfaceType({
-	name: 'Object',
+	name: 'ObjectInterface',
 	fields: () => ({
 		__id__: {type: GraphQLID},
 		__type__: {type: GraphQLString}
@@ -24,17 +27,30 @@ export const ObjectInterface = new GraphQLInterfaceType({
 function buildSchemaObject() {
 	return new GraphQLObjectType({
 		name: 'Schema',
-		fields: () => {
-			return {name: {type: GraphQLString}};
-		}
+		fields: {name: {type: GraphQLString}}
 	});
 }
 
 export async function buildObjects() {
-	const ObjectTypes = {};
 	const model = await readModel();
-	for (const structure of model) {
-		ObjectTypes[structure.name] = new GraphQLObjectType({
+
+	const ObjectUnion = new GraphQLUnionType({
+		name: 'ObjectUnion',
+		types: () => model.map(structure => ObjectTypes[structure.name]),
+		resolveType: value => ObjectTypes[value.__type__]
+	});
+
+	const KeyValuePair = new GraphQLObjectType({
+		name: 'KeyValuePair',
+		fields: () => ({
+			__key__: {type: GraphQLString},
+			__value__: {type: ObjectUnion},
+			__list__: {type: new GraphQLList(ObjectUnion)}
+		})
+	});
+
+	const ObjectTypes = _.fromPairs(model.map(structure => {
+		return [structure.name, new GraphQLObjectType({
 			name: structure.name,
 			interfaces: [ObjectInterface],
 			isTypeOf: value => value.__type__ === structure.name,
@@ -72,17 +88,24 @@ export async function buildObjects() {
 								type: ObjectInterface,
 								resolve: root => readChild(root[field.name])
 							};
+						} else if (field.type[0] === 'map' && field.type[1] === '*') {
+							resultFields[field.name] = {
+								type: new GraphQLList(KeyValuePair),
+								resolve: root => readMap(root[field.name])
+							};
 						} else {
 							resultFields[field.name] = {type: GraphQLString};
 						}
+					} else if (field.type[0] === 'json') {
+						resultFields[field.name] = {type: GraphQLJSON};
 					} else {
 						resultFields[field.name] = {type: GraphQLString};
 					}
 				});
 				return resultFields;
 			}
-		});
-	}
+		})];
+	}));
 	ObjectTypes.Schema = buildSchemaObject();
 	return ObjectTypes;
 }
@@ -114,6 +137,21 @@ function readChild(link) {
 	return readObject(collection, id);
 }
 
+function readMap(map) {
+	if (!_.isObject(map)) {
+		return null;
+	}
+	return mapSeries(
+		_.toPairs(map.map),
+		pair => {
+			console.log('pair', pair);
+			return _.isArray(pair[1]) ?
+				{__key__: pair[0], __list__: readChildren({links: pair[1]})} :
+				{__key__: pair[0], __value__: readChild({link: pair[1]})};
+		}
+	);
+}
+
 export async function buildQuery(ObjectTypes) {
 	const query = new GraphQLObjectType({
 		name: 'Query',
@@ -122,7 +160,10 @@ export async function buildQuery(ObjectTypes) {
 			Object.keys(ObjectTypes).forEach(key => {
 				QueryObjects[key] = {type: new GraphQLList(ObjectTypes[key]),
 					args: {id: {type: GraphQLID}},
-					resolve: (root, {id}) => read(key, id)
+					resolve: (root, {id}) => {
+						console.log('resolve root query', key, id);
+						return read(key, id);
+					}
 				};
 			});
 			return QueryObjects;

@@ -1,15 +1,20 @@
 {
 	"content": {
 		"repository": "https://github.com/aya-experience/citation-demo-content.git",
-		"username": "citation-server"
+		"username": "citation-server",
+		"branch": "particles"
 	},
 	"components": [{
 		"dependency": "citation-react-demo-components"
 	}, {
 		"repository": "https://github.com/aya-experience/citation-demo-react-components.git",
 		"username": "citation-server"
+	}, {
+		"dependency": "react-particles-js",
+		"default": "Particles"
 	}],
 	"render": {
-		"framework": "react"
+		"framework": "react",
+		"disable": true
 	}
 }

@@ -11,7 +11,7 @@ const logger = winston.loggers.get('GitAsDb');
 export async function readCollection(type) {
 	try {
 		logger.debug(`read collection ${type}`);
-		const collectionPath = path.resolve(conf.work.content, 'master', type);
+		const collectionPath = path.resolve(conf.work.content, conf.content.branch, type);
 		const collectionFolders = await fs.readdir(collectionPath);
 		return await Promise.all(collectionFolders.map(folder => readObject(type, folder)));
 	} catch (error) {
@@ -26,7 +26,7 @@ export async function readObject(type, id) {
 	}
 	try {
 		logger.debug(`read object ${type} ${id}`);
-		const objectPath = path.resolve(conf.work.content, 'master', type, id);
+		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
 		const objectFiles = await fs.readdir(objectPath);
 		const objectFields = await Promise.all(objectFiles.map(async file => {
 			const ext = path.extname(file);
