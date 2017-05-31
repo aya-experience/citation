@@ -47,10 +47,8 @@ test('generateTypes should return formatted custom fields only', async t => {
 });
 
 test('loadObject should dispatch result after querying the server ', async t => {
-	const generateTypes = sinon.stub(objects, 'generateTypes');
 	const getState = sinon.spy();
 	const dispatchSpy = sinon.spy();
-	generateTypes.withArgs(unformatedData).returns(formatedData);
 	const queryReturn = {data: {TEST: ['test success']}};
 	query.withArgs(`{TEST(id: "test") {__id__, ${formatedData.join(', ')}}}`).returns(Promise.resolve(queryReturn));
 	get.withArgs(getState(), `objects.Test.test`).returns('state');

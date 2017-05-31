@@ -96,14 +96,11 @@ test('mapDispatchToProps should dispatch writeObject', t => {
 
 test('handleSubmit should call write with good args', t => {
 	writeObject.reset();
-	const loadFields = sinon.stub().returns(Promise.resolve([true]));
 	const fields = {};
 	const objects = {};
-	const myFields = {data: 'myFields'};
 	const myData = 'myData';
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
-	objectComponent.setProps({fields: myFields, type, loadFields});
 	objectComponent.instance().handleSubmit(myData);
-	t.true(writeObject.calledWith(type, id, myData, myFields));
+	t.true(writeObject.calledWith(type, id, myData, fields));
 });
