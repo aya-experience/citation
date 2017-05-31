@@ -4,6 +4,7 @@ import _ from 'lodash';
 import fs from 'fs-promise';
 
 import conf from '../conf';
+import {updateSchema} from '../index';
 
 export async function readModel() {
 	const modelPath = path.resolve(conf.work.content, 'master', 'model.json');
@@ -19,5 +20,7 @@ export async function writeModel(newModel) {
 		}
 	});
 	const modelPath = path.resolve(conf.work.content, 'master', 'model.json');
-	return await fs.writeJSON(modelPath, newModel.schema.types);
+	const result = await fs.writeJSON(modelPath, newModel.schema.types);
+	await updateSchema();
+	return result;
 }

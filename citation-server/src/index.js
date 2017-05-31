@@ -6,6 +6,7 @@ import Hapi from 'hapi';
 import inert from 'inert';
 import GraphQL from 'hapi-graphql';
 import winston from 'winston';
+import _ from 'lodash';
 
 import {buildSchema} from './graphql/schema';
 import conf, {setConfig} from './conf';
@@ -16,14 +17,25 @@ const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice
 const boIndex = path.join(boDirectory, 'index.html');
 const logger = winston.loggers.get('Server');
 
+let server;
+let schema;
+
+export async function updateSchema() {
+	schema = await buildSchema();
+}
+
+async function getSchema() {
+	return schema ? schema : await buildSchema();
+}
+
 export default async function start(inputConfig) {
 	setConfig(inputConfig);
 
 	await updateContent();
 
-	const ContentSchema = await buildSchema();
+	schema = await buildSchema();
 
-	const server = new Hapi.Server();
+	server = new Hapi.Server();
 
 	server.connection({
 		host: conf.server.host,
@@ -37,7 +49,7 @@ export default async function start(inputConfig) {
 		register: GraphQL,
 		options: {
 			query: {
-				schema: ContentSchema
+				schemaFunc: getSchema
 			},
 			route: {
 				path: `/${conf.server['graphql-context']}`,
