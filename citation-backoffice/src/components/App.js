@@ -64,7 +64,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(loadSchema())
 		]),
 		loadCollections: schema => Promise.all([
-			dispatch(loadCollection(schema.data.filter(field => field !== 'Schema')))
+			dispatch(loadCollection(schema.data))
 		])
 	};
 };

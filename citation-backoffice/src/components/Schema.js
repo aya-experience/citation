@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {loadSchemaFields, loadSchema, writeSchema} from '../logic/schema';
 import SchemaComponent from './forms/Schema';
+import {filterSchemaFields} from './../utils/filters';
 
 class Schema extends Component {
 	static propTypes = {
@@ -39,7 +40,7 @@ class Schema extends Component {
 export const mapStateToProps = state => {
 	return {
 		schema: state.schema.data ? state.schema.data : [],
-		fields: state.fields
+		fields: filterSchemaFields(state.fields)
 	};
 };
 

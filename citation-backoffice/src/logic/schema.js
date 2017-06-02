@@ -2,6 +2,8 @@ import _ from 'lodash';
 import {createAction, createReducer} from 'redux-act';
 import {query, mutation} from './graphql-client';
 
+import {filterSchemaNames} from './../utils/filters';
+
 export const loadSchemaSuccess = createAction('load schema success');
 export const loadSchemaFieldsSuccess = createAction('load schema fields success');
 
@@ -43,12 +45,12 @@ export async function queryCustomTypes(types) {
 	return result;
 }
 
-async function askTypes() {
+export async function askTypes() {
 	const existingTypes = await queryExistingTypes();
 	const objectNames = [];
 	Object.keys(existingTypes.data.__schema.types).forEach(key => {
 		const field = existingTypes.data.__schema.types[key];
-		if (field.kind === 'OBJECT' && field.name !== 'Query' && field.name !== 'Mutation' && !/^__/.test(field.name)) {
+		if (field.kind === 'OBJECT' && filterSchemaNames(field.name)) {
 			objectNames.push(field.name);
 		}
 	});
@@ -65,9 +67,7 @@ export function loadSchema() {
 export function loadSchemaFields(type) {
 	return dispatch => {
 		return queryCustomTypes(type)
-		.then(response =>
-			dispatch(loadSchemaFieldsSuccess({data: response}))
-		);
+		.then(response => dispatch(loadSchemaFieldsSuccess({data: response})));
 	};
 }
 

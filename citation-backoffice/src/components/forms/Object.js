@@ -57,7 +57,7 @@ export const mapStateToProps = (state, ownProps) => {
 	return {
 		object: ownProps.object,
 		collections: state.collections,
-		fields: state.fields
+		fields: ownProps.fields
 	};
 };
 

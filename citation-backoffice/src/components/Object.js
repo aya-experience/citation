@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {loadObject, writeObject} from '../logic/objects';
 import {loadSchemaFields} from '../logic/schema';
 import GenericObject from './forms/Object';
+import {filterObjectFields} from './../utils/filters';
 import './Object.css';
 
 class ObjectComponent extends Component {
@@ -50,7 +51,7 @@ export const mapStateToProps = (state, ownProps) => {
 	const {type, id} = ownProps.match.params;
 	let object = _.get(state.objects, `${type}.${id}`, {});
 	object = object === null ? {} : object;
-	return {type, id, object, fields: state.fields};
+	return {type, id, object, fields: filterObjectFields(state.fields)};
 };
 
 export const mapDispatchToProps = (dispatch, ownProps) => {

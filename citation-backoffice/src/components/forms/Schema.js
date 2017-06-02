@@ -38,9 +38,9 @@ class SchemaComponent extends Component {
 	render() {
 		const actualValues = _.cloneDeep(this.props.fields);
 		const initialValues = {};
-		initialValues.data = Object.keys(actualValues).filter(key => key !== 'Page' && key !== 'Component' && key !== 'Content' && key !== 'Schema').map(key => {
+		initialValues.data = Object.keys(actualValues).map(key => {
 			const tempValues = {};
-			tempValues[key] = Object.keys(actualValues[key]).filter(field => !/^__/.test(field)).map(field => {
+			tempValues[key] = Object.keys(actualValues[key]).map(field => {
 				actualValues[key][field].name = field;
 				return actualValues[key][field];
 			});
@@ -51,7 +51,7 @@ class SchemaComponent extends Component {
 			onSubmit: this.handleSubmit,
 			fields: this.props.fields,
 			initialValues,
-			schema: this.props.schema.filter(field => field !== 'Schema')
+			schema: this.props.schema
 		};
 		return <SchemaForm {...formProps}/>;
 	}

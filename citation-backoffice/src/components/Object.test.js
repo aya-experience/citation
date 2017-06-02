@@ -35,7 +35,7 @@ test('componentDidMount should call the load method with good args', async t => 
 	const loadFields = sinon.stub().returns(Promise.resolve([true]));
 	const loadSpy = sinon.stub();
 	const objects = {};
-	const fields = {fields: 'fields'};
+	const fields = {test: {fields: 'fields'}};
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
 	objectComponent.setProps({load: loadSpy, loadFields});
