@@ -90,9 +90,8 @@ export function writeSchema(schema) {
 			return `${key}: ${formatedData}`;
 		});
 	}
-	return dispatch => {
-		return mutation(`{editSchema(${formatData(schema)}) {name}}`)
-			.then(response => console.log(response));
+	return () => {
+		return mutation(`{editSchema(${formatData(schema)}) {name}}`);
 	};
 }
 
