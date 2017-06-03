@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 const reservedSchema = ['Query', 'Mutation', 'Schema'];
 const reservedSchemaNames = ['Page', 'Component', 'Content', 'Schema', 'KeyValuePair'];
-const nameRegex = /^__(?!value)__$/;
+const nameRegex = /^__(?!value).*__$/;
 
 export function filterFields(values, reservedNames) {
 	const response = {};

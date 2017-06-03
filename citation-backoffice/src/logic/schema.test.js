@@ -24,6 +24,6 @@ test('queryExistingTypes should return query result for existing types', async t
 test('queryCustomTypes should return data for type', async t => {
 	const returnedValue = {data: {__type: {name: 'TEST', fields: [{name: 'id', type: {name: 'ID', kind: 'SCALAR'}}]}}};
 	query.returns(returnedValue);
-	const expectedValue = {__type: {id: {typeName: 'ID', kind: 'SCALAR'}}};
+	const expectedValue = {__type: {id: {typeName: 'ID', kind: 'SCALAR', ofType: undefined}}};
 	t.deepEqual(await schema.queryCustomTypes(['TEST']), expectedValue);
 });

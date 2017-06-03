@@ -4,6 +4,7 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
 const workingDirectory = 'workingDirectory';
+const branch = 'branch';
 
 let read;
 let readdir;
@@ -11,7 +12,10 @@ let readdir;
 test.beforeEach(() => {
 	readdir = sinon.stub().returns(Promise.resolve([]));
 	read = proxyquire('./read', {
-		'../conf': {default: {work: {content: workingDirectory}}},
+		'../conf': {default: {
+			content: {branch},
+			work: {content: workingDirectory}
+		}},
 		'fs-promise': {readdir},
 		winston: {loggers: {get: () => ({debug: () => {}})}}
 	});
@@ -19,7 +23,7 @@ test.beforeEach(() => {
 
 test('readCollection should map readObject on each folder of a type', async t => {
 	const type = 'type';
-	const collectionPath = path.resolve(workingDirectory, 'master', type);
+	const collectionPath = path.resolve(workingDirectory, branch, type);
 	const folders = ['one', 'two', 'three'];
 	const expected = folders.map(folder => ({__id__: folder, __type__: type}));
 
