@@ -42,9 +42,9 @@ class Fields extends Component {
 		return (
 			<ul className="SchemaArray">
 				{this.props.fields.map((link, i) => {
-					const inputName = `${key}[${i}].name`;
-					const kindName = `${key}[${i}].kind`;
-					const typeName = `${key}[${i}].typeName`;
+					const inputName = `${key}.__fields__[${i}].name`;
+					const kindName = `${key}.__fields__[${i}].kind`;
+					const typeName = `${key}.__fields__[${i}].typeName`;
 					return (<li key={i}>
 						<Field component="input" type="text" name={inputName}/>
 						<Field name={kindName} component={FieldType} props={{kindName, typeName, collections: this.props.collections}}/>

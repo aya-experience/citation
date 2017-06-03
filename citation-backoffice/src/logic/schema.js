@@ -27,6 +27,10 @@ export async function queryCustomTypes(types) {
 					type {
 						name
 						kind
+						ofType {
+							name
+							kind
+						}
 					}
 				}
 			}`);
@@ -36,9 +40,11 @@ export async function queryCustomTypes(types) {
 	Object.keys(returnedTypes.data).map(returnedType => {
 		result[returnedType] = {};
 		return returnedTypes.data[returnedType].fields.map(field => {
-			result[returnedType][field.name] = {};
-			result[returnedType][field.name].typeName = field.type.name ? field.type.name : (field.name === 'children' ? returnedType : '*');
-			result[returnedType][field.name].kind = field.type.kind;
+			result[returnedType][field.name] = {
+				typeName: field.type.name ? field.type.name : (field.name === 'children' ? returnedType : '*'),
+				kind: field.type.kind,
+				ofType: _.get(field.type, 'ofType.name')
+			};
 			return result[field.name];
 		});
 	});

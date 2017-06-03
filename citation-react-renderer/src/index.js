@@ -32,7 +32,7 @@ export default async function render(options) {
 	await fs.copy(options.buildDir, options.renderDir);
 	const rootIndexPath = path.join(options.renderDir, 'index.html');
 	const indexContentBuffer = await fs.readFile(rootIndexPath);
-	await fs.remove(rootIndexPath);
+	await fs.move(rootIndexPath, path.join(options.renderDir, 'preview.html'));
 	context.indexContent = indexContentBuffer.toString();
 	logger.debug(`Index content ready with ${context.indexContent.length} chars`);
 

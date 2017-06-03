@@ -70,6 +70,20 @@ form.ObjectForm > div > ul.ObjectArray > li.ObjectArrayAdd {
 	flex-direction: row-reverse;
 }
 
+form.ObjectForm > div > ul.ObjectArray > li.ValueOrListField {
+	border: 1px solid black;
+}
+
+li.ValueOrListField ul {
+	padding: 0;
+	list-style: none;
+}
+
+form.ObjectForm > div > ul.ObjectArray > li.ValueOrListField > div {
+	display: flex;
+	flex-direction: column;
+}
+
 form.ObjectForm button {
 	border-radius: 5px;
 	padding: 0 1rem;

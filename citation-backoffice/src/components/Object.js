@@ -24,11 +24,15 @@ class ObjectComponent extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadFields([this.props.type]).then(() => this.props.load(this.props.fields));
+		this.props.loadFields([this.props.type])
+			.then(() => this.props.load(this.props.fields));
 	}
 
 	componentWillReceiveProps(nextProps) {
-		nextProps.loadFields([nextProps.type]).then(() => nextProps.load(this.props.fields));
+		if (this.props.type !== nextProps.type) {
+			this.props.loadFields([nextProps.type])
+				.then(() => this.props.load(nextProps.fields));
+		}
 	}
 
 	handleSubmit(values) {

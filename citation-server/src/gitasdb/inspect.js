@@ -1,6 +1,6 @@
 import path from 'path';
 
-import _ from 'lodash';
+import _, {isArray, isObject, values} from 'lodash';
 import fs from 'fs-promise';
 import mergeDeep from 'merge-deep';
 import winston from 'winston';
@@ -43,23 +43,34 @@ export async function inspectObject(type, id, stack = []) {
 					);
 					return mergeDeep({}, ...linksInspection);
 				}
+				if (content.__role__ === 'map') {
+					const __value__ = await Promise.all(values(content.map)
+						.filter(link => !includesLink(stack, link))
+						.map(async link => {
+							const {collection, id} = link;
+							const inspection = await inspectObject(collection, id, [...stack, link]);
+							return {[`... on ${collection}`]: inspection};
+						})
+					);
+					return {[key]: ['__key__', {__value__}]};
+				}
 			}
 			return key;
 		}));
 		return objectFields.filter(x => !_.isEmpty(x));
 	} catch (error) {
-		logger.error(`Gitasdb inspect error ${error}`);
+		logger.debug(`Gitasdb inspect error ${error}`);
 		return [];
 	}
 }
 
 export function graphqlQuerySerialize(query) {
 	try {
-		if (_.isArray(query)) {
+		if (isArray(query)) {
 			return `${query.map(graphqlQuerySerialize).join(', ')}`;
 		}
 
-		if (_.isObject(query)) {
+		if (isObject(query)) {
 			return _(query)
 				.pickBy(value => !_.isEmpty(value))
 				.map((value, key) => `${key} {${graphqlQuerySerialize(value)}}`)

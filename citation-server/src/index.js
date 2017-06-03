@@ -15,6 +15,7 @@ import {start as startDevMode} from './rendering/build';
 
 const boDirectory = path.join(__dirname, '..', 'node_modules/citation-backoffice/build');
 const boIndex = path.join(boDirectory, 'index.html');
+const previewIndex = path.join(process.cwd(), conf.work.root, conf.work.render, 'preview.html');
 const logger = winston.loggers.get('Server');
 
 let server;
@@ -71,8 +72,13 @@ export default async function start(inputConfig) {
 
 		server.ext('onPostHandler', (request, reply) => {
 			const response = request.response;
-			if (request.url.path.startsWith('/admin') && response.isBoom && response.output.statusCode === 404) {
-				return reply.file(boIndex, {confine: false});
+			if (response.isBoom && response.output.statusCode === 404) {
+				if (request.url.path.startsWith('/preview')) {
+					return reply.file(previewIndex, {confine: false});
+				}
+				if (request.url.path.startsWith('/admin')) {
+					return reply.file(boIndex, {confine: false});
+				}
 			}
 			return reply.continue();
 		});

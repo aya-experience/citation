@@ -41,7 +41,7 @@ export async function readObject(type, id) {
 		});
 		return object;
 	} catch (error) {
-		logger.error('Gitasdb read object error', error);
+		logger.debug('Gitasdb read object error', error);
 		return null;
 	}
 }

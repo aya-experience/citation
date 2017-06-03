@@ -3,6 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {Field, FieldArray, reduxForm} from 'redux-form';
 import LinkField from './LinkField';
 import LinksField from './LinksField';
+import KeyValueField from './KeyValueField';
 
 import './ObjectForm.css';
 
@@ -37,6 +38,14 @@ class ObjectForm extends Component {
 						</div>
 					);
 				} else if (fields[field].kind === 'LIST') {
+					if (fields[field].ofType === 'KeyValuePair') {
+						return (
+							<div key={field}>
+								{label}
+								<FieldArray name={field} component={KeyValueField} props={{collections}}/>
+							</div>
+						);
+					}
 					if (fields[field].typeName === '*') {
 						return (
 							<div key={field}>
@@ -49,6 +58,16 @@ class ObjectForm extends Component {
 						<div key={field}>
 							{label}
 							<FieldArray name={field} component={LinksField} props={{collections, type: fields[field].typeName}}/>
+						</div>
+					);
+				}
+				if (fields[field].typeName === 'JSON') {
+					const format = value => JSON.stringify(value, null, 2);
+					const parse = value => JSON.parse(value);
+					return (
+						<div key={field}>
+							{label}
+							<Field name={field} component="textarea" format={format} parse={parse}/>
 						</div>
 					);
 				}

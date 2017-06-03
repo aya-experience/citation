@@ -25,13 +25,14 @@ class Fields extends Component {
 			name = `newType${index}`;
 			index++;
 		} while (usedNames.indexOf(name) > -1);
-		const newType = [{
-			kind: 'SCALAR',
-			name: 'new1',
-			typeName: 'String'
-		}];
-		newType.__name__ = name;
-		this.props.fields.push(newType);
+		this.props.fields.push({
+			__name__: name,
+			__fields__: [{
+				kind: 'SCALAR',
+				name: 'new1',
+				typeName: 'String'
+			}]
+		});
 	}
 
 	handleRemove(index) {
@@ -42,11 +43,12 @@ class Fields extends Component {
 		return (
 			<ul className="SchemaArray">
 				{this.props.fields.map((link, i) => {
+					console.log('link', link);
 					return (
 						<li key={i}>
 							<Field component="input" type="text" name={`${link}.__name__`}/>
 							<div key={i}>
-								<FieldArray name={link} component={SchemaFields} props={{name: link, collections: this.props.schema}}/>
+								<FieldArray name={`${link}.__fields__`} component={SchemaFields} props={{name: link, collections: this.props.schema}}/>
 							</div>
 							<button type="button" onClick={this.handleRemove(i)}>
 								X

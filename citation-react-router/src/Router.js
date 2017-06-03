@@ -25,6 +25,11 @@ export default class Router extends Component {
 	}
 
 	render() {
-		return <Routes match={{url: ''}} {...this.props} pages={this.state.pages}/>;
+		return (
+			<div>
+				<Routes match={{url: ''}} {...this.props} pages={this.state.pages}/>
+				<Routes match={{url: '/preview'}} {...this.props} pages={this.state.pages}/>
+			</div>
+		);
 	}
 }
