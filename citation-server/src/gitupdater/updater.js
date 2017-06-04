@@ -9,7 +9,7 @@ import {create} from '../nodegit/wrapper';
 
 const logger = winston.loggers.get('GitUpdater');
 
-export async function updater(label, repositoryUrl, directory) {
+export async function updater(label, repositoryUrl, branch, directory) {
 	try {
 		const masterPath = path.resolve(directory);
 		const ready = await check(masterPath, repositoryUrl);
@@ -18,7 +18,7 @@ export async function updater(label, repositoryUrl, directory) {
 
 		if (ready) {
 			const repository = await create(masterPath);
-			change = await repository.pull();
+			change = await repository.pull(branch);
 		} else {
 			logger.info(`Repository ${repositoryUrl} not ready at ${masterPath}, cloning...`);
 			await fs.remove(masterPath);

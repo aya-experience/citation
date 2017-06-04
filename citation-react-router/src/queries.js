@@ -6,6 +6,10 @@ export default {
 			headers: new Headers({'Content-Type': 'application/graphql'})
 		});
 		const json = await response.json();
+		if (Array.isArray(json.errors)) {
+			console.error('GraphQL query error', url, body, json.errors);
+			throw new Error('GraphQL query error');
+		}
 		return json.data;
 	},
 

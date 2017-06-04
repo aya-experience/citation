@@ -23,6 +23,7 @@
     "citation-react-renderer": "^0.2.0",
     "fs-promise": "^1.0.0",
     "graphql": "^0.7.2",
+    "graphql-type-json": "^0.1.4",
     "hapi": "^15.2.0",
     "hapi-graphql": "aya-experience/hapi-graphql",
     "inert": "^4.1.0",

@@ -7,6 +7,8 @@ import {loadSchema} from '../logic/schema';
 import Menu from './Menu';
 import Home from './Home';
 import ObjectComponent from './Object';
+import Schema from './Schema';
+import Page from './Page';
 
 import './App.css';
 
@@ -38,6 +40,8 @@ class App extends Component {
 					<div className="App-content">
 						<Switch>
 							<Route exact path="/" component={Home}/>
+							<Route exact path="/schema" component={Schema}/>
+							<Route exact path="/page/:id" component={Page}/>
 							<Route exact path="/object/:type" component={ObjectComponent}/>
 							<Route path="/object/:type/:id" component={ObjectComponent}/>
 							<Route component={NoMatch}/>
@@ -62,7 +66,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(loadSchema())
 		]),
 		loadCollections: schema => Promise.all([
-			dispatch(loadCollection(schema.data.filter(field => field !== 'Schema')))
+			dispatch(loadCollection(schema.data))
 		])
 	};
 };

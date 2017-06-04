@@ -8,8 +8,12 @@
 	}, {
 		"repository": "https://github.com/aya-experience/citation-demo-react-components.git",
 		"username": "citation-server"
+	}, {
+		"dependency": "react-particles-js",
+		"default": "Particles"
 	}],
 	"render": {
-		"framework": "react"
+		"framework": "react",
+		"enable": true
 	}
 }

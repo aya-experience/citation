@@ -13,7 +13,7 @@ const logger = winston.loggers.get('GitAsDb');
 export async function writeObject(type, data) {
 	try {
 		// Opening repository
-		const repositoryPath = path.resolve(conf.work.content, 'master');
+		const repositoryPath = path.resolve(conf.work.content, conf.content.branch);
 		const repository = await create(repositoryPath);
 		let id = data.__id__;
 		const newId = data.__newId__;
@@ -53,7 +53,7 @@ export async function writeObject(type, data) {
 		// Git Push
 		const oid = await repository.add(path.join(type, id));
 		await repository.commit(oid);
-		await repository.push();
+		await repository.push(conf.content.branch);
 		// Return read object
 		return await readObject(type, id);
 	} catch (error) {

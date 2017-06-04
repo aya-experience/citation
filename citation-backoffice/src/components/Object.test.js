@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import test from 'ava';
 import proxyquire from 'proxyquire';
@@ -14,16 +15,16 @@ let writeObject;
 const type = 'TEST';
 const id = 'id';
 
-const schemaFieldsReturned = 'loadSchemaFields returned';
-const objectReturned = 'loadObject returned';
-const writeObjectReturned = 'writeObject returned';
+const schemaFieldsReturned = {schema: 'loadSchemaFields returned'};
+const objectReturned = {object: 'loadObject returned'};
+const writeObjectReturned = {object: 'writeObject returned'};
 
 const setup = () => shallow(<ObjectComponent match={{params: {type, id}}}/>, {context: {store}}).find('ObjectComponent').shallow();
 
 test.beforeEach(() => {
-	loadObject = sinon.stub().returns('loadObject returned');
-	loadSchemaFields = sinon.stub().returns('loadSchemaFields returned');
-	writeObject = sinon.stub().returns('writeObject returned');
+	loadObject = sinon.stub().returns(objectReturned);
+	loadSchemaFields = sinon.stub().returns(schemaFieldsReturned);
+	writeObject = sinon.stub().returns(writeObjectReturned);
 	ObjectComponent = proxyquire('./Object', {
 		'../logic/objects': {loadObject, writeObject},
 		'../logic/schema': {loadSchemaFields}
@@ -31,15 +32,15 @@ test.beforeEach(() => {
 });
 
 test('componentDidMount should call the load method with good args', async t => {
-	const loadFields = sinon.stub().returns(Promise.resolve(['test']));
+	const loadFields = sinon.stub().returns(Promise.resolve([true]));
 	const loadSpy = sinon.stub();
 	const objects = {};
-	const fields = {};
+	const fields = {test: {fields: 'fields'}};
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
 	objectComponent.setProps({load: loadSpy, loadFields});
 	await objectComponent.instance().componentDidMount();
-	t.true(loadSpy.called);
+	t.true(loadSpy.calledWith(fields));
 });
 
 test('componentDidMount should call the loadFields method with good args', async t => {
@@ -51,7 +52,7 @@ test('componentDidMount should call the loadFields method with good args', async
 	const objectComponent = setup();
 	objectComponent.setProps({load, loadFields: loadFieldsSpy});
 	await objectComponent.instance().componentDidMount();
-	t.true(loadFieldsSpy.calledWith(type));
+	t.true(loadFieldsSpy.calledWith([type]));
 });
 
 test('title shoud be Edit if thre is an id', t => {
@@ -70,7 +71,7 @@ test('mapDispatchToProps should dispatch loadSchemaFields', t => {
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
 	objectComponent.instance().props.loadFields();
-	t.is(store.dispatch.args[0][0], schemaFieldsReturned);
+	t.true(store.dispatch.calledWith(schemaFieldsReturned));
 });
 
 test('mapDispatchToProps should dispatch loadOject', t => {
@@ -80,7 +81,7 @@ test('mapDispatchToProps should dispatch loadOject', t => {
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
 	objectComponent.instance().props.load();
-	t.is(store.dispatch.args[0][0], objectReturned);
+	t.true(store.dispatch.calledWith(objectReturned));
 });
 
 test('mapDispatchToProps should dispatch writeObject', t => {
@@ -90,18 +91,16 @@ test('mapDispatchToProps should dispatch writeObject', t => {
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
 	objectComponent.instance().props.write();
-	t.is(store.dispatch.args[0][0], writeObjectReturned);
+	t.true(store.dispatch.calledWith(writeObjectReturned));
 });
 
 test('handleSubmit should call write with good args', t => {
 	writeObject.reset();
 	const fields = {};
 	const objects = {};
-	const myFields = 'myFields';
 	const myData = 'myData';
 	store.getState.returns({objects, fields});
 	const objectComponent = setup();
-	objectComponent.setProps({fields: myFields});
 	objectComponent.instance().handleSubmit(myData);
-	t.true(writeObject.calledWith(type, id, myData, myFields));
+	t.true(writeObject.calledWith(type, id, myData, fields));
 });

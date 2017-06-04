@@ -9,6 +9,7 @@ const conf = {
 	content: {
 		// repostory: no default value, keep for documentation
 		// username: no default value, keep for documentation
+		branch: 'master',
 		'password-env-var': 'GIT_PASSWORD'
 	},
 	components: [],
@@ -20,7 +21,7 @@ const conf = {
 	},
 	render: {
 		// framework: no default value, keep for documentation
-		disable: false,
+		enable: true,
 		anchor: '<div id="root"></div>'
 	},
 	server: {

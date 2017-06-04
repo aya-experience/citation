@@ -6,19 +6,24 @@ export const loadObjectStarted = createAction('load object started');
 export const loadObjectSuccess = createAction('load object success');
 
 export function generateTypes(fields) {
-	return Object.keys(fields.data).filter(field => !/^__/.test(field)).map(field => {
-		if (fields.data[field].kind === 'OBJECT' || fields.data[field].kind === 'LIST') {
-			if (fields.data[field].typeName === '*') {
+	const requiredFields = Object.keys(fields).map(field => {
+		if (fields[field].kind === 'OBJECT' || fields[field].kind === 'LIST') {
+			if (fields[field].ofType === 'KeyValuePair') {
+				return `${field} {__key__, __value__ {__id__, __type__}, __list__ {__id__, __type__}}`;
+			}
+			if (fields[field].typeName === '*') {
 				return (`${field} {__id__, __type__}`);
 			}
 			return (`${field} {__id__}`);
 		}
 		return (`${field}`);
 	});
+	requiredFields.push('__id__');
+	return requiredFields;
 }
 
 export function loadObject(type, id, fields) {
-	const types = generateTypes(fields);
+	const types = generateTypes(fields[type]);
 	return (dispatch, getState) => {
 		const stateObject = _.get(getState(), `objects.${type}.${id}`);
 		if (!_.isUndefined(stateObject)) {
@@ -50,14 +55,15 @@ export function writeObject(type, id, data, fields) {
 	} else {
 		delete data[type].__id__;
 	}
-	const types = generateTypes(fields);
+	const types = generateTypes(fields[type]);
 	return dispatch => {
 		return mutation(`{edit${type}(${formatData(data)}) {${types.join(', ')}}}`)
 			.then(response => dispatch(loadObjectSuccess({
 				type,
 				id: response.data[`edit${type}`].__id__,
 				data: response.data.editObject
-			})));
+			}))
+		);
 	};
 }
 

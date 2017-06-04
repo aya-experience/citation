@@ -17,14 +17,14 @@ let task;
 
 export async function updateContent() {
 	const contentRepository = conf.content.repository;
-	const contentDiretory = path.join(conf.work.content, 'master');
-	return await updater('Content', contentRepository, contentDiretory);
+	const contentDiretory = path.join(conf.work.content, conf.content.branch);
+	return await updater('Content', contentRepository, conf.content.branch, contentDiretory);
 }
 
 export async function updateComponent(components, i) {
 	if (components.repository) {
 		const directory = path.resolve(conf.work.components, i.toString());
-		return await updater(`Components(${i})`, components.repository, directory);
+		return await updater(`Components(${i})`, components.repository, 'master', directory);
 	}
 	return false;
 }
@@ -33,6 +33,10 @@ async function updaterTask(first = false) {
 	logger.info('Updater task starting', first);
 
 	const contentChange = await updateContent();
+
+	if (conf.render.disable) {
+		return;
+	}
 
 	const componentsChanges = await mapSeries(conf.components, updateComponent);
 

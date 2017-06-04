@@ -8,6 +8,8 @@
 		"directory": "../citation-react-demo-components"
 	}, {
 		"directory": "../../citation-demo-react-components"
+	}, {
+		"dependency": "react-particles-js"
 	}],
 	"render": {
 		"framework": "react"

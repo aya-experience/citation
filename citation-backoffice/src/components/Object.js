@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {loadObject, writeObject} from '../logic/objects';
 import {loadSchemaFields} from '../logic/schema';
 import GenericObject from './forms/Object';
+import {filterObjectFields} from './../utils/filters';
 import './Object.css';
 
 class ObjectComponent extends Component {
@@ -23,11 +24,15 @@ class ObjectComponent extends Component {
 	}
 
 	componentDidMount() {
-		this.props.loadFields(this.props.type).then(() => this.props.load(this.props.fields));
+		this.props.loadFields([this.props.type])
+			.then(() => this.props.load(this.props.fields));
 	}
 
 	componentWillReceiveProps(nextProps) {
-		nextProps.loadFields(nextProps.type).then(() => nextProps.load(this.props.fields));
+		if (this.props.type !== nextProps.type) {
+			this.props.loadFields([nextProps.type])
+				.then(() => this.props.load(nextProps.fields));
+		}
 	}
 
 	handleSubmit(values) {
@@ -50,13 +55,13 @@ export const mapStateToProps = (state, ownProps) => {
 	const {type, id} = ownProps.match.params;
 	let object = _.get(state.objects, `${type}.${id}`, {});
 	object = object === null ? {} : object;
-	return {type, id, object, fields: state.fields};
+	return {type, id, object, fields: filterObjectFields(state.fields)};
 };
 
 export const mapDispatchToProps = (dispatch, ownProps) => {
 	const {type, id} = ownProps.match.params;
 	return {
-		loadFields: type => Promise.all([dispatch(loadSchemaFields(type))]),
+		loadFields: type => dispatch(loadSchemaFields([type])),
 		load: fields => dispatch(loadObject(type, id, fields)),
 		write: (data, fields) => dispatch(writeObject(type, id, data, fields))
 	};

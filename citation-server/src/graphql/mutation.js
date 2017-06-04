@@ -1,6 +1,9 @@
 /* eslint no-use-before-define: 0 */
 
-import _ from 'lodash';
+import {
+	isString,
+	fromPairs
+} from 'lodash';
 import {
 	GraphQLObjectType,
 	GraphQLInputObjectType,
@@ -8,6 +11,7 @@ import {
 	GraphQLList,
 	GraphQLString
 } from 'graphql';
+import GraphQLJSON from 'graphql-type-json';
 import winston from 'winston';
 
 import {writeObject} from '../gitasdb/write';
@@ -39,6 +43,14 @@ export const LinksInputType = new GraphQLInputObjectType({
 	})
 });
 
+export const MapInputType = new GraphQLInputObjectType({
+	name: 'MapInput',
+	fields: () => ({
+		__role__: {type: GraphQLString},
+		map: {type: GraphQLJSON}
+	})
+});
+
 export const FieldType = new GraphQLInputObjectType({
 	name: 'FieldType',
 	fields: () => ({
@@ -64,6 +76,24 @@ function buildSchemaInput() {
 	});
 }
 
+const buildInput = field => {
+	if (isString(field.type)) {
+		field.type = [field.type];
+	}
+	switch (field.type[0]) {
+		case 'link':
+			return {type: LinkInputType};
+		case 'links':
+			return {type: LinksInputType};
+		case 'map':
+			return {type: MapInputType};
+		case 'json':
+			return {type: GraphQLJSON};
+		default:
+			return {type: GraphQLString};
+	}
+};
+
 async function buildInputs() {
 	const InputType = {};
 	const model = await readModel();
@@ -75,21 +105,33 @@ async function buildInputs() {
 					__id__: {type: GraphQLID},
 					__newId__: {type: GraphQLID}
 				};
-				structure.fields.forEach(field => {
-					if (_.isString(field.type)) {
-						resultFields[field.name] = {type: GraphQLString};
-					} else if (_.isArray(field.type)) {
-						if (field.type[0] === 'link') {
-							resultFields[field.name] = {type: LinkInputType};
-						} else if (field.type[0] === 'links') {
-							resultFields[field.name] = {type: LinksInputType};
-						} else {
-							resultFields[field.name] = {type: GraphQLString};
-						}
-					} else {
-						resultFields[field.name] = {type: GraphQLString};
-					}
-				});
+
+				if (structure.type) {
+					resultFields.__value__ = buildInput(structure);
+				} else {
+					Object.assign(resultFields, fromPairs(structure.fields.map(field => [
+						field.name,
+						buildInput(field)
+					])));
+				}
+
+				// console.log('coucou', structure);
+				// structure.fields.forEach(field => {
+				// 	if (_.isString(field.type)) {
+				// 		resultFields[field.name] = {type: GraphQLString};
+				// 	} else if (_.isArray(field.type)) {
+				// 		if (field.type[0] === 'link') {
+				// 			resultFields[field.name] = {type: LinkInputType};
+				// 		} else if (field.type[0] === 'links') {
+				// 			resultFields[field.name] = {type: LinksInputType};
+				// 		} else {
+				// 			resultFields[field.name] = {type: GraphQLString};
+				// 		}
+				// 	} else {
+				// 		resultFields[field.name] = {type: GraphQLString};
+				// 	}
+				// });
+
 				return resultFields;
 			}
 		});
