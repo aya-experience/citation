@@ -1579,6 +1579,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6,
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
+graphql-type-json@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.1.4.tgz#89f13f5d32ce08c9a76c79fdf9c1968384d81a4e"
+
 graphql@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.7.2.tgz#cc894a32823399b8a0cb012b9e9ecad35cd00f72"
@@ -1587,7 +1591,7 @@ graphql@^0.7.2:
 
 hapi-graphql@aya-experience/hapi-graphql:
   version "1.0.1"
-  resolved "https://codeload.github.com/aya-experience/hapi-graphql/tar.gz/a0cc62f19b86f2c0f0c3732e7a767ecfcc1dea5a"
+  resolved "https://codeload.github.com/aya-experience/hapi-graphql/tar.gz/4979c32a874b449ee2cc4bd5dee0a15c56673ad6"
   dependencies:
     accepts "^1.3.3"
     babel-runtime "^6.9.2"
