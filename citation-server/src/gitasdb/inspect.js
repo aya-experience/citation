@@ -6,14 +6,21 @@ import mergeDeep from 'merge-deep';
 import winston from 'winston';
 
 import conf from '../conf';
+import {getTypesNames} from '../graphql/model';
 
 const logger = winston.loggers.get('GitAsDb');
 
+let modelTypes;
+
 function includesLink(stack, link) {
+	if (!modelTypes.includes(link.collection)) {
+		return true;
+	}
 	return stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id).length > 0;
 }
 
 export async function inspectObject(type, id, stack = []) {
+	modelTypes = await getTypesNames();
 	try {
 		logger.debug(`inspect object ${type} ${id}`);
 		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
