@@ -1,6 +1,5 @@
 import path from 'path';
 
-import _ from 'lodash';
 import fs from 'fs-promise';
 
 import conf from '../conf';
@@ -23,4 +22,9 @@ export async function writeModel(newModel) {
 	const result = await fs.writeJSON(modelPath, newModel.schema.types);
 	await updateSchema();
 	return result;
+}
+
+export async function getTypesNames() {
+	const model = await readModel();
+	return model.map(type => type.name);
 }
