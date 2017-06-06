@@ -5,12 +5,15 @@ import sinon from 'sinon';
 let inspect;
 let readdir;
 let readFile;
+let getTypesNames;
 
 test.beforeEach(() => {
 	readdir = sinon.stub().returns(Promise.resolve([]));
 	readFile = sinon.stub().returns(Promise.resolve(new Buffer('')));
+	getTypesNames = sinon.stub().returns(['Type', 'LinkedType', 'LinkedType1', 'LinkedType2']);
 	inspect = proxyquire('./inspect', {
 		'fs-promise': { readdir, readFile },
+		'../graphql/model': { getTypesNames },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});
 });
