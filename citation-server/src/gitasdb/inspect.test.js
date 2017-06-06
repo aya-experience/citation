@@ -46,6 +46,20 @@ test('inspectObject should follow unique link', async t => {
 	t.deepEqual(result, ['one', { two: ['three', 'four'] }]);
 });
 
+test('inspectObject should ignore link if type is not in the model', async t => {
+	const links = {
+		__role__: 'link',
+		link: {
+			collection: 'LinkedType3',
+			id: 'LinkedId'
+		}
+	};
+	readdir.onCall(0).returns(Promise.resolve(['one.md', 'two.json']));
+	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
+	const result = await inspect.inspectObject('Type', 'id');
+	t.deepEqual(result, ['one']);
+});
+
 test('inspectObject should follow multiple links', async t => {
 	const links = {
 		__role__: 'links',
