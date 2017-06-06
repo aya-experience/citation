@@ -12,12 +12,14 @@ let readdir;
 test.beforeEach(() => {
 	readdir = sinon.stub().returns(Promise.resolve([]));
 	read = proxyquire('./read', {
-		'../conf': {default: {
-			content: {branch},
-			work: {content: workingDirectory}
-		}},
-		'fs-promise': {readdir},
-		winston: {loggers: {get: () => ({debug: () => {}})}}
+		'../conf': {
+			default: {
+				content: { branch },
+				work: { content: workingDirectory }
+			}
+		},
+		'fs-promise': { readdir },
+		winston: { loggers: { get: () => ({ debug: () => {} }) } }
 	});
 });
 
@@ -25,7 +27,7 @@ test('readCollection should map readObject on each folder of a type', async t =>
 	const type = 'type';
 	const collectionPath = path.resolve(workingDirectory, branch, type);
 	const folders = ['one', 'two', 'three'];
-	const expected = folders.map(folder => ({__id__: folder, __type__: type}));
+	const expected = folders.map(folder => ({ __id__: folder, __type__: type }));
 
 	readdir.withArgs(collectionPath).returns(Promise.resolve(folders));
 	t.deepEqual(await read.readCollection(type), expected);

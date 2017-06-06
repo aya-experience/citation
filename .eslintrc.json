@@ -1,16 +1,17 @@
 {
 	"parser": "babel-eslint",
 	"extends": [
-		"xo/esnext"
+		"xo/esnext",
+		"prettier"
 	],
 	"plugins": [
 		"import",
-		"jasmine"
+		"jasmine",
+		"prettier"
 	],
-	"env": {
-		"jasmine": true
-	},
 	"rules": {
+		"prettier/prettier": ["error", {"printWidth": 120, "useTabs": true, "singleQuote": true}],
+		"object-curly-spacing": ["error", "always"],
 		"import/default": "error",
 		"import/export": "error",
 		"import/extensions": ["error", {"js": "never"}],

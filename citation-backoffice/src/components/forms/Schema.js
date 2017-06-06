@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import SchemaForm from './SchemaForm';
 
 class SchemaComponent extends Component {
@@ -8,7 +8,7 @@ class SchemaComponent extends Component {
 		schema: PropTypes.array.isRequired,
 		fields: PropTypes.object.isRequired,
 		onSubmit: PropTypes.func.isRequired
-	}
+	};
 
 	constructor() {
 		super();
@@ -17,18 +17,18 @@ class SchemaComponent extends Component {
 
 	handleSubmit(values) {
 		const result = _.clone(values);
-		const schema = {schema: {}};
+		const schema = { schema: {} };
 		schema.schema.types = Object.keys(result.data).map(type => {
-			const field = {name: result.data[type].__name__};
+			const field = { name: result.data[type].__name__ };
 			delete result.data[type].__name__;
 			field.fields = Object.keys(result.data[type]).map(key => {
 				const field = result.data[type][key];
 				if (field.kind === 'OBJECT') {
-					return {name: field.name, type: ['link', field.typeName]};
+					return { name: field.name, type: ['link', field.typeName] };
 				} else if (field.kind === 'LIST') {
-					return {name: field.name, type: ['links', field.typeName]};
+					return { name: field.name, type: ['links', field.typeName] };
 				}
-				return {name: field.name, type: 'text'};
+				return { name: field.name, type: 'text' };
 			});
 			return field;
 		});
@@ -54,7 +54,7 @@ class SchemaComponent extends Component {
 			initialValues,
 			schema: this.props.schema
 		};
-		return <SchemaForm {...formProps}/>;
+		return <SchemaForm {...formProps} />;
 	}
 }
 

@@ -3,7 +3,7 @@ export default {
 		const response = await fetch(url, {
 			method: 'POST',
 			body,
-			headers: new Headers({'Content-Type': 'application/graphql'})
+			headers: new Headers({ 'Content-Type': 'application/graphql' })
 		});
 		const json = await response.json();
 		if (Array.isArray(json.errors)) {
@@ -21,13 +21,11 @@ export default {
 
 		pages.forEach(page => {
 			if (Array.isArray(page.children)) {
-				page.children = page.children
-					.filter(page => page !== null)
-					.map(({__id__}) => {
-						const child = ref[__id__];
-						child.__child__ = true;
-						return child;
-					});
+				page.children = page.children.filter(page => page !== null).map(({ __id__ }) => {
+					const child = ref[__id__];
+					child.__child__ = true;
+					return child;
+				});
 			}
 		});
 
@@ -47,7 +45,9 @@ export default {
 	},
 
 	async queryPages(url) {
-		const response = await this.graphqlQuery(url, `query Query {
+		const response = await this.graphqlQuery(
+			url,
+			`query Query {
 			Page {
 				__id__, slug, title,
 				children {
@@ -57,16 +57,20 @@ export default {
 					__id__, __tree__
 				}
 			}
-		}`);
+		}`
+		);
 		return this.buildPageTree(response.Page);
 	},
 
 	async queryComponentTree(url, component) {
-		const response = await this.graphqlQuery(url, `query Query {
+		const response = await this.graphqlQuery(
+			url,
+			`query Query {
 			Component(id: "${component.__id__}") {
 				${component.__tree__}
 			}
-		}`);
+		}`
+		);
 		return response.Component[0];
 	}
 };

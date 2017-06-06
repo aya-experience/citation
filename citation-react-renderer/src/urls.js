@@ -1,4 +1,4 @@
-export default function getPaths(pages, parent = {url: '', pages: []}) {
+export default function getPaths(pages, parent = { url: '', pages: [] }) {
 	return pages.reduce((acc, page) => {
 		const children = page.children ? page.children : [];
 		let url;
@@ -7,7 +7,7 @@ export default function getPaths(pages, parent = {url: '', pages: []}) {
 		} else {
 			url = `${parent.url}/${page.slug}`;
 		}
-		const result = {url, pages: [...parent.pages, page]};
+		const result = { url, pages: [...parent.pages, page] };
 		acc.push(result, ...getPaths(children, result));
 		return acc;
 	}, []);

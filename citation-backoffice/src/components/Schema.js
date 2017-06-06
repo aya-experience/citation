@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
-import {loadSchemaFields, loadSchema, writeSchema} from '../logic/schema';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { loadSchemaFields, loadSchema, writeSchema } from '../logic/schema';
 import SchemaComponent from './forms/Schema';
-import {filterSchemaFields} from './../utils/filters';
+import { filterSchemaFields } from './../utils/filters';
 
 class Schema extends Component {
 	static propTypes = {
@@ -31,7 +31,7 @@ class Schema extends Component {
 		return (
 			<div className="Schema">
 				<h1>Edit Schema</h1>
-				<Form schema={this.props.schema} fields={this.props.fields} onSubmit={this.handleSubmit}/>
+				<Form schema={this.props.schema} fields={this.props.fields} onSubmit={this.handleSubmit} />
 			</div>
 		);
 	}

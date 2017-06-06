@@ -1,4 +1,4 @@
-import {Cred} from 'nodegit';
+import { Cred } from 'nodegit';
 
 import conf from '../conf';
 

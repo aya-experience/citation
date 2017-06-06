@@ -1,6 +1,6 @@
 import React from 'react';
-import {renderToString} from 'react-dom/server';
-import {StaticRouter} from 'react-router';
+import { renderToString } from 'react-dom/server';
+import { StaticRouter } from 'react-router';
 import Router from 'citation-react-router';
 import winston from 'winston';
 
@@ -19,7 +19,7 @@ export default async function renderPage(url, context, options) {
 
 		const markup = renderToString(
 			<StaticRouter location={url} context={serverRenderContext}>
-				<Router serverUrl={options.serverUrl} components={context.components}/>
+				<Router serverUrl={options.serverUrl} components={context.components} />
 			</StaticRouter>
 		);
 

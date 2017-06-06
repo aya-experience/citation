@@ -5,11 +5,11 @@ import react from 'citation-react-renderer';
 import winston from 'winston';
 
 import conf from '../conf';
-import {getBuilderPath, getComponentsPaths} from './build';
+import { getBuilderPath, getComponentsPaths } from './build';
 
 const logger = winston.loggers.get('Renderer');
 
-export const renderers = {react};
+export const renderers = { react };
 
 export default async function rendering() {
 	try {

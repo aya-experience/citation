@@ -4,7 +4,7 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import CitationRouter from 'citation-react-router';
 
 import components from './components';
@@ -19,7 +19,7 @@ if (process && process.env && process.env.NODE_ENV === 'development') {
 
 ReactDOM.render(
 	<BrowserRouter>
-		<CitationRouter serverUrl={serverUrl} components={components}/>
+		<CitationRouter serverUrl={serverUrl} components={components} />
 	</BrowserRouter>,
 	document.getElementById('root')
 );

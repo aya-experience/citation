@@ -1,4 +1,4 @@
-import {Repository} from 'nodegit';
+import { Repository } from 'nodegit';
 import add from './add';
 import remove from './remove';
 import commit from './commit';

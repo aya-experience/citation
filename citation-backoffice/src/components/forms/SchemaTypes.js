@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, {Component, PropTypes} from 'react';
-import {Field, FieldArray} from 'redux-form';
+import React, { Component, PropTypes } from 'react';
+import { Field, FieldArray } from 'redux-form';
 import SchemaFields from './SchemaFields';
 
 class Fields extends Component {
@@ -27,11 +27,13 @@ class Fields extends Component {
 		} while (usedNames.indexOf(name) > -1);
 		this.props.fields.push({
 			__name__: name,
-			__fields__: [{
-				kind: 'SCALAR',
-				name: 'new1',
-				typeName: 'String'
-			}]
+			__fields__: [
+				{
+					kind: 'SCALAR',
+					name: 'new1',
+					typeName: 'String'
+				}
+			]
 		});
 	}
 
@@ -46,9 +48,13 @@ class Fields extends Component {
 					console.log('link', link);
 					return (
 						<li key={i}>
-							<Field component="input" type="text" name={`${link}.__name__`}/>
+							<Field component="input" type="text" name={`${link}.__name__`} />
 							<div key={i}>
-								<FieldArray name={`${link}.__fields__`} component={SchemaFields} props={{name: link, collections: this.props.schema}}/>
+								<FieldArray
+									name={`${link}.__fields__`}
+									component={SchemaFields}
+									props={{ name: link, collections: this.props.schema }}
+								/>
 							</div>
 							<button type="button" onClick={this.handleRemove(i)}>
 								X
@@ -63,7 +69,6 @@ class Fields extends Component {
 			</ul>
 		);
 	}
-
 }
 
 export default Fields;

@@ -1,4 +1,4 @@
-import {Repository, Remote} from 'nodegit';
+import { Repository, Remote } from 'nodegit';
 import fs from 'fs-promise';
 import winston from 'winston';
 

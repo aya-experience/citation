@@ -5,7 +5,7 @@ import winston from 'winston';
 
 import check from '../nodegit/check';
 import clone from '../nodegit/clone';
-import {create} from '../nodegit/wrapper';
+import { create } from '../nodegit/wrapper';
 
 const logger = winston.loggers.get('GitUpdater');
 

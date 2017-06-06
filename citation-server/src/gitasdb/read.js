@@ -28,14 +28,16 @@ export async function readObject(type, id) {
 		logger.debug(`read object ${type} ${id}`);
 		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
 		const objectFiles = await fs.readdir(objectPath);
-		const objectFields = await Promise.all(objectFiles.map(async file => {
-			const ext = path.extname(file);
-			const key = path.basename(file, ext);
-			const contentString = (await fs.readFile(path.resolve(objectPath, file))).toString();
-			const content = ext === '.json' ? JSON.parse(contentString) : contentString.trim();
-			return {key, content};
-		}));
-		const object = {__id__: id, __type__: type};
+		const objectFields = await Promise.all(
+			objectFiles.map(async file => {
+				const ext = path.extname(file);
+				const key = path.basename(file, ext);
+				const contentString = (await fs.readFile(path.resolve(objectPath, file))).toString();
+				const content = ext === '.json' ? JSON.parse(contentString) : contentString.trim();
+				return { key, content };
+			})
+		);
+		const object = { __id__: id, __type__: type };
 		objectFields.forEach(field => {
 			object[field.key] = field.content;
 		});

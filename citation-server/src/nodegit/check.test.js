@@ -13,13 +13,15 @@ let lookup;
 test.beforeEach(() => {
 	access = sinon.stub().returns(Promise.resolve());
 	open = sinon.stub().returns(Promise.resolve());
-	lookup = sinon.stub().returns(Promise.resolve({
-		url: () => Promise.resolve(gitRemote)
-	}));
+	lookup = sinon.stub().returns(
+		Promise.resolve({
+			url: () => Promise.resolve(gitRemote)
+		})
+	);
 	check = proxyquire('./check', {
-		'fs-promise': {access},
-		nodegit: {Repository: {open}, Remote: {lookup}},
-		winston: {loggers: {get: () => ({debug: () => {}, error: () => {}})}}
+		'fs-promise': { access },
+		nodegit: { Repository: { open }, Remote: { lookup } },
+		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	}).default;
 });
 
@@ -34,9 +36,11 @@ test('Check return false for empty directory', async t => {
 });
 
 test('Check return false for git directory with wrong remote', async t => {
-	lookup.returns(Promise.resolve({
-		url: () => Promise.resolve('wrong')
-	}));
+	lookup.returns(
+		Promise.resolve({
+			url: () => Promise.resolve('wrong')
+		})
+	);
 	t.false(await check(directory, gitRemote));
 });
 

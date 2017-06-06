@@ -1,10 +1,8 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 
-const PageOrComponent = ({childPage, children}) => {
+const PageOrComponent = ({ childPage, children }) => {
 	const exact = childPage ? childPage.props.match.isExact : false;
-	return (
-		<div>{exact ? children : childPage}</div>
-	);
+	return <div>{exact ? children : childPage}</div>;
 };
 
 PageOrComponent.propTypes = {

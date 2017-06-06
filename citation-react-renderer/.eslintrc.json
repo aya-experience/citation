@@ -1,5 +1,7 @@
 {
 	"extends": [
-		"xo-react"
+		"xo-react",
+		"prettier",
+		"prettier/react"
 	]
 }

@@ -1,8 +1,8 @@
 import _ from 'lodash';
-import {createAction, createReducer} from 'redux-act';
-import {query, mutation} from './graphql-client';
+import { createAction, createReducer } from 'redux-act';
+import { query, mutation } from './graphql-client';
 
-import {filterSchemaNames} from './../utils/filters';
+import { filterSchemaNames } from './../utils/filters';
 
 export const loadSchemaSuccess = createAction('load schema success');
 export const loadSchemaFieldsSuccess = createAction('load schema fields success');
@@ -19,7 +19,8 @@ export async function queryExistingTypes() {
 
 export async function queryCustomTypes(types) {
 	const result = {};
-	const request = types.map(type => `
+	const request = types.map(
+		type => `
 		${type}: __type(name: "${type}") {
 				name
 				fields {
@@ -33,7 +34,8 @@ export async function queryCustomTypes(types) {
 						}
 					}
 				}
-			}`);
+			}`
+	);
 	const returnedTypes = await query(`{
 			${request.join(', ')}
 		}`);
@@ -41,7 +43,7 @@ export async function queryCustomTypes(types) {
 		result[returnedType] = {};
 		return returnedTypes.data[returnedType].fields.map(field => {
 			result[returnedType][field.name] = {
-				typeName: field.type.name ? field.type.name : (field.name === 'children' ? returnedType : '*'),
+				typeName: field.type.name ? field.type.name : field.name === 'children' ? returnedType : '*',
 				kind: field.type.kind,
 				ofType: _.get(field.type, 'ofType.name')
 			};
@@ -65,15 +67,13 @@ export async function askTypes() {
 
 export function loadSchema() {
 	return dispatch => {
-		return askTypes()
-		.then(response => dispatch(loadSchemaSuccess({data: response})));
+		return askTypes().then(response => dispatch(loadSchemaSuccess({ data: response })));
 	};
 }
 
 export function loadSchemaFields(type) {
 	return dispatch => {
-		return queryCustomTypes(type)
-		.then(response => dispatch(loadSchemaFieldsSuccess({data: response})));
+		return queryCustomTypes(type).then(response => dispatch(loadSchemaFieldsSuccess({ data: response })));
 	};
 }
 
@@ -101,16 +101,22 @@ export function writeSchema(schema) {
 	};
 }
 
-export const schemaReducer = createReducer({
-	[loadSchemaSuccess]: (state, payload) => ({
-		...state,
-		data: payload.data
-	})
-}, {});
+export const schemaReducer = createReducer(
+	{
+		[loadSchemaSuccess]: (state, payload) => ({
+			...state,
+			data: payload.data
+		})
+	},
+	{}
+);
 
-export const fieldsReducer = createReducer({
-	[loadSchemaFieldsSuccess]: (state, payload) => ({
-		...state,
-		...payload.data
-	})
-}, {});
+export const fieldsReducer = createReducer(
+	{
+		[loadSchemaFieldsSuccess]: (state, payload) => ({
+			...state,
+			...payload.data
+		})
+	},
+	{}
+);

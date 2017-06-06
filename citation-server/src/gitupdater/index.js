@@ -2,14 +2,14 @@ import path from 'path';
 
 import _ from 'lodash';
 import cron from 'node-cron';
-import {mapSeries} from 'bluebird';
+import { mapSeries } from 'bluebird';
 import winston from 'winston';
 
 import conf from '../conf';
 import render from '../rendering';
-import {build, updateComponentsJs} from '../rendering/build';
+import { build, updateComponentsJs } from '../rendering/build';
 import spawn from '../utils/spawn';
-import {updater} from './updater';
+import { updater } from './updater';
 
 const logger = winston.loggers.get('GitUpdater');
 

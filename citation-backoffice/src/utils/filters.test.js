@@ -1,9 +1,8 @@
-
 import test from 'ava';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
-import {winston} from './../winstonMock';
+import { winston } from './../winstonMock';
 
 let filters;
 let isEmpty;
@@ -11,22 +10,24 @@ let isEmpty;
 test.beforeEach(() => {
 	isEmpty = sinon.stub().returns(Promise.resolve([]));
 	filters = proxyquire('./filters', {
-		lodash: {isEmpty},
+		lodash: { isEmpty },
 		winston
 	});
 });
 
 test('filterFields value should filter reserved types names', t => {
-	const inputValues = {test: {}, secondTest: {}};
+	const inputValues = { test: {}, secondTest: {} };
 	const reservedNames = ['secondTest'];
-	const outputValues = {test: {}};
+	const outputValues = { test: {} };
 	t.deepEqual(filters.filterFields(inputValues, reservedNames), outputValues);
 });
 
 test('filterFields value should filter field name matching the regex', t => {
-	const inputValues = {test: {firstField: 'firstField', __secondField__: 'secondField'}};
+	const inputValues = {
+		test: { firstField: 'firstField', __secondField__: 'secondField' }
+	};
 	const reservedNames = [];
-	const outputValues = {test: {firstField: 'firstField'}};
+	const outputValues = { test: { firstField: 'firstField' } };
 	t.deepEqual(filters.filterFields(inputValues, reservedNames), outputValues);
 });
 
@@ -69,8 +70,11 @@ test('filterSchemaFields should return an empty object if the given values are e
 
 test('filterSchemaFields should return filtered values', t => {
 	isEmpty.returns(false);
-	const inputValues = {Page: {}, Test: {firstField: 'firstField', __secondField__: 'secondField'}};
-	const outputValues = {Test: {firstField: 'firstField'}};
+	const inputValues = {
+		Page: {},
+		Test: { firstField: 'firstField', __secondField__: 'secondField' }
+	};
+	const outputValues = { Test: { firstField: 'firstField' } };
 	t.deepEqual(filters.filterSchemaFields(inputValues), outputValues);
 });
 
@@ -88,7 +92,9 @@ test('filterObjectFields should return an empty object if the given values are e
 
 test('filterObjectFields should return filtered values', t => {
 	isEmpty.returns(false);
-	const inputValues = {Test: {firstField: 'firstField', __secondField__: 'secondField'}};
-	const outputValues = {Test: {firstField: 'firstField'}};
+	const inputValues = {
+		Test: { firstField: 'firstField', __secondField__: 'secondField' }
+	};
+	const outputValues = { Test: { firstField: 'firstField' } };
 	t.deepEqual(filters.filterObjectFields(inputValues), outputValues);
 });

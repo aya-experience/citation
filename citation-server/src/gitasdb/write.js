@@ -4,9 +4,9 @@ import _ from 'lodash';
 import fs from 'fs-promise';
 import winston from 'winston';
 
-import {create} from '../nodegit/wrapper';
+import { create } from '../nodegit/wrapper';
 import conf from '../conf';
-import {readObject} from './read';
+import { readObject } from './read';
 
 const logger = winston.loggers.get('GitAsDb');
 
@@ -34,22 +34,24 @@ export async function writeObject(type, data) {
 			}
 		}
 		if (!id) {
-			const error = {code: 409, message: 'Unavailable ID'};
-			throw (error);
+			const error = { code: 409, message: 'Unavailable ID' };
+			throw error;
 		}
 		objectPath = objectPath || path.resolve(repositoryPath, type, id);
 		await fs.emptyDir(objectPath);
 		// FS write
 		const objectFields = Object.keys(data);
-		await Promise.all(objectFields.map(async field => {
-			if (_.isObject(data[field])) {
-				const fieldPath = path.resolve(objectPath, `${field}.json`);
-				await fs.writeFile(fieldPath, JSON.stringify(data[field], null, 2));
-			} else {
-				const fieldPath = path.resolve(objectPath, `${field}.md`);
-				await fs.writeFile(fieldPath, data[field]);
-			}
-		}));
+		await Promise.all(
+			objectFields.map(async field => {
+				if (_.isObject(data[field])) {
+					const fieldPath = path.resolve(objectPath, `${field}.json`);
+					await fs.writeFile(fieldPath, JSON.stringify(data[field], null, 2));
+				} else {
+					const fieldPath = path.resolve(objectPath, `${field}.md`);
+					await fs.writeFile(fieldPath, data[field]);
+				}
+			})
+		);
 		// Git Push
 		const oid = await repository.add(path.join(type, id));
 		await repository.commit(oid);

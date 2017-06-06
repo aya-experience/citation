@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-promise';
-import {mapSeries} from 'bluebird';
+import { mapSeries } from 'bluebird';
 
 import conf from '../conf';
 import spawn from '../utils/spawn';

@@ -4,7 +4,7 @@ import _ from 'lodash';
 import fs from 'fs-promise';
 
 import conf from '../conf';
-import {updateSchema} from '../index';
+import { updateSchema } from '../index';
 
 export async function readModel() {
 	const modelPath = path.resolve(conf.work.content, conf.content.branch, 'model.json');
