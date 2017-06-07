@@ -6,7 +6,7 @@ import mergeDeep from 'merge-deep';
 import winston from 'winston';
 
 import conf from '../conf';
-import {getTypesNames} from '../graphql/model';
+import { getTypesNames } from '../graphql/model';
 
 const logger = winston.loggers.get('GitAsDb');
 
