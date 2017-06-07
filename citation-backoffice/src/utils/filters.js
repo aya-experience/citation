@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
-const reservedSchema = ['Query', 'Mutation', 'Schema'];
+const reservedSchema = ['Query', 'Mutation', 'Schema', 'KeyValuePair'];
 const reservedSchemaNames = ['Page', 'Component', 'Content', 'Schema', 'KeyValuePair'];
 const nameRegex = /^__(?!value).*__$/;
+const typeRegex = /^__/;
 
 export function filterFields(values, reservedNames) {
 	const response = {};
@@ -21,7 +22,7 @@ export function filterSchemaNames(name) {
 }
 
 export function regexNames(name) {
-	return nameRegex.test(name);
+	return typeRegex.test(name);
 }
 
 export function filterSchemaFields(values) {
