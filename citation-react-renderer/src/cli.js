@@ -28,4 +28,4 @@ if (!cli.flags.anchor) {
 	cli.flags.anchor = '<div id="root"></div>';
 }
 
-render({...cli.flags});
+render({ ...cli.flags });

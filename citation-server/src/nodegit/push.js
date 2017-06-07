@@ -1,7 +1,7 @@
-import {Remote} from 'nodegit';
+import { Remote } from 'nodegit';
 import winston from 'winston';
 
-import {securityOptions} from './security';
+import { securityOptions } from './security';
 
 const logger = winston.loggers.get('NodeGit');
 

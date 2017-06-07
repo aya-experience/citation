@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, {Component, PropTypes} from 'react';
-import {Field} from 'redux-form';
+import React, { Component, PropTypes } from 'react';
+import { Field } from 'redux-form';
 import FieldType from './FieldType';
 
 class Fields extends Component {
@@ -45,13 +45,23 @@ class Fields extends Component {
 					const inputName = `${key}.__fields__[${i}].name`;
 					const kindName = `${key}.__fields__[${i}].kind`;
 					const typeName = `${key}.__fields__[${i}].typeName`;
-					return (<li key={i}>
-						<Field component="input" type="text" name={inputName}/>
-						<Field name={kindName} component={FieldType} props={{kindName, typeName, collections: this.props.collections}}/>
-						<button type="button" onClick={this.handleRemove(i)}>
-							X
-						</button>
-					</li>);
+					return (
+						<li key={i}>
+							<Field component="input" type="text" name={inputName} />
+							<Field
+								name={kindName}
+								component={FieldType}
+								props={{
+									kindName,
+									typeName,
+									collections: this.props.collections
+								}}
+							/>
+							<button type="button" onClick={this.handleRemove(i)}>
+								X
+							</button>
+						</li>
+					);
 				})}
 				<li className="SchemaArrayAdd">
 					<button type="button" onClick={this.handleAdd}>+</button>
@@ -60,7 +70,6 @@ class Fields extends Component {
 			</ul>
 		);
 	}
-
 }
 
 export default Fields;

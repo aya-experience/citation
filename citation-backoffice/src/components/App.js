@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react';
-import {Route, Link, Switch} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {loadCollection} from '../logic/collections';
-import {loadSchema} from '../logic/schema';
+import React, { Component, PropTypes } from 'react';
+import { Route, Link, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loadCollection } from '../logic/collections';
+import { loadSchema } from '../logic/schema';
 
 import Menu from './Menu';
 import Home from './Home';
@@ -20,7 +20,7 @@ class App extends Component {
 		collections: PropTypes.object.isRequired,
 		loadCollections: PropTypes.func.isRequired,
 		loadSchema: PropTypes.func.isRequired
-	}
+	};
 
 	componentDidMount() {
 		this.props.loadSchema().then(() => this.props.loadCollections(this.props.schema));
@@ -31,20 +31,20 @@ class App extends Component {
 			<div className="App">
 				<div className="App-header">
 					<Link to="/">
-						<img src="/logo.svg" className="App-logo" alt="logo"/>
+						<img src="/logo.svg" className="App-logo" alt="logo" />
 						<h2>Citation Admin</h2>
 					</Link>
 				</div>
 				<div className="App-layout">
-					<Menu collections={this.props.collections}/>
+					<Menu collections={this.props.collections} />
 					<div className="App-content">
 						<Switch>
-							<Route exact path="/" component={Home}/>
-							<Route exact path="/schema" component={Schema}/>
-							<Route exact path="/page/:id" component={Page}/>
-							<Route exact path="/object/:type" component={ObjectComponent}/>
-							<Route path="/object/:type/:id" component={ObjectComponent}/>
-							<Route component={NoMatch}/>
+							<Route exact path="/" component={Home} />
+							<Route exact path="/schema" component={Schema} />
+							<Route exact path="/page/:id" component={Page} />
+							<Route exact path="/object/:type" component={ObjectComponent} />
+							<Route path="/object/:type/:id" component={ObjectComponent} />
+							<Route component={NoMatch} />
 						</Switch>
 					</div>
 				</div>
@@ -62,12 +62,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		loadSchema: () => Promise.all([
-			dispatch(loadSchema())
-		]),
-		loadCollections: schema => Promise.all([
-			dispatch(loadCollection(schema.data))
-		])
+		loadSchema: () => Promise.all([dispatch(loadSchema())]),
+		loadCollections: schema => Promise.all([dispatch(loadCollection(schema.data))])
 	};
 };
 

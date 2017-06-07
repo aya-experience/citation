@@ -1,6 +1,8 @@
 {
 	"extends": [
 		"xo/browser",
-		"xo-react"
+		"xo-react",
+		"prettier",
+		"prettier/react"
 	]
 }

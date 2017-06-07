@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, {Component, PropTypes} from 'react';
-import {Field} from 'redux-form';
+import React, { Component, PropTypes } from 'react';
+import { Field } from 'redux-form';
 import LinkField from './LinkField';
 
 export function toLinksInput(links, type) {
@@ -19,7 +19,7 @@ class LinksField extends Component {
 		meta: PropTypes.object.isRequired,
 		collections: PropTypes.object.isRequired,
 		type: PropTypes.string
-	}
+	};
 
 	constructor() {
 		super();
@@ -44,7 +44,14 @@ class LinksField extends Component {
 			<ul className="ObjectArray">
 				{this.props.fields.map((link, i) =>
 					<li key={i}>
-						<Field name={link} component={LinkField} props={{collections: this.props.collections, type: this.props.type}}/>
+						<Field
+							name={link}
+							component={LinkField}
+							props={{
+								collections: this.props.collections,
+								type: this.props.type
+							}}
+						/>
 						<button type="button" onClick={this.handleRemove(i)}>
 							X
 						</button>

@@ -1,10 +1,10 @@
 import _ from 'lodash';
-import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import ObjectForm from './ObjectForm';
-import {toLinkInput} from './LinkField';
-import {toLinksInput} from './LinksField';
-import {toKeyValueInput} from './KeyValueField';
+import { toLinkInput } from './LinkField';
+import { toLinksInput } from './LinksField';
+import { toKeyValueInput } from './KeyValueField';
 
 class GenericObject extends Component {
 	static propTypes = {
@@ -13,7 +13,7 @@ class GenericObject extends Component {
 		collections: PropTypes.object.isRequired,
 		fields: PropTypes.object.isRequired,
 		onSubmit: PropTypes.func.isRequired
-	}
+	};
 
 	constructor() {
 		super();
@@ -55,7 +55,7 @@ class GenericObject extends Component {
 			fields: this.props.fields,
 			type: this.props.type
 		};
-		return <ObjectForm {...formProps}/>;
+		return <ObjectForm {...formProps} />;
 	}
 }
 

@@ -1,1 +1,3 @@
-export const winston = {loggers: {get: () => ({debug: () => {}, error: () => {}})}};
+export const winston = {
+	loggers: { get: () => ({ debug: () => {}, error: () => {} }) }
+};

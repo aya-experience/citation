@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import React, {Component, PropTypes} from 'react';
-import {Field} from 'redux-form';
+import React, { Component, PropTypes } from 'react';
+import { Field } from 'redux-form';
 
 class FieldType extends Component {
 	static propTypes = {
@@ -19,11 +19,10 @@ class FieldType extends Component {
 					<option key="OBJECT" value="OBJECT">Object</option>
 					<option key="LIST" value="LIST">Objects List</option>
 				</Field>
-				{kind !== 'SCALAR' && <Field name={this.props.typeName} component="select">
-					{this.props.collections.map((field, i) => (
-						<option key={i} value={field}>{field}</option>
-					))}
-				</Field>}
+				{kind !== 'SCALAR' &&
+					<Field name={this.props.typeName} component="select">
+						{this.props.collections.map((field, i) => <option key={i} value={field}>{field}</option>)}
+					</Field>}
 			</div>
 		);
 	}

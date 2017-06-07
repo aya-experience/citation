@@ -2,7 +2,7 @@ import path from 'path';
 import 'isomorphic-fetch';
 import 'ignore-styles';
 import fs from 'fs-promise';
-import {queries} from 'citation-react-router';
+import { queries } from 'citation-react-router';
 import winston from 'winston';
 
 import requireComponents from './require';

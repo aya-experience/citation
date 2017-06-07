@@ -1,4 +1,4 @@
-import {spawn as spawnProcess} from 'child_process';
+import { spawn as spawnProcess } from 'child_process';
 
 export default function spawn(cmd, cwd) {
 	return new Promise((resolve, reject) => {
