@@ -2,7 +2,7 @@ FROM ayaxp/citation-base
 
 # install all dependencies
 ADD package.json ./
-RUN npm install
+RUN yarn install
 
 # add node content initially
 ADD . .
