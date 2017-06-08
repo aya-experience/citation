@@ -26,7 +26,7 @@ class GenericObject extends Component {
 		result[type] = _.clone(values);
 		Object.keys(result[type]).forEach(key => {
 			const field = this.props.fields[type][key];
-			if (field.kind !== 'SCALAR') {
+			if (field && field.kind !== 'SCALAR') {
 				if (_.isArray(result[type][key])) {
 					if (field.ofType === 'KeyValuePair') {
 						result[type][key] = toKeyValueInput(values[key]);
