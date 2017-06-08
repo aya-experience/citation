@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import queries from './queries';
 import Default from './Default';
 
@@ -70,12 +70,12 @@ export default class Routes extends Component {
 
 	render() {
 		return (
-			<div>
-				{this.props.pages.map((page, i) => {
+			<Switch>
+				{this.props.pages.reverse().map((page, i) => {
 					const path = `${this.props.match.url}/${page.slug}`.replace(/\/\//g, '/');
 					return <Route key={i} path={path} render={this.matchRenderer(page)} />;
 				})}
-			</div>
+			</Switch>
 		);
 	}
 }
