@@ -18,7 +18,7 @@ export default async function renderPage(url, context, options) {
 		};
 
 		const markup = renderToString(
-			<StaticRouter location={url} context={serverRenderContext}>
+			<StaticRouter location={url.url} context={serverRenderContext}>
 				<Router serverUrl={options.serverUrl} components={context.components} />
 			</StaticRouter>
 		);
