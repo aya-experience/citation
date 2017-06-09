@@ -6,21 +6,17 @@ import mergeDeep from 'merge-deep';
 import winston from 'winston';
 
 import conf from '../conf';
-import { getTypesNames } from '../graphql/model';
 
 const logger = winston.loggers.get('GitAsDb');
 
-let modelTypes;
-
-function includesLink(stack, link) {
+function includesLink(stack, link, modelTypes) {
 	if (!modelTypes.includes(link.collection)) {
 		return true;
 	}
 	return stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id).length > 0;
 }
 
-export async function inspectObject(type, id, stack = []) {
-	modelTypes = await getTypesNames();
+export async function inspectObject(type, id, modelTypes, stack = []) {
 	try {
 		logger.debug(`inspect object ${type} ${id}`);
 		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
@@ -33,18 +29,18 @@ export async function inspectObject(type, id, stack = []) {
 					const contentBuffer = await fs.readFile(path.resolve(objectPath, file));
 					const content = JSON.parse(contentBuffer.toString());
 					if (content.__role__ === 'link') {
-						if (includesLink(stack, content.link)) {
+						if (includesLink(stack, content.link, modelTypes)) {
 							return;
 						}
 						const { collection, id } = content.link;
-						const inspection = await inspectObject(collection, id, [...stack, content.link]);
+						const inspection = await inspectObject(collection, id, modelTypes, [...stack, content.link]);
 						return { [key]: inspection };
 					}
 					if (content.__role__ === 'links') {
 						const linksInspection = await Promise.all(
-							content.links.filter(link => !includesLink(stack, link)).map(async link => {
+							content.links.filter(link => !includesLink(stack, link, modelTypes)).map(async link => {
 								const { collection, id } = link;
-								const inspection = await inspectObject(collection, id, [...stack, link]);
+								const inspection = await inspectObject(collection, id, modelTypes, [...stack, link]);
 								return { [key]: { [`... on ${collection}`]: inspection } };
 							})
 						);
@@ -52,9 +48,9 @@ export async function inspectObject(type, id, stack = []) {
 					}
 					if (content.__role__ === 'map') {
 						const __value__ = await Promise.all(
-							values(content.map).filter(link => !includesLink(stack, link)).map(async link => {
+							values(content.map).filter(link => !includesLink(stack, link, modelTypes)).map(async link => {
 								const { collection, id } = link;
-								const inspection = await inspectObject(collection, id, [...stack, link]);
+								const inspection = await inspectObject(collection, id, modelTypes, [...stack, link]);
 								return { [`... on ${collection}`]: inspection };
 							})
 						);
