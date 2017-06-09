@@ -4,7 +4,7 @@ import { map, fromPairs, isString } from 'lodash';
 import { GraphQLObjectType, GraphQLInterfaceType, GraphQLID, GraphQLList, GraphQLString } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
 
-import { readModel } from './model';
+import { readModel, getTypesNames } from './model';
 import { read, readChild, readChildren, readMap, inspect } from './resolve';
 
 function buildSchemaObject() {
@@ -16,6 +16,7 @@ function buildSchemaObject() {
 
 export async function buildObjects() {
 	const model = await readModel();
+	const modelTypes = getTypesNames(model);
 
 	const ObjectInterface = new GraphQLInterfaceType({
 		name: 'Object',
@@ -46,11 +47,11 @@ export async function buildObjects() {
 				return { type, resolve: root => readChild(root[field.name]) };
 			case 'links':
 				type = field.type[1] === '*' ? new GraphQLList(ObjectInterface) : new GraphQLList(ObjectTypes[field.type[1]]);
-				return { type, resolve: root => readChildren(root[field.name]) };
+				return { type, resolve: root => readChildren(root[field.name], modelTypes) };
 			case 'map':
 				return {
 					type: new GraphQLList(KeyValuePair),
-					resolve: root => readMap(root[field.name])
+					resolve: root => readMap(root[field.name], modelTypes)
 				};
 			case 'json':
 				return { type: GraphQLJSON };
@@ -58,7 +59,6 @@ export async function buildObjects() {
 				return { type: GraphQLString };
 		}
 	};
-
 	const ObjectTypes = fromPairs(
 		model.map(structure => {
 			return [
@@ -72,7 +72,7 @@ export async function buildObjects() {
 						__type__: { type: GraphQLString },
 						__tree__: {
 							type: GraphQLString,
-							resolve: inspect
+							resolve: root => inspect(root, modelTypes)
 						},
 						...fromPairs(structure.fields.map(field => [field.name, buildField(field)]))
 					})

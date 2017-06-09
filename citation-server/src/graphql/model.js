@@ -24,7 +24,6 @@ export async function writeModel(newModel) {
 	return result;
 }
 
-export async function getTypesNames() {
-	const model = await readModel();
+export function getTypesNames(model) {
 	return model.map(type => type.name);
 }

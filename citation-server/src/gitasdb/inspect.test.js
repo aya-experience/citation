@@ -5,21 +5,19 @@ import sinon from 'sinon';
 let inspect;
 let readdir;
 let readFile;
-let getTypesNames;
+const modelTypes = ['Type', 'LinkedType', 'LinkedType1', 'LinkedType2'];
 
 test.beforeEach(() => {
 	readdir = sinon.stub().returns(Promise.resolve([]));
 	readFile = sinon.stub().returns(Promise.resolve(new Buffer('')));
-	getTypesNames = sinon.stub().returns(['Type', 'LinkedType', 'LinkedType1', 'LinkedType2']);
 	inspect = proxyquire('./inspect', {
 		'fs-promise': { readdir, readFile },
-		'../graphql/model': { getTypesNames },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});
 });
 
 test('inspectObject should return empty array for an empty object folder', async t => {
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	const expected = [];
 	t.deepEqual(result, expected);
 });
@@ -27,7 +25,7 @@ test('inspectObject should return empty array for an empty object folder', async
 test('inspectObject should return field list when no links', async t => {
 	const expected = ['one', 'two'];
 	readdir.returns(Promise.resolve(expected));
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, expected);
 });
 
@@ -42,7 +40,7 @@ test('inspectObject should follow unique link', async t => {
 	readdir.onCall(0).returns(Promise.resolve(['one.md', 'two.json']));
 	readdir.onCall(1).returns(Promise.resolve(['three', 'four']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(link))));
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, ['one', { two: ['three', 'four'] }]);
 });
 
@@ -56,7 +54,7 @@ test('inspectObject should ignore link if type is not in the model', async t => 
 	};
 	readdir.onCall(0).returns(Promise.resolve(['one.md', 'two.json']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, ['one']);
 });
 
@@ -78,7 +76,7 @@ test('inspectObject should follow multiple links', async t => {
 	readdir.onCall(1).returns(Promise.resolve(['three', 'four']));
 	readdir.onCall(2).returns(Promise.resolve(['five', 'six']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
 		'one',
 		{
@@ -100,7 +98,7 @@ test('inspectObject should ignore loops in link', async t => {
 	};
 	readdir.returns(Promise.resolve(['one.md', 'two.json']));
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(link))));
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
 		'one',
 		{
@@ -125,7 +123,7 @@ test('inspectObject should ignore loops in links', async t => {
 	};
 	readdir.returns(Promise.resolve(['one.md', 'two.json']));
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(links))));
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
 		'one',
 		{
@@ -149,7 +147,7 @@ test('inspectObject should ignore loops in links', async t => {
 
 test('inspectObject should not fail on a broken link', async t => {
 	readdir.throws();
-	const result = await inspect.inspectObject('Type', 'id');
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, []);
 });
 
