@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { string, object } from 'prop-types';
 import queries from './queries';
 import Routes from './Routes';
 
 export default class Router extends Component {
 	static propTypes = {
-		serverUrl: PropTypes.string.isRequired,
-		components: PropTypes.object.isRequired // eslint-disable-line react/no-unused-prop-types
+		serverUrl: string.isRequired,
+		components: object.isRequired // eslint-disable-line react/no-unused-prop-types
 	};
 
 	constructor() {
