@@ -27,7 +27,7 @@ class GenericObject extends Component {
 		Object.keys(result[type]).forEach(key => {
 			const field = this.props.fields[type][key];
 			if (field && field.kind !== 'SCALAR') {
-				if (_.isArray(result[type][key])) {
+				if (field.kind === 'LIST') {
 					if (field.ofType === 'KeyValuePair') {
 						result[type][key] = toKeyValueInput(values[key]);
 					} else if (field.typeName === '*') {
@@ -35,7 +35,7 @@ class GenericObject extends Component {
 					} else {
 						result[type][key] = toLinksInput(values[key], field.typeName);
 					}
-				} else if (_.isObject(result[type][key])) {
+				} else if (field.kind === 'OBJECT') {
 					if (field.typeName === '*') {
 						result[type][key] = toLinkInput(values[key]);
 					} else {
@@ -43,6 +43,7 @@ class GenericObject extends Component {
 					}
 				}
 			}
+			result[type][key] = result[type][key] ? result[type][key] : '';
 		});
 		this.props.onSubmit(result);
 	}
