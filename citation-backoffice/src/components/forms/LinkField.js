@@ -2,7 +2,8 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { Field } from 'redux-form';
 
-export function toLinkInput(link, type) {
+export function toLinkInput(input, type) {
+	const link = input ? input : {};
 	return {
 		__role__: 'link',
 		link: {

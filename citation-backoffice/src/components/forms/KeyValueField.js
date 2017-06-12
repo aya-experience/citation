@@ -6,7 +6,8 @@ import { withHandlers, compose } from 'recompose';
 
 import ValueOrListField from './ValueOrListField';
 
-export const toKeyValueInput = pairs => {
+export const toKeyValueInput = inputPairs => {
+	const pairs = inputPairs ? inputPairs : [];
 	return {
 		__role__: 'map',
 		map: fromPairs(
