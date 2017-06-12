@@ -30,3 +30,23 @@ test('writeObject should throw error with code 409 if the id is unavailable', as
 	const err = await t.throws(write.writeObject(type, data));
 	t.deepEqual(err, { code: 409, message: 'Unavailable ID' });
 });
+
+test('emptyField should return true if field is an empty string', t => {
+	t.true(write.emptyField(''));
+});
+
+test('emptyField should return false if field is a string', t => {
+	t.false(write.emptyField('test'));
+});
+
+test('emptyField should return false if field is an object with a role and a non empty correspondance to this role', t => {
+	t.false(write.emptyField({ __role__: 'test', test: 'myTest' }));
+});
+
+test('emptyField should return true if field is an object with a role and an empty array as correspondance to this role', t => {
+	t.true(write.emptyField({ __role__: 'test', test: [] }));
+});
+
+test('emptyField should return true if field is an object with a role and an empty object as correspondance to this role', t => {
+	t.true(write.emptyField({ __role__: 'test', test: {} }));
+});
