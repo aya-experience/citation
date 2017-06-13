@@ -102,24 +102,6 @@ async function buildInputs() {
 				} else {
 					Object.assign(resultFields, fromPairs(structure.fields.map(field => [field.name, buildInput(field)])));
 				}
-
-				// console.log('coucou', structure);
-				// structure.fields.forEach(field => {
-				// 	if (_.isString(field.type)) {
-				// 		resultFields[field.name] = {type: GraphQLString};
-				// 	} else if (_.isArray(field.type)) {
-				// 		if (field.type[0] === 'link') {
-				// 			resultFields[field.name] = {type: LinkInputType};
-				// 		} else if (field.type[0] === 'links') {
-				// 			resultFields[field.name] = {type: LinksInputType};
-				// 		} else {
-				// 			resultFields[field.name] = {type: GraphQLString};
-				// 		}
-				// 	} else {
-				// 		resultFields[field.name] = {type: GraphQLString};
-				// 	}
-				// });
-
 				return resultFields;
 			}
 		});
