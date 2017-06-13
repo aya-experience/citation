@@ -3,7 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { Field } from 'redux-form';
 import LinkField from './LinkField';
 
-export function toLinksInput(links, type) {
+export function toLinksInput(inputs, type) {
+	const links = inputs ? inputs : [];
 	return {
 		__role__: 'links',
 		links: links.map(link => ({

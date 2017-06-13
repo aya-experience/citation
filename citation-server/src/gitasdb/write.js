@@ -10,6 +10,11 @@ import { readObject } from './read';
 
 const logger = winston.loggers.get('GitAsDb');
 
+export function emptyField(field) {
+	const role = field.__role__;
+	return _.isEmpty(field) || _.isUndefined(role) !== _.isEmpty(field[role]);
+}
+
 export async function writeObject(type, data) {
 	try {
 		// Opening repository
@@ -43,12 +48,20 @@ export async function writeObject(type, data) {
 		const objectFields = Object.keys(data);
 		await Promise.all(
 			objectFields.map(async field => {
+				let extension;
+				let writeData;
 				if (_.isObject(data[field])) {
-					const fieldPath = path.resolve(objectPath, `${field}.json`);
-					await fs.writeFile(fieldPath, JSON.stringify(data[field], null, 2));
+					extension = 'json';
+					writeData = JSON.stringify(data[field], null, 2);
 				} else {
-					const fieldPath = path.resolve(objectPath, `${field}.md`);
-					await fs.writeFile(fieldPath, data[field]);
+					extension = 'md';
+					writeData = data[field];
+				}
+				const fieldPath = path.resolve(objectPath, `${field}.${extension}`);
+				if (emptyField(data[field])) {
+					await fs.remove(fieldPath);
+				} else {
+					await fs.writeFile(fieldPath, writeData);
 				}
 			})
 		);
