@@ -13,7 +13,6 @@ class SchemaForm extends Component {
 	};
 
 	render() {
-		console.log('render form', this.props);
 		let result;
 		if (this.props.fields) {
 			result = <FieldArray name="data" component={SchemaTypes} props={{ schema: this.props.schema }} />;

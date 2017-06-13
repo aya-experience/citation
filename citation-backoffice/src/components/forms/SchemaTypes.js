@@ -45,7 +45,6 @@ class Fields extends Component {
 		return (
 			<ul className="SchemaArray">
 				{this.props.fields.map((link, i) => {
-					console.log('link', link);
 					return (
 						<li key={i}>
 							<Field component="input" type="text" name={`${link}.__name__`} />
