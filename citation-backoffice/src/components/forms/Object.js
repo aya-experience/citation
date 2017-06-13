@@ -23,28 +23,22 @@ class GenericObject extends Component {
 	handleSubmit(values) {
 		const result = {};
 		const type = this.props.type;
-		result[type] = _.clone(values);
-		Object.keys(result[type]).forEach(key => {
-			const field = this.props.fields[type][key];
-			if (field && field.kind !== 'SCALAR') {
-				if (field.kind === 'LIST') {
+		result[type] = _.fromPairs(
+			_.map(values, (value, key) => {
+				const field = this.props.fields[type][key];
+				let formatedValue = value ? value : '';
+				if (field && field.kind !== 'SCALAR') {
 					if (field.ofType === 'KeyValuePair') {
-						result[type][key] = toKeyValueInput(values[key]);
-					} else if (field.typeName === '*') {
-						result[type][key] = toLinksInput(values[key]);
-					} else {
-						result[type][key] = toLinksInput(values[key], field.typeName);
-					}
-				} else if (field.kind === 'OBJECT') {
-					if (field.typeName === '*') {
-						result[type][key] = toLinkInput(values[key]);
-					} else {
-						result[type][key] = toLinkInput(values[key], field.typeName);
+						formatedValue = toKeyValueInput(values[key]);
+					} else if (field.kind === 'LIST') {
+						formatedValue = toLinksInput(value, field.typeName);
+					} else if (field.kind === 'OBJECT') {
+						formatedValue = toLinkInput(value, field.typeName);
 					}
 				}
-			}
-			result[type][key] = result[type][key] ? result[type][key] : '';
-		});
+				return [key, formatedValue];
+			})
+		);
 		this.props.onSubmit(result);
 	}
 
