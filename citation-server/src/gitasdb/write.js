@@ -12,8 +12,7 @@ const logger = winston.loggers.get('GitAsDb');
 
 export function emptyField(field) {
 	const role = field.__role__;
-	const test = _.isEmpty(field) || _.isUndefined(role) !== _.isEmpty(field[role]);
-	return test;
+	return _.isEmpty(field) || _.isUndefined(role) !== _.isEmpty(field[role]);
 }
 
 export async function writeObject(type, data) {
