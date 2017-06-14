@@ -23,22 +23,19 @@ class GenericObject extends Component {
 	handleSubmit(values) {
 		const result = {};
 		const type = this.props.type;
-		result[type] = _.fromPairs(
-			_.map(values, (value, key) => {
-				const field = this.props.fields[type][key];
-				let formatedValue = value ? value : '';
-				if (field && field.kind !== 'SCALAR') {
-					if (field.ofType === 'KeyValuePair') {
-						formatedValue = toKeyValueInput(values[key]);
-					} else if (field.kind === 'LIST') {
-						formatedValue = toLinksInput(value, field.typeName);
-					} else if (field.kind === 'OBJECT') {
-						formatedValue = toLinkInput(value, field.typeName);
-					}
+		result[type] = _.mapValues(values, (value, key) => {
+			const field = this.props.fields[type][key];
+			if (field) {
+				if (field.ofType === 'KeyValuePair') {
+					return toKeyValueInput(value);
+				} else if (field.kind === 'LIST') {
+					return toLinksInput(value, field.typeName);
+				} else if (field.kind === 'OBJECT') {
+					return toLinkInput(value, field.typeName);
 				}
-				return [key, formatedValue];
-			})
-		);
+			}
+			return value ? value : '';
+		});
 		this.props.onSubmit(result);
 	}
 
