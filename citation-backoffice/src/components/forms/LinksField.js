@@ -8,7 +8,7 @@ export function toLinksInput(inputs, type) {
 	return {
 		__role__: 'links',
 		links: links.map(link => ({
-			collection: link.__type__ ? link.__type__ : type,
+			collection: type === '*' ? link.__type__ : type,
 			id: link.__id__
 		}))
 	};

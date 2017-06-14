@@ -23,27 +23,18 @@ class GenericObject extends Component {
 	handleSubmit(values) {
 		const result = {};
 		const type = this.props.type;
-		result[type] = _.clone(values);
-		Object.keys(result[type]).forEach(key => {
+		result[type] = _.mapValues(values, (value, key) => {
 			const field = this.props.fields[type][key];
-			if (field && field.kind !== 'SCALAR') {
-				if (field.kind === 'LIST') {
-					if (field.ofType === 'KeyValuePair') {
-						result[type][key] = toKeyValueInput(values[key]);
-					} else if (field.typeName === '*') {
-						result[type][key] = toLinksInput(values[key]);
-					} else {
-						result[type][key] = toLinksInput(values[key], field.typeName);
-					}
+			if (field) {
+				if (field.ofType === 'KeyValuePair') {
+					return toKeyValueInput(value);
+				} else if (field.kind === 'LIST') {
+					return toLinksInput(value, field.typeName);
 				} else if (field.kind === 'OBJECT') {
-					if (field.typeName === '*') {
-						result[type][key] = toLinkInput(values[key]);
-					} else {
-						result[type][key] = toLinkInput(values[key], field.typeName);
-					}
+					return toLinkInput(value, field.typeName);
 				}
 			}
-			result[type][key] = result[type][key] ? result[type][key] : '';
+			return value ? value : '';
 		});
 		this.props.onSubmit(result);
 	}

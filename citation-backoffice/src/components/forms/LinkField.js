@@ -7,7 +7,7 @@ export function toLinkInput(input, type) {
 	return {
 		__role__: 'link',
 		link: {
-			collection: link.__type__ ? link.__type__ : type,
+			collection: type === '*' ? link.__type__ : type,
 			id: link.__id__
 		}
 	};
