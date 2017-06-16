@@ -2,8 +2,9 @@ export default function getPaths(pages, parent = { url: '', pages: [] }) {
 	return pages.reduce((acc, page) => {
 		const children = page.children ? page.children : [];
 		let url;
-		if (parent.url === '' && (page.slug === '' || page.slug === '/')) {
+		if (parent.url === '' && (!page.slug || page.slug === '' || page.slug === '/')) {
 			url = '';
+			page.slug = '';
 		} else {
 			url = `${parent.url}/${page.slug}`;
 		}
