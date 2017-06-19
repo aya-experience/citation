@@ -28,8 +28,10 @@ class ObjectComponent extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.type !== nextProps.type) {
-			this.props.loadFields([nextProps.type]).then(() => this.props.load(nextProps.fields));
+		if (this.props.fields[nextProps.type]) {
+			nextProps.load(this.props.fields);
+		} else {
+			nextProps.loadFields([nextProps.type]).then(() => nextProps.load(this.props.fields));
 		}
 	}
 

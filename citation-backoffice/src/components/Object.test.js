@@ -60,6 +60,17 @@ test('componentDidMount should call the loadFields method with good args', async
 	t.true(loadFieldsSpy.calledWith([type]));
 });
 
+test('componentWillReceiveProps should not call lodafFields if fields are already in props', async t => {
+	const loadFieldsSpy = sinon.stub().returns(Promise.resolve([true]));
+	const load = sinon.stub();
+	const objects = {};
+	const fields = { TEST: {} };
+	store.getState.returns({ objects, fields });
+	const objectComponent = setup();
+	objectComponent.setProps({ load, loadFields: loadFieldsSpy });
+	t.false(loadFieldsSpy.called);
+});
+
 test('title shoud be Edit if thre is an id', t => {
 	t.is(setup().find('h1').text(), `Edit ${type} ${id}`);
 });
