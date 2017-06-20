@@ -40,6 +40,14 @@ class LinksField extends Component {
 		return () => this.props.fields.remove(index);
 	}
 
+	handleUp(index) {
+		return () => this.props.fields.swap(index, index - 1);
+	}
+
+	handleDown(index) {
+		return () => this.props.fields.swap(index, index + 1);
+	}
+
 	render() {
 		return (
 			<ul className="ObjectArray">
@@ -56,6 +64,14 @@ class LinksField extends Component {
 						<button type="button" onClick={this.handleRemove(i)}>
 							X
 						</button>
+						{i > 0 &&
+							<button type="button" onClick={this.handleUp(i)}>
+								Λ
+							</button>}
+						{i + 1 < this.props.fields.length &&
+							<button type="button" onClick={this.handleDown(i)}>
+								V
+							</button>}
 					</li>
 				)}
 				<li className="ObjectArrayAdd">
