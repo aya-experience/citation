@@ -1,19 +1,15 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import { array } from 'prop-types';
 
-class Default extends Component {
-	static propTypes = {
-		children: PropTypes.array,
-		data: PropTypes.array
-	};
+const Default = ({ data, children }) =>
+	<div className="Default">
+		Default component with data {JSON.stringify(data)}
+		{children}
+	</div>;
 
-	render() {
-		return (
-			<div className="Default">
-				Default component with data {JSON.stringify(this.props.data)}
-				{this.props.children}
-			</div>
-		);
-	}
-}
+Default.propTypes = {
+	children: array,
+	data: array
+};
 
 export default Default;

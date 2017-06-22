@@ -9,9 +9,7 @@ const componentId = 'componentId';
 const component = { __id__: 'componentId', data: [] };
 const page = { slug: 'test', component, children: [] };
 
-global.window = {
-	__contents__: { [componentId]: component }
-};
+global.window = {};
 
 const props = {
 	serverUrl: 'serverUrl',
@@ -20,7 +18,13 @@ const props = {
 	match: { url: '' }
 };
 
+test('should init contents if not present in window', t => {
+	const routes = shallow(<Routes {...props} />);
+	t.deepEqual(routes.state('contents'), {});
+});
+
 test('should add contents in state', t => {
+	global.window.__contents__ = { [componentId]: component };
 	const routes = shallow(<Routes {...props} />);
 	t.is(routes.state('contents'), global.window.__contents__);
 });

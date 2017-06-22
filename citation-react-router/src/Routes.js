@@ -1,14 +1,15 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { string, object, array } from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 import queries from './queries';
 import Default from './Default';
 
 export default class Routes extends Component {
 	static propTypes = {
-		serverUrl: PropTypes.string.isRequired,
-		components: PropTypes.object.isRequired,
-		pages: PropTypes.array.isRequired,
-		match: PropTypes.object.isRequired
+		serverUrl: string.isRequired,
+		components: object.isRequired,
+		pages: array.isRequired,
+		match: object.isRequired
 	};
 
 	constructor() {
