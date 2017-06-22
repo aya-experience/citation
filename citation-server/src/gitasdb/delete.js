@@ -15,10 +15,9 @@ export async function deleteObject(type, data) {
 		const repository = await create(repositoryPath);
 		const id = data.__id__;
 		const objectPath = path.resolve(repositoryPath, type, id);
+
 		if (await fs.existsSync(objectPath)) {
-			console.log('ici');
 			await fs.remove(objectPath);
-			console.log(type);
 			const oid = await repository.add(path.join(type, id));
 			await repository.commit(oid);
 			await repository.push(conf.content.branch);
