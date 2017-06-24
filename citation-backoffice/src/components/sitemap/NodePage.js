@@ -3,12 +3,13 @@ import { object, string, number, func } from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
-import withDrag from './withDrag';
+import AddButton from './AddButton';
+import pageControls from './pageControls';
 import { fontSize } from './params';
 
-const enhancer = withDrag();
+const enhancer = pageControls();
 
-const NodePage = ({ page, direction, color, position, drag }) => {
+const NodePage = ({ page, direction, color, position, drag, add }) => {
 	const children = page.children === null ? [] : page.children;
 	return (
 		<g>
@@ -24,17 +25,25 @@ const NodePage = ({ page, direction, color, position, drag }) => {
 				/>
 			)}
 			<DraggableCore onDrag={drag}>
-				<text
-					className="Draggable"
-					x={position.x}
-					y={position.y - 0.5}
-					fontSize={fontSize}
-					fill="black"
-					textAnchor="middle"
-					alignmentBaseline="baseline"
-				>
-					{page.__id__}
-				</text>
+				<g className="Draggable">
+					<text
+						x={position.x}
+						y={position.y - 0.5}
+						fontSize={fontSize}
+						fill="black"
+						textAnchor="middle"
+						alignmentBaseline="baseline"
+					>
+						{page.__id__}
+					</text>
+					<AddButton
+						position={{
+							x: position.x,
+							y: position.y + 0.5
+						}}
+						onClick={add}
+					/>
+				</g>
 			</DraggableCore>
 		</g>
 	);
@@ -45,7 +54,8 @@ NodePage.propTypes = {
 	direction: number.isRequired,
 	position: object.isRequired,
 	color: string.isRequired,
-	drag: func.isRequired
+	drag: func.isRequired,
+	add: func.isRequired
 };
 
 export default enhancer(NodePage);

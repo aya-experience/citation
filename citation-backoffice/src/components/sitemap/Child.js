@@ -9,9 +9,9 @@ import { blockWidth, childSpaceX, childSpaceY, linkCurv, linkWidth } from './par
 
 const computePositionFromRoot = (i, size, position) => {
 	const halfI = Math.floor(i / 2);
-	const halfSize = Math.floor(size / 2) + (i % 2 === 1 ? size % 2 : 0);
+	const halfSize = Math.floor(size / 2) + (i % 2 === 0 ? size % 2 : 0);
 	const childrenHeight = (halfSize - 1) * childSpaceY;
-	const direction = i % 2 * 2 - 1;
+	const direction = i % 2 * -2 + 1;
 	return {
 		from: {
 			x: position.x + direction * blockWidth / 2,
@@ -19,7 +19,7 @@ const computePositionFromRoot = (i, size, position) => {
 		},
 		to: {
 			x: position.x + direction * blockWidth / 2 + direction * childSpaceX,
-			y: position.y - childrenHeight / 2 + childrenHeight * halfI
+			y: position.y - childrenHeight / 2 + childSpaceY * halfI
 		},
 		direction
 	};
@@ -31,7 +31,7 @@ const computePositionWithDirection = (direction, i, size, position) => {
 		from: position,
 		to: {
 			x: position.x + direction * childSpaceX,
-			y: position.y - childrenHeight / 2 + childrenHeight * i / (size - 1)
+			y: position.y - childrenHeight / 2 + childSpaceY * i
 		},
 		direction
 	};

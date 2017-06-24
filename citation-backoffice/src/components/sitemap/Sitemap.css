@@ -5,3 +5,12 @@
 .Draggable {
   cursor: move;
 }
+
+.AddButton {
+  display: none;
+  cursor: pointer;
+}
+
+.Draggable:hover .AddButton {
+  display: block;
+}

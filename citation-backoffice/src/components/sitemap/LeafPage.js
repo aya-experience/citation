@@ -2,17 +2,17 @@ import React from 'react';
 import { object, number, func } from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 
-import withDrag from './withDrag';
+import AddButton from './AddButton';
+import pageControls from './pageControls';
 import { fontSize } from './params';
 
-const enhancer = withDrag();
+const enhancer = pageControls();
 
-const LeafPage = ({ page, direction, position, drag }) => {
-	return (
-		<g>
-			<DraggableCore onDrag={drag}>
+const LeafPage = ({ page, direction, position, drag, add }) =>
+	<g>
+		<DraggableCore onDrag={drag}>
+			<g className="Draggable">
 				<text
-					className="Draggable"
 					x={position.x + direction * 0.4}
 					y={position.y}
 					fontSize={fontSize}
@@ -22,16 +22,23 @@ const LeafPage = ({ page, direction, position, drag }) => {
 				>
 					{page.__id__}
 				</text>
-			</DraggableCore>
-		</g>
-	);
-};
+				<AddButton
+					position={{
+						x: position.x,
+						y: position.y
+					}}
+					onClick={add}
+				/>
+			</g>
+		</DraggableCore>
+	</g>;
 
 LeafPage.propTypes = {
 	page: object.isRequired,
 	direction: number.isRequired,
 	position: object.isRequired,
-	drag: func.isRequired
+	drag: func.isRequired,
+	add: func.isRequired
 };
 
 export default enhancer(LeafPage);

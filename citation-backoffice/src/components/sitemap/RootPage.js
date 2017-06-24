@@ -3,12 +3,13 @@ import { object, func } from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
-import withDrag from './withDrag';
+import AddButton from './AddButton';
+import pageControls from './pageControls';
 import { blockHeight, blockWidth, fontSize, colors } from './params';
 
-const enhancer = withDrag();
+const enhancer = pageControls();
 
-const RootPage = ({ page, position, drag }) => {
+const RootPage = ({ page, position, drag, add }) => {
 	const children = page.children === null ? [] : page.children;
 	return (
 		<g>
@@ -17,7 +18,7 @@ const RootPage = ({ page, position, drag }) => {
 					key={`child-${child.__id__}-${i}`}
 					child={child}
 					direction={0}
-					color={colors[i % page.children.length]}
+					color={colors[i % colors.length]}
 					i={i}
 					size={page.children.length}
 					position={position}
@@ -44,6 +45,13 @@ const RootPage = ({ page, position, drag }) => {
 					>
 						{page.__id__}
 					</text>
+					<AddButton
+						position={{
+							x: position.x,
+							y: position.y + blockHeight / 2
+						}}
+						onClick={add}
+					/>
 				</g>
 			</DraggableCore>
 		</g>
@@ -53,7 +61,8 @@ const RootPage = ({ page, position, drag }) => {
 RootPage.propTypes = {
 	page: object.isRequired,
 	position: object.isRequired,
-	drag: func.isRequired
+	drag: func.isRequired,
+	add: func.isRequired
 };
 
 export default enhancer(RootPage);
