@@ -9,6 +9,7 @@ import Home from './Home';
 import ObjectComponent from './Object';
 import Schema from './Schema';
 import Page from './Page';
+import Sitemap from './sitemap/Sitemap';
 
 import './App.css';
 
@@ -42,6 +43,7 @@ class App extends Component {
 							<Route exact path="/" component={Home} />
 							<Route exact path="/schema" component={Schema} />
 							<Route exact path="/page/:id" component={Page} />
+							<Route exact path="/sitemap" component={Sitemap} />
 							<Route exact path="/object/:type" component={ObjectComponent} />
 							<Route path="/object/:type/:id" component={ObjectComponent} />
 							<Route component={NoMatch} />

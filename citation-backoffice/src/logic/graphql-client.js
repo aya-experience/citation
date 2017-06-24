@@ -1,12 +1,14 @@
 /* global process */
 
-let serverUrl;
+let url;
 
 if (process && process.env && process.env.NODE_ENV === 'development') {
-	serverUrl = 'http://localhost:4000/graphql';
+	url = 'http://localhost:4000/graphql';
 } else {
-	serverUrl = '/graphql';
+	url = '/graphql';
 }
+
+export const serverUrl = url;
 
 export function query(query) {
 	return fetch(serverUrl, {
