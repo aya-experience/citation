@@ -11,6 +11,7 @@ let ObjectComponent;
 let loadObject;
 let loadSchemaFields;
 let writeObject;
+let deleteObject;
 
 const type = 'TEST';
 const id = 'id';
@@ -30,8 +31,9 @@ test.beforeEach(() => {
 	loadObject = sinon.stub().returns(objectReturned);
 	loadSchemaFields = sinon.stub().returns(schemaFieldsReturned);
 	writeObject = sinon.stub().returns(writeObjectReturned);
+	deleteObject = sinon.stub().returns(null);
 	ObjectComponent = proxyquire('./Object', {
-		'../logic/objects': { loadObject, writeObject },
+		'../logic/objects': { loadObject, writeObject, deleteObject },
 		'../logic/schema': { loadSchemaFields }
 	}).default;
 });
@@ -124,4 +126,13 @@ test('handleSubmit should call write with good args', t => {
 	const objectComponent = setup();
 	objectComponent.instance().handleSubmit(myData);
 	t.true(writeObject.calledWith(type, id, myData, fields));
+});
+
+test('handleDelete should call delete with good args', t => {
+	const fields = {};
+	const objects = {};
+	store.getState.returns({ objects, fields });
+	const objectComponent = setup();
+	objectComponent.instance().handleDelete();
+	t.true(deleteObject.calledWith(type, id));
 });
