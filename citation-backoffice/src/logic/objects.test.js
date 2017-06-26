@@ -179,3 +179,12 @@ test('reducer for loadObjectSuccess should return reduceResult', t => {
 	);
 	t.deepEqual(reduceResult, { TEST: { id: 'myData' } });
 });
+
+test('deleteObject should call mutation with good args', t => {
+	mutation.reset();
+	const type = 'type';
+	const id = 'id';
+	const expectedResult = `{delete${type}(${type.toLowerCase()}: {__id__: "${id}"}) {__id__, message}}`;
+	objects.deleteObject(type, id);
+	t.true(mutation.calledWith(expectedResult));
+});

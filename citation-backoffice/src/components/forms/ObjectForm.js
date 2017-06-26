@@ -10,6 +10,7 @@ import './ObjectForm.css';
 class ObjectForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
+		handleDelete: PropTypes.func.isRequired,
 		collections: PropTypes.object.isRequired,
 		fields: PropTypes.object.isRequired,
 		type: PropTypes.string.isRequired
@@ -86,6 +87,9 @@ class ObjectForm extends Component {
 					<Field name="__id__" component="input" type="text" />
 				</div>
 				{customFields}
+				<button type="button" onClick={this.props.handleDelete}>
+					Delete
+				</button>
 				<button type="submit">Submit</button>
 			</form>
 		);

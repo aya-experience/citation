@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { loadObject, writeObject } from '../logic/objects';
+import { loadObject, writeObject, deleteObject } from '../logic/objects';
 import { loadSchemaFields } from '../logic/schema';
 import GenericObject from './forms/Object';
 import { filterObjectFields } from './../utils/filters';
@@ -15,12 +15,14 @@ class ObjectComponent extends Component {
 		fields: PropTypes.object.isRequired,
 		loadFields: PropTypes.func.isRequired,
 		load: PropTypes.func.isRequired,
-		write: PropTypes.func.isRequired
+		write: PropTypes.func.isRequired,
+		delete: PropTypes.func.isRequired
 	};
 
 	constructor() {
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
 	}
 
 	componentDidMount() {
@@ -39,6 +41,10 @@ class ObjectComponent extends Component {
 		this.props.write(values, this.props.fields);
 	}
 
+	handleDelete() {
+		this.props.delete();
+	}
+
 	render() {
 		const Form = GenericObject;
 		const Title = this.props.id ? 'Edit' : 'Add';
@@ -50,6 +56,7 @@ class ObjectComponent extends Component {
 					object={this.props.object}
 					fields={this.props.fields}
 					onSubmit={this.handleSubmit}
+					onDelete={this.handleDelete}
 				/>
 			</div>
 		);
@@ -68,7 +75,8 @@ export const mapDispatchToProps = (dispatch, ownProps) => {
 	return {
 		loadFields: type => dispatch(loadSchemaFields([type])),
 		load: fields => dispatch(loadObject(type, id, fields)),
-		write: (data, fields) => dispatch(writeObject(type, id, data, fields))
+		write: (data, fields) => dispatch(writeObject(type, id, data, fields)),
+		delete: () => deleteObject(type, id)
 	};
 };
 
