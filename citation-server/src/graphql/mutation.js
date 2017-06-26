@@ -6,6 +6,7 @@ import GraphQLJSON from 'graphql-type-json';
 import winston from 'winston';
 
 import { writeObject } from '../gitasdb/write';
+import { deleteObject } from '../gitasdb/delete';
 import { readModel, writeModel } from './model';
 
 const logger = winston.loggers.get('GraphQL');
@@ -110,6 +111,15 @@ async function buildInputs() {
 	return InputType;
 }
 
+export const buildDeleteObject = key =>
+	new GraphQLObjectType({
+		name: `__DeleteObject${key}__`,
+		fields: {
+			__id__: { type: GraphQLID },
+			message: { type: GraphQLString }
+		}
+	});
+
 export async function buildMutation(ObjectTypes) {
 	const InputType = await buildInputs();
 	const MutationObjects = {};
@@ -129,6 +139,18 @@ export async function buildMutation(ObjectTypes) {
 								return await writeModel(params);
 							}
 							return await writeObject(key, params[key.toLowerCase()]);
+						} catch (error) {
+							throw error;
+						}
+					}
+				};
+				MutationObjects[`delete${key}`] = {
+					type: buildDeleteObject(key),
+					args: { ...inputs },
+					resolve: async (root, params) => {
+						logger.debug(`delete mutation ${params}`);
+						try {
+							return await deleteObject(key, params[key.toLowerCase()]);
 						} catch (error) {
 							throw error;
 						}
