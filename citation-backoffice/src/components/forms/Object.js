@@ -12,7 +12,8 @@ class GenericObject extends Component {
 		type: PropTypes.object.isRequired,
 		collections: PropTypes.object.isRequired,
 		fields: PropTypes.object.isRequired,
-		onSubmit: PropTypes.func.isRequired
+		onSubmit: PropTypes.func.isRequired,
+		onDelete: PropTypes.func.isRequired
 	};
 
 	constructor() {
@@ -42,6 +43,7 @@ class GenericObject extends Component {
 	render() {
 		const formProps = {
 			onSubmit: this.handleSubmit,
+			handleDelete: this.props.onDelete,
 			initialValues: this.props.object,
 			collections: this.props.collections,
 			fields: this.props.fields,

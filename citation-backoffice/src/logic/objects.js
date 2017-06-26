@@ -36,6 +36,10 @@ export function loadObject(type, id, fields) {
 	};
 }
 
+export function deleteObject(type, id) {
+	mutation(`{delete${type}(${type.toLowerCase()}: {__id__: "${id}"}) {__id__, message}}`);
+}
+
 export function writeObject(type, id, data, fields) {
 	function formatData(data) {
 		return _.map(data, (value, key) => {
