@@ -33,7 +33,8 @@ export default class Routes extends Component {
 		}
 	}
 
-	createElement(page, { type, data, props, children = [] }, i, matchProps) {
+	createElement(page, { type, data, props, children }, i, matchProps) {
+		children = children ? children : [];
 		let Component = this.props.components[type];
 
 		if (Component === undefined) {
