@@ -21,8 +21,8 @@ class SchemaComponent extends Component {
 		schema.schema.types = Object.keys(result.data).map(type => {
 			const field = { name: result.data[type].__name__ };
 			delete result.data[type].__name__;
-			field.fields = Object.keys(result.data[type]).map(key => {
-				const field = result.data[type][key];
+			field.fields = Object.keys(result.data[type].__fields__).map(key => {
+				const field = result.data[type].__fields__[key];
 				if (field.kind === 'OBJECT') {
 					return { name: field.name, type: ['link', field.typeName] };
 				} else if (field.kind === 'LIST') {
