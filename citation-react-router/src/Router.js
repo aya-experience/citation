@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { string, object } from 'prop-types';
-import queries from './queries';
+import { queryPages, buildPageTree } from './queries';
 import Routes from './Routes';
 
 export default class Router extends Component {
@@ -20,7 +20,7 @@ export default class Router extends Component {
 
 	async componentDidMount() {
 		if (this.state.pages.length === 0) {
-			const pages = await queries.queryPages(this.props.serverUrl);
+			const pages = await queryPages(this.props.serverUrl).then(buildPageTree);
 			this.setState({ pages });
 		}
 	}

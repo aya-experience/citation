@@ -4,6 +4,7 @@ import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
 import AddButton from './AddButton';
+import EditButton from './EditButton';
 import pageControls from './pageControls';
 import { blockHeight, blockWidth, fontSize, colors } from './params';
 
@@ -47,10 +48,17 @@ const RootPage = ({ page, position, drag, add }) => {
 					</text>
 					<AddButton
 						position={{
-							x: position.x,
+							x: position.x - blockHeight / 2,
 							y: position.y + blockHeight / 2
 						}}
 						onClick={add}
+					/>
+					<EditButton
+						page={page}
+						position={{
+							x: position.x + blockHeight / 2,
+							y: position.y + blockHeight / 2
+						}}
 					/>
 				</g>
 			</DraggableCore>

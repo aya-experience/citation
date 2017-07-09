@@ -4,8 +4,9 @@ import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
 import AddButton from './AddButton';
+import EditButton from './EditButton';
 import pageControls from './pageControls';
-import { fontSize } from './params';
+import { blockHeight, fontSize } from './params';
 
 const enhancer = pageControls();
 
@@ -38,10 +39,17 @@ const NodePage = ({ page, direction, color, position, drag, add }) => {
 					</text>
 					<AddButton
 						position={{
-							x: position.x,
+							x: position.x - blockHeight / 2,
 							y: position.y + 0.5
 						}}
 						onClick={add}
+					/>
+					<EditButton
+						page={page}
+						position={{
+							x: position.x + blockHeight / 2,
+							y: position.y + 0.5
+						}}
 					/>
 				</g>
 			</DraggableCore>

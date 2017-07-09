@@ -133,7 +133,7 @@ export async function buildMutation(ObjectTypes) {
 					type: ObjectTypes[key],
 					args: { ...inputs },
 					resolve: async (root, params) => {
-						logger.debug(`mutation ${params}`);
+						logger.debug('mutation', params);
 						try {
 							if (key === 'Schema') {
 								return await writeModel(params);
