@@ -71,6 +71,13 @@ class ObjectForm extends Component {
 							<Field name={field} component="textarea" format={format} parse={parse} />
 						</div>
 					);
+				} else if (fields[field].typeName === 'RichText') {
+					return (
+						<div key={field}>
+							{label}
+							<Field name={field} component="textarea" />
+						</div>
+					);
 				}
 				return (
 					<div key={field}>
@@ -80,6 +87,7 @@ class ObjectForm extends Component {
 				);
 			});
 		}
+
 		return (
 			<form className="ObjectForm" onSubmit={this.props.handleSubmit}>
 				<div>
