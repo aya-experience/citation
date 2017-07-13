@@ -95,11 +95,7 @@ export async function buildObjects() {
 							type: GraphQLString,
 							resolve: root => inspect(root, modelTypes)
 						},
-						...fromPairs(
-							structure.fields.map(field => {
-								return [field.name, buildField(field)];
-							})
-						)
+						...fromPairs(structure.fields.map(field => [field.name, buildField(field)]))
 					})
 				})
 			];
