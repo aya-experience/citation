@@ -1,6 +1,6 @@
 /* eslint no-use-before-define: 0 */
 
-import { map, fromPairs, isString } from 'lodash';
+import { map, fromPairs } from 'lodash';
 import {
 	GraphQLScalarType,
 	GraphQLObjectType,
@@ -13,11 +13,6 @@ import GraphQLJSON from 'graphql-type-json';
 
 import { readModel, getTypesNames } from './model';
 import { read, readChild, readChildren, readMap, inspect } from './resolve';
-
-const TextType = new GraphQLScalarType({
-	name: 'Text',
-	serialize: value => value
-});
 
 const RichTextType = new GraphQLScalarType({
 	name: 'RichText',
@@ -63,7 +58,6 @@ export async function buildObjects() {
 	const buildField = field => {
 		const fieldType = field.type[0];
 		let type;
-		console.log(field);
 		switch (fieldType) {
 			case 'link':
 				type = field.type[1] === '*' ? ObjectInterface : ObjectTypes[field.type[1]];
@@ -78,12 +72,10 @@ export async function buildObjects() {
 				};
 			case 'json':
 				return { type: GraphQLJSON };
-			// case 'text':
-			// 	return { type: TextType };
 			case 'rich-text':
 				return { type: RichTextType };
-			// case 'image':
-			// 	return { type: ImageType };
+			case 'image':
+				return { type: ImageType };
 			default:
 				return { type: GraphQLString };
 		}
