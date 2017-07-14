@@ -13,7 +13,7 @@ global.window = {};
 test.beforeEach(() => {
 	queryPages = sinon.stub();
 	Router = proxyquire('./Router', {
-		'./queries': { default: { queryPages } }
+		'./queries': { queryPages }
 	}).default;
 });
 
@@ -41,11 +41,11 @@ test.serial('should not load pages if not empty', async t => {
 
 test.serial('should load pages empty', async t => {
 	const expected = ['page'];
-	queryPages.returns(expected);
+	queryPages.returns(Promise.resolve(expected));
 	const router = setup();
 	await router.instance().componentDidMount();
 	t.true(queryPages.called);
-	t.is(router.state('pages'), expected);
+	t.deepEqual(router.state('pages'), expected);
 });
 
 test('should render Routes with all props added with pages', t => {
