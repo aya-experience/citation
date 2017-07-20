@@ -7,7 +7,7 @@ import KeyValueField from './KeyValueField';
 
 import './ObjectForm.css';
 
-class ObjectForm extends Component {
+export class ObjectForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
 		handleDelete: PropTypes.func.isRequired,
