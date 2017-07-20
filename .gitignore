@@ -6,4 +6,4 @@ lerna-debug.log*
 .nyc_output
 yarn-error.log
 *.orig
-	
+./env.sh	

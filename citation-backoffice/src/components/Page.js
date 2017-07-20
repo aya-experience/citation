@@ -31,7 +31,7 @@ const enhancer = compose(
 const Page = ({ page }) =>
 	<div>
 		<h1>Edit page {page.title}</h1>
-		<iframe src={`/preview/${page.slug}`} className="preview" />
+		<iframe src={`/preview/${page.slug}`} className="preview" title="preview" />
 	</div>;
 
 Page.propTypes = {

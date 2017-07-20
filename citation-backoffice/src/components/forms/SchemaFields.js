@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { Field } from 'redux-form';
 import FieldType from './FieldType';

@@ -2,7 +2,7 @@ import path from 'path';
 import 'isomorphic-fetch';
 import 'ignore-styles';
 import fs from 'fs-promise';
-import { queries } from 'citation-react-router';
+import { queryPages, buildPageTree } from 'citation-react-router';
 import winston from 'winston';
 
 import requireComponents from './require';
@@ -19,7 +19,7 @@ export default async function render(options) {
 	context.components = requireComponents(options.components);
 	logger.debug(`${Object.keys(context.components).length} components loaded`);
 
-	context.pages = await queries.queryPages(options.serverUrl);
+	context.pages = await queryPages(options.serverUrl).then(buildPageTree);
 	logger.debug(`${context.pages.length} root pages loaded`);
 
 	context.urls = await urls(context.pages);

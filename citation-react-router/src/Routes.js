@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { string, object, array } from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import queries from './queries';
+import { queryComponentTree } from './queries';
 import Default from './Default';
 
 export default class Routes extends Component {
@@ -28,7 +28,7 @@ export default class Routes extends Component {
 		if (page !== undefined && this.state.contents[page.component.__id__] === undefined) {
 			await Promise.resolve();
 			this.setState({ contents: { [page.component.__id__]: null } });
-			const content = await queries.queryComponentTree(this.props.serverUrl, page.component);
+			const content = await queryComponentTree(this.props.serverUrl, page.component);
 			this.setState({ contents: { [page.component.__id__]: content } });
 		}
 	}

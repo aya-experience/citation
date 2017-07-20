@@ -1,5 +1,4 @@
 import { createAction, createReducer } from 'redux-act';
-import _ from 'lodash';
 import { query } from './graphql-client';
 
 export const loadCollectionSuccess = createAction('load collection success');

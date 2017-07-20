@@ -54,12 +54,14 @@ async function updaterTask(first = false) {
 		await updateComponentsJs();
 	}
 
-	if (!conf.dev && (componentsChange || first)) {
-		await build();
-	}
+	if (!conf.dev && conf.render.enable) {
+		if (componentsChange || first) {
+			await build();
+		}
 
-	if (!conf.dev && (contentChange || componentsChange || first)) {
-		await render();
+		if (contentChange || componentsChange || first) {
+			await render();
+		}
 	}
 }
 

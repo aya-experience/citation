@@ -1,0 +1,39 @@
+.SitemapContainer {
+  position: relative;
+}
+
+.Sitemap {
+  width: 100%;
+}
+
+.ActionBar {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+}
+
+.Draggable {
+  cursor: move;
+}
+
+.AddButton, .EditButton {
+  display: none;
+  cursor: pointer;
+}
+
+.Draggable:hover .AddButton, .Draggable:hover .EditButton {
+  display: block;
+}
+
+.EditPanel {
+  position: absolute;
+  border: 1px solid gray;
+  background: white;
+}
+
+.EditPanel .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: .2rem;
+}

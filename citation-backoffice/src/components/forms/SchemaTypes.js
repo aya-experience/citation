@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { Field, FieldArray } from 'redux-form';
 import SchemaFields from './SchemaFields';

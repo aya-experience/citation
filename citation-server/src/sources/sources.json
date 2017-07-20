@@ -27,6 +27,12 @@
           "links",
           "Page"
         ]
+      },
+      {
+        "name": "position",
+        "type": [
+          "json"
+        ]
       }
     ]
   },
@@ -53,13 +59,13 @@
           "*"
         ]
       },
-			{
-				"name": "props",
-				"type": [
-					"map",
-					"*"
-				]
-			}
+      {
+        "name": "props",
+        "type": [
+          "map",
+          "*"
+        ]
+      }
     ]
   },
   {

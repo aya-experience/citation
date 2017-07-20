@@ -18,6 +18,11 @@ export default class Menu extends Component {
 						Edit schema
 					</p>
 				</Link>
+				<Link to={'/sitemap'}>
+					<p className="Menu-object">
+						Sitemap
+					</p>
+				</Link>
 				{pairs.map(([type, objects]) =>
 					<li key={type}>
 						<p className="Menu-collection">
