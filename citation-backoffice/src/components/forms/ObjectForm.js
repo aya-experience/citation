@@ -7,7 +7,7 @@ import KeyValueField from './KeyValueField';
 
 import './ObjectForm.css';
 
-export class ObjectForm extends Component {
+export class GenericObjectForm extends Component {
 	static propTypes = {
 		handleSubmit: PropTypes.func.isRequired,
 		handleDelete: PropTypes.func.isRequired,
@@ -107,4 +107,4 @@ export class ObjectForm extends Component {
 export default reduxForm({
 	form: 'GenericObject',
 	enableReinitialize: true
-})(ObjectForm);
+})(GenericObjectForm);

@@ -6,7 +6,7 @@ import { shallow } from 'enzyme';
 
 const testProps = sinon.stub().returns(null);
 
-export class testComponent extends Component {
+class testComponent extends Component {
 	static propTypes = {
 		name: PropTypes.string.isRequired,
 		component: PropTypes.string.isRequired,
@@ -75,7 +75,7 @@ test.beforeEach(() => {
 		'./KeyValueField': {
 			default: 'KeyValueField'
 		}
-	}).ObjectForm;
+	}).GenericObjectForm;
 	objectForm = setup();
 	objectForm.html();
 });
