@@ -11,7 +11,7 @@
       {
         "name": "title",
         "type": [
-          "rich-text"
+          "richtext"
         ]
       },
       {
@@ -80,7 +80,7 @@
       {
         "name": "content",
         "type": [
-          "rich-text"
+          "richtext"
         ]
       }
     ]

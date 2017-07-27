@@ -28,7 +28,7 @@ class SchemaComponent extends Component {
 				} else if (field.kind === 'LIST') {
 					return { name: field.name, type: ['links', field.typeName] };
 				}
-				return { name: field.name, type: 'text' };
+				return { name: field.name, type: field.kind.toLowerCase() };
 			});
 			return field;
 		});
@@ -44,6 +44,9 @@ class SchemaComponent extends Component {
 					__name__: key,
 					__fields__: Object.keys(actualValues[key]).map(field => {
 						actualValues[key][field].name = field;
+						actualValues[key][field].kind = actualValues[key][field].kind === 'SCALAR'
+							? actualValues[key][field].typeName
+							: actualValues[key][field].kind;
 						return actualValues[key][field];
 					})
 				}))
