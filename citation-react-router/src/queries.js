@@ -62,7 +62,7 @@ export async function queryPages(url) {
 }
 
 export async function queryComponentTree(url, component) {
-	const response = await this.graphqlQuery(
+	const response = await graphqlQuery(
 		url,
 		`query Query {
 			Component(id: "${component.__id__}") {
