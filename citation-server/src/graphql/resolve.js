@@ -41,7 +41,10 @@ export function readMap(map, modelTypes) {
 		toPairs(map.map),
 		pair =>
 			isArray(pair[1])
-				? { __key__: pair[0], __list__: readChildren({ links: pair[1] }, modelTypes) }
+				? {
+						__key__: pair[0],
+						__list__: readChildren({ links: pair[1] }, modelTypes)
+					}
 				: { __key__: pair[0], __value__: readChild({ link: pair[1] }) }
 	);
 }

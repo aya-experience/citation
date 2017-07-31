@@ -48,12 +48,12 @@ export default class Routes extends Component {
 		const parsedProps = {};
 		if (Array.isArray(props)) {
 			props.forEach(prop => {
-				const value = prop.__value__.__value__ ? prop.__value__.__value__ : prop.__value__;
+				const value = prop.__value__ ? prop.__value__ : prop.__list__;
 				parsedProps[prop.__key__] = value;
 			});
 		}
 		return (
-			<Component {...parsedProps} key={i} data={data} pages={this.props.pages} childPage={childPage}>
+			<Component data={data} {...parsedProps} key={i} pages={this.props.pages} childPage={childPage}>
 				{children.map((child, i) => this.createElement(page, child, i, matchProps))}
 			</Component>
 		);
@@ -74,7 +74,8 @@ export default class Routes extends Component {
 		return (
 			<Switch>
 				{this.props.pages.reverse().map((page, i) => {
-					const path = `${this.props.match.url}/${page.slug}`.replace(/\/\//g, '/');
+					const slug = page.slug === null ? '' : page.slug;
+					const path = `${this.props.match.url}/${slug}`.replace(/\/\//g, '/');
 					return <Route key={i} path={path} render={this.matchRenderer(page)} />;
 				})}
 			</Switch>
