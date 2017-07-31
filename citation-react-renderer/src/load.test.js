@@ -20,7 +20,7 @@ test.beforeEach(() => {
 	queryComponentTree.withArgs(serverUrl, page1.component).returns(content1);
 	queryComponentTree.withArgs(serverUrl, page2.component).returns(content2);
 	load = proxyquire('./load', {
-		'citation-react-router': { queries: { queryComponentTree } }
+		'citation-react-router': { queryComponentTree }
 	}).default;
 });
 
