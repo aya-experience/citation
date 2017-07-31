@@ -19,7 +19,7 @@ test.beforeEach(async () => {
 					},
 					{
 						name: 'field2',
-						type: ['rich-text']
+						type: ['richtext']
 					},
 					{
 						name: 'field3',

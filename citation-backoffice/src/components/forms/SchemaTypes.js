@@ -28,7 +28,7 @@ class Fields extends Component {
 			__name__: name,
 			__fields__: [
 				{
-					kind: 'SCALAR',
+					kind: 'String',
 					name: 'new1',
 					typeName: 'String'
 				}

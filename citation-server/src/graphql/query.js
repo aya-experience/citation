@@ -72,7 +72,7 @@ export async function buildObjects() {
 				};
 			case 'json':
 				return { type: GraphQLJSON };
-			case 'rich-text':
+			case 'richtext':
 				return { type: RichTextType };
 			case 'image':
 				return { type: ImageType };

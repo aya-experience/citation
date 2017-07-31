@@ -28,7 +28,7 @@ class Fields extends Component {
 		this.props.fields.push({
 			name,
 			typeName: 'String',
-			kind: 'SCALAR'
+			kind: 'String'
 		});
 	}
 
