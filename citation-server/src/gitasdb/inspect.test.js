@@ -55,7 +55,7 @@ test('inspectObject should ignore link if type is not in the model', async t => 
 	readdir.onCall(0).returns(Promise.resolve(['one.md', 'two.json']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
-	t.deepEqual(result, ['one']);
+	t.deepEqual(result, ['one', { two: {} }]);
 });
 
 test('inspectObject should follow multiple links', async t => {
@@ -102,7 +102,7 @@ test('inspectObject should ignore loops in link', async t => {
 	t.deepEqual(result, [
 		'one',
 		{
-			two: ['one']
+			two: ['one', { two: {} }]
 		}
 	]);
 });
@@ -131,13 +131,35 @@ test('inspectObject should ignore loops in links', async t => {
 				'... on LinkedType1': [
 					'one',
 					{
-						two: { '... on LinkedType2': ['one'] }
+						two: {
+							'... on LinkedType1': {},
+							'... on LinkedType2': [
+								'one',
+								{
+									two: {
+										'... on LinkedType1': {},
+										'... on LinkedType2': {}
+									}
+								}
+							]
+						}
 					}
 				],
 				'... on LinkedType2': [
 					'one',
 					{
-						two: { '... on LinkedType1': ['one'] }
+						two: {
+							'... on LinkedType1': [
+								'one',
+								{
+									two: {
+										'... on LinkedType1': {},
+										'... on LinkedType2': {}
+									}
+								}
+							],
+							'... on LinkedType2': {}
+						}
 					}
 				]
 			}
@@ -149,6 +171,78 @@ test('inspectObject should not fail on a broken link', async t => {
 	readdir.throws();
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, []);
+});
+
+test('inspectObject should follow a map with single link', async t => {
+	const map = {
+		__role__: 'map',
+		map: {
+			prop1: {
+				collection: 'LinkedType1',
+				id: 'LinkedId'
+			},
+			prop2: {
+				collection: 'LinkedType2',
+				id: 'LinkedId'
+			}
+		}
+	};
+	readdir.onCall(0).returns(Promise.resolve(['one.json']));
+	readdir.onCall(1).returns(Promise.resolve(['two.md', 'three.md']));
+	readdir.onCall(2).returns(Promise.resolve(['four.md', 'five.md']));
+	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(map))));
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
+	t.deepEqual(result, [
+		{
+			one: [
+				'__key__',
+				{
+					__value__: {
+						'... on LinkedType1': ['two', 'three'],
+						'... on LinkedType2': ['four', 'five']
+					},
+					__list__: {}
+				}
+			]
+		}
+	]);
+});
+
+test('inspectObject should follow a map with a link array', async t => {
+	const map = {
+		__role__: 'map',
+		map: {
+			prop: [
+				{
+					collection: 'LinkedType1',
+					id: 'LinkedId'
+				},
+				{
+					collection: 'LinkedType2',
+					id: 'LinkedId'
+				}
+			]
+		}
+	};
+	readdir.onCall(0).returns(Promise.resolve(['one.json']));
+	readdir.onCall(1).returns(Promise.resolve(['two.md', 'three.md']));
+	readdir.onCall(2).returns(Promise.resolve(['four.md', 'five.md']));
+	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(map))));
+	const result = await inspect.inspectObject('Type', 'id', modelTypes);
+	t.deepEqual(result, [
+		{
+			one: [
+				'__key__',
+				{
+					__value__: {},
+					__list__: {
+						'... on LinkedType1': ['two', 'three'],
+						'... on LinkedType2': ['four', 'five']
+					}
+				}
+			]
+		}
+	]);
 });
 
 test('graphqlQuerySerialize should serialize arrays', t => {
@@ -169,7 +263,20 @@ test('graphqlQuerySerialize should recuse on object values', t => {
 	t.deepEqual(result, 'Test1 {Value1, Value2}');
 });
 
-test('graphqlQuerySerialize should skip properties with empty values', t => {
+test('graphqlQuerySerialize should skip properties with empty arrays', t => {
 	const result = inspect.graphqlQuerySerialize({ Test1: [], Test2: 'Value2' });
 	t.deepEqual(result, 'Test2 {Value2}');
+});
+
+test('graphqlQuerySerialize should skip properties with empty objects', t => {
+	const result = inspect.graphqlQuerySerialize({
+		Test1: {},
+		Test2: 'Value2'
+	});
+	t.deepEqual(result, 'Test2 {Value2}');
+});
+
+test('graphqlQuerySerialize should skip properties with empty values recursively', t => {
+	const result = inspect.graphqlQuerySerialize([{ Value1: {} }, 'Value2']);
+	t.deepEqual(result, 'Value2');
 });

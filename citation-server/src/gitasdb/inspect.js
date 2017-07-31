@@ -1,19 +1,54 @@
 import path from 'path';
 
-import _, { isArray, isObject, values } from 'lodash';
-import fs from 'fs-promise';
+import _, { isArray, isObject, partition, values } from 'lodash';
 import mergeDeep from 'merge-deep';
+import fs from 'fs-promise';
 import winston from 'winston';
 
 import conf from '../conf';
 
 const logger = winston.loggers.get('GitAsDb');
 
-function includesLink(stack, link, modelTypes) {
+function linkIsValid(link, stack, modelTypes) {
 	if (!modelTypes.includes(link.collection)) {
 		return true;
 	}
 	return stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id).length > 0;
+}
+
+async function inspectLink(link, stack, modelTypes) {
+	if (linkIsValid(link, stack, modelTypes)) {
+		return {};
+	}
+	const { collection, id } = link;
+	return await inspectObject(collection, id, modelTypes, [...stack, link]);
+}
+
+async function inspectLinks(links, stack, modelTypes) {
+	const inspections = await Promise.all(
+		links.map(async link => {
+			const inspection = await inspectLink(link, stack, modelTypes);
+			return { [`... on ${link.collection}`]: inspection };
+		})
+	);
+	return mergeDeep({}, ...inspections);
+}
+
+async function inspectMap(map, stack, modelTypes) {
+	const [listOfLinks, listOfLink] = partition(values(map), isArray);
+	const linksInspections = await Promise.all(
+		listOfLinks.map(async links => await inspectLinks(links, stack, modelTypes))
+	);
+	const linkInspections = await Promise.all(
+		listOfLink.map(async link => {
+			const inspection = await inspectLink(link, stack, modelTypes);
+			return { [`... on ${link.collection}`]: inspection };
+		})
+	);
+	return {
+		__value__: mergeDeep({}, ...linkInspections),
+		__list__: mergeDeep({}, ...linksInspections)
+	};
 }
 
 export async function inspectObject(type, id, modelTypes, stack = []) {
@@ -29,32 +64,19 @@ export async function inspectObject(type, id, modelTypes, stack = []) {
 					const contentBuffer = await fs.readFile(path.resolve(objectPath, file));
 					const content = JSON.parse(contentBuffer.toString());
 					if (content.__role__ === 'link') {
-						if (includesLink(stack, content.link, modelTypes)) {
-							return;
-						}
-						const { collection, id } = content.link;
-						const inspection = await inspectObject(collection, id, modelTypes, [...stack, content.link]);
-						return { [key]: inspection };
+						return {
+							[key]: await inspectLink(content.link, stack, modelTypes)
+						};
 					}
 					if (content.__role__ === 'links') {
-						const linksInspection = await Promise.all(
-							content.links.filter(link => !includesLink(stack, link, modelTypes)).map(async link => {
-								const { collection, id } = link;
-								const inspection = await inspectObject(collection, id, modelTypes, [...stack, link]);
-								return { [key]: { [`... on ${collection}`]: inspection } };
-							})
-						);
-						return mergeDeep({}, ...linksInspection);
+						return {
+							[key]: await inspectLinks(content.links, stack, modelTypes)
+						};
 					}
 					if (content.__role__ === 'map') {
-						const __value__ = await Promise.all(
-							values(content.map).filter(link => !includesLink(stack, link, modelTypes)).map(async link => {
-								const { collection, id } = link;
-								const inspection = await inspectObject(collection, id, modelTypes, [...stack, link]);
-								return { [`... on ${collection}`]: inspection };
-							})
-						);
-						return { [key]: ['__key__', { __value__ }] };
+						return {
+							[key]: ['__key__', await inspectMap(content.map, stack, modelTypes)]
+						};
 					}
 				}
 				return key;
@@ -70,16 +92,18 @@ export async function inspectObject(type, id, modelTypes, stack = []) {
 export function graphqlQuerySerialize(query) {
 	try {
 		if (isArray(query)) {
-			return `${query.map(graphqlQuerySerialize).join(', ')}`;
+			return query.map(graphqlQuerySerialize).filter(value => value !== '').join(', ');
 		}
 
 		if (isObject(query)) {
 			return _(query)
-				.pickBy(value => !_.isEmpty(value))
-				.map((value, key) => `${key} {${graphqlQuerySerialize(value)}}`)
+				.map((value, key) => {
+					const serialize = graphqlQuerySerialize(value);
+					return serialize === '' ? '' : `${key} {${serialize}}`;
+				})
+				.filter(value => value !== '')
 				.join(', ');
 		}
-
 		return query;
 	} catch (error) {
 		logger.error(`Gitasdb GraphQL Query Serialize error ${error}`);
