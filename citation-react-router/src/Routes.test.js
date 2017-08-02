@@ -5,8 +5,31 @@ import test from 'ava';
 import { shallow } from 'enzyme';
 import Routes from './Routes';
 
+const propName = 'prop';
+const propNameArray = 'propArray';
+const propValue = { test: 'test' };
+const propValueArray = [
+	{
+		test1: 'test1'
+	},
+	{
+		test2: 'test2'
+	}
+];
 const componentId = 'componentId';
-const component = { __id__: 'componentId', data: [] };
+const component = {
+	__id__: 'componentId',
+	props: [
+		{
+			__key__: propName,
+			__value__: propValue
+		},
+		{
+			__key__: propNameArray,
+			__list__: propValueArray
+		}
+	]
+};
 const page = { slug: 'test', component, children: [] };
 
 global.window = {};
@@ -29,8 +52,16 @@ test('should add contents in state', t => {
 	t.is(routes.state('contents'), global.window.__contents__);
 });
 
-test('should use content in state if present', t => {
+test('should use prop value in state if present', t => {
+	global.window.__contents__ = { [componentId]: component };
 	const routes = shallow(<Routes {...props} />);
 	const route = routes.instance().matchRenderer(page)({ url: `/${page.slug}` });
-	t.is(route.props.data, component.data);
+	t.is(route.props[propName], propValue);
+});
+
+test('should use prop array in state if present', t => {
+	global.window.__contents__ = { [componentId]: component };
+	const routes = shallow(<Routes {...props} />);
+	const route = routes.instance().matchRenderer(page)({ url: `/${page.slug}` });
+	t.is(route.props[propNameArray], propValueArray);
 });
