@@ -1,8 +1,8 @@
-import _ from 'lodash';
+import { get } from 'lodash';
 import React from 'react';
-import { object } from 'prop-types';
+import { object, string } from 'prop-types';
 import { connect } from 'react-redux';
-import { lifecycle, compose } from 'recompose';
+import { lifecycle, withProps, compose } from 'recompose';
 import { loadObject } from '../logic/objects';
 import { loadSchemaFields } from '../logic/schema';
 
@@ -12,8 +12,9 @@ const enhancer = compose(
 	connect(
 		(state, ownProps) => {
 			const id = ownProps.match.params.id;
-			let page = _.get(state.objects, `Page.${id}`, {});
+			let page = get(state.objects, `Page.${id}`, {});
 			page = page === null ? {} : page;
+			console.log('coucou', state.objects, id, page);
 			return { id, page, fields: state.fields };
 		},
 		(dispatch, ownProps) => ({
@@ -25,17 +26,23 @@ const enhancer = compose(
 		componentDidMount() {
 			this.props.loadFields().then(() => this.props.load(this.props.fields));
 		}
+	}),
+	withProps(({ page }) => {
+		const host = window.location.hostname === 'localhost' ? 'http://localhost:4000' : '';
+		const path = page.slug === null ? '' : page.slug;
+		return { url: `${host}/edition/${path}` };
 	})
 );
 
-const Page = ({ page }) =>
-	<div>
+const Page = ({ page, url }) =>
+	<div className="PageEdition-container">
 		<h1>Edit page {page.title}</h1>
-		<iframe src={`/preview/${page.slug}`} className="preview" title="preview" />
+		<iframe src={url} className="PageEdition-iframe" title="preview" />
 	</div>;
 
 Page.propTypes = {
-	page: object
+	page: object,
+	url: string
 };
 
 export default enhancer(Page);

@@ -78,7 +78,7 @@ export default async function start(inputConfig) {
 			server.ext('onPostHandler', (request, reply) => {
 				const response = request.response;
 				if (response.isBoom && response.output.statusCode === 404) {
-					if (request.url.path.startsWith('/preview')) {
+					if (request.url.path.startsWith('/preview') || request.url.path.startsWith('/edition')) {
 						return reply.file(previewIndex, { confine: false });
 					}
 					if (request.url.path.startsWith('/admin')) {

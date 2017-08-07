@@ -1,5 +1,10 @@
-iframe.preview {
+.PageEdition-container {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.PageEdition-iframe {
 	border: solid 1px black;
-	width: 100%;
-	height: 100%;
+	flex: 1;
 }

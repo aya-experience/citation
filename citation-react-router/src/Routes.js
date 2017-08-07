@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { string, object, array } from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+
 import { queryComponentTree } from './queries';
 import Default from './Default';
+import ComponentControl from './edition/ComponentControl';
 
 export default class Routes extends Component {
 	static propTypes = {
 		serverUrl: string.isRequired,
 		components: object.isRequired,
 		pages: array.isRequired,
-		match: object.isRequired
+		match: object.isRequired,
+		context: string.isRequired
 	};
 
 	constructor() {
@@ -33,8 +36,9 @@ export default class Routes extends Component {
 		}
 	}
 
-	createElement(page, { type, props, children }, i, matchProps) {
-		children = children ? children : [];
+	createElement(page, content, i, matchProps) {
+		const { type, props } = content;
+		const children = content.children ? content.children : [];
 		let Component = this.props.components[type];
 
 		if (Component === undefined) {
@@ -51,11 +55,15 @@ export default class Routes extends Component {
 				parsedProps[prop.__key__] = value;
 			});
 		}
-		return (
+		const comp = (
 			<Component {...parsedProps} key={i} pages={this.props.pages} childPage={childPage}>
 				{children.map((child, i) => this.createElement(page, child, i, matchProps))}
 			</Component>
 		);
+		if (this.props.context === '/edition') {
+			return <ComponentControl key={i} content={content}>{comp}</ComponentControl>;
+		}
+		return comp;
 	}
 
 	matchRenderer(page) {

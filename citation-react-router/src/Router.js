@@ -3,6 +3,8 @@ import { string, object } from 'prop-types';
 import { queryPages, buildPageTree } from './queries';
 import Routes from './Routes';
 
+const technicalContexts = ['/preview', '/edition'];
+
 export default class Router extends Component {
 	static propTypes = {
 		serverUrl: string.isRequired,
@@ -26,11 +28,14 @@ export default class Router extends Component {
 	}
 
 	render() {
-		return (
-			<div>
-				<Routes match={{ url: '' }} {...this.props} pages={this.state.pages} />
-				<Routes match={{ url: '/preview' }} {...this.props} pages={this.state.pages} />
-			</div>
-		);
+		let context = '';
+		if (window && window.location) {
+			const pathname = window.location.pathname;
+			const matchingContexts = technicalContexts.filter(context => pathname.startsWith(context));
+			if (matchingContexts.length > 0) {
+				context = matchingContexts[0];
+			}
+		}
+		return <Routes match={{ url: context }} {...this.props} context={context} pages={this.state.pages} />;
 	}
 }
