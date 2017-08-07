@@ -53,13 +53,6 @@
         ]
       },
       {
-        "name": "data",
-        "type": [
-          "links",
-          "*"
-        ]
-      },
-      {
         "name": "props",
         "type": [
           "map",

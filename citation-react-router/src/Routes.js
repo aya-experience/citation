@@ -33,14 +33,13 @@ export default class Routes extends Component {
 		}
 	}
 
-	createElement(page, { type, data, props, children }, i, matchProps) {
+	createElement(page, { type, props, children }, i, matchProps) {
 		children = children ? children : [];
 		let Component = this.props.components[type];
 
 		if (Component === undefined) {
 			Component = Default;
 		}
-
 		let childPage;
 		if (Array.isArray(page.children)) {
 			childPage = <Routes {...this.props} {...matchProps} pages={page.children} />;
@@ -53,7 +52,7 @@ export default class Routes extends Component {
 			});
 		}
 		return (
-			<Component data={data} {...parsedProps} key={i} pages={this.props.pages} childPage={childPage}>
+			<Component {...parsedProps} key={i} pages={this.props.pages} childPage={childPage}>
 				{children.map((child, i) => this.createElement(page, child, i, matchProps))}
 			</Component>
 		);
