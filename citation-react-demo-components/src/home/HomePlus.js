@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react';
 
 import './HomePlus.css';
 
-const HomePlus = ({ data }) => {
+const HomePlus = ({ plus }) => {
 	return (
 		<div className="HomePlus">
-			{data.map(homePlus =>
+			{plus.map(homePlus =>
 				<div key={homePlus.title} className="HomePlusBlock">
 					<div className={homePlus.align}>
 						<p>
@@ -26,7 +26,7 @@ const HomePlus = ({ data }) => {
 };
 
 HomePlus.propTypes = {
-	data: PropTypes.array.isRequired
+	plus: PropTypes.array.isRequired
 };
 
 export default HomePlus;
