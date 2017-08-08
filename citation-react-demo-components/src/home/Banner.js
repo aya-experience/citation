@@ -2,24 +2,22 @@ import React, { PropTypes } from 'react';
 
 import './Banner.css';
 
-const icons = ['js', 'content', 'deploy'];
-
-const Banner = ({ data }) => {
+const Banner = ({ image, children }) => {
 	return (
 		<div className="Banner">
-			{data.map((data, i) =>
-				<div key={icons[i]} className="Banner-column">
-					<img src={`/assets/${icons[i]}.svg`} alt={data.title} />
-					<br />
-					{data.content}
-				</div>
-			)}
+			<p>
+				{image.image}
+			</p>
+			<div className="Banner-CTA">
+				{children}
+			</div>
 		</div>
 	);
 };
 
 Banner.propTypes = {
-	data: PropTypes.array.isRequired
+	children: PropTypes.array.isRequired,
+	image: PropTypes.object.isRequired
 };
 
 export default Banner;
