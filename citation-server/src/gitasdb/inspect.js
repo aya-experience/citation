@@ -56,32 +56,35 @@ export async function inspectObject(type, id, modelTypes, stack = []) {
 		logger.debug(`inspect object ${type} ${id}`);
 		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
 		const objectFiles = await fs.readdir(objectPath);
-		const objectFields = await Promise.all(
-			objectFiles.map(async file => {
-				const ext = path.extname(file);
-				const key = path.basename(file, ext);
-				if (ext === '.json') {
-					const contentBuffer = await fs.readFile(path.resolve(objectPath, file));
-					const content = JSON.parse(contentBuffer.toString());
-					if (content.__role__ === 'link') {
-						return {
-							[key]: await inspectLink(content.link, stack, modelTypes)
-						};
+		const objectFields = [
+			'__id__',
+			...(await Promise.all(
+				objectFiles.map(async file => {
+					const ext = path.extname(file);
+					const key = path.basename(file, ext);
+					if (ext === '.json') {
+						const contentBuffer = await fs.readFile(path.resolve(objectPath, file));
+						const content = JSON.parse(contentBuffer.toString());
+						if (content.__role__ === 'link') {
+							return {
+								[key]: await inspectLink(content.link, stack, modelTypes)
+							};
+						}
+						if (content.__role__ === 'links') {
+							return {
+								[key]: await inspectLinks(content.links, stack, modelTypes)
+							};
+						}
+						if (content.__role__ === 'map') {
+							return {
+								[key]: ['__key__', await inspectMap(content.map, stack, modelTypes)]
+							};
+						}
 					}
-					if (content.__role__ === 'links') {
-						return {
-							[key]: await inspectLinks(content.links, stack, modelTypes)
-						};
-					}
-					if (content.__role__ === 'map') {
-						return {
-							[key]: ['__key__', await inspectMap(content.map, stack, modelTypes)]
-						};
-					}
-				}
-				return key;
-			})
-		);
+					return key;
+				})
+			))
+		];
 		return objectFields.filter(x => !_.isEmpty(x));
 	} catch (error) {
 		logger.debug(`Gitasdb inspect error ${error}`);

@@ -14,20 +14,14 @@ export default class Router extends Component {
 	constructor() {
 		super();
 
-		this.state = { pages: [] };
+		let pages = [];
 		if (window && window.__pages__) {
-			this.state = { pages: window.__pages__ };
+			pages = window.__pages__;
 		}
+		this.state = { pages, context: this.getContext(), key: 0 };
 	}
 
-	async componentDidMount() {
-		if (this.state.pages.length === 0) {
-			const pages = await queryPages(this.props.serverUrl).then(buildPageTree);
-			this.setState({ pages });
-		}
-	}
-
-	render() {
+	getContext() {
 		let context = '';
 		if (window && window.location) {
 			const pathname = window.location.pathname;
@@ -36,6 +30,27 @@ export default class Router extends Component {
 				context = matchingContexts[0];
 			}
 		}
-		return <Routes match={{ url: context }} {...this.props} context={context} pages={this.state.pages} />;
+		return context;
+	}
+
+	async componentDidMount() {
+		if (this.state.pages.length === 0) {
+			const pages = await queryPages(this.props.serverUrl).then(buildPageTree);
+			this.setState({ pages });
+		}
+		if (this.state.context === '/edition') {
+			window.addEventListener('message', event => {
+				if (event.source === window.parent) {
+					if (event.data.type === 'RELOAD') {
+						window.location.reload();
+					}
+				}
+			});
+		}
+	}
+
+	render() {
+		const { context, pages } = this.state;
+		return <Routes match={{ url: context }} {...this.props} context={context} pages={pages} />;
 	}
 }

@@ -8,7 +8,7 @@ import Menu from './Menu';
 import Home from './Home';
 import ObjectComponent from './Object';
 import Schema from './Schema';
-import Page from './Page';
+import Page from './compose/Page';
 import Sitemap from './sitemap/Sitemap';
 
 import './App.css';

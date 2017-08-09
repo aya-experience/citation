@@ -70,5 +70,5 @@ export async function queryComponentTree(url, component) {
 			}
 		}`
 	);
-	return response.Component[0];
+	return { __id__: component.__id__, ...response.Component[0] };
 }

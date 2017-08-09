@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { node } from 'prop-types';
 
 const ComponentList = ({ children }) => <div>{children}</div>;
 
 ComponentList.propTypes = {
-	children: PropTypes.array.isRequired
+	children: node.isRequired
 };
 
 export default ComponentList;
