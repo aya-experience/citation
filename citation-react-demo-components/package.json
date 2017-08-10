@@ -20,7 +20,11 @@
   "devDependencies": {
     "ava": "^0.18.0",
     "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^2.2.0",
+    "babel-plugin-transform-require-ignore": "0.0.2",
     "css-loader": "^0.28.0",
     "enzyme": "^2.7.1",
     "eslint": "^3.19.0",
@@ -44,6 +48,16 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      [
+        "babel-plugin-transform-require-ignore",
+        {
+          "extensions": [
+            ".css"
+          ]
+        }
+      ]
     ]
   }
 }
