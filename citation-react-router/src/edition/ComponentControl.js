@@ -53,6 +53,7 @@ const DragHandle = SortableHandle(() => <a style={stylesFn().drag}>drag</a>);
 class ComponentControl extends Component {
 	static propTypes = {
 		content: object.isRequired,
+		parent: object.isRequired,
 		children: node.isRequired
 	};
 
@@ -68,15 +69,21 @@ class ComponentControl extends Component {
 			{
 				type: 'EDIT',
 				content: this.props.content,
-				position: { x: event.pageX, y: event.pageY }
+				position: event.pageY
 			},
 			'*'
 		);
-		event.stopPropagation();
 	}
 
 	handleDelete() {
-		window.parent.postMessage({ type: 'DELETE', content: this.props.content }, '*');
+		window.parent.postMessage(
+			{
+				type: 'DELETE',
+				content: this.props.content,
+				parent: this.props.parent
+			},
+			'*'
+		);
 	}
 
 	render() {
@@ -85,7 +92,7 @@ class ComponentControl extends Component {
 			<div style={styles.container}>
 				<div style={styles.header}>
 					<DragHandle />
-					{this.props.content.type}
+					{this.props.content.__id__} ({this.props.content.type})
 					<a style={styles.delete} onClick={this.handleDelete}>
 						delete
 					</a>

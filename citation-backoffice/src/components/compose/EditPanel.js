@@ -3,23 +3,26 @@ import { object, func } from 'prop-types';
 import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
-import { editComponent, editComponentSave } from '../../logic/compose';
+import { editComponent, editComponentSave, addComponentSave } from '../../logic/compose';
 import form2data from '../forms/form2data';
 import ComponentForm from './ComponentForm';
 import { askReload } from './iframe-comunication';
 
 const enhancer = compose(
 	connect(
-		state => ({ fields: state.fields }),
+		state => ({ fields: state.fields, edition: state.compose.edition }),
 		dispatch => ({
 			close: () => dispatch(editComponent({ component: null, position: null })),
-			save: (oldId, data) => dispatch(editComponentSave(oldId, data))
+			saveEdit: data => dispatch(editComponentSave(data)),
+			saveAdd: data => dispatch(addComponentSave(data))
 		})
 	),
 	withHandlers({
-		submit: ({ close, save, edition, fields }) => data => {
+		submit: ({ close, saveEdit, saveAdd, edition, fields }) => data => {
+			const formatedData = form2data(data, fields.Component);
+			const save = edition.parent === null ? saveEdit : saveAdd;
+			save(formatedData).then(askReload);
 			close();
-			save(edition.component.__id__, form2data(data, fields.Component)).then(askReload);
 		}
 	})
 );
@@ -28,7 +31,7 @@ const EditPanel = ({ edition, close, submit }) =>
 	<div
 		className="EditPanel"
 		style={{
-			top: `calc(${edition.position.y}px - 5rem + 8rem)`,
+			top: `calc(${edition.position}px - 5rem + 8rem)`,
 			left: `calc(50% - 15rem + 6rem)`,
 			width: '30rem',
 			height: '20rem'

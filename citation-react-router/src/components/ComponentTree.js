@@ -13,7 +13,7 @@ const sortHandler = (content, refresh) => ({ oldIndex, newIndex }) => {
 	refresh();
 };
 
-const ComponentTree = ({ index, draggable, routesProps, page, content, matchProps, refresh }) => {
+const ComponentTree = ({ index, draggable, routesProps, page, content, parent, matchProps, refresh }) => {
 	const { type, props } = content;
 	const children = content.children ? content.children : [];
 	let Component = routesProps.components[type];
@@ -37,7 +37,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, matchProp
 	if (routesProps.context === '/edition') {
 		const Control = draggable ? ComponentControl : NotSortableControl;
 		return (
-			<Control index={index} diabled={!draggable} content={content}>
+			<Control index={index} diabled={!draggable} content={content} parent={parent}>
 				<Component {...parsedProps} pages={routesProps.pages} childPage={childPage}>
 					<ComponentListControl content={content} useDragHandle onSortEnd={sortHandler(content, refresh)}>
 						{children.map((child, i) =>
@@ -48,6 +48,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, matchProp
 								routesProps={routesProps}
 								page={page}
 								content={child}
+								parent={content}
 								matchProps={matchProps}
 								refresh={refresh}
 							/>
@@ -79,6 +80,7 @@ ComponentTree.propTypes = {
 	routesProps: object,
 	page: object,
 	content: object,
+	parent: object,
 	matchProps: object,
 	refresh: func
 };

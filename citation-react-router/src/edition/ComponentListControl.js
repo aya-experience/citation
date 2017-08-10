@@ -23,8 +23,15 @@ class ComponentListControl extends Component {
 		this.handleAdd = this.handleAdd.bind(this);
 	}
 
-	handleAdd() {
-		window.parent.postMessage({ type: 'ADD_CHILD', content: this.props.content }, '*');
+	handleAdd(event) {
+		window.parent.postMessage(
+			{
+				type: 'ADD_CHILD',
+				content: this.props.content,
+				position: event.pageY
+			},
+			'*'
+		);
 	}
 
 	render() {

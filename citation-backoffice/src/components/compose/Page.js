@@ -1,11 +1,9 @@
-// import { get } from 'lodash';
 import React from 'react';
 import { object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { lifecycle, withProps, compose } from 'recompose';
 
 import { loadPage, loadComponents } from '../../logic/compose';
-// import { loadObject } from '../../logic/objects';
 import { loadSchemaFields } from '../../logic/schema';
 import { startIframeMessageListener, stopIframeMessageListener } from './iframe-comunication';
 import EditPanel from './EditPanel';
@@ -41,7 +39,7 @@ const enhancer = compose(
 const Page = ({ compose, url }) =>
 	<div className="PageEdition-container">
 		<h1>Edit page {compose.page.title}</h1>
-		{compose.edition.component === null ? undefined : <EditPanel edition={compose.edition} />}
+		{compose.edition.component === null ? undefined : <EditPanel />}
 		<iframe src={url} className="PageEdition-iframe" title="edition" />
 	</div>;
 

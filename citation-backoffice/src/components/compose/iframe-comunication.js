@@ -1,7 +1,18 @@
 import { find } from 'lodash';
 
 import { store } from '../../logic/store';
-import { editComponent, removeComponent, addChildComponent, sortChildComponent } from '../../logic/compose';
+import { editComponent, removeComponentSave, addComponent, sortComponentSave } from '../../logic/compose';
+
+const context = {
+	iframe: null,
+	messageListener: null
+};
+
+export const askReload = () => {
+	if (context.iframe !== null) {
+		context.iframe.contentWindow.postMessage({ type: 'RELOAD' }, '*');
+	}
+};
 
 const iframeMessageDispatcher = event => {
 	const component = find(store.getState().compose.components, {
@@ -12,33 +23,28 @@ const iframeMessageDispatcher = event => {
 		case 'EDIT':
 			store.dispatch(editComponent({ component, position: event.data.position }));
 			break;
-		case 'REMOVE':
-			store.dispatch(removeComponent({ component }));
+		case 'DELETE': {
+			const parent = find(store.getState().compose.components, {
+				__id__: event.data.parent.__id__
+			});
+			store.dispatch(removeComponentSave({ parent, component })).then(askReload);
 			break;
+		}
 		case 'ADD_CHILD':
-			store.dispatch(addChildComponent({ component }));
+			store.dispatch(addComponent({ parent: component, position: event.data.position }));
 			break;
 		case 'SORT_CHILDREN':
-			store.dispatch(
-				sortChildComponent({
-					component,
-					oldIndex: event.data.oldIndex,
-					newIndex: event.data.newIndex
-				})
-			);
+			store
+				.dispatch(
+					sortComponentSave({
+						parent: component,
+						oldIndex: event.data.oldIndex,
+						newIndex: event.data.newIndex
+					})
+				)
+				.then(askReload);
 			break;
 		default: // nothing to do
-	}
-};
-
-const context = {
-	iframe: null,
-	messageListener: null
-};
-
-export const askReload = () => {
-	if (context.iframe !== null) {
-		context.iframe.contentWindow.postMessage({ type: 'RELOAD' }, '*');
 	}
 };
 
