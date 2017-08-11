@@ -40,35 +40,33 @@ test('handleSubmit should call onSubmit with good args', async t => {
 		seventhTest: null
 	};
 	const expectedValues = {
-		TEST: {
-			test: {
-				links: [{ collection: 'testType', id: 'myTest' }],
-				__role__: 'links'
+		test: {
+			links: [{ collection: 'testType', id: 'myTest' }],
+			__role__: 'links'
+		},
+		secondTest: 'mySecondTest',
+		thirdTest: {
+			link: { collection: 'test', id: 'myThirdTest' },
+			__role__: 'link'
+		},
+		fourthTest: {
+			links: [{ collection: 'TEST', id: 'myFourthTest' }],
+			__role__: 'links'
+		},
+		fifthTest: {
+			link: { collection: 'testType', id: 'myFifthTest' },
+			__role__: 'link'
+		},
+		sixthTest: {
+			map: {
+				mySixthTest: {
+					collection: 'type',
+					id: 'id'
+				}
 			},
-			secondTest: 'mySecondTest',
-			thirdTest: {
-				link: { collection: 'test', id: 'myThirdTest' },
-				__role__: 'link'
-			},
-			fourthTest: {
-				links: [{ collection: 'TEST', id: 'myFourthTest' }],
-				__role__: 'links'
-			},
-			fifthTest: {
-				link: { collection: 'testType', id: 'myFifthTest' },
-				__role__: 'link'
-			},
-			sixthTest: {
-				map: {
-					mySixthTest: {
-						collection: 'type',
-						id: 'id'
-					}
-				},
-				__role__: 'map'
-			},
-			seventhTest: ''
-		}
+			__role__: 'map'
+		},
+		seventhTest: ''
 	};
 	store.getState.returns({ collections });
 	const objectComponent = setup();

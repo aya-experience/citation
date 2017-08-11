@@ -52,16 +52,9 @@ test('should add contents in state', t => {
 	t.is(routes.state('contents'), global.window.__contents__);
 });
 
-test('should use prop value in state if present', t => {
+test('should use component data in state if present', t => {
 	global.window.__contents__ = { [componentId]: component };
 	const routes = shallow(<Routes {...props} />);
 	const route = routes.instance().matchRenderer(page)({ url: `/${page.slug}` });
-	t.is(route.props[propName], propValue);
-});
-
-test('should use prop array in state if present', t => {
-	global.window.__contents__ = { [componentId]: component };
-	const routes = shallow(<Routes {...props} />);
-	const route = routes.instance().matchRenderer(page)({ url: `/${page.slug}` });
-	t.is(route.props[propNameArray], propValueArray);
+	t.is(route.props.content, component);
 });

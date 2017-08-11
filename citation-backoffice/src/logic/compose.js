@@ -1,9 +1,9 @@
 import { isArray } from 'lodash';
 import { createAction, createReducer } from 'redux-act';
 
-import form2data from '../components/forms/form2data';
+import form2data from '../utils/form2data';
+import data2query from '../utils/data2query';
 import { query, mutation } from './graphql-client';
-import data2query from './data2query';
 
 export const loadPageSuccess = createAction('load page success');
 export const loadComponentsSuccess = createAction('load components success');

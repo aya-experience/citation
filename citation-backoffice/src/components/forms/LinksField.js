@@ -2,17 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Field } from 'redux-form';
 import LinkField from './LinkField';
 
-export function toLinksInput(inputs, type) {
-	const links = inputs ? inputs : [];
-	return {
-		__role__: 'links',
-		links: links.map(link => ({
-			collection: type === '*' ? link.__type__ : type,
-			id: link.__id__
-		}))
-	};
-}
-
 class LinksField extends Component {
 	static propTypes = {
 		fields: PropTypes.object.isRequired,

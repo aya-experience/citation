@@ -14,6 +14,8 @@ const collectionReturned = 'loadCollection returned';
 const schemaReturned = 'loadSchema returned';
 
 test.beforeEach(() => {
+	// eslint-disable-next-line no-undef
+	global.window = { location: { hostname: 'localhost' } };
 	loadCollection = sinon.stub().returns(collectionReturned);
 	loadSchema = sinon.stub().returns(schemaReturned);
 	App = proxyquire('./App', {

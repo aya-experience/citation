@@ -2,17 +2,6 @@ import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { Field } from 'redux-form';
 
-export function toLinkInput(input, type) {
-	const link = input ? input : {};
-	return {
-		__role__: 'link',
-		link: {
-			collection: type === '*' ? link.__type__ : type,
-			id: link.__id__
-		}
-	};
-}
-
 class LinkField extends Component {
 	static propTypes = {
 		input: PropTypes.object.isRequired,

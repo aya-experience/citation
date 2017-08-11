@@ -46,12 +46,11 @@ class ObjectComponent extends Component {
 	}
 
 	render() {
-		const Form = GenericObject;
-		const Title = this.props.id ? 'Edit' : 'Add';
+		const title = this.props.id ? 'Edit' : 'Add';
 		return (
 			<div className="Object">
-				<h1>{Title} {this.props.type} {this.props.id}</h1>
-				<Form
+				<h1>{title} {this.props.type} {this.props.id}</h1>
+				<GenericObject
 					type={this.props.type}
 					object={this.props.object}
 					fields={this.props.fields}

@@ -84,10 +84,8 @@ test('loadObject should return if stateObject is undefined', async t => {
 test('writeObject should dispatch result after sending mutation to the server', async t => {
 	const dispatchSpy = sinon.spy();
 	const data = {
-		TEST: {
-			__id__: 'id',
-			data: { links: [{ value: 'data1' }, { value: 'data2' }] }
-		}
+		__id__: 'id',
+		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
 	};
 	const generateTypes = sinon.stub(objects, 'generateTypes');
 	generateTypes.withArgs(unformatedData).returns(formatedData);
@@ -97,9 +95,10 @@ test('writeObject should dispatch result after sending mutation to the server', 
 
 	mutation
 		.withArgs(
-			`{editTEST(test: {__id__: "id",data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"}) {${formatedData.join(
-				', '
-			)}}}`
+			`
+			{editTEST(test: {__id__: "id",data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"})
+			{${formatedData.join(', ')}}}
+			`
 		)
 		.returns(Promise.resolve(mutationReturn));
 	await objects.writeObject('TEST', 'id', data, unformatedData)(dispatchSpy);
@@ -114,10 +113,8 @@ test('if there is no id, writeObject should delete the property data.__id__', t 
 	mutation.reset();
 	const dispatchSpy = sinon.spy();
 	const data = {
-		TEST: {
-			__id__: 'id',
-			data: { links: [{ value: 'data1' }, { value: 'data2' }] }
-		}
+		__id__: 'id',
+		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
 	};
 	const generateTypes = sinon.stub(objects, 'generateTypes');
 	generateTypes.withArgs(unformatedData).returns(formatedData);
@@ -128,9 +125,10 @@ test('if there is no id, writeObject should delete the property data.__id__', t 
 	objects.writeObject('TEST', undefined, data, unformatedData)(dispatchSpy);
 	t.is(
 		mutation.args[0][0],
-		`{editTEST(test: {data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"}) {${formatedData.join(
-			', '
-		)}}}`
+		`
+			{editTEST(test: {data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"})
+			{${formatedData.join(', ')}}}
+			`
 	);
 });
 
@@ -138,10 +136,8 @@ test('if there is an id, writeObject should put the id value for both data.__id_
 	mutation.reset();
 	const dispatchSpy = sinon.spy();
 	const data = {
-		TEST: {
-			__id__: 'id',
-			data: { links: [{ value: 'data1' }, { value: 'data2' }] }
-		}
+		__id__: 'id',
+		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
 	};
 	const generateTypes = sinon.stub(objects, 'generateTypes');
 	generateTypes.withArgs(unformatedData).returns(formatedData);
@@ -152,9 +148,10 @@ test('if there is an id, writeObject should put the id value for both data.__id_
 	objects.writeObject('TEST', 'id', data, unformatedData)(dispatchSpy);
 	t.is(
 		mutation.args[0][0],
-		`{editTEST(test: {__id__: "id",data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"}) {${formatedData.join(
-			', '
-		)}}}`
+		`
+			{editTEST(test: {__id__: "id",data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"})
+			{${formatedData.join(', ')}}}
+			`
 	);
 });
 

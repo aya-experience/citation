@@ -15,12 +15,12 @@ function formatData(data) {
 }
 
 export default function data2query(oldId, data) {
-	console.log('data2query', oldId, data);
 	data.__newId__ = data.__id__;
 	if (isString(oldId)) {
 		data.__id__ = oldId;
 	} else {
 		delete data.__id__;
 	}
+	console.log('data2query', oldId, data.__newId__, data.__id__);
 	return formatData(data);
 }

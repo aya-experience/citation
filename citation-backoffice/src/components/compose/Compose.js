@@ -8,7 +8,7 @@ import { loadSchemaFields } from '../../logic/schema';
 import { startIframeMessageListener, stopIframeMessageListener } from './iframe-comunication';
 import EditPanel from './EditPanel';
 
-import './Page.css';
+import './Compose.css';
 
 const enhancer = compose(
 	connect(

@@ -22,7 +22,7 @@ function toLinksInput(inputs, type) {
 	};
 }
 
-const toKeyValueInput = inputPairs => {
+function toKeyValueInput(inputPairs) {
 	const pairs = inputPairs ? inputPairs : [];
 	return {
 		__role__: 'map',
@@ -38,7 +38,7 @@ const toKeyValueInput = inputPairs => {
 			])
 		)
 	};
-};
+}
 
 export default function form2data(values, fields) {
 	return mapValues(values, (value, key) => {

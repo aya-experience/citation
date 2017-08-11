@@ -4,7 +4,7 @@ import { compose, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 
 import { editComponent, editComponentSave, addComponentSave } from '../../logic/compose';
-import form2data from '../forms/form2data';
+import form2data from '../../utils/form2data';
 import ComponentForm from './ComponentForm';
 import { askReload } from './iframe-comunication';
 
