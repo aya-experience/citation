@@ -19,6 +19,7 @@
     "react-dom": "^15.4.0",
     "react-router": "4.1.1",
     "react-router-dom": "4.1.1",
+    "react-sortable-hoc": "^0.6.6",
     "sinon": "^2.3.2"
   },
   "devDependencies": {

@@ -39,7 +39,11 @@ export default async function render(options) {
 	let loadedPage = 0;
 	for (const url of context.urls) {
 		try {
+			logger.debug('Rendering url', url.url);
+
 			context.preparedContents = prepare(url, context.contents);
+			// logger.debug('Prepared contents', JSON.stringify(context.preparedContents, null, 2));
+
 			const markup = await renderPage(url, context, options);
 			const indexDir = path.join(options.renderDir, url.url);
 			const indexPath = path.join(indexDir, 'index.html');

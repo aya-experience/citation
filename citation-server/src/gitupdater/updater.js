@@ -22,7 +22,7 @@ export async function updater(label, repositoryUrl, branch, directory) {
 		} else {
 			logger.info(`Repository ${repositoryUrl} not ready at ${masterPath}, cloning...`);
 			await fs.remove(masterPath);
-			await clone(repositoryUrl, masterPath);
+			await clone(repositoryUrl, masterPath, branch);
 			logger.info(`${repositoryUrl} clone done`);
 			change = true;
 		}

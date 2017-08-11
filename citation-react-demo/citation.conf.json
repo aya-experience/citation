@@ -1,7 +1,8 @@
 {
 	"content": {
 		"repository": "https://github.com/aya-experience/citation-demo-content.git",
-		"username": "citation-server"
+		"username": "citation-server",
+		"branch": "swiip"
 	},
 	"components": [{
 		"dependency": "citation-react-demo-components"
@@ -14,6 +15,6 @@
 	}],
 	"render": {
 		"framework": "react",
-		"enable": false
+		"enable": true
 	}
 }

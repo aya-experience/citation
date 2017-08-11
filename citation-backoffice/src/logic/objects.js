@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import { createAction, createReducer } from 'redux-act';
+
+import data2query from '../utils/data2query';
 import { query, mutation } from './graphql-client';
 
 export const loadObjectStarted = createAction('load object started');
@@ -41,28 +43,14 @@ export function deleteObject(type, id) {
 }
 
 export function writeObject(type, id, data, fields) {
-	function formatData(data) {
-		return _.map(data, (value, key) => {
-			let formatedData;
-			if (_.isArray(value)) {
-				formatedData = `[${value.map(x => `{${formatData(x)}}`).join(', ')}]`;
-			} else if (_.isObject(value)) {
-				formatedData = `{${formatData(value)}}`;
-			} else {
-				formatedData = JSON.stringify(value);
-			}
-			return key === type ? `${key.toLowerCase()}: ${formatedData}` : `${key}: ${formatedData}`;
-		});
-	}
-	data[type].__newId__ = data[type].__id__;
-	if (id) {
-		data[type].__id__ = id;
-	} else {
-		delete data[type].__id__;
-	}
 	const types = generateTypes(fields[type]);
 	return dispatch => {
-		return mutation(`{edit${type}(${formatData(data)}) {${types.join(', ')}}}`).then(response =>
+		return mutation(
+			`
+			{edit${type}(${type.toLowerCase()}: {${data2query(id, data)}})
+			{${types.join(', ')}}}
+			`
+		).then(response =>
 			dispatch(
 				loadObjectSuccess({
 					type,

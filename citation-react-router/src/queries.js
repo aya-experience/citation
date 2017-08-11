@@ -6,7 +6,7 @@ export async function graphqlQuery(url, body) {
 	});
 	const json = await response.json();
 	if (Array.isArray(json.errors)) {
-		console.error('GraphQL query error', url, body, json.errors);
+		console.error('GraphQL query error', url, body, json);
 		throw new Error('GraphQL query error');
 	}
 	return json.data;
@@ -70,5 +70,5 @@ export async function queryComponentTree(url, component) {
 			}
 		}`
 	);
-	return response.Component[0];
+	return { __id__: component.__id__, ...response.Component[0] };
 }

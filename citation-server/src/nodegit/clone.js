@@ -7,10 +7,11 @@ import { securityOptions } from './security';
 
 const logger = winston.loggers.get('NodeGit');
 
-export default async function clone(repositoryUrl, repositoryPath) {
+export default async function clone(repositoryUrl, repositoryPath, branch) {
 	try {
 		return await Clone(repositoryUrl, repositoryPath, {
-			fetchOpts: securityOptions
+			fetchOpts: securityOptions,
+			checkoutBranch: branch
 		});
 	} catch (error) {
 		logger.error(`Nodegit clone error ${error}`);

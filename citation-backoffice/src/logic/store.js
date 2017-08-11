@@ -5,6 +5,7 @@ import { reducer as collections } from './collections';
 import { schemaReducer as schema, fieldsReducer as fields } from './schema';
 import { reducer as objects } from './objects';
 import sitemap from './sitemap';
+import composeReducer from './compose';
 
 const devTools = window.devToolsExtension ? window.devToolsExtension() : f => f;
 
@@ -16,6 +17,7 @@ const reducers = combineReducers({
 	collections,
 	objects,
 	sitemap,
+	compose: composeReducer,
 	form
 });
 

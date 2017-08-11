@@ -52,16 +52,11 @@ test('should render Routes with all props added with pages', t => {
 	const pages = ['page'];
 	const router = setup();
 	router.setState({ pages });
-	const routes = router.find('Routes');
-	const real = routes.at(0);
-	const preview = routes.at(1);
-	t.deepEqual(real.prop('match'), { url: '' });
-	t.deepEqual(preview.prop('match'), { url: '/preview' });
-	[real, preview].forEach(routes => {
-		t.is(routes.prop('serverUrl'), serverUrl);
-		t.is(routes.prop('components'), components);
-		t.is(routes.prop('pages'), pages);
-	});
+	const routes = router.find('Routes').at(0);
+	t.deepEqual(routes.prop('match'), { url: '' });
+	t.is(routes.prop('serverUrl'), serverUrl);
+	t.is(routes.prop('components'), components);
+	t.is(routes.prop('pages'), pages);
 });
 
 test.afterEach(() => {

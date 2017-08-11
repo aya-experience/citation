@@ -1,28 +1,9 @@
-import { fromPairs } from 'lodash';
 import React from 'react';
 import { object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import { withHandlers, compose } from 'recompose';
 
 import ValueOrListField from './ValueOrListField';
-
-export const toKeyValueInput = inputPairs => {
-	const pairs = inputPairs ? inputPairs : [];
-	return {
-		__role__: 'map',
-		map: fromPairs(
-			pairs.map(pair => [
-				pair.__key__,
-				pair.__value__ === null
-					? pair.__list__.map(link => ({
-							collection: link.__type__,
-							id: link.__id__
-						}))
-					: { collection: pair.__value__.__type__, id: pair.__value__.__id__ }
-			])
-		)
-	};
-};
 
 const enhancer = compose(
 	withHandlers({

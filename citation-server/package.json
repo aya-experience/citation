@@ -25,7 +25,7 @@
     "graphql": "^0.7.2",
     "graphql-type-json": "^0.1.4",
     "hapi": "^15.2.0",
-    "hapi-graphql": "aya-experience/hapi-graphql",
+    "hapi-graphql": "github:aya-experience/hapi-graphql",
     "inert": "^4.1.0",
     "lodash": "^4.17.2",
     "meow": "^3.7.0",

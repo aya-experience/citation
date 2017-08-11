@@ -18,13 +18,13 @@ test.beforeEach(() => {
 
 test('inspectObject should return empty array for an empty object folder', async t => {
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
-	const expected = [];
+	const expected = ['__id__'];
 	t.deepEqual(result, expected);
 });
 
 test('inspectObject should return field list when no links', async t => {
-	const expected = ['one', 'two'];
-	readdir.returns(Promise.resolve(expected));
+	const expected = ['__id__', 'one', 'two'];
+	readdir.returns(Promise.resolve(['one', 'two']));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, expected);
 });
@@ -41,7 +41,7 @@ test('inspectObject should follow unique link', async t => {
 	readdir.onCall(1).returns(Promise.resolve(['three', 'four']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(link))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
-	t.deepEqual(result, ['one', { two: ['three', 'four'] }]);
+	t.deepEqual(result, ['__id__', 'one', { two: ['__id__', 'three', 'four'] }]);
 });
 
 test('inspectObject should ignore link if type is not in the model', async t => {
@@ -55,7 +55,7 @@ test('inspectObject should ignore link if type is not in the model', async t => 
 	readdir.onCall(0).returns(Promise.resolve(['one.md', 'two.json']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
-	t.deepEqual(result, ['one', { two: {} }]);
+	t.deepEqual(result, ['__id__', 'one', { two: {} }]);
 });
 
 test('inspectObject should follow multiple links', async t => {
@@ -78,11 +78,12 @@ test('inspectObject should follow multiple links', async t => {
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
+		'__id__',
 		'one',
 		{
 			two: {
-				'... on LinkedType1': ['three', 'four'],
-				'... on LinkedType2': ['five', 'six']
+				'... on LinkedType1': ['__id__', 'three', 'four'],
+				'... on LinkedType2': ['__id__', 'five', 'six']
 			}
 		}
 	]);
@@ -100,9 +101,10 @@ test('inspectObject should ignore loops in link', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(link))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
+		'__id__',
 		'one',
 		{
-			two: ['one', { two: {} }]
+			two: ['__id__', 'one', { two: {} }]
 		}
 	]);
 });
@@ -125,15 +127,18 @@ test('inspectObject should ignore loops in links', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
+		'__id__',
 		'one',
 		{
 			two: {
 				'... on LinkedType1': [
+					'__id__',
 					'one',
 					{
 						two: {
 							'... on LinkedType1': {},
 							'... on LinkedType2': [
+								'__id__',
 								'one',
 								{
 									two: {
@@ -146,10 +151,12 @@ test('inspectObject should ignore loops in links', async t => {
 					}
 				],
 				'... on LinkedType2': [
+					'__id__',
 					'one',
 					{
 						two: {
 							'... on LinkedType1': [
+								'__id__',
 								'one',
 								{
 									two: {
@@ -193,13 +200,14 @@ test('inspectObject should follow a map with single link', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(map))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
+		'__id__',
 		{
 			one: [
 				'__key__',
 				{
 					__value__: {
-						'... on LinkedType1': ['two', 'three'],
-						'... on LinkedType2': ['four', 'five']
+						'... on LinkedType1': ['__id__', 'two', 'three'],
+						'... on LinkedType2': ['__id__', 'four', 'five']
 					},
 					__list__: {}
 				}
@@ -230,14 +238,15 @@ test('inspectObject should follow a map with a link array', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(map))));
 	const result = await inspect.inspectObject('Type', 'id', modelTypes);
 	t.deepEqual(result, [
+		'__id__',
 		{
 			one: [
 				'__key__',
 				{
 					__value__: {},
 					__list__: {
-						'... on LinkedType1': ['two', 'three'],
-						'... on LinkedType2': ['four', 'five']
+						'... on LinkedType1': ['__id__', 'two', 'three'],
+						'... on LinkedType2': ['__id__', 'four', 'five']
 					}
 				}
 			]

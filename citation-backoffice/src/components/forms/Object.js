@@ -1,10 +1,8 @@
-import _ from 'lodash';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+
+import form2data from '../../utils/form2data';
 import ObjectForm from './ObjectForm';
-import { toLinkInput } from './LinkField';
-import { toLinksInput } from './LinksField';
-import { toKeyValueInput } from './KeyValueField';
 
 class GenericObject extends Component {
 	static propTypes = {
@@ -22,22 +20,11 @@ class GenericObject extends Component {
 	}
 
 	handleSubmit(values) {
-		const result = {};
+		// const result = {};
 		const type = this.props.type;
-		result[type] = _.mapValues(values, (value, key) => {
-			const field = this.props.fields[type][key];
-			if (field) {
-				if (field.ofType === 'KeyValuePair') {
-					return toKeyValueInput(value);
-				} else if (field.kind === 'LIST') {
-					return toLinksInput(value, field.typeName);
-				} else if (field.kind === 'OBJECT') {
-					return toLinkInput(value, field.typeName);
-				}
-			}
-			return value ? value : '';
-		});
-		this.props.onSubmit(result);
+		const fields = this.props.fields[type];
+		// result[type] = form2data(values, fields);
+		this.props.onSubmit(form2data(values, fields));
 	}
 
 	render() {

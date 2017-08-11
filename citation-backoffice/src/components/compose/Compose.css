@@ -1,0 +1,10 @@
+.PageEdition-container {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.PageEdition-iframe {
+	border: solid 1px black;
+	flex: 1;
+}

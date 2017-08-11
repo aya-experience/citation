@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import { string, object, array } from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
+
 import { queryComponentTree } from './queries';
-import Default from './Default';
+import ComponentTree from './components/ComponentTree';
+import { chooseColorForComponents } from './edition/colors';
 
 export default class Routes extends Component {
 	static propTypes = {
-		serverUrl: string.isRequired,
-		components: object.isRequired,
+		serverUrl: string.isRequired, // eslint-disable-line react/no-unused-prop-types
+		components: object.isRequired, // eslint-disable-line react/no-unused-prop-types
 		pages: array.isRequired,
-		match: object.isRequired
+		match: object.isRequired,
+		context: string.isRequired
 	};
 
 	constructor() {
 		super();
-		this.matchRenderer = this.matchRenderer.bind(this);
 		this.state = { contents: {} };
+
+		this.matchRenderer = this.matchRenderer.bind(this);
+		this.forceUpdate = this.forceUpdate.bind(this);
 	}
 
 	componentWillMount() {
@@ -29,33 +34,11 @@ export default class Routes extends Component {
 			await Promise.resolve();
 			this.setState({ contents: { [page.component.__id__]: null } });
 			const content = await queryComponentTree(this.props.serverUrl, page.component);
+			if (this.props.context === '/edition') {
+				chooseColorForComponents(content, 0);
+			}
 			this.setState({ contents: { [page.component.__id__]: content } });
 		}
-	}
-
-	createElement(page, { type, props, children }, i, matchProps) {
-		children = children ? children : [];
-		let Component = this.props.components[type];
-
-		if (Component === undefined) {
-			Component = Default;
-		}
-		let childPage;
-		if (Array.isArray(page.children)) {
-			childPage = <Routes {...this.props} {...matchProps} pages={page.children} />;
-		}
-		const parsedProps = {};
-		if (Array.isArray(props)) {
-			props.forEach(prop => {
-				const value = prop.__value__ ? prop.__value__ : prop.__list__;
-				parsedProps[prop.__key__] = value;
-			});
-		}
-		return (
-			<Component {...parsedProps} key={i} pages={this.props.pages} childPage={childPage}>
-				{children.map((child, i) => this.createElement(page, child, i, matchProps))}
-			</Component>
-		);
 	}
 
 	matchRenderer(page) {
@@ -65,7 +48,17 @@ export default class Routes extends Component {
 				this.loadPageContent(page);
 				return <span />;
 			}
-			return this.createElement(page, content, 0, matchProps);
+			return (
+				<ComponentTree
+					index={0}
+					draggable={false}
+					routesProps={this.props}
+					page={page}
+					content={content}
+					matchProps={matchProps}
+					refresh={this.forceUpdate}
+				/>
+			);
 		};
 	}
 

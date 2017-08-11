@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Field } from 'redux-form';
-import FieldType from './FieldType';
+import FieldType from '../forms/FieldType';
 
 class Fields extends Component {
 	static propTypes = {
