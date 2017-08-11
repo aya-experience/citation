@@ -1,0 +1,25 @@
+.HomePlus {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.HomePlusBlock {
+	padding: 2rem;
+	text-align: center;
+}
+
+.left {
+	justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+}
+
+.right {
+	justify-content: space-around;
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.PlusContent {
+	width: 60%;
+}

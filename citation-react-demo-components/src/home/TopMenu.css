@@ -9,18 +9,9 @@ body {
 .TopMenu {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	color: white;
 	background-color: black;
-}
-
-.TopMenu .logo {
-	font-size: 2.5rem;
-	padding: 0 1rem;
-}
-
-.TopMenu .logo a {
-	text-decoration: none;
 }
 
 .TopMenu ul {
