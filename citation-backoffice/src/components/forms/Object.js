@@ -20,10 +20,8 @@ class GenericObject extends Component {
 	}
 
 	handleSubmit(values) {
-		// const result = {};
 		const type = this.props.type;
 		const fields = this.props.fields[type];
-		// result[type] = form2data(values, fields);
 		this.props.onSubmit(form2data(values, fields));
 	}
 
