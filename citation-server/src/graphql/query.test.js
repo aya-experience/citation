@@ -54,7 +54,7 @@ test.beforeEach(async () => {
 		])
 	);
 	query = proxyquire('./query', {
-		'./model': { readModel },
+		'../gitasdb/model': { readModel },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});
 	result = await query.buildObjects();

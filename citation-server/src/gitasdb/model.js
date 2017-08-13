@@ -7,8 +7,15 @@ import { updateSchema } from '../index';
 
 export async function readModel() {
 	const modelPath = path.resolve(conf.work.content, conf.content.branch, 'model.json');
+	let modelTypes;
+	try {
+		modelTypes = await fs.readJson(modelPath);
+	} catch (e) {
+		modelTypes = [];
+	}
 	const sourcesPath = path.resolve('../citation-server/src/sources/sources.json');
-	return Array.prototype.concat(await fs.readJson(sourcesPath), await fs.readJson(modelPath));
+	const sourcesTypes = await fs.readJson(sourcesPath);
+	return [...sourcesTypes, ...modelTypes];
 }
 
 export async function writeModel(newModel) {

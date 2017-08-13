@@ -21,7 +21,7 @@ test.beforeEach(() => {
 		])
 	);
 	mutation = proxyquire('./mutation', {
-		'./model': { readModel },
+		'../gitasdb/model': { readModel },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});
 });
