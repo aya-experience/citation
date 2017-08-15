@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { Field, FieldArray } from 'redux-form';
 import SchemaFields from './SchemaFields';
 
 class Fields extends Component {
 	static propTypes = {
-		fields: PropTypes.object.isRequired,
-		meta: PropTypes.object.isRequired,
-		schema: PropTypes.object.isRequired
+		fields: object.isRequired,
+		meta: object.isRequired,
+		schema: object.isRequired
 	};
 
 	constructor() {

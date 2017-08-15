@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './TopMenu.css';
@@ -36,8 +37,8 @@ const TopMenu = ({ pages, links }) => {
 };
 
 TopMenu.propTypes = {
-	pages: PropTypes.array.isRequired,
-	links: PropTypes.array.isRequired
+	pages: array.isRequired,
+	links: array.isRequired
 };
 
 export default TopMenu;

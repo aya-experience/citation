@@ -1,13 +1,14 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { array, object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import SchemaForm from './SchemaForm';
 
 class SchemaComponent extends Component {
 	static propTypes = {
-		schema: PropTypes.array.isRequired,
-		fields: PropTypes.object.isRequired,
-		onSubmit: PropTypes.func.isRequired
+		schema: array.isRequired,
+		fields: object.isRequired,
+		onSubmit: func.isRequired
 	};
 
 	constructor() {

@@ -1,12 +1,13 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { object, string } from 'prop-types';
 import { Field } from 'redux-form';
 
 class LinkField extends Component {
 	static propTypes = {
-		input: PropTypes.object.isRequired,
-		collections: PropTypes.object.isRequired,
-		type: PropTypes.string
+		input: object.isRequired,
+		collections: object.isRequired,
+		type: string
 	};
 
 	render() {

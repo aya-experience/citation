@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { string, object, func } from 'prop-types';
 import test from 'ava';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
@@ -8,12 +9,12 @@ const testProps = sinon.stub().returns(null);
 
 class testComponent extends Component {
 	static propTypes = {
-		name: PropTypes.string.isRequired,
-		component: PropTypes.string.isRequired,
-		type: PropTypes.string,
-		props: PropTypes.object,
-		format: PropTypes.func,
-		parse: PropTypes.func
+		name: string.isRequired,
+		component: string.isRequired,
+		type: string,
+		props: object,
+		format: func,
+		parse: func
 	};
 
 	render() {
@@ -121,7 +122,12 @@ test('field3 should be LinkField with no type', t => {
 });
 
 test('field4 should be LinkField with test type', t => {
-	t.true(testProps.calledWith('field4', 'LinkField', undefined, { collections, type: 'test' }));
+	t.true(
+		testProps.calledWith('field4', 'LinkField', undefined, {
+			collections,
+			type: 'test'
+		})
+	);
 });
 
 test('field5 should be LinksField with no type', t => {
@@ -129,7 +135,12 @@ test('field5 should be LinksField with no type', t => {
 });
 
 test('field6 should be Linksfield with test type', t => {
-	t.true(testProps.calledWith('field6', 'LinksField', undefined, { collections, type: 'test' }));
+	t.true(
+		testProps.calledWith('field6', 'LinksField', undefined, {
+			collections,
+			type: 'test'
+		})
+	);
 });
 
 test('field7 sould be KeyValueField', t => {

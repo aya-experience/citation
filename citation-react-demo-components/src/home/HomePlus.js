@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { array } from 'prop-types';
 
 import './HomePlus.css';
 
@@ -26,7 +27,7 @@ const HomePlus = ({ plus }) => {
 };
 
 HomePlus.propTypes = {
-	plus: PropTypes.array.isRequired
+	plus: array.isRequired
 };
 
 export default HomePlus;

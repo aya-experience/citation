@@ -1,12 +1,13 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './Menu.css';
 
 export default class Menu extends Component {
 	static propTypes = {
-		collections: PropTypes.object.isRequired
+		collections: object.isRequired
 	};
 
 	render() {

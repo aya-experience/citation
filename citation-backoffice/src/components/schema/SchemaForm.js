@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { func, object, array } from 'prop-types';
 import { FieldArray, reduxForm } from 'redux-form';
 import SchemaTypes from './SchemaTypes';
 
@@ -6,9 +7,9 @@ import './SchemaForm.css';
 
 class SchemaForm extends Component {
 	static propTypes = {
-		handleSubmit: PropTypes.func.isRequired,
-		fields: PropTypes.object.isRequired,
-		schema: PropTypes.array.isRequired
+		handleSubmit: func.isRequired,
+		fields: object.isRequired,
+		schema: array.isRequired
 	};
 
 	render() {

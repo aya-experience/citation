@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { array, object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { loadSchemaFields, loadSchema, writeSchema } from '../logic/schema';
 import SchemaComponent from './schema/Schema';
@@ -6,11 +7,11 @@ import { filterSchemaFields } from './../utils/filters';
 
 class Schema extends Component {
 	static propTypes = {
-		schema: PropTypes.array.isRequired,
-		fields: PropTypes.object.isRequired,
-		loadFields: PropTypes.func.isRequired,
-		loadSchema: PropTypes.func.isRequired,
-		write: PropTypes.func.isRequired
+		schema: array.isRequired,
+		fields: object.isRequired,
+		loadFields: func.isRequired,
+		loadSchema: func.isRequired,
+		write: func.isRequired
 	};
 
 	constructor() {

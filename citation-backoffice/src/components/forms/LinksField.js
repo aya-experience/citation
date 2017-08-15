@@ -1,13 +1,14 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { object, string } from 'prop-types';
 import { Field } from 'redux-form';
 import LinkField from './LinkField';
 
 class LinksField extends Component {
 	static propTypes = {
-		fields: PropTypes.object.isRequired,
-		meta: PropTypes.object.isRequired,
-		collections: PropTypes.object.isRequired,
-		type: PropTypes.string
+		fields: object.isRequired,
+		meta: object.isRequired,
+		collections: object.isRequired,
+		type: string
 	};
 
 	constructor() {

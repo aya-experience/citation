@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { func, object, string } from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 import LinkField from './LinkField';
 import LinksField from './LinksField';
@@ -8,11 +9,11 @@ import './ObjectForm.css';
 
 export class GenericObjectForm extends Component {
 	static propTypes = {
-		handleSubmit: PropTypes.func.isRequired,
-		handleDelete: PropTypes.func.isRequired,
-		collections: PropTypes.object.isRequired,
-		fields: PropTypes.object.isRequired,
-		type: PropTypes.string.isRequired
+		handleSubmit: func.isRequired,
+		handleDelete: func.isRequired,
+		collections: object.isRequired,
+		fields: object.isRequired,
+		type: string.isRequired
 	};
 
 	render() {

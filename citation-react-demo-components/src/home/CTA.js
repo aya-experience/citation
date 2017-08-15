@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import './HomePlus.css';
@@ -14,7 +15,7 @@ const CTA = ({ cta }) => {
 };
 
 CTA.propTypes = {
-	cta: PropTypes.object.isRequired
+	cta: object.isRequired
 };
 
 export default CTA;
