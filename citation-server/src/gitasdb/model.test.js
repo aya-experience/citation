@@ -27,11 +27,18 @@ test('readModel should return data from sources and model', async t => {
 		{ name: 'type1', fields: 'fields' },
 		{ name: 'type2', fields: 'fields' }
 	];
-	resolve.returns('modelPath1');
-	resolve.withArgs('../citation-server/src/sources/sources.json').returns('modelPath2');
-	readJson.withArgs('modelPath1').returns(firstSchema);
-	readJson.withArgs('modelPath2').returns(secondSchema);
+	resolve.returns('modelPath');
+	readJson.onCall(0).returns(firstSchema);
+	readJson.onCall(1).returns(secondSchema);
 	t.deepEqual(await model.readModel(), expectedResult);
+});
+
+test('readModel should not fail if there is no model.json file', async t => {
+	const schema = [{ name: 'type1', fields: 'fields' }];
+	resolve.returns('modelPath');
+	readJson.onCall(0).returns(Promise.reject());
+	readJson.onCall(1).returns(schema);
+	t.deepEqual(await model.readModel(), schema);
 });
 
 test('getTypesNames function should return only type names from the model', async t => {

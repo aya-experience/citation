@@ -23,6 +23,9 @@ export default async function render(options) {
 	logger.debug(`${context.pages.length} root pages loaded`);
 
 	context.urls = await urls(context.pages);
+	if (context.urls.length === 0) {
+		context.urls = [{ url: '', pages: [] }];
+	}
 	logger.debug(`${context.urls.length} urls computed`);
 
 	context.contents = await load(options.serverUrl, context.pages);

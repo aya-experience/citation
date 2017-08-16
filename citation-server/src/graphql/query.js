@@ -11,7 +11,7 @@ import {
 } from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
 
-import { readModel, getTypesNames } from './model';
+import { readModel, getTypesNames } from '../gitasdb/model';
 import { read, readChild, readChildren, readMap, inspect } from './resolve';
 
 const RichTextType = new GraphQLScalarType({
@@ -64,7 +64,10 @@ export async function buildObjects() {
 				return { type, resolve: root => readChild(root[field.name]) };
 			case 'links':
 				type = field.type[1] === '*' ? new GraphQLList(ObjectInterface) : new GraphQLList(ObjectTypes[field.type[1]]);
-				return { type, resolve: root => readChildren(root[field.name], modelTypes) };
+				return {
+					type,
+					resolve: root => readChildren(root[field.name], modelTypes)
+				};
 			case 'map':
 				return {
 					type: new GraphQLList(KeyValuePair),

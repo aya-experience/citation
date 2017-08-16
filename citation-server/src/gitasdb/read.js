@@ -15,8 +15,8 @@ export async function readCollection(type) {
 		const collectionFolders = await fs.readdir(collectionPath);
 		return await Promise.all(collectionFolders.map(folder => readObject(type, folder)));
 	} catch (error) {
-		logger.error('Gitasdb read collection error', error);
-		throw error;
+		logger.debug('GitAsDb read collection', error);
+		return [];
 	}
 }
 
@@ -43,7 +43,7 @@ export async function readObject(type, id) {
 		});
 		return object;
 	} catch (error) {
-		logger.debug('Gitasdb read object error', error);
+		logger.debug('GitAsDb read object', error);
 		return null;
 	}
 }

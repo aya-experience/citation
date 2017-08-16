@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { queryComponentTree } from './queries';
 import ComponentTree from './components/ComponentTree';
 import { chooseColorForComponents } from './edition/colors';
+import Empty from './empty/Empty';
 
 export default class Routes extends Component {
 	static propTypes = {
@@ -63,6 +64,9 @@ export default class Routes extends Component {
 	}
 
 	render() {
+		if (this.props.pages.length === 0) {
+			return <Empty />;
+		}
 		return (
 			<Switch>
 				{this.props.pages.reverse().map((page, i) => {

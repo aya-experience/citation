@@ -7,7 +7,7 @@ import winston from 'winston';
 
 import { writeObject } from '../gitasdb/write';
 import { deleteObject } from '../gitasdb/delete';
-import { readModel, writeModel } from './model';
+import { readModel, writeModel } from '../gitasdb/model';
 
 const logger = winston.loggers.get('GraphQL');
 
