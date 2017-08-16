@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { string, object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { loadObject, writeObject, deleteObject } from '../logic/objects';
 import { loadSchemaFields } from '../logic/schema';
@@ -9,14 +10,14 @@ import './Object.css';
 
 class ObjectComponent extends Component {
 	static propTypes = {
-		id: PropTypes.string.isRequired,
-		type: PropTypes.string.isRequired,
-		object: PropTypes.object.isRequired,
-		fields: PropTypes.object.isRequired,
-		loadFields: PropTypes.func.isRequired,
-		load: PropTypes.func.isRequired,
-		write: PropTypes.func.isRequired,
-		delete: PropTypes.func.isRequired
+		id: string.isRequired,
+		type: string.isRequired,
+		object: object.isRequired,
+		fields: object.isRequired,
+		loadFields: func.isRequired,
+		load: func.isRequired,
+		write: func.isRequired,
+		delete: func.isRequired
 	};
 
 	constructor() {

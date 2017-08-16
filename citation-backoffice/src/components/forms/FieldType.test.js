@@ -1,5 +1,6 @@
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { string } from 'prop-types';
 import test from 'ava';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
@@ -11,8 +12,8 @@ const testProps = sinon.stub().returns(null);
 
 class testComponent extends Component {
 	static propTypes = {
-		name: PropTypes.string.isRequired,
-		component: PropTypes.string.isRequired
+		name: string.isRequired,
+		component: string.isRequired
 	};
 
 	render() {

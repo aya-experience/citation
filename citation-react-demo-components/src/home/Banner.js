@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { array, object } from 'prop-types';
 
 import './Banner.css';
 
@@ -16,8 +17,8 @@ const Banner = ({ image, children }) => {
 };
 
 Banner.propTypes = {
-	children: PropTypes.array.isRequired,
-	image: PropTypes.object.isRequired
+	children: array.isRequired,
+	image: object.isRequired
 };
 
 export default Banner;

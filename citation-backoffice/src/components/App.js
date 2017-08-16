@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import { object, func } from 'prop-types';
 import { Route, Link, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadCollection } from '../logic/collections';
@@ -17,10 +18,10 @@ const NoMatch = () => <div><h1>Oups!</h1></div>;
 
 class App extends Component {
 	static propTypes = {
-		schema: PropTypes.object.isRequired,
-		collections: PropTypes.object.isRequired,
-		loadCollections: PropTypes.func.isRequired,
-		loadSchema: PropTypes.func.isRequired
+		schema: object.isRequired,
+		collections: object.isRequired,
+		loadCollections: func.isRequired,
+		loadSchema: func.isRequired
 	};
 
 	componentDidMount() {
