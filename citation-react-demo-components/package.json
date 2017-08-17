@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "../node_modules/.bin/eslint src",
-    "dev": "BABEL_ENV=development babel src -d lib --watch",
+    "dev": "BABEL_ENV=production babel src -d lib --watch",
     "prebuild": "rm -rf lib && mkdir lib && cp -r src/* lib",
     "build": "BABEL_ENV=production babel src -d lib",
     "test": "BABEL_ENV=development ava --verbose"
@@ -50,15 +50,17 @@
     "presets": [
       "react-app"
     ],
-    "plugins": [
-      [
-        "babel-plugin-transform-require-ignore",
-        {
-          "extensions": [
-            ".css"
+    "env": {
+      "development": {
+        "plugins": [
+          [
+            "babel-plugin-transform-require-ignore",
+            {
+              "extensions": [".css"]
+            }
           ]
-        }
-      ]
-    ]
+        ]
+      }
+    }
   }
 }
