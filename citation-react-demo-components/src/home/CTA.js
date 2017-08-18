@@ -2,8 +2,6 @@ import React from 'react';
 import { object } from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import './HomePlus.css';
-
 const CTA = ({ cta }) => {
 	return (
 		<div className="CTA">

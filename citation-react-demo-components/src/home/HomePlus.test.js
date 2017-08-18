@@ -16,13 +16,13 @@ const setup = () => shallow(<HomePlus plus={[plus]} />);
 
 let homePlus;
 let homePlusDiv;
-let homePlusContent;
+let homePlusBlock;
 
 test.beforeEach(() => {
 	HomePlus = proxyquire('./HomePlus', {}).default;
 	homePlus = setup();
 	homePlusDiv = homePlus.childAt(0);
-	homePlusContent = homePlusDiv.find(`.${plus.align}`);
+	homePlusBlock = homePlusDiv.find(`[align="${plus.align}"]`);
 });
 
 test('HomePlus should have a div with HomePlus title as key', t => {
@@ -30,13 +30,13 @@ test('HomePlus should have a div with HomePlus title as key', t => {
 });
 
 test('HomePlus should have a div with align className', t => {
-	t.is(homePlusContent.length, 1);
+	t.is(homePlusBlock.length, 1);
 });
 
 test('HomePlus should have image name', t => {
-	t.deepEqual(homePlusContent.childAt(1).text(), plus.image);
+	t.deepEqual(homePlusBlock.childAt(1).text(), plus.image);
 });
 
 test('HomePlus should have image name', t => {
-	t.deepEqual(homePlusContent.find('.PlusContent').text(), `${plus.title}${plus.content}`);
+	t.deepEqual(homePlusBlock.childAt(2).shallow().text(), `${plus.title}${plus.content}`);
 });

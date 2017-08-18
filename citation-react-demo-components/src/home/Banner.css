@@ -1,8 +1,0 @@
-.Banner {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	height: 20rem;
-	font-size: 2rem;
-	background-color: lightgray;
-}

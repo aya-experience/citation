@@ -1,8 +1,42 @@
 import React from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
+import styled, { injectGlobal } from 'styled-components';
 
-import './TopMenu.css';
+// eslint-disable-next-line no-unused-expressions
+injectGlobal`
+	@import url('https://fonts.googleapis.com/css?family=Lato');
+
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: 'Lato', sans-serif;
+	}
+`;
+
+const TopMenuContainer = styled.header`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	background-color: black;
+
+	& ul {
+		display: flex;
+		align-items: center;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	& li {
+		padding: .5rem;
+	}
+
+	& a {
+		color: white;
+	}
+`;
 
 const TopMenu = ({ pages, links }) => {
 	const home = pages.filter(page => page.__id__ === 'home')[0];
@@ -10,7 +44,7 @@ const TopMenu = ({ pages, links }) => {
 	const others = home.children.filter(page => page.__id__ !== 'docs');
 
 	return (
-		<header className="TopMenu">
+		<TopMenuContainer>
 			<ul>
 				{docs.children.map(doc =>
 					<Link key={doc.id} to={`/docs/${doc.slug}`}>
@@ -38,7 +72,7 @@ const TopMenu = ({ pages, links }) => {
 					</a>
 				)}
 			</ul>
-		</header>
+		</TopMenuContainer>
 	);
 };
 

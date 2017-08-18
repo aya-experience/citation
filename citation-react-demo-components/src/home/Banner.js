@@ -1,18 +1,26 @@
 import React from 'react';
 import { array, object } from 'prop-types';
+import styled from 'styled-components';
 
-import './Banner.css';
+const BannerContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 20rem;
+	font-size: 2rem;
+	background-color: lightgray;
+`;
 
 const Banner = ({ image, children }) => {
 	return (
-		<div className="Banner">
+		<BannerContainer>
 			<p>
 				{image.image}
 			</p>
 			<div className="Banner-CTA">
 				{children}
 			</div>
-		</div>
+		</BannerContainer>
 	);
 };
 
