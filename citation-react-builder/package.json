@@ -7,7 +7,6 @@
     "test": "NODE_ENV=development ava --verbose"
   },
   "dependencies": {
-    "ava": "^0.22.0",
     "babel-polyfill": "^6.26.0",
     "citation-react-router": "^0.2.0",
     "react": "^15.6.1",
@@ -15,6 +14,8 @@
     "react-router-dom": "^4.1.2"
   },
   "devDependencies": {
+    "ava": "^0.22.0",
+    "babel-preset-env": "^1.6.0",
     "react-scripts": "1.0.11"
   },
   "ava": {
@@ -24,7 +25,12 @@
     "require": [
       "babel-register"
     ],
-    "babel": "inherit"
+    "babel": {
+      "presets": [
+        "env",
+        "react-app"
+      ]
+    }
   },
   "babel": {
     "presets": [
