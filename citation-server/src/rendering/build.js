@@ -26,15 +26,24 @@ export async function getComponentsPaths() {
 }
 
 async function createComponentsJs() {
-	const builderSrcPath = path.join(await getBuilderPath(), conf.builder['src-directory']);
+	const builderNodeModulesPath = path.join(await getBuilderPath(), 'node_modules');
+	const componentsPaths = await getComponentsPaths();
 
-	const imports = (await getComponentsPaths())
-		.map(componentsPath => path.relative(builderSrcPath, componentsPath))
-		.map((componentsPath, i) => {
-			if (conf.components[i].default) {
-				return `import ${conf.components[i].default} from '${componentsPath}';`;
+	await mapSeries(componentsPaths, async (componentsPath, i) => {
+		const moduleName = conf.components[i].dependency ? conf.components[i].dependency : `citation-components-${i}`;
+		const destination = path.join(builderNodeModulesPath, moduleName);
+		await fs.ensureSymlink(componentsPath, destination);
+	});
+
+	const imports = conf.components
+		.map((components, i) => {
+			if (components.dependency) {
+				if (components.default) {
+					return `import ${components.default} from '${components.dependency}';`;
+				}
+				return `import components${i} from '${components.dependency}';`;
 			}
-			return `import components${i} from '${componentsPath}';`;
+			return `import components${i} from 'citation-components-${i}';`;
 		})
 		.join('\n');
 
