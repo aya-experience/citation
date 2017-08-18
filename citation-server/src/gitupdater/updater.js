@@ -1,6 +1,6 @@
 import path from 'path';
 
-import fs from 'fs-promise';
+import fs from 'fs-extra';
 import winston from 'winston';
 
 import check from '../nodegit/check';

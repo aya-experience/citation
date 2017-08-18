@@ -14,7 +14,7 @@ test.beforeEach(() => {
 	create = sinon.stub().returns(Promise.resolve([]));
 	write = proxyquire('./write', {
 		'./constants': { workingDirectory },
-		'fs-promise': { existsSync },
+		'fs-extra': { existsSync },
 		'../nodegit/wrapper': { create },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});

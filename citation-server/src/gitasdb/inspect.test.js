@@ -11,7 +11,7 @@ test.beforeEach(() => {
 	readdir = sinon.stub().returns(Promise.resolve([]));
 	readFile = sinon.stub().returns(Promise.resolve(new Buffer('')));
 	inspect = proxyquire('./inspect', {
-		'fs-promise': { readdir, readFile },
+		'fs-extra': { readdir, readFile },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});
 });

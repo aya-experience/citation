@@ -1,5 +1,5 @@
 import { Repository, Remote } from 'nodegit';
-import fs from 'fs-promise';
+import fs from 'fs-extra';
 import winston from 'winston';
 
 const logger = winston.loggers.get('NodeGit');
