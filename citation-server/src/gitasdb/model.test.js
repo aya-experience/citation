@@ -13,7 +13,7 @@ test.beforeEach(() => {
 	resolve = sinon.stub().returns(Promise.resolve([]));
 	model = proxyquire('./model', {
 		'./constants': { workingDirectory },
-		'fs-promise': { readJson },
+		'fs-extra': { readJson },
 		path: { resolve },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});

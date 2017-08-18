@@ -17,7 +17,7 @@ test.beforeEach(() => {
 	create = sinon.stub();
 	deleteObject = proxyquire('./delete', {
 		'./constants': { workingDirectory },
-		'fs-promise': { existsSync, remove },
+		'fs-extra': { existsSync, remove },
 		'../nodegit/wrapper': { create },
 		winston: { loggers: { get: () => ({ debug: () => {}, error: () => {} }) } }
 	});

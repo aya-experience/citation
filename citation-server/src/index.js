@@ -4,10 +4,10 @@ import './conf/log';
 import path from 'path';
 import Hapi from 'hapi';
 import inert from 'inert';
-import GraphQL from 'hapi-graphql';
 import winston from 'winston';
 import _ from 'lodash';
 
+import GraphQL from './hapi-graphql';
 import { buildSchema } from './graphql/schema';
 import conf, { setConfig } from './conf';
 import { start as startUpdater, updateContent } from './gitupdater';

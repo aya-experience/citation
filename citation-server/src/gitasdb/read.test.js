@@ -18,7 +18,7 @@ test.beforeEach(() => {
 				work: { content: workingDirectory }
 			}
 		},
-		'fs-promise': { readdir },
+		'fs-extra': { readdir },
 		winston: { loggers: { get: () => ({ debug: () => {} }) } }
 	});
 });

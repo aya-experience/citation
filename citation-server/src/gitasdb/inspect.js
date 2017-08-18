@@ -2,7 +2,7 @@ import path from 'path';
 
 import _, { isArray, isObject, partition, values } from 'lodash';
 import mergeDeep from 'merge-deep';
-import fs from 'fs-promise';
+import fs from 'fs-extra';
 import winston from 'winston';
 
 import conf from '../conf';

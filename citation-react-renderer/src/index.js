@@ -1,7 +1,7 @@
 import path from 'path';
 import 'isomorphic-fetch';
 import 'ignore-styles';
-import fs from 'fs-promise';
+import fs from 'fs-extra';
 import { queryPages, buildPageTree } from 'citation-react-router';
 import winston from 'winston';
 
