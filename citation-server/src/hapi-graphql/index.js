@@ -5,9 +5,9 @@ import { Stream } from 'stream';
 import Joi from 'joi';
 import Boom from 'boom';
 import { Source, parse, validate, execute, formatError, getOperationAST, specifiedRules } from 'graphql';
-// import accepts from 'accepts';
+// Import accepts from 'accepts';
 import { version } from '../../package.json';
-// import renderGraphiQL from './renderGraphiQL';
+// Import renderGraphiQL from './renderGraphiQL';
 
 /**
  * Define constants
@@ -20,7 +20,7 @@ const optionsSchema = {
 			context: Joi.object(),
 			rootValue: Joi.object(),
 			pretty: Joi.boolean(),
-			// graphiql: Joi.boolean(),
+			// Graphiql: Joi.boolean(),
 			formatError: Joi.func(),
 			validationRules: Joi.array()
 		}).required()
@@ -216,7 +216,7 @@ const handler = (route, options = {}) => async (request, reply) => {
 			context,
 			rootValue,
 			pretty,
-			// graphiql,
+			// Graphiql,
 			formatError: customFormatError,
 			validationRules: additionalValidationRules
 		} = await getOptions(options, request);
@@ -252,7 +252,7 @@ const handler = (route, options = {}) => async (request, reply) => {
 			request,
 			rootValue,
 			schemaFunc,
-			// showGraphiQL,
+			// ShowGraphiQL,
 			validationRules,
 			variables
 		});

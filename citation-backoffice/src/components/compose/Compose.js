@@ -38,7 +38,9 @@ const enhancer = compose(
 
 const Page = ({ compose, url }) =>
 	<div className="PageEdition-container">
-		<h1>Edit page {compose.page.title}</h1>
+		<h1>
+			Edit page {compose.page.title}
+		</h1>
 		{compose.edition.component === null ? undefined : <EditPanel />}
 		<iframe src={url} className="PageEdition-iframe" title="edition" />
 	</div>;

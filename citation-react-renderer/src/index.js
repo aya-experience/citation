@@ -45,7 +45,7 @@ export default async function render(options) {
 			logger.debug('Rendering url', url.url);
 
 			context.preparedContents = prepare(url, context.contents);
-			// logger.debug('Prepared contents', JSON.stringify(context.preparedContents, null, 2));
+			// Logger.debug('Prepared contents', JSON.stringify(context.preparedContents, null, 2));
 
 			const markup = await renderPage(url, context, options);
 			const indexDir = path.join(options.renderDir, url.url);

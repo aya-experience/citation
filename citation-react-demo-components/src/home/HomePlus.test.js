@@ -5,7 +5,12 @@ import { shallow } from 'enzyme';
 
 let HomePlus;
 
-const plus = { title: 'homePlus', align: 'left', image: 'plusImage', content: 'PlusContent' };
+const plus = {
+	title: 'homePlus',
+	align: 'left',
+	image: 'plusImage',
+	content: 'PlusContent'
+};
 
 const setup = () => shallow(<HomePlus plus={[plus]} />);
 

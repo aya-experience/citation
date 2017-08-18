@@ -50,7 +50,9 @@ class ObjectComponent extends Component {
 		const title = this.props.id ? 'Edit' : 'Add';
 		return (
 			<div className="Object">
-				<h1>{title} {this.props.type} {this.props.id}</h1>
+				<h1>
+					{title} {this.props.type} {this.props.id}
+				</h1>
 				<GenericObject
 					type={this.props.type}
 					object={this.props.object}

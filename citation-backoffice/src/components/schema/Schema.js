@@ -45,9 +45,10 @@ class SchemaComponent extends Component {
 					__name__: key,
 					__fields__: Object.keys(actualValues[key]).map(field => {
 						actualValues[key][field].name = field;
-						actualValues[key][field].kind = actualValues[key][field].kind === 'SCALAR'
-							? actualValues[key][field].typeName
-							: actualValues[key][field].kind;
+						actualValues[key][field].kind =
+							actualValues[key][field].kind === 'SCALAR'
+								? actualValues[key][field].typeName
+								: actualValues[key][field].kind;
 						return actualValues[key][field];
 					})
 				}))

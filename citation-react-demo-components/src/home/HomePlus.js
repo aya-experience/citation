@@ -9,9 +9,7 @@ const HomePlus = ({ plus }) => {
 			{plus.map(homePlus =>
 				<div key={homePlus.title} className="HomePlusBlock">
 					<div className={homePlus.align}>
-						<p>
-							IMAGE
-						</p>
+						<p>IMAGE</p>
 						<p>
 							{homePlus.image}
 						</p>

@@ -1,6 +1,5 @@
 import path from 'path';
 
-import _ from 'lodash';
 import react from 'citation-react-renderer';
 import winston from 'winston';
 

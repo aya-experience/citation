@@ -5,7 +5,10 @@ import { shallow } from 'enzyme';
 
 let TopMenu;
 
-const docs = { __id__: 'docs', children: [{ id: 'doc1', slug: 'slugDoc1', title: 'doc 1' }] };
+const docs = {
+	__id__: 'docs',
+	children: [{ id: 'doc1', slug: 'slugDoc1', title: 'doc 1' }]
+};
 const other = { id: 'other', slug: 'other', title: 'other doc' };
 const pages = [
 	{

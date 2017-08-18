@@ -18,13 +18,13 @@ let task;
 export async function updateContent() {
 	const contentRepository = conf.content.repository;
 	const contentDiretory = path.join(conf.work.content, conf.content.branch);
-	return await updater('Content', contentRepository, conf.content.branch, contentDiretory);
+	return updater('Content', contentRepository, conf.content.branch, contentDiretory);
 }
 
 export async function updateComponent(components, i) {
 	if (components.repository) {
 		const directory = path.resolve(conf.work.components, i.toString());
-		return await updater(`Components(${i})`, components.repository, 'master', directory);
+		return updater(`Components(${i})`, components.repository, 'master', directory);
 	}
 	return false;
 }

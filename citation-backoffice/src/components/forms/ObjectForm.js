@@ -22,7 +22,11 @@ export class GenericObjectForm extends Component {
 			const collections = this.props.collections;
 			const fields = this.props.fields[this.props.type];
 			customFields = Object.keys(fields).map(field => {
-				const label = <label htmlFor={field}>{field}</label>;
+				const label = (
+					<label htmlFor={field}>
+						{field}
+					</label>
+				);
 				if (fields[field].kind === 'OBJECT') {
 					if (fields[field].typeName === '*') {
 						return (

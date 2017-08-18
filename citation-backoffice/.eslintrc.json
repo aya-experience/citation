@@ -1,8 +1,7 @@
 {
-	"extends": [
-		"xo/browser",
-		"xo-react",
-		"prettier",
-		"prettier/react"
-	]
+	"extends": ["xo/browser", "xo-react", "prettier", "prettier/react"],
+	"rules": {
+		"react/require-default-props": "off",
+		"react/no-array-index-key": "off"
+	}
 }

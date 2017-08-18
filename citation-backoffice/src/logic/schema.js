@@ -8,7 +8,7 @@ export const loadSchemaSuccess = createAction('load schema success');
 export const loadSchemaFieldsSuccess = createAction('load schema fields success');
 
 export async function queryExistingTypes() {
-	return await query(`{
+	return query(`{
 			__schema {
 				types {
 					name, kind

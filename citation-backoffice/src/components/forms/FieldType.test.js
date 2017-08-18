@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Component } from 'react';
 import { string } from 'prop-types';
 import test from 'ava';

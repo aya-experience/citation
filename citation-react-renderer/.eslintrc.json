@@ -1,7 +1,6 @@
 {
-	"extends": [
-		"xo-react",
-		"prettier",
-		"prettier/react"
-	]
+	"extends": ["xo-react", "prettier", "prettier/react"],
+	"rules": {
+		"no-await-in-loop": "off"
+	}
 }

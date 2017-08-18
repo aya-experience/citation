@@ -14,21 +14,27 @@ const TopMenu = ({ pages, links }) => {
 			<ul>
 				{docs.children.map(doc =>
 					<Link key={doc.id} to={`/docs/${doc.slug}`}>
-						<li>{doc.title}</li>
+						<li>
+							{doc.title}
+						</li>
 					</Link>
 				)}
 			</ul>
 			<ul>
 				{others.map(other =>
 					<Link key={other.id} to={`/${other.slug}`}>
-						<li>{other.title}</li>
+						<li>
+							{other.title}
+						</li>
 					</Link>
 				)}
 			</ul>
 			<ul>
 				{links.map(links =>
 					<a key={links.id} href={links.content} target="_blank" rel="noopener noreferrer">
-						<li>{links.title}</li>
+						<li>
+							{links.title}
+						</li>
 					</a>
 				)}
 			</ul>

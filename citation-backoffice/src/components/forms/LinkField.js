@@ -17,10 +17,18 @@ class LinkField extends Component {
 			<div>
 				{!this.props.type &&
 					<Field name={`${this.props.input.name}.__type__`} component="select">
-						{Object.keys(this.props.collections).map((type, i) => <option key={i} value={type}>{type}</option>)}
+						{Object.keys(this.props.collections).map((type, i) =>
+							<option key={i} value={type}>
+								{type}
+							</option>
+						)}
 					</Field>}
 				<Field name={`${this.props.input.name}.__id__`} component="select">
-					{values.map((value, i) => <option key={i} value={value.__id__}>{value.__id__}</option>)}
+					{values.map((value, i) =>
+						<option key={i} value={value.__id__}>
+							{value.__id__}
+						</option>
+					)}
 				</Field>
 			</div>
 		);

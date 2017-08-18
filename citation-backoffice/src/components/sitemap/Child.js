@@ -38,9 +38,10 @@ const computePositionWithDirection = (direction, i, size, position) => {
 };
 
 const Child = ({ child, direction, color, i, size, position }) => {
-	const positions = direction === 0
-		? computePositionFromRoot(i, size, position)
-		: computePositionWithDirection(direction, i, size, position);
+	const positions =
+		direction === 0
+			? computePositionFromRoot(i, size, position)
+			: computePositionWithDirection(direction, i, size, position);
 	if (child.position) {
 		positions.to = {
 			x: child.position.x + positions.from.x,

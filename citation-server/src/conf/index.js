@@ -7,7 +7,7 @@ const conf = {
 		cron: '*/5 * * * *'
 	},
 	content: {
-		// repostory: no default value, keep for documentation
+		// Repostory: no default value, keep for documentation
 		// username: no default value, keep for documentation
 		branch: 'master',
 		'password-env-var': 'GIT_PASSWORD'
@@ -20,12 +20,12 @@ const conf = {
 		'build-directory': 'build'
 	},
 	render: {
-		// framework: no default value, keep for documentation
+		// Framework: no default value, keep for documentation
 		enable: true,
 		anchor: '<div id="root"></div>'
 	},
 	server: {
-		// host: no default value, keep for documentation
+		// Host: no default value, keep for documentation
 		port: 4000,
 		'graphql-context': 'graphql'
 	},
@@ -38,7 +38,7 @@ const conf = {
 };
 
 const defaultComponents = {
-	// repository: no default value, keep for documentation
+	// Repository: no default value, keep for documentation
 	// username: no default value, keep for documentation
 	// directory: no default value, keep for documentation
 	// dependency: no default value, keep for documentation

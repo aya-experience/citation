@@ -5,7 +5,6 @@ import path from 'path';
 import Hapi from 'hapi';
 import inert from 'inert';
 import winston from 'winston';
-import _ from 'lodash';
 
 import GraphQL from './hapi-graphql';
 import { buildSchema } from './graphql/schema';
@@ -26,7 +25,7 @@ export async function updateSchema() {
 }
 
 async function getSchema() {
-	return schema ? schema : await buildSchema();
+	return schema ? schema : buildSchema();
 }
 
 export default async function start(inputConfig) {

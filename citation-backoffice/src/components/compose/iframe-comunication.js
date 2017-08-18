@@ -44,7 +44,7 @@ const iframeMessageDispatcher = event => {
 				)
 				.then(askReload);
 			break;
-		default: // nothing to do
+		default: // Nothing to do
 	}
 };
 

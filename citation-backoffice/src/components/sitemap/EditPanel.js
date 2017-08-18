@@ -29,7 +29,9 @@ const EditPanel = ({ edition, close, submit }) =>
 			height: '10rem'
 		}}
 	>
-		<a className="close" onClick={close}>X</a>
+		<a className="close" onClick={close}>
+			X
+		</a>
 		<h1>Page form</h1>
 		<PageForm onSubmit={submit} />
 	</div>;
