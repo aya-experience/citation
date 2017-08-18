@@ -14,7 +14,10 @@ import Sitemap from './sitemap/Sitemap';
 
 import './App.css';
 
-const NoMatch = () => <div><h1>Oups!</h1></div>;
+const NoMatch = () =>
+	<div>
+		<h1>Oups!</h1>
+	</div>;
 
 class App extends Component {
 	static propTypes = {

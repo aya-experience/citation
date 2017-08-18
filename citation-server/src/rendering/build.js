@@ -1,5 +1,5 @@
 import path from 'path';
-import fs from 'fs-promise';
+import fs from 'fs-extra';
 import { mapSeries } from 'bluebird';
 
 import conf from '../conf';
@@ -9,7 +9,7 @@ const citationServerPath = path.join(__dirname, '..', '..');
 
 export async function getBuilderPath() {
 	const builderLinkedPath = path.join(citationServerPath, conf.builder.directory);
-	return await fs.realpath(builderLinkedPath);
+	return fs.realpath(builderLinkedPath);
 }
 
 export async function getComponentsPaths() {
@@ -19,7 +19,7 @@ export async function getComponentsPaths() {
 		}
 		if (components.dependency) {
 			const dependencyLinkedPath = path.join(conf.work.root, '../node_modules', components.dependency);
-			return await fs.realpath(dependencyLinkedPath);
+			return fs.realpath(dependencyLinkedPath);
 		}
 		return components.directory;
 	});

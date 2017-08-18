@@ -3,7 +3,11 @@ import { object, array } from 'prop-types';
 
 const PageOrComponent = ({ childPage, children }) => {
 	const exact = childPage ? childPage.props.match.isExact : false;
-	return <div>{exact ? children : childPage}</div>;
+	return (
+		<div>
+			{exact ? children : childPage}
+		</div>
+	);
 };
 
 PageOrComponent.propTypes = {

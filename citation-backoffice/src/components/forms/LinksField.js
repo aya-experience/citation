@@ -64,9 +64,14 @@ class LinksField extends Component {
 					</li>
 				)}
 				<li className="ObjectArrayAdd">
-					<button type="button" onClick={this.handleAdd}>+</button>
+					<button type="button" onClick={this.handleAdd}>
+						+
+					</button>
 				</li>
-				{this.props.meta.error && <li className="error">{this.props.meta.error}</li>}
+				{this.props.meta.error &&
+					<li className="error">
+						{this.props.meta.error}
+					</li>}
 			</ul>
 		);
 	}

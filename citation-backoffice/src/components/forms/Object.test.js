@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import test from 'ava';
 import proxyquire from 'proxyquire';

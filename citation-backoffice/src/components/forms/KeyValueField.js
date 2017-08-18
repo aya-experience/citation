@@ -25,13 +25,20 @@ const KeyValueField = ({ collections, fields, meta, handleAdd, handleRemove }) =
 		{fields.map((link, i) =>
 			<li key={i} className="ValueOrListField">
 				<Field name={link} component={ValueOrListField} props={{ collections }} />
-				<button type="button" onClick={handleRemove(i)}>X</button>
+				<button type="button" onClick={handleRemove(i)}>
+					X
+				</button>
 			</li>
 		)}
 		<li className="ObjectArrayAdd">
-			<button type="button" onClick={handleAdd}>+</button>
+			<button type="button" onClick={handleAdd}>
+				+
+			</button>
 		</li>
-		{meta.error && <li className="error">{meta.error}</li>}
+		{meta.error &&
+			<li className="error">
+				{meta.error}
+			</li>}
 	</ul>;
 
 KeyValueField.propTypes = {

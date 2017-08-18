@@ -62,9 +62,14 @@ class Fields extends Component {
 					);
 				})}
 				<li className="SchemaArrayAdd">
-					<button type="button" onClick={this.handleAdd}>+</button>
+					<button type="button" onClick={this.handleAdd}>
+						+
+					</button>
 				</li>
-				{this.props.meta.error && <li className="error">{this.props.meta.error}</li>}
+				{this.props.meta.error &&
+					<li className="error">
+						{this.props.meta.error}
+					</li>}
 			</ul>
 		);
 	}

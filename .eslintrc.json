@@ -1,34 +1,12 @@
 {
 	"parser": "babel-eslint",
-	"extends": [
-		"xo/esnext",
-		"prettier"
-	],
-	"plugins": [
-		"import",
-		"jasmine",
-		"prettier"
-	],
+	"extends": ["xo/esnext", "prettier"],
+	"plugins": ["import", "jasmine", "prettier"],
 	"rules": {
-		"prettier/prettier": ["error", {"printWidth": 120, "useTabs": true, "singleQuote": true}],
-		"object-curly-spacing": ["error", "always"],
-		"import/default": "error",
-		"import/export": "error",
-		"import/extensions": ["error", {"js": "never"}],
-		"import/first": "error",
-		"import/named": "error",
-		"import/namespace": ["error", {"allowComputed": true}],
-		"import/no-absolute-path": "error",
-		"import/no-dynamic-require": "error",
-		"import/no-webpack-loader-syntax": "error",
-		"import/newline-after-import": "error",
-		"import/no-amd": "error",
-		"import/no-commonjs": "error",
-		"import/no-extraneous-dependencies": "error",
-		"import/no-mutable-exports": "error",
-		"import/no-named-as-default-member": "error",
-		"import/no-named-as-default": "error",
-		"import/no-unresolved": ["error", {"commonjs": true}],
-		"import/order": "error"
+		"prettier/prettier": [
+			"error",
+			{ "printWidth": 120, "useTabs": true, "singleQuote": true }
+		],
+		"object-curly-spacing": ["error", "always"]
 	}
 }

@@ -37,7 +37,9 @@ const EditPanel = ({ edition, close, submit }) =>
 			height: '20rem'
 		}}
 	>
-		<a className="close" onClick={close}>X</a>
+		<a className="close" onClick={close}>
+			X
+		</a>
 		<h1>Component form</h1>
 		<ComponentForm onSubmit={submit} />
 	</div>;

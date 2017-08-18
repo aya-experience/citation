@@ -69,10 +69,10 @@ export default class Routes extends Component {
 		}
 		return (
 			<Switch>
-				{this.props.pages.reverse().map((page, i) => {
+				{this.props.pages.reverse().map(page => {
 					const slug = page.slug === null ? '' : page.slug;
 					const path = `${this.props.match.url}/${slug}`.replace(/\/\//g, '/');
-					return <Route key={i} path={path} render={this.matchRenderer(page)} />;
+					return <Route key={slug} path={path} render={this.matchRenderer(page)} />;
 				})}
 			</Switch>
 		);

@@ -12,31 +12,30 @@
     "build": "babel src -d lib",
     "test": "ava --verbose"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "babel-polyfill": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
     "citation-react-router": "^0.2.0",
-    "fs-promise": "^1.0.0",
+    "fs-extra": "^4.0.1",
     "ignore-styles": "^5.0.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",
     "meow": "^3.7.0",
-    "react": "^15.4.0",
-    "react-dom": "^15.4.0",
+    "react": "^15.6.0",
+    "react-dom": "^15.6.0",
     "react-router": "4.1.1",
     "react-router-dom": "4.1.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {
-    "ava": "0.18.1",
-    "babel-cli": "^6.18.0",
+    "ava": "0.22.0",
+    "babel-cli": "^6.26.0",
     "babel-plugin-transform-class-properties": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
-    "babel-preset-env": "0.0.7",
+    "babel-preset-env": "1.6.0",
     "babel-preset-react": "^6.22.0",
-    "proxyquire": "^1.7.11",
-    "sinon": "^1.17.7"
+    "proxyquire": "^1.8.0",
+    "sinon": "^3.2.0"
   },
   "ava": {
     "files": [
@@ -47,5 +46,15 @@
       "babel-polyfill"
     ],
     "babel": "inherit"
+  },
+  "babel": {
+    "presets": [
+      ["env", {"targets": {"node": 6}}],
+      "react"
+    ],
+    "plugins": [
+      "transform-class-properties",
+      "transform-object-rest-spread"
+    ]
   }
 }

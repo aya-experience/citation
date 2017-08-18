@@ -2,7 +2,7 @@ import path from 'path';
 
 import _, { isArray, isObject, partition, values } from 'lodash';
 import mergeDeep from 'merge-deep';
-import fs from 'fs-promise';
+import fs from 'fs-extra';
 import winston from 'winston';
 
 import conf from '../conf';
@@ -21,7 +21,7 @@ async function inspectLink(link, stack, modelTypes) {
 		return {};
 	}
 	const { collection, id } = link;
-	return await inspectObject(collection, id, modelTypes, [...stack, link]);
+	return inspectObject(collection, id, modelTypes, [...stack, link]);
 }
 
 async function inspectLinks(links, stack, modelTypes) {
@@ -36,9 +36,7 @@ async function inspectLinks(links, stack, modelTypes) {
 
 async function inspectMap(map, stack, modelTypes) {
 	const [listOfLinks, listOfLink] = partition(values(map), isArray);
-	const linksInspections = await Promise.all(
-		listOfLinks.map(async links => await inspectLinks(links, stack, modelTypes))
-	);
+	const linksInspections = await Promise.all(listOfLinks.map(async links => inspectLinks(links, stack, modelTypes)));
 	const linkInspections = await Promise.all(
 		listOfLink.map(async link => {
 			const inspection = await inspectLink(link, stack, modelTypes);

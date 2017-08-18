@@ -1,81 +1,57 @@
 [
-  {
-    "name": "Page",
-    "fields": [
-      {
-        "name": "slug",
-        "type": [
-          "text"
-        ]
-      },
-      {
-        "name": "title",
-        "type": [
-          "richtext"
-        ]
-      },
-      {
-        "name": "component",
-        "type": [
-          "link",
-          "Component"
-        ]
-      },
-      {
-        "name": "children",
-        "type": [
-          "links",
-          "Page"
-        ]
-      },
-      {
-        "name": "position",
-        "type": [
-          "json"
-        ]
-      }
-    ]
-  },
-  {
-    "name": "Component",
-    "fields": [
-      {
-        "name": "type",
-        "type": [
-          "text"
-        ]
-      },
-      {
-        "name": "children",
-        "type": [
-          "links",
-          "Component"
-        ]
-      },
-      {
-        "name": "props",
-        "type": [
-          "map",
-          "*"
-        ]
-      }
-    ]
-  },
-  {
-    "name": "Content",
-    "fields": [
-      {
-        "name": "title",
-        "type": [
-          "text"
-        ]
-      },
-      {
-        "name": "content",
-        "type": [
-          "richtext"
-        ]
-      }
-    ]
-  }
+	{
+		"name": "Page",
+		"fields": [
+			{
+				"name": "slug",
+				"type": ["text"]
+			},
+			{
+				"name": "title",
+				"type": ["richtext"]
+			},
+			{
+				"name": "component",
+				"type": ["link", "Component"]
+			},
+			{
+				"name": "children",
+				"type": ["links", "Page"]
+			},
+			{
+				"name": "position",
+				"type": ["json"]
+			}
+		]
+	},
+	{
+		"name": "Component",
+		"fields": [
+			{
+				"name": "type",
+				"type": ["text"]
+			},
+			{
+				"name": "children",
+				"type": ["links", "Component"]
+			},
+			{
+				"name": "props",
+				"type": ["map", "*"]
+			}
+		]
+	},
+	{
+		"name": "Content",
+		"fields": [
+			{
+				"name": "title",
+				"type": ["text"]
+			},
+			{
+				"name": "content",
+				"type": ["richtext"]
+			}
+		]
+	}
 ]

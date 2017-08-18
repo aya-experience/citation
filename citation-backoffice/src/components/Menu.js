@@ -15,14 +15,10 @@ export default class Menu extends Component {
 		return (
 			<ul className="Menu-container">
 				<Link to={'/schema'}>
-					<p className="Menu-object">
-						Edit schema
-					</p>
+					<p className="Menu-object">Edit schema</p>
 				</Link>
 				<Link to={'/sitemap'}>
-					<p className="Menu-object">
-						Sitemap
-					</p>
+					<p className="Menu-object">Sitemap</p>
 				</Link>
 				{pairs.map(([type, objects]) =>
 					<li key={type}>

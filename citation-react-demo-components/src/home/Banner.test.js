@@ -8,7 +8,12 @@ let Banner;
 const image = { image: 'myImage' };
 const children = ['children1'];
 
-const setup = () => shallow(<Banner image={image}>{children}</Banner>);
+const setup = () =>
+	shallow(
+		<Banner image={image}>
+			{children}
+		</Banner>
+	);
 
 let banner;
 

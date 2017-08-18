@@ -42,7 +42,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, parent, m
 					<ComponentListControl content={content} useDragHandle onSortEnd={sortHandler(content, refresh)}>
 						{children.map((child, i) =>
 							<ComponentTree
-								key={i}
+								key={child.__id__}
 								index={i}
 								draggable
 								routesProps={routesProps}
