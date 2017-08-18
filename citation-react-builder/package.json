@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "test": "NODE_ENV=development ava --verbose"
+    "test": "NODE_ENV=test ava --verbose"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -25,16 +25,9 @@
     "require": [
       "babel-register"
     ],
-    "babel": {
-      "presets": [
-        "env",
-        "react-app"
-      ]
-    }
+    "babel": "inherit"
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   }
 }
