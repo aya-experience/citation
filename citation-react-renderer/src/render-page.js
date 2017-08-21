@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router';
 import Router from 'citation-react-router';
 import winston from 'winston';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 import './log';
 
@@ -12,20 +13,28 @@ export default async function renderPage(url, context, options) {
 	try {
 		const serverRenderContext = {};
 
+		const sheet = new ServerStyleSheet();
+
 		global.window = {
 			__pages__: context.pages,
 			__contents__: context.preparedContents
 		};
 
 		const markup = renderToString(
-			<StaticRouter location={url.url} context={serverRenderContext}>
-				<Router serverUrl={options.serverUrl} components={context.components} />
-			</StaticRouter>
+			sheet.collectStyles(
+				<StyleSheetManager sheet={sheet.instance}>
+					<StaticRouter location={url.url} context={serverRenderContext}>
+						<Router serverUrl={options.serverUrl} components={context.components} />
+					</StaticRouter>
+				</StyleSheetManager>
+			)
 		);
 
 		// TODO Handle context errors and redirects
 
-		const replacement = `
+		const replacementStyle = `</head>${sheet.getStyleTags()}`;
+
+		const replacementMarkup = `
 			<div id="root">${markup}</div>
 			<script>
 				window.__pages__=${JSON.stringify(global.window.__pages__)};
@@ -33,7 +42,7 @@ export default async function renderPage(url, context, options) {
 			</script>
 		`.replace(/[\t\n]/g, '');
 
-		return context.indexContent.replace(options.anchor, replacement);
+		return context.indexContent.replace('</head>', replacementStyle).replace(options.anchor, replacementMarkup);
 	} catch (error) {
 		logger.error(`Error while rendering ${url} ${error}`);
 		throw error;

@@ -1,26 +1,38 @@
 import React from 'react';
 import { array } from 'prop-types';
+import styled from 'styled-components';
 
-import './HomePlus.css';
+const HomePlusContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+`;
+
+const HomePlusBlock = styled.div`
+	padding: 2rem;
+	text-align: center;
+	justify-content: space-around;
+	display: flex;
+	flex-direction: ${({ align }) => (align === 'left' ? 'row' : 'row-reverse')};
+`;
+
+const HomePlusContent = styled.div`width: 60%;`;
 
 const HomePlus = ({ plus }) => {
 	return (
-		<div className="HomePlus">
+		<HomePlusContainer>
 			{plus.map(homePlus =>
-				<div key={homePlus.title} className="HomePlusBlock">
-					<div className={homePlus.align}>
-						<p>IMAGE</p>
-						<p>
-							{homePlus.image}
-						</p>
-						<div className="PlusContent">
-							{homePlus.title}
-							{homePlus.content}
-						</div>
-					</div>
-				</div>
+				<HomePlusBlock key={homePlus.title} align={homePlus.align}>
+					<p>IMAGE</p>
+					<p>
+						{homePlus.image}
+					</p>
+					<HomePlusContent>
+						{homePlus.title}
+						{homePlus.content}
+					</HomePlusContent>
+				</HomePlusBlock>
 			)}
-		</div>
+		</HomePlusContainer>
 	);
 };
 

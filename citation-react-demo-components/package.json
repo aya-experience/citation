@@ -10,18 +10,19 @@
     "test": "BABEL_ENV=test ava --verbose"
   },
   "dependencies": {
+    "babel-plugin-styled-components": "^1.1.7",
     "babel-polyfill": "^6.26.0",
     "prop-types": "^15.5.10",
     "proxyquire": "^1.8.0",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",
     "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "styled-components": "^2.1.2"
   },
   "devDependencies": {
     "ava": "^0.22.0",
     "babel-cli": "^6.26.0",
-    "babel-plugin-transform-require-ignore": "^0.1.1",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react-app": "^3.0.2",
     "enzyme": "^2.9.1",
@@ -47,21 +48,8 @@
       "react-app"
     ],
     "plugins": [
-      "transform-es2015-modules-commonjs"
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          [
-            "babel-plugin-transform-require-ignore",
-            {
-              "extensions": [
-                ".css"
-              ]
-            }
-          ]
-        ]
-      }
-    }
+      "transform-es2015-modules-commonjs",
+      "styled-components"
+    ]
   }
 }
