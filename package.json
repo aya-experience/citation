@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
+    "postbootstrap": "rm -rf citation-react-demo-components/node_modules/styled-components && ln -s ../../citation-react-renderer/node_modules/styled-components citation-react-demo-components/node_modules/styled-components",
     "lint": "lerna run lint",
     "build": "lerna run build",
     "test": "nyc lerna run test && nyc report --reporter=text-lcov > coverage.lcov",

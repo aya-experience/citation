@@ -10,6 +10,7 @@
     "test": "BABEL_ENV=test ava --verbose"
   },
   "dependencies": {
+    "babel-plugin-styled-components": "^1.1.7",
     "babel-polyfill": "^6.26.0",
     "prop-types": "^15.5.10",
     "proxyquire": "^1.8.0",
@@ -33,12 +34,22 @@
     "sinon": "^3.2.0"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register", "babel-polyfill"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["react-app"],
-    "plugins": ["transform-es2015-modules-commonjs"]
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      "transform-es2015-modules-commonjs",
+      "styled-components"
+    ]
   }
 }
