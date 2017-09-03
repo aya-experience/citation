@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import { Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import { loadCollection } from '../logic/collections';
 import { loadSchema } from '../logic/schema';
-
+import Header from './layout/Header';
 import Menu from './Menu';
 import Home from './Home';
 import ObjectComponent from './Object';
 import Schema from './Schema';
 import Compose from './compose/Compose';
 import Sitemap from './sitemap/Sitemap';
+
+import './style/global';
 
 import './App.css';
 
@@ -33,28 +36,25 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="App">
-				<div className="App-header">
-					<Link to="/">
-						<img src="/logo.svg" className="App-logo" alt="logo" />
-						<h2>Citation Admin</h2>
-					</Link>
-				</div>
-				<div className="App-layout">
-					<Menu collections={this.props.collections} />
-					<div className="App-content">
-						<Switch>
-							<Route exact path="/" component={Home} />
-							<Route exact path="/schema" component={Schema} />
-							<Route exact path="/compose/:id" component={Compose} />
-							<Route exact path="/sitemap" component={Sitemap} />
-							<Route exact path="/object/:type" component={ObjectComponent} />
-							<Route path="/object/:type/:id" component={ObjectComponent} />
-							<Route component={NoMatch} />
-						</Switch>
+			<BrowserRouter basename="/admin">
+				<div className="App">
+					<Header />
+					<div className="App-layout">
+						<Menu collections={this.props.collections} />
+						<div className="App-content">
+							<Switch>
+								<Route exact path="/" component={Home} />
+								<Route exact path="/model" component={Schema} />
+								<Route exact path="/compose/:id" component={Compose} />
+								<Route exact path="/sitemap" component={Sitemap} />
+								<Route exact path="/object/:type" component={ObjectComponent} />
+								<Route path="/object/:type/:id" component={ObjectComponent} />
+								<Route component={NoMatch} />
+							</Switch>
+						</div>
 					</div>
 				</div>
-			</div>
+			</BrowserRouter>
 		);
 	}
 }
