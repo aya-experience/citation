@@ -51,7 +51,7 @@ const items = [
 				key="content"
 				isActive={isActive(2)}
 				innerRef={refNode(2)}
-				to="/"
+				to="/content"
 				title="Content"
 				color={darkBlue}
 			/>

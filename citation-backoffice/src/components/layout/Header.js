@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { gray } from '../style/colors';
 import MainMenu from './MainMenu';
-import A from '../style/A';
+import A from '../common/A';
 
 const publicUrl = process.env.PUBLIC_URL;
 
@@ -14,7 +13,6 @@ const HeaderContainer = styled.header`
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	border-bottom: .1rem solid ${gray};
 	align-items: center;
 
 	img {

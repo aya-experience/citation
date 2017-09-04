@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { string, object, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import form2data from '../../utils/form2data';
@@ -8,7 +8,7 @@ import ObjectForm from './ObjectForm';
 class GenericObject extends Component {
 	static propTypes = {
 		object: object.isRequired,
-		type: object.isRequired,
+		type: string.isRequired,
 		collections: object.isRequired,
 		fields: object.isRequired,
 		onSubmit: func.isRequired,

@@ -1,12 +1,32 @@
-import _ from 'lodash';
+import { get } from 'lodash';
 import React, { Component } from 'react';
 import { string, object, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { loadObject, writeObject, deleteObject } from '../logic/objects';
-import { loadSchemaFields } from '../logic/schema';
-import GenericObject from './forms/Object';
-import { filterObjectFields } from './../utils/filters';
-import './Object.css';
+
+import Link from '../common/Link';
+import Breadcrumb from '../common/Breadcrumb';
+import { loadObject, writeObject, deleteObject } from '../../logic/objects';
+import { loadSchemaFields } from '../../logic/schema';
+import GenericObject from '../forms/Object';
+import { filterObjectFields } from '../../utils/filters';
+
+const enhancer = connect(
+	(state, ownProps) => {
+		const { type, id } = ownProps.match.params;
+		let object = get(state.objects, `${type}.${id}`, {});
+		object = object === null ? {} : object;
+		return { type, id, object, fields: filterObjectFields(state.fields) };
+	},
+	(dispatch, ownProps) => {
+		const { type, id } = ownProps.match.params;
+		return {
+			loadFields: type => dispatch(loadSchemaFields([type])),
+			load: fields => dispatch(loadObject(type, id, fields)),
+			write: (data, fields) => dispatch(writeObject(type, id, data, fields)),
+			delete: () => deleteObject(type, id)
+		};
+	}
+);
 
 class ObjectComponent extends Component {
 	static propTypes = {
@@ -47,12 +67,13 @@ class ObjectComponent extends Component {
 	}
 
 	render() {
-		const title = this.props.id ? 'Edit' : 'Add';
+		const title = this.props.id ? this.props.id : 'New object...';
 		return (
 			<div className="Object">
-				<h1>
-					{title} {this.props.type} {this.props.id}
-				</h1>
+				<Breadcrumb>
+					<Link to="/content/types">CONTENT</Link> /{' '}
+					<Link to={`/content/objects/${this.props.type}`}>{this.props.type}</Link> / {title}
+				</Breadcrumb>
 				<GenericObject
 					type={this.props.type}
 					object={this.props.object}
@@ -65,21 +86,4 @@ class ObjectComponent extends Component {
 	}
 }
 
-export const mapStateToProps = (state, ownProps) => {
-	const { type, id } = ownProps.match.params;
-	let object = _.get(state.objects, `${type}.${id}`, {});
-	object = object === null ? {} : object;
-	return { type, id, object, fields: filterObjectFields(state.fields) };
-};
-
-export const mapDispatchToProps = (dispatch, ownProps) => {
-	const { type, id } = ownProps.match.params;
-	return {
-		loadFields: type => dispatch(loadSchemaFields([type])),
-		load: fields => dispatch(loadObject(type, id, fields)),
-		write: (data, fields) => dispatch(writeObject(type, id, data, fields)),
-		delete: () => deleteObject(type, id)
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ObjectComponent);
+export default enhancer(ObjectComponent);

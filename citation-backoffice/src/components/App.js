@@ -6,16 +6,13 @@ import { connect } from 'react-redux';
 import { loadCollection } from '../logic/collections';
 import { loadSchema } from '../logic/schema';
 import Header from './layout/Header';
-import Menu from './Menu';
 import Home from './Home';
-import ObjectComponent from './Object';
 import Schema from './Schema';
 import Compose from './compose/Compose';
+import Content from './content/Content';
 import Sitemap from './sitemap/Sitemap';
 
 import './style/global';
-
-import './App.css';
 
 const NoMatch = () =>
 	<div>
@@ -25,7 +22,6 @@ const NoMatch = () =>
 class App extends Component {
 	static propTypes = {
 		schema: object.isRequired,
-		collections: object.isRequired,
 		loadCollections: func.isRequired,
 		loadSchema: func.isRequired
 	};
@@ -40,15 +36,14 @@ class App extends Component {
 				<div className="App">
 					<Header />
 					<div className="App-layout">
-						<Menu collections={this.props.collections} />
+						{/* <Menu collections={this.props.collections} /> */}
 						<div className="App-content">
 							<Switch>
 								<Route exact path="/" component={Home} />
 								<Route exact path="/model" component={Schema} />
-								<Route exact path="/compose/:id" component={Compose} />
 								<Route exact path="/sitemap" component={Sitemap} />
-								<Route exact path="/object/:type" component={ObjectComponent} />
-								<Route path="/object/:type/:id" component={ObjectComponent} />
+								<Route exact path="/compose/:id" component={Compose} />
+								<Route path="/content" component={Content} />
 								<Route component={NoMatch} />
 							</Switch>
 						</div>
@@ -68,8 +63,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		loadSchema: () => Promise.all([dispatch(loadSchema())]),
-		loadCollections: schema => Promise.all([dispatch(loadCollection(schema.data))])
+		loadSchema: () => dispatch(loadSchema()),
+		loadCollections: schema => dispatch(loadCollection(schema.data))
 	};
 };
 

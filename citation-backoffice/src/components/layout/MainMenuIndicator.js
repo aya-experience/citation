@@ -2,6 +2,8 @@ import React from 'react';
 import { array } from 'prop-types';
 import styled from 'styled-components';
 
+import renderOnResize from '../../logic/hocs/renderOnResize';
+
 const MainMenuIndicatorContainer = styled.div`
 	position: absolute;
 	top: 0;
@@ -22,10 +24,12 @@ const active = items => {
 	return null;
 };
 
+const enhancer = renderOnResize;
+
 const MainMenuIndicator = ({ items }) => {
 	const item = active(items);
-	const node = item.node;
-	if (node !== null) {
+	if (item !== null && item.node !== null) {
+		const node = item.node;
 		const color = item.menu.props.color;
 		const rect = node.getBoundingClientRect();
 		return <MainMenuIndicatorContainer left={rect.left} width={rect.width} color={color} />;
@@ -37,4 +41,4 @@ MainMenuIndicator.propTypes = {
 	items: array
 };
 
-export default MainMenuIndicator;
+export default enhancer(MainMenuIndicator);
