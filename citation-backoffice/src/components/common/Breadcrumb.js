@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
-const Breadcrumb = styled.aside`
-	width: 50rem;
-	margin: 1rem auto;
-	font-size: 1.5rem;
+export const Breadcrumb = styled.aside`
+	width: 80rem;
+	margin: 2rem auto;
+	font-size: 2.5rem;
 `;
-
-export default Breadcrumb;

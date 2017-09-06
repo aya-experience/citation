@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { darkBlue, green } from '../style/colors';
 
-const Link = styled(RouterLink)`
+export const A = styled.a`
 	cursor: pointer;
 	color: ${darkBlue};
 	text-decoration: none;
@@ -14,4 +14,4 @@ const Link = styled(RouterLink)`
 	}
 `;
 
-export default Link;
+export const Link = A.withComponent(RouterLink);

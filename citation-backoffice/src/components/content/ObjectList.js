@@ -3,19 +3,20 @@ import React from 'react';
 import { string, array } from 'prop-types';
 import { connect } from 'react-redux';
 
-import Link from '../common/Link';
-import Breadcrumb from '../common/Breadcrumb';
-import { TableList, TableListRow, TableListLinkCell } from '../common/TableList';
+import { Link } from '../common/Link';
+import { Breadcrumb } from '../common/Breadcrumb';
+import { TableList, TableListRow, TableListCell, TableListLinkCell } from '../common/TableList';
+import { ButtonLink } from '../common/Button';
 
 const enhancer = connect((state, ownProps) => ({
 	type: ownProps.match.params.id,
 	objects: get(state.collections, ownProps.match.params.id, [])
 }));
 
-const Objects = ({ type, objects }) =>
+const ObjectList = ({ type, objects }) =>
 	<div>
 		<Breadcrumb>
-			<Link to="/content/types">CONTENT</Link> / {type} / Choose an object...
+			<Link to="/content">CONTENT</Link> / {type} / Choose an object...
 		</Breadcrumb>
 		<TableList>
 			{objects.map(({ __id__ }) =>
@@ -23,15 +24,17 @@ const Objects = ({ type, objects }) =>
 					<TableListLinkCell to={`/content/object/${type}/${__id__}`}>
 						{__id__}
 					</TableListLinkCell>
-					<TableListLinkCell to={`/content/object/${type}`}>Add</TableListLinkCell>
+					<TableListCell>
+						<ButtonLink icon="plus-sign" to={`/content/object/${type}`} />
+					</TableListCell>
 				</TableListRow>
 			)}
 		</TableList>
 	</div>;
 
-Objects.propTypes = {
+ObjectList.propTypes = {
 	type: string,
 	objects: array
 };
 
-export default enhancer(Objects);
+export default enhancer(ObjectList);

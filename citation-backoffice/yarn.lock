@@ -6386,6 +6386,12 @@ react-scripts@1.0.11:
   optionalDependencies:
     fsevents "1.1.2"
 
+react-svg@^2.1.21:
+  version "2.1.21"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-2.1.21.tgz#0caf34002649542967f04e197480d784768e914c"
+  dependencies:
+    svg-injector "^1.1.3"
+
 react-test-renderer@^1.0.3:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-1.1.0.tgz#0faa35a2cd71a1499a1e3d72267a34fcb1e350ef"
@@ -7253,6 +7259,10 @@ supports-color@^4.0.0, supports-color@^4.2.1:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-4.2.1.tgz#65a4bb2631e90e02420dba5554c375a4754bb836"
   dependencies:
     has-flag "^2.0.0"
+
+svg-injector@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/svg-injector/-/svg-injector-1.1.3.tgz#8fba18d7419e5f818e712c4f82d83ee357610e61"
 
 svgo@^0.7.0:
   version "0.7.2"

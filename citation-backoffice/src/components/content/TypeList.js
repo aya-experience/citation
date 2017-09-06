@@ -3,12 +3,12 @@ import React from 'react';
 import { object } from 'prop-types';
 import { connect } from 'react-redux';
 
-import Breadcrumb from '../common/Breadcrumb';
+import { Breadcrumb } from '../common/Breadcrumb';
 import { TableList, TableListLinkRow, TableListCell } from '../common/TableList';
 
 const enhancer = connect(state => ({ collections: state.collections }));
 
-const Types = ({ collections }) =>
+const TypeList = ({ collections }) =>
 	<div>
 		<Breadcrumb>CONTENT / Choose a type...</Breadcrumb>
 		<TableList>
@@ -25,8 +25,8 @@ const Types = ({ collections }) =>
 		</TableList>
 	</div>;
 
-Types.propTypes = {
+TypeList.propTypes = {
 	collections: object
 };
 
-export default enhancer(Types);
+export default enhancer(TypeList);

@@ -1,80 +1,79 @@
-import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import React from 'react';
+import { func, object, string } from 'prop-types';
 import { Field } from 'redux-form';
+import { withHandlers } from 'recompose';
+import styled from 'styled-components';
+
 import LinkField from './LinkField';
+import { Button, ButtonContainer } from '../common/Button';
 
-class LinksField extends Component {
-	static propTypes = {
-		fields: object.isRequired,
-		meta: object.isRequired,
-		collections: object.isRequired,
-		type: string
-	};
+const Container = styled.ul`
+	list-style: none;
+	margin: 0;
+	padding: 0;
+`;
 
-	constructor() {
-		super();
-		this.handleAdd = this.handleAdd.bind(this);
-		this.handleRemove = this.handleRemove.bind(this);
+const Line = styled.li`
+	display: flex;
+	flex-direction: row;
+	margin: 1rem 0;
+
+	> div:first-child {
+		width: calc(100% - 12rem);
 	}
 
-	handleAdd() {
-		const keys = Object.keys(this.props.collections);
-		this.props.fields.push({
+	${ButtonContainer} {
+		margin: .5rem 0 0 .5rem;
+	}
+`;
+
+const ControlLine = Line.extend`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+`;
+
+const enhancer = withHandlers({
+	handleAdd: ({ fields, collections }) => () => {
+		const keys = Object.keys(collections);
+		fields.push({
 			__type__: keys[0],
-			__id__: this.props.collections[keys[0]][0].__id__
+			__id__: collections[keys[0]][0].__id__
 		});
-	}
+	},
+	handleRemove: ({ fields }) => index => () => fields.remove(index),
+	handleUp: ({ fields }) => index => () => fields.swap(index, index - 1),
+	handleDown: ({ fields }) => index => () => fields.swap(index, index + 1)
+});
 
-	handleRemove(index) {
-		return () => this.props.fields.remove(index);
-	}
+const LinksField = ({ type, fields, collections, meta, handleAdd, handleRemove, handleUp, handleDown }) =>
+	<Container>
+		{fields.map((link, i) =>
+			<Line key={i}>
+				<Field name={link} component={LinkField} props={{ collections, type }} />
+				<Button icon="delete" onClick={handleRemove(i)} />
+				{i > 0 && <Button icon="navigate-up-arrow" onClick={handleUp(i)} />}
+				{i + 1 < fields.length && <Button icon="arrow-down-sign-to-navigate" onClick={handleDown(i)} />}
+			</Line>
+		)}
+		<ControlLine>
+			<Button icon="plus-sign" onClick={handleAdd} />
+		</ControlLine>
+		{meta.error &&
+			<ControlLine>
+				{meta.error}
+			</ControlLine>}
+	</Container>;
 
-	handleUp(index) {
-		return () => this.props.fields.swap(index, index - 1);
-	}
+LinksField.propTypes = {
+	fields: object.isRequired,
+	meta: object.isRequired,
+	collections: object.isRequired,
+	type: string,
+	handleAdd: func.isRequired,
+	handleRemove: func.isRequired,
+	handleUp: func.isRequired,
+	handleDown: func.isRequired
+};
 
-	handleDown(index) {
-		return () => this.props.fields.swap(index, index + 1);
-	}
-
-	render() {
-		return (
-			<ul className="ObjectArray">
-				{this.props.fields.map((link, i) =>
-					<li key={i}>
-						<Field
-							name={link}
-							component={LinkField}
-							props={{
-								collections: this.props.collections,
-								type: this.props.type
-							}}
-						/>
-						<button type="button" onClick={this.handleRemove(i)}>
-							X
-						</button>
-						{i > 0 &&
-							<button type="button" onClick={this.handleUp(i)}>
-								Λ
-							</button>}
-						{i + 1 < this.props.fields.length &&
-							<button type="button" onClick={this.handleDown(i)}>
-								V
-							</button>}
-					</li>
-				)}
-				<li className="ObjectArrayAdd">
-					<button type="button" onClick={this.handleAdd}>
-						+
-					</button>
-				</li>
-				{this.props.meta.error &&
-					<li className="error">
-						{this.props.meta.error}
-					</li>}
-			</ul>
-		);
-	}
-}
-
-export default LinksField;
+export default enhancer(LinksField);

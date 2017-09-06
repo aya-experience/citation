@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 import MainMenu from './MainMenu';
-import A from '../common/A';
+import { A } from '../common/Link';
 
 const publicUrl = process.env.PUBLIC_URL;
 
 const HeaderContainer = styled.header`
 	position: relative;
 	padding: .1rem;
-	height: 3rem;
+	height: 4rem;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -21,8 +21,8 @@ const HeaderContainer = styled.header`
 `;
 
 const Link = A.extend`
-	font-size: 1.2rem;
-	padding: .2rem;
+	font-size: 1.5rem;
+	padding: .5rem;
 `;
 
 const Header = () =>

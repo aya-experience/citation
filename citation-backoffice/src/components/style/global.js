@@ -9,9 +9,13 @@ injectGlobal`
 		box-sizing: border-box;
 	}
 
-	body {
-		margin: 0;
+	html {
 		font-family: Lato, sans-serif;
 		font-size: 62.5%;
+	}
+
+	body {
+		margin: 0;
+		padding-bottom: 5rem;
 	}
 `;

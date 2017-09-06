@@ -20,6 +20,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.0",
+    "react-svg": "^2.1.21",
     "recompose": "^0.23.4",
     "redux": "^3.6.0",
     "redux-act": "^1.1.0",
@@ -47,19 +48,27 @@
     "sinon": "^3.2.1"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["react-app"],
+    "presets": [
+      "react-app"
+    ],
     "env": {
       "test": {
         "plugins": [
           [
             "babel-plugin-transform-require-ignore",
             {
-              "extensions": [".css"]
+              "extensions": [
+                ".css"
+              ]
             }
           ]
         ]

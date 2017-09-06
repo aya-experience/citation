@@ -15,25 +15,26 @@ InnerLink.propTypes = {
 const MainMenuItemContainer = styled(InnerLink)`
 	&::before {
 		content: '';
-		width: 1.4rem;
-		height: 1.4rem;
+		width: 1.6rem;
+		height: 1.6rem;
 		background-color: ${({ color }) => color};
 		position: absolute;
 		border-radius: 50%;
-		left: 2rem;
+		top: .8rem;
+		left: 3rem;
 	}
 
 	display: block;
 	position: relative;
-	font-size: 1.2rem;
-	padding: .2rem 2.5rem .2rem 4.5rem;
+	font-size: 1.8rem;
+	padding: .4rem 4rem .4rem 6rem;
 	text-transform: uppercase;
 	text-decoration: none;
 	color: ${({ color }) => color};
-	border-left: .1rem solid ${gray};
+	border-left: .2rem solid ${gray};
 
 	&:last-child {
-		border-right: .1rem solid ${gray};
+		border-right: .2rem solid ${gray};
 	}
 `;
 
