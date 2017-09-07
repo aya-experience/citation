@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import LinkField from './LinkField';
 import { Button, ButtonContainer } from '../common/Button';
+import { red } from '../style/colors';
 
 const Container = styled.ul`
 	list-style: none;
@@ -51,13 +52,13 @@ const LinksField = ({ type, fields, collections, meta, handleAdd, handleRemove, 
 		{fields.map((link, i) =>
 			<Line key={i}>
 				<Field name={link} component={LinkField} props={{ collections, type }} />
-				<Button icon="delete" onClick={handleRemove(i)} />
-				{i > 0 && <Button icon="navigate-up-arrow" onClick={handleUp(i)} />}
-				{i + 1 < fields.length && <Button icon="arrow-down-sign-to-navigate" onClick={handleDown(i)} />}
+				<Button icon="delete" onClick={handleRemove(i)} color={red} />
+				{i > 0 && <Button icon="up" onClick={handleUp(i)} />}
+				{i + 1 < fields.length && <Button icon="down" onClick={handleDown(i)} />}
 			</Line>
 		)}
 		<ControlLine>
-			<Button icon="plus-sign" onClick={handleAdd} />
+			<Button icon="plus" onClick={handleAdd} />
 		</ControlLine>
 		{meta.error &&
 			<ControlLine>

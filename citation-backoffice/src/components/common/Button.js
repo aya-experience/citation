@@ -1,11 +1,11 @@
 import { omit } from 'lodash';
 import React from 'react';
-import { string, oneOf } from 'prop-types';
-import ReactSvg from 'react-svg';
+import { string, oneOf, object, func, number } from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { green } from '../style/colors';
+import { Icon } from './Icon';
 
 const sizes = {
 	big: 4,
@@ -16,11 +16,12 @@ const sizes = {
 export const ButtonContainer = styled.button`
 	height: ${({ size }) => sizes[size]}rem;
 	width: ${({ size }) => sizes[size]}rem;
-	display: inline-block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	border: .1rem solid ${({ color }) => color};
 	border-radius: 50%;
 	margin: 0 .5rem .5rem .5rem;
-	padding: ${({ size }) => sizes[size] / 4 - 0.1}rem; /* - 0.1r	em for the border */
 	cursor: pointer;
 	background-color: transparent;
 	transition: .5s color, background-color ease;
@@ -41,10 +42,29 @@ export const ButtonContainer = styled.button`
 
 export const ButtonLinkContainer = ButtonContainer.withComponent(Link);
 
-const Svg = styled(ReactSvg)`
-	height: ${({ size }) => sizes[size] / 2}rem;
-	width: ${({ size }) => sizes[size] / 2}rem;
-	display: block;
+export const ButtonSvgContainer = styled.g`
+	cursor: pointer;
+
+	& > circle {
+		fill: white;
+		stroke: ${({ color }) => color};
+		stroke-width: .1px;
+	}
+
+	svg {
+		fill: ${({ color }) => color};
+		transition: .5s fill, color, background-color ease;
+	}
+
+	&:hover {
+		& > circle {
+			fill: ${({ color }) => color};
+		}
+
+		svg {
+			fill: white;
+		}
+	}
 `;
 
 // eslint-disable-next-line no-use-before-define
@@ -52,13 +72,26 @@ const omitProps = props => omit(props, Object.keys(Button.propTypes));
 
 export const Button = props =>
 	<ButtonContainer {...omitProps(props)} type={props.type} color={props.color} size={props.size}>
-		<Svg path={`/assets/icons/${props.icon}.svg`} color={props.color} size={props.size} />
+		<Icon icon={props.icon} size={`${sizes[props.size] / 2}rem`} />
 	</ButtonContainer>;
 
 export const ButtonLink = props =>
-	<ButtonLinkContainer {...omitProps(props)} color={props.color} type={props.type} size={props.size}>
-		<Svg path={`/assets/icons/${props.icon}.svg`} color={props.color} size={props.size} />
+	<ButtonLinkContainer {...omitProps(props)} type={props.type} color={props.color} size={props.size}>
+		<Icon icon={props.icon} size={`${sizes[props.size] / 2}rem`} />
 	</ButtonLinkContainer>;
+
+export const ButtonSvg = ({ icon, color, position, onClick, size }) =>
+	<ButtonSvgContainer onClick={onClick} color={color}>
+		<circle cx={position.x} cy={position.y} r={size / 2} />
+		<Icon
+			icon={icon}
+			position={{
+				x: position.x - size / 2 + size * 0.2,
+				y: position.y - size / 2 + size * 0.2
+			}}
+			size={`${size * 0.6}px`}
+		/>
+	</ButtonSvgContainer>;
 
 Button.propTypes = {
 	icon: string.isRequired,
@@ -69,6 +102,13 @@ Button.propTypes = {
 
 ButtonLink.propTypes = Button.propTypes;
 
+ButtonSvg.propTypes = {
+	...Button.propTypes,
+	position: object.isRequired,
+	size: number.isRequired,
+	onClick: func.isRequired
+};
+
 Button.defaultProps = {
 	type: 'button',
 	color: green,
@@ -76,5 +116,6 @@ Button.defaultProps = {
 };
 
 ButtonLink.defaultProps = Button.defaultProps;
+ButtonSvg.defaultProps = Button.defaultProps;
 
 export default Button;

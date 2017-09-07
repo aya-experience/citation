@@ -5,13 +5,14 @@ import { DraggableCore } from 'react-draggable';
 import AddButton from './AddButton';
 import pageControls from './pageControls';
 import { fontSize } from './params';
+import { DraggableGroup } from '../common/Draggable';
 
 const enhancer = pageControls();
 
 const LeafPage = ({ page, direction, position, drag, add }) =>
 	<g>
 		<DraggableCore onDrag={drag}>
-			<g className="Draggable">
+			<DraggableGroup>
 				<text
 					x={position.x + direction * 0.4}
 					y={position.y}
@@ -29,7 +30,7 @@ const LeafPage = ({ page, direction, position, drag, add }) =>
 					}}
 					onClick={add}
 				/>
-			</g>
+			</DraggableGroup>
 		</DraggableCore>
 	</g>;
 

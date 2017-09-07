@@ -3,10 +3,11 @@ import { object, func } from 'prop-types';
 import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
-import AddButton from './AddButton';
 import EditButton from './EditButton';
 import pageControls from './pageControls';
 import { blockHeight, blockWidth, fontSize, colors } from './params';
+import { DraggableGroup } from '../common/Draggable';
+import { ButtonSvg } from '../common/Button';
 
 const enhancer = pageControls();
 
@@ -26,7 +27,7 @@ const RootPage = ({ page, position, drag, add }) => {
 				/>
 			)}
 			<DraggableCore onDrag={drag}>
-				<g className="Draggable">
+				<DraggableGroup>
 					<rect
 						x={position.x - blockWidth / 2}
 						y={position.y - blockHeight / 2}
@@ -46,11 +47,13 @@ const RootPage = ({ page, position, drag, add }) => {
 					>
 						{page.__id__}
 					</text>
-					<AddButton
+					<ButtonSvg
 						position={{
 							x: position.x - blockHeight / 2,
 							y: position.y + blockHeight / 2
 						}}
+						size={blockHeight}
+						icon="plus"
 						onClick={add}
 					/>
 					<EditButton
@@ -60,7 +63,7 @@ const RootPage = ({ page, position, drag, add }) => {
 							y: position.y + blockHeight / 2
 						}}
 					/>
-				</g>
+				</DraggableGroup>
 			</DraggableCore>
 		</g>
 	);

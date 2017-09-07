@@ -7,6 +7,7 @@ import AddButton from './AddButton';
 import EditButton from './EditButton';
 import pageControls from './pageControls';
 import { blockHeight, fontSize } from './params';
+import { DraggableGroup } from '../common/Draggable';
 
 const enhancer = pageControls();
 
@@ -26,7 +27,7 @@ const NodePage = ({ page, direction, color, position, drag, add }) => {
 				/>
 			)}
 			<DraggableCore onDrag={drag}>
-				<g className="Draggable">
+				<DraggableGroup>
 					<text
 						x={position.x}
 						y={position.y - 0.5}
@@ -51,7 +52,7 @@ const NodePage = ({ page, direction, color, position, drag, add }) => {
 							y: position.y + 0.5
 						}}
 					/>
-				</g>
+				</DraggableGroup>
 			</DraggableCore>
 		</g>
 	);

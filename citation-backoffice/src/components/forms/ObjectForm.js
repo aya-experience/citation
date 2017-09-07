@@ -3,7 +3,7 @@ import { func, object, string } from 'prop-types';
 import { Field, FieldArray, reduxForm } from 'redux-form';
 
 import { Form, FieldContainer, Label, ActionContainer } from '../common/Form';
-import { Button } from '../common/Button';
+import { Button, ButtonLink } from '../common/Button';
 import LinkField from './LinkField';
 import LinksField from './LinksField';
 import KeyValueField from './KeyValueField';
@@ -64,6 +64,7 @@ const ObjectForm = ({ type, fields, collections, onSubmit, onDelete }) =>
 		</FieldContainer>
 		{getCustomFieldsComponents(fields[type], collections)}
 		<ActionContainer>
+			<ButtonLink icon="left" to={`/content/type/${type}`} size="big" />
 			<Button icon="delete" onClick={onDelete} size="big" color={red} />
 			<Button icon="check" type="submit" size="big" />
 		</ActionContainer>

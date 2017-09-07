@@ -25,7 +25,7 @@ const ObjectList = ({ type, objects }) =>
 						{__id__}
 					</TableListLinkCell>
 					<TableListCell>
-						<ButtonLink icon="plus-sign" to={`/content/object/${type}`} />
+						<ButtonLink icon="plus" to={`/content/object/${type}`} />
 					</TableListCell>
 				</TableListRow>
 			)}
