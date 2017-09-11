@@ -1,12 +1,12 @@
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { compose, renameProp, withProps, withState, withHandlers, lifecycle } from 'recompose';
-import { movePage, addPage } from '../../logic/sitemap';
+import { movePage } from '../../logic/sitemap';
 
 const pageControls = () =>
 	compose(
 		connect(null, (dispatch, { page }) => ({
-			move: position => dispatch(movePage({ page, position })),
-			add: () => dispatch(addPage(page))
+			move: position => dispatch(movePage({ page, position }))
 		})),
 		renameProp('position', 'positionSource'),
 		withProps(({ page, positionSource, from }) => ({
@@ -25,6 +25,7 @@ const pageControls = () =>
 				this.props.setSvgRect(document.querySelector('svg.Sitemap').getBoundingClientRect());
 			}
 		}),
+		withRouter,
 		withHandlers({
 			drag: ({ position, svgRect, move, from }) => (event, data) => {
 				const ref = from ? from : { x: 0, y: 0 };
@@ -34,8 +35,7 @@ const pageControls = () =>
 					y: position.y + data.deltaY * ratio - ref.y
 				};
 				move(next);
-			},
-			add: ({ add }) => () => add()
+			}
 		})
 	);
 

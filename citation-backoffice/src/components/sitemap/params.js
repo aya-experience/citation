@@ -1,10 +1,10 @@
 export const blockWidth = 12;
-export const blockHeight = 2.5;
+export const blockHeight = 3;
 
 export const childSpaceX = 15;
 export const childSpaceY = 5;
 
-export const fontSize = 1.2;
+export const fontSize = 1.8;
 
 export const linkCurv = 10;
 export const linkWidth = 0.5;

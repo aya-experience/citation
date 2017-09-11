@@ -1,17 +1,16 @@
 import React from 'react';
 import { object, func } from 'prop-types';
-import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
-import EditButton from './EditButton';
 import pageControls from './pageControls';
 import { blockHeight, blockWidth, fontSize, colors } from './params';
-import { DraggableGroup } from '../common/Draggable';
-import { ButtonSvg } from '../common/Button';
+import DraggableContainer from './DraggableContainer';
+import { darkBlue } from '../style/colors';
+import ButtonGroup from './ButtonGroup';
 
 const enhancer = pageControls();
 
-const RootPage = ({ page, position, drag, add }) => {
+const RootPage = ({ page, position, drag }) => {
 	const children = page.children === null ? [] : page.children;
 	return (
 		<g>
@@ -26,45 +25,28 @@ const RootPage = ({ page, position, drag, add }) => {
 					position={position}
 				/>
 			)}
-			<DraggableCore onDrag={drag}>
-				<DraggableGroup>
-					<rect
-						x={position.x - blockWidth / 2}
-						y={position.y - blockHeight / 2}
-						width={blockWidth}
-						height={blockHeight}
-						rx="1"
-						ry="1"
-						fill="rgb(180, 180, 180)"
-					/>
-					<text
-						x={position.x}
-						y={position.y}
-						fontSize={fontSize}
-						fill="white"
-						textAnchor="middle"
-						alignmentBaseline="central"
-					>
-						{page.__id__}
-					</text>
-					<ButtonSvg
-						position={{
-							x: position.x - blockHeight / 2,
-							y: position.y + blockHeight / 2
-						}}
-						size={blockHeight}
-						icon="plus"
-						onClick={add}
-					/>
-					<EditButton
-						page={page}
-						position={{
-							x: position.x + blockHeight / 2,
-							y: position.y + blockHeight / 2
-						}}
-					/>
-				</DraggableGroup>
-			</DraggableCore>
+			<DraggableContainer onDrag={drag}>
+				<rect
+					x={position.x - blockWidth / 2}
+					y={position.y - blockHeight / 2}
+					width={blockWidth}
+					height={blockHeight}
+					rx="0.5"
+					ry="0.5"
+					fill={darkBlue}
+				/>
+				<text
+					x={position.x}
+					y={position.y - fontSize / 4}
+					fontSize={fontSize}
+					fill="white"
+					textAnchor="middle"
+					alignmentBaseline="central"
+				>
+					{page.__id__}
+				</text>
+				<ButtonGroup position={position} page={page} />
+			</DraggableContainer>
 		</g>
 	);
 };
@@ -72,8 +54,7 @@ const RootPage = ({ page, position, drag, add }) => {
 RootPage.propTypes = {
 	page: object.isRequired,
 	position: object.isRequired,
-	drag: func.isRequired,
-	add: func.isRequired
+	drag: func.isRequired
 };
 
 export default enhancer(RootPage);

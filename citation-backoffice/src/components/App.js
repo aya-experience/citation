@@ -8,9 +8,8 @@ import { loadSchema } from '../logic/schema';
 import Header from './layout/Header';
 import Home from './Home';
 import Schema from './Schema';
-import Compose from './compose/Compose';
 import Content from './content/Content';
-import Sitemap from './sitemap/Sitemap';
+import Structure from './Structure';
 
 import './style/global';
 
@@ -36,13 +35,11 @@ class App extends Component {
 				<div className="App">
 					<Header />
 					<div className="App-layout">
-						{/* <Menu collections={this.props.collections} /> */}
 						<div className="App-content">
 							<Switch>
 								<Route exact path="/" component={Home} />
 								<Route exact path="/model" component={Schema} />
-								<Route exact path="/sitemap" component={Sitemap} />
-								<Route exact path="/compose/:id" component={Compose} />
+								<Route path="/structure" component={Structure} />
 								<Route path="/content" component={Content} />
 								<Route component={NoMatch} />
 							</Switch>

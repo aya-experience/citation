@@ -1,17 +1,15 @@
 import React from 'react';
 import { object, string, number, func } from 'prop-types';
-import { DraggableCore } from 'react-draggable';
 
 import Child from './Child';
-import AddButton from './AddButton';
-import EditButton from './EditButton';
 import pageControls from './pageControls';
-import { blockHeight, fontSize } from './params';
-import { DraggableGroup } from '../common/Draggable';
+import { fontSize } from './params';
+import DraggableContainer from './DraggableContainer';
+import ButtonGroup from './ButtonGroup';
 
 const enhancer = pageControls();
 
-const NodePage = ({ page, direction, color, position, drag, add }) => {
+const NodePage = ({ page, direction, color, position, drag }) => {
 	const children = page.children === null ? [] : page.children;
 	return (
 		<g>
@@ -26,34 +24,19 @@ const NodePage = ({ page, direction, color, position, drag, add }) => {
 					position={position}
 				/>
 			)}
-			<DraggableCore onDrag={drag}>
-				<DraggableGroup>
-					<text
-						x={position.x}
-						y={position.y - 0.5}
-						fontSize={fontSize}
-						fill="black"
-						textAnchor="middle"
-						alignmentBaseline="baseline"
-					>
-						{page.__id__}
-					</text>
-					<AddButton
-						position={{
-							x: position.x - blockHeight / 2,
-							y: position.y + 0.5
-						}}
-						onClick={add}
-					/>
-					<EditButton
-						page={page}
-						position={{
-							x: position.x + blockHeight / 2,
-							y: position.y + 0.5
-						}}
-					/>
-				</DraggableGroup>
-			</DraggableCore>
+			<DraggableContainer onDrag={drag}>
+				<text
+					x={position.x}
+					y={position.y - fontSize / 2}
+					fontSize={fontSize}
+					fill="black"
+					textAnchor="middle"
+					alignmentBaseline="baseline"
+				>
+					{page.__id__}
+				</text>
+				<ButtonGroup position={position} page={page} />
+			</DraggableContainer>
 		</g>
 	);
 };
@@ -63,8 +46,7 @@ NodePage.propTypes = {
 	direction: number.isRequired,
 	position: object.isRequired,
 	color: string.isRequired,
-	drag: func.isRequired,
-	add: func.isRequired
+	drag: func.isRequired
 };
 
 export default enhancer(NodePage);

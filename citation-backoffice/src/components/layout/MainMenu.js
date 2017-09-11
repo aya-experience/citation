@@ -30,7 +30,7 @@ const items = [
 				key="structure"
 				isActive={isActive(0)}
 				innerRef={refNode(0)}
-				to="/sitemap"
+				to="/structure"
 				title="Structure"
 				color={yellow}
 			/>
