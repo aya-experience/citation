@@ -9,7 +9,6 @@ export const savePagesSuccess = createAction('save pages success');
 export const movePage = createAction('move page');
 export const addPage = createAction('add page');
 export const editPage = createAction('edit page');
-export const editPageCommit = createAction('edit page commit');
 
 export const loadPages = () => dispatch => {
 	const loadQuery = `{
@@ -111,11 +110,7 @@ const reducer = createReducer(
 				pagesToSave: addToSave(state.pagesToSave, parentPage, newPage)
 			};
 		},
-		[editPage]: (state, { page, position }) => ({
-			...state,
-			edition: { page, position }
-		}),
-		[editPageCommit]: (state, { oldPage, page }) => ({
+		[editPage]: (state, { oldPage, page }) => ({
 			...state,
 			pages: updatePage(state.pages, oldPage.__id__, page),
 			pagesToSave: addToSave(state.pagesToSave, page)
@@ -125,15 +120,10 @@ const reducer = createReducer(
 			pagesToSave: []
 		})
 	},
-	{ pages: [], edition: { page: null, position: null }, pagesToSave: [] }
+	{ pages: [], pagesToSave: [] }
 );
 
 export default undoable(reducer, {
-	filter: includeAction([
-		loadPagesSuccess.toString(),
-		movePage.toString(),
-		addPage.toString(),
-		editPageCommit.toString()
-	]),
+	filter: includeAction([loadPagesSuccess.toString(), movePage.toString(), addPage.toString(), editPage.toString()]),
 	groupBy: groupByActionTypes(movePage.toString())
 });

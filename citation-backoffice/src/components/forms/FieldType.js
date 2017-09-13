@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { object, array } from 'prop-types';
+import { object, array, string } from 'prop-types';
 import { Field } from 'redux-form';
 
 class FieldType extends Component {
 	static propTypes = {
 		input: object.isRequired,
-		typeName: object.isRequired,
-		kindName: object.isRequired,
+		typeName: string.isRequired,
+		kindName: string.isRequired,
 		collections: array.isRequired
 	};
 

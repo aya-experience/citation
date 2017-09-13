@@ -7,7 +7,7 @@ import { loadCollection } from '../logic/collections';
 import { loadSchema } from '../logic/schema';
 import Header from './layout/Header';
 import Home from './Home';
-import Schema from './Schema';
+import Model from './Model';
 import Content from './content/Content';
 import Structure from './Structure';
 
@@ -32,19 +32,15 @@ class App extends Component {
 	render() {
 		return (
 			<BrowserRouter basename="/admin">
-				<div className="App">
+				<div>
 					<Header />
-					<div className="App-layout">
-						<div className="App-content">
-							<Switch>
-								<Route exact path="/" component={Home} />
-								<Route exact path="/model" component={Schema} />
-								<Route path="/structure" component={Structure} />
-								<Route path="/content" component={Content} />
-								<Route component={NoMatch} />
-							</Switch>
-						</div>
-					</div>
+					<Switch>
+						<Route exact path="/" component={Home} />
+						<Route path="/model" component={Model} />
+						<Route path="/structure" component={Structure} />
+						<Route path="/content" component={Content} />
+						<Route component={NoMatch} />
+					</Switch>
 				</div>
 			</BrowserRouter>
 		);

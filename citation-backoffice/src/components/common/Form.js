@@ -42,6 +42,21 @@ export const Label = styled.label`
 	padding: 2rem 1.5rem 1rem 1.5rem;
 `;
 
+export const InputLine = styled.div`
+	display: flex;
+	flex-direction: row;
+	margin-top: 1rem;
+
+	&:first-of-type {
+		margin-top: 0;
+	}
+`;
+
+export const ControlLine = InputLine.extend`
+	margin-top: 1rem;
+	justify-content: center;
+`;
+
 export const ActionContainer = styled.div`
 	display: flex;
 	flex-direction: row;

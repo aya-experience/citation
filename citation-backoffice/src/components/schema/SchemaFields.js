@@ -1,23 +1,36 @@
-import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import React from 'react';
+import { array, func, object } from 'prop-types';
 import { Field } from 'redux-form';
+import { withHandlers } from 'recompose';
+
 import FieldType from '../forms/FieldType';
+import { FieldContainer, Label, InputLine, ControlLine } from '../common/Form';
+import { Button } from '../common/Button';
 
-class Fields extends Component {
-	static propTypes = {
-		fields: object.isRequired,
-		meta: object.isRequired,
-		collections: object.isRequired,
-		name: string.isRequired
-	};
-
-	constructor() {
-		super();
-		this.handleAdd = this.handleAdd.bind(this);
+const FieldInputLine = InputLine.extend`
+	& > input {
+		flex: 2;
 	}
 
-	handleAdd() {
-		const usedNames = this.props.fields.getAll().map(field => {
+	& > div:first-of-type {
+		flex: 3;
+		display: flex;
+		flex-direction: row;
+
+		select {
+			margin-left: 1rem;
+			height: 100%;
+		}
+	}
+
+	& > ${ControlLine} {
+		width: 5rem;
+	}
+`;
+
+const enhancer = withHandlers({
+	handleAdd: ({ fields }) => () => {
+		const usedNames = fields.getAll().map(field => {
 			return field.name;
 		});
 		let index = 1;
@@ -26,55 +39,54 @@ class Fields extends Component {
 			name = `new${index}`;
 			index++;
 		} while (usedNames.indexOf(name) > -1);
-		this.props.fields.push({
+		fields.push({
 			name,
 			typeName: 'String',
 			kind: 'String'
 		});
-	}
+	},
 
-	handleRemove(index) {
-		return () => this.props.fields.remove(index);
-	}
+	handleRemove: ({ fields }) => () => index => fields.remove(index)
+});
 
-	render() {
-		const key = this.props.name;
-		return (
-			<ul className="SchemaArray">
-				{this.props.fields.map((link, i) => {
-					const inputName = `${key}.__fields__[${i}].name`;
-					const kindName = `${key}.__fields__[${i}].kind`;
-					const typeName = `${key}.__fields__[${i}].typeName`;
-					return (
-						<li key={i}>
-							<Field component="input" type="text" name={inputName} />
-							<Field
-								name={kindName}
-								component={FieldType}
-								props={{
-									kindName,
-									typeName,
-									collections: this.props.collections
-								}}
-							/>
-							<button type="button" onClick={this.handleRemove(i)}>
-								X
-							</button>
-						</li>
-					);
-				})}
-				<li className="SchemaArrayAdd">
-					<button type="button" onClick={this.handleAdd}>
-						+
-					</button>
-				</li>
-				{this.props.meta.error &&
-					<li className="error">
-						{this.props.meta.error}
-					</li>}
-			</ul>
-		);
-	}
-}
+const SchemaFields = ({ fields, collections, handleRemove, handleAdd }) => {
+	return (
+		<FieldContainer>
+			<Label>Fields</Label>
+			{fields.map((link, i) => {
+				const inputName = `${link}.name`;
+				const kindName = `${link}.kind`;
+				const typeName = `${link}.typeName`;
+				return (
+					<FieldInputLine key={i}>
+						<Field component="input" type="text" name={inputName} />
+						<Field
+							name={kindName}
+							component={FieldType}
+							props={{
+								kindName,
+								typeName,
+								collections
+							}}
+						/>
+						<ControlLine>
+							<Button icon="delete" type="button" onClick={handleRemove(i)} />
+						</ControlLine>
+					</FieldInputLine>
+				);
+			})}
+			<ControlLine>
+				<Button icon="plus" onClick={handleAdd} />
+			</ControlLine>
+		</FieldContainer>
+	);
+};
 
-export default Fields;
+SchemaFields.propTypes = {
+	fields: object.isRequired,
+	collections: array.isRequired,
+	handleRemove: func.isRequired,
+	handleAdd: func.isRequired
+};
+
+export default enhancer(SchemaFields);

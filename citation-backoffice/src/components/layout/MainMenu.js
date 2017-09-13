@@ -7,11 +7,26 @@ import { yellow, green, darkBlue } from '../style/colors';
 import MainMenuItem from './MainMenuItem';
 import MainMenuIndicator from './MainMenuIndicator';
 
-const MainMenuContainer = styled.nav`
+const MainMenuContainer = styled.div`width: 100%;`;
+
+const MainMenuNav = styled.nav`
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+`;
+
+const MainMenuIndicatorContainer = styled.div`
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+
+	& > div {
+		z-index: -1;
+	}
 `;
 
 const refNode = index => node => {
@@ -63,8 +78,12 @@ const items = [
 
 const MainMenu = () =>
 	<MainMenuContainer>
-		{items.map(item => item.menu)}
-		<MainMenuIndicator items={items} />
+		<MainMenuNav>
+			{items.map(item => item.menu)}
+		</MainMenuNav>
+		<MainMenuIndicatorContainer>
+			<MainMenuIndicator items={items} />
+		</MainMenuIndicatorContainer>
 	</MainMenuContainer>;
 
 export default MainMenu;

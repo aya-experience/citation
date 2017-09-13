@@ -3,18 +3,18 @@ import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { compose, withHandlers } from 'recompose';
-import { addPage, editPage } from '../../logic/sitemap';
+import { addPage } from '../../logic/sitemap';
 
 import { ButtonSvg } from '../common/Button';
 import { blockHeight } from './params';
 
 const enhancer = compose(
 	connect(null, (dispatch, { page }) => ({
-		add: () => dispatch(addPage(page)),
-		edit: position => dispatch(editPage({ page, position }))
+		add: () => dispatch(addPage(page))
 	})),
 	withRouter,
 	withHandlers({
+		edit: ({ history, page }) => () => history.push(`/structure/metadata/${page.__id__}`),
 		compose: ({ history, page }) => () => history.push(`/structure/compose/${page.__id__}`)
 	})
 );

@@ -29,7 +29,7 @@ class Schema extends Component {
 
 	render() {
 		return (
-			<div className="Schema">
+			<div>
 				<h1>Edit Schema</h1>
 				<SchemaComponent schema={this.props.schema} fields={this.props.fields} onSubmit={this.handleSubmit} />
 			</div>

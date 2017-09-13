@@ -29,7 +29,6 @@ const enhancer = compose(
 
 const EditPanel = ({ edition, close, submit }) =>
 	<div
-		className="EditPanel"
 		style={{
 			top: `calc(${edition.position}px - 5rem + 8rem)`,
 			left: `calc(50% - 15rem + 6rem)`,
@@ -37,9 +36,7 @@ const EditPanel = ({ edition, close, submit }) =>
 			height: '20rem'
 		}}
 	>
-		<a className="close" onClick={close}>
-			X
-		</a>
+		<a onClick={close}>X</a>
 		<h1>Component form</h1>
 		<ComponentForm onSubmit={submit} />
 	</div>;

@@ -1,8 +1,7 @@
 import React from 'react';
 import { array } from 'prop-types';
 import styled from 'styled-components';
-
-import renderOnResize from '../../logic/hocs/renderOnResize';
+import dimensions from 'react-dimensions';
 
 const MainMenuIndicatorContainer = styled.div`
 	position: absolute;
@@ -24,7 +23,7 @@ const active = items => {
 	return null;
 };
 
-const enhancer = renderOnResize;
+const enhancer = dimensions();
 
 const MainMenuIndicator = ({ items }) => {
 	const item = active(items);

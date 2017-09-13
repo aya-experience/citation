@@ -20,26 +20,26 @@ const enhancer = compose(
 	})
 );
 
-const KeyValueField = ({ collections, fields, meta, handleAdd, handleRemove }) =>
-	<ul className="ObjectArray">
-		{fields.map((link, i) =>
-			<li key={i} className="ValueOrListField">
-				<Field name={link} component={ValueOrListField} props={{ collections }} />
-				<button type="button" onClick={handleRemove(i)}>
-					X
+const KeyValueField = ({ collections, fields, meta, handleAdd, handleRemove }) => {
+	console.log(collections, fields, meta, handleAdd, handleRemove);
+	return (
+		<ul>
+			{fields.map((link, i) =>
+				<li key={i}>
+					<Field name={link} component={ValueOrListField} props={{ collections }} />
+					<button type="button" onClick={handleRemove(i)}>
+						X
+					</button>
+				</li>
+			)}
+			<li>
+				<button type="button" onClick={handleAdd}>
+					+
 				</button>
 			</li>
-		)}
-		<li className="ObjectArrayAdd">
-			<button type="button" onClick={handleAdd}>
-				+
-			</button>
-		</li>
-		{meta.error &&
-			<li className="error">
-				{meta.error}
-			</li>}
-	</ul>;
+		</ul>
+	);
+};
 
 KeyValueField.propTypes = {
 	handleAdd: func.isRequired,
