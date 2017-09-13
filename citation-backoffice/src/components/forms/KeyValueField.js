@@ -4,6 +4,9 @@ import { Field } from 'redux-form';
 import { withHandlers, compose } from 'recompose';
 
 import ValueOrListField from './ValueOrListField';
+import { FieldArrayContainer, InputLine, ControlLine } from '../common/Form';
+import { Button } from '../common/Button';
+import { red } from '../style/colors';
 
 const enhancer = compose(
 	withHandlers({
@@ -14,38 +17,29 @@ const enhancer = compose(
 				__list__: null
 			});
 		},
-		handleRemove: props => index => () => {
-			props.fields.remove(index);
+		handleRemove: ({ fields }) => index => () => {
+			fields.remove(index);
 		}
 	})
 );
 
-const KeyValueField = ({ collections, fields, meta, handleAdd, handleRemove }) => {
-	console.log(collections, fields, meta, handleAdd, handleRemove);
-	return (
-		<ul>
-			{fields.map((link, i) =>
-				<li key={i}>
-					<Field name={link} component={ValueOrListField} props={{ collections }} />
-					<button type="button" onClick={handleRemove(i)}>
-						X
-					</button>
-				</li>
-			)}
-			<li>
-				<button type="button" onClick={handleAdd}>
-					+
-				</button>
-			</li>
-		</ul>
-	);
-};
+const KeyValueField = ({ collections, fields, handleAdd, handleRemove }) =>
+	<FieldArrayContainer>
+		{fields.map((link, i) =>
+			<InputLine key={i}>
+				<Field name={link} component={ValueOrListField} props={{ collections }} />
+				<Button icon="delete" color={red} onClick={handleRemove(i)} />
+			</InputLine>
+		)}
+		<ControlLine>
+			<Button icon="plus" onClick={handleAdd} />
+		</ControlLine>
+	</FieldArrayContainer>;
 
 KeyValueField.propTypes = {
 	handleAdd: func.isRequired,
 	handleRemove: func.isRequired,
 	fields: object.isRequired,
-	meta: object.isRequired,
 	collections: object.isRequired
 };
 

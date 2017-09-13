@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { lightGray } from '../style/colors';
+import { ButtonContainer } from '../common/Button';
 
 export const Form = styled.form`
 	display: flex;
@@ -24,6 +25,7 @@ export const FieldContainer = styled.div`
 		background-color: ${lightGray};
 		border: none;
 		width: 100%;
+		height: 4rem;
 	}
 
 	textarea {
@@ -31,10 +33,14 @@ export const FieldContainer = styled.div`
 	}
 
 	select {
-		height: 4rem;
 		border-left: .5rem solid ${lightGray};
 		border-right: .5rem solid ${lightGray};
 	}
+`;
+
+export const FieldArrayContainer = styled.div`
+	display: flex;
+	flex-direction: column;
 `;
 
 export const Label = styled.label`
@@ -50,9 +56,15 @@ export const InputLine = styled.div`
 	&:first-of-type {
 		margin-top: 0;
 	}
+
+	${ButtonContainer} {
+		margin: .5rem 0 0 .5rem;
+	}
 `;
 
-export const ControlLine = InputLine.extend`
+export const ControlLine = styled.div`
+	display: flex;
+	flex-direction: row;
 	margin-top: 1rem;
 	justify-content: center;
 `;

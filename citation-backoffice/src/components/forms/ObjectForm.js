@@ -21,22 +21,22 @@ const getCustomFieldsComponents = (fields, collections) => {
 			if (fields[field].kind === 'OBJECT') {
 				if (fields[field].typeName === '*') {
 					fieldComponent = <Field name={field} component={LinkField} props={{ collections }} />;
+				} else {
+					fieldComponent = (
+						<Field name={field} component={LinkField} props={{ collections, type: fields[field].typeName }} />
+					);
 				}
-				fieldComponent = (
-					<Field name={field} component={LinkField} props={{ collections, type: fields[field].typeName }} />
-				);
 			} else if (fields[field].kind === 'LIST') {
 				if (fields[field].ofType === 'KeyValuePair') {
 					fieldComponent = <FieldArray name={field} component={KeyValueField} props={{ collections }} />;
-				}
-				if (fields[field].typeName === '*') {
+				} else if (fields[field].typeName === '*') {
 					fieldComponent = <FieldArray name={field} component={LinksField} props={{ collections }} />;
+				} else {
+					fieldComponent = (
+						<FieldArray name={field} component={LinksField} props={{ collections, type: fields[field].typeName }} />
+					);
 				}
-				fieldComponent = (
-					<FieldArray name={field} component={LinksField} props={{ collections, type: fields[field].typeName }} />
-				);
-			}
-			if (fields[field].typeName === 'JSON') {
+			} else if (fields[field].typeName === 'JSON') {
 				const format = value => JSON.stringify(value, null, 2);
 				const parse = value => JSON.parse(value);
 				fieldComponent = <Field name={field} component="textarea" format={format} parse={parse} />;

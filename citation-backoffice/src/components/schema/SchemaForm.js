@@ -18,7 +18,10 @@ const SchemaForm = ({ collections, handleSubmit }) => {
 				<Label htmlFor="__name__">ID</Label>
 				<Field name="__name__" component="input" type="text" />
 			</FieldContainer>
-			<FieldArray name="__fields__" component={SchemaFields} props={{ collections }} />
+			<FieldContainer>
+				<Label htmlFor="__fields__">fields</Label>
+				<FieldArray name="__fields__" component={SchemaFields} props={{ collections }} />
+			</FieldContainer>
 			<ActionContainer>
 				<Button icon="check" type="submit" size="big" />
 			</ActionContainer>

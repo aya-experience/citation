@@ -2,36 +2,16 @@ import React from 'react';
 import { func, object, string } from 'prop-types';
 import { Field } from 'redux-form';
 import { withHandlers } from 'recompose';
-import styled from 'styled-components';
 
 import LinkField from './LinkField';
-import { Button, ButtonContainer } from '../common/Button';
+import { FieldArrayContainer, InputLine, ControlLine } from '../common/Form';
+import { Button } from '../common/Button';
 import { red } from '../style/colors';
 
-const Container = styled.ul`
-	list-style: none;
-	margin: 0;
-	padding: 0;
-`;
-
-const Line = styled.li`
-	display: flex;
-	flex-direction: row;
-	margin: 1rem 0;
-
+const LinksInputLine = InputLine.extend`
 	> div:first-child {
 		width: calc(100% - 12rem);
 	}
-
-	${ButtonContainer} {
-		margin: .5rem 0 0 .5rem;
-	}
-`;
-
-const ControlLine = Line.extend`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
 `;
 
 const enhancer = withHandlers({
@@ -47,28 +27,23 @@ const enhancer = withHandlers({
 	handleDown: ({ fields }) => index => () => fields.swap(index, index + 1)
 });
 
-const LinksField = ({ type, fields, collections, meta, handleAdd, handleRemove, handleUp, handleDown }) =>
-	<Container>
+const LinksField = ({ type, fields, collections, handleAdd, handleRemove, handleUp, handleDown }) =>
+	<FieldArrayContainer>
 		{fields.map((link, i) =>
-			<Line key={i}>
+			<LinksInputLine key={i}>
 				<Field name={link} component={LinkField} props={{ collections, type }} />
 				<Button icon="delete" onClick={handleRemove(i)} color={red} />
 				{i > 0 && <Button icon="up" onClick={handleUp(i)} />}
 				{i + 1 < fields.length && <Button icon="down" onClick={handleDown(i)} />}
-			</Line>
+			</LinksInputLine>
 		)}
 		<ControlLine>
 			<Button icon="plus" onClick={handleAdd} />
 		</ControlLine>
-		{meta.error &&
-			<ControlLine>
-				{meta.error}
-			</ControlLine>}
-	</Container>;
+	</FieldArrayContainer>;
 
 LinksField.propTypes = {
 	fields: object.isRequired,
-	meta: object.isRequired,
 	collections: object.isRequired,
 	type: string,
 	handleAdd: func.isRequired,

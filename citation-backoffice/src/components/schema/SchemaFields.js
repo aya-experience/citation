@@ -4,10 +4,16 @@ import { Field } from 'redux-form';
 import { withHandlers } from 'recompose';
 
 import FieldType from '../forms/FieldType';
-import { FieldContainer, Label, InputLine, ControlLine } from '../common/Form';
+import { FieldArrayContainer, InputLine, ControlLine } from '../common/Form';
 import { Button } from '../common/Button';
 
 const FieldInputLine = InputLine.extend`
+	margin-top: 1rem;
+
+	&:first-of-type {
+		margin-top: 0;
+	}
+
 	& > input {
 		flex: 2;
 	}
@@ -46,13 +52,12 @@ const enhancer = withHandlers({
 		});
 	},
 
-	handleRemove: ({ fields }) => () => index => fields.remove(index)
+	handleRemove: ({ fields }) => index => () => fields.remove(index)
 });
 
 const SchemaFields = ({ fields, collections, handleRemove, handleAdd }) => {
 	return (
-		<FieldContainer>
-			<Label>Fields</Label>
+		<FieldArrayContainer>
 			{fields.map((link, i) => {
 				const inputName = `${link}.name`;
 				const kindName = `${link}.kind`;
@@ -78,7 +83,7 @@ const SchemaFields = ({ fields, collections, handleRemove, handleAdd }) => {
 			<ControlLine>
 				<Button icon="plus" onClick={handleAdd} />
 			</ControlLine>
-		</FieldContainer>
+		</FieldArrayContainer>
 	);
 };
 
