@@ -30,7 +30,7 @@ const TopMenuContainer = styled.header`
 	}
 
 	& li {
-		padding: .5rem;
+		padding: 0.5rem;
 	}
 
 	& a {
@@ -46,31 +46,25 @@ const TopMenu = ({ pages, links }) => {
 	return (
 		<TopMenuContainer>
 			<ul>
-				{docs.children.map(doc =>
+				{docs.children.map(doc => (
 					<Link key={doc.id} to={`/docs/${doc.slug}`}>
-						<li>
-							{doc.title}
-						</li>
+						<li>{doc.title}</li>
 					</Link>
-				)}
+				))}
 			</ul>
 			<ul>
-				{others.map(other =>
+				{others.map(other => (
 					<Link key={other.id} to={`/${other.slug}`}>
-						<li>
-							{other.title}
-						</li>
+						<li>{other.title}</li>
 					</Link>
-				)}
+				))}
 			</ul>
 			<ul>
-				{links.map(links =>
+				{links.map(links => (
 					<a key={links.id} href={links.content} target="_blank" rel="noopener noreferrer">
-						<li>
-							{links.title}
-						</li>
+						<li>{links.title}</li>
 					</a>
-				)}
+				))}
 			</ul>
 		</TopMenuContainer>
 	);

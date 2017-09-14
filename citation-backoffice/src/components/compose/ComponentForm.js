@@ -14,7 +14,7 @@ const enhancer = compose(
 	reduxForm({ form: 'page' })
 );
 
-const ComponentForm = ({ handleSubmit, collections }) =>
+const ComponentForm = ({ handleSubmit, collections }) => (
 	<form onSubmit={handleSubmit}>
 		<div>
 			<label htmlFor="__id__">Id</label>
@@ -29,7 +29,8 @@ const ComponentForm = ({ handleSubmit, collections }) =>
 			<FieldArray name="props" component={KeyValueField} props={{ collections }} />
 		</div>
 		<button>Submit</button>
-	</form>;
+	</form>
+);
 
 ComponentForm.propTypes = {
 	handleSubmit: func.isRequired,

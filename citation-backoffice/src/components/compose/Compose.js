@@ -2,13 +2,23 @@ import React from 'react';
 import { object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { lifecycle, withProps, compose } from 'recompose';
+import styled from 'styled-components';
 
 import { loadPage, loadComponents } from '../../logic/compose';
 import { loadSchemaFields } from '../../logic/schema';
 import { startIframeMessageListener, stopIframeMessageListener } from './iframe-comunication';
 import EditPanel from './EditPanel';
+import { Breadcrumb } from '../common/Breadcrumb';
+import { Link } from '../common/Link';
+import { darkBlue } from '../style/colors';
 
-import './Compose.css';
+const Iframe = styled.iframe`
+	border: solid 0.1rem ${darkBlue};
+	display: block;
+	width: 80rem;
+	margin: auto;
+	height: 80vh;
+`;
 
 const enhancer = compose(
 	connect(
@@ -36,14 +46,15 @@ const enhancer = compose(
 	})
 );
 
-const Page = ({ compose, url }) =>
-	<div className="PageEdition-container">
-		<h1>
-			Edit page {compose.page.title}
-		</h1>
+const Page = ({ compose, url }) => (
+	<div>
+		<Breadcrumb>
+			<Link to="/structure">STRUCTURE</Link> / {compose.page.__id__}
+		</Breadcrumb>
 		{compose.edition.component === null ? undefined : <EditPanel />}
-		<iframe src={url} className="PageEdition-iframe" title="edition" />
-	</div>;
+		<Iframe src={url} title="edition" />
+	</div>
+);
 
 Page.propTypes = {
 	compose: object,

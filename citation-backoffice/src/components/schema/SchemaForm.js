@@ -1,34 +1,37 @@
-import React, { Component } from 'react';
-import { func, object, array } from 'prop-types';
-import { FieldArray, reduxForm } from 'redux-form';
-import SchemaTypes from './SchemaTypes';
+import React from 'react';
+import { func, array } from 'prop-types';
+import { Field, FieldArray, reduxForm } from 'redux-form';
 
-import './SchemaForm.css';
+import SchemaFields from './SchemaFields';
+import { Form, Label, FieldContainer, ActionContainer } from '../common/Form';
+import { Button } from '../common/Button';
 
-class SchemaForm extends Component {
-	static propTypes = {
-		handleSubmit: func.isRequired,
-		fields: object.isRequired,
-		schema: array.isRequired
-	};
-
-	render() {
-		let result;
-		if (this.props.fields) {
-			result = <FieldArray name="data" component={SchemaTypes} props={{ schema: this.props.schema }} />;
-		}
-		return (
-			<form className="SchemaForm" onSubmit={this.props.handleSubmit}>
-				<div>
-					{result}
-				</div>
-				<button type="submit">Submit</button>
-			</form>
-		);
-	}
-}
-
-export default reduxForm({
+const enhancer = reduxForm({
 	form: 'SchemaComponent',
 	enableReinitialize: true
-})(SchemaForm);
+});
+
+const SchemaForm = ({ collections, handleSubmit }) => {
+	return (
+		<Form onSubmit={handleSubmit}>
+			<FieldContainer>
+				<Label htmlFor="__name__">ID</Label>
+				<Field name="__name__" component="input" type="text" />
+			</FieldContainer>
+			<FieldContainer>
+				<Label htmlFor="__fields__">fields</Label>
+				<FieldArray name="__fields__" component={SchemaFields} props={{ collections }} />
+			</FieldContainer>
+			<ActionContainer>
+				<Button icon="check" type="submit" size="big" />
+			</ActionContainer>
+		</Form>
+	);
+};
+
+SchemaForm.propTypes = {
+	collections: array.isRequired,
+	handleSubmit: func.isRequired
+};
+
+export default enhancer(SchemaForm);

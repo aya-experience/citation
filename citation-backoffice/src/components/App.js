@@ -1,76 +1,59 @@
-import React, { Component } from 'react';
-import { object, func } from 'prop-types';
-import { Route, Link, Switch } from 'react-router-dom';
+import React from 'react';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { compose, lifecycle } from 'recompose';
+
 import { loadCollection } from '../logic/collections';
 import { loadSchema } from '../logic/schema';
-
-import Menu from './Menu';
+import Header from './layout/Header';
 import Home from './Home';
-import ObjectComponent from './Object';
-import Schema from './Schema';
-import Compose from './compose/Compose';
-import Sitemap from './sitemap/Sitemap';
+import Model from './Model';
+import Content from './content/Content';
+import Structure from './Structure';
 
-import './App.css';
+import './style/global';
 
-const NoMatch = () =>
+const NoMatch = () => (
 	<div>
 		<h1>Oups!</h1>
-	</div>;
+	</div>
+);
 
-class App extends Component {
-	static propTypes = {
-		schema: object.isRequired,
-		collections: object.isRequired,
-		loadCollections: func.isRequired,
-		loadSchema: func.isRequired
-	};
+const enhancer = compose(
+	connect(
+		state => {
+			return {
+				collections: state.collections,
+				schema: state.schema
+			};
+		},
+		dispatch => {
+			return {
+				loadSchema: () => dispatch(loadSchema()),
+				loadCollections: schema => dispatch(loadCollection(schema.data))
+			};
+		}
+	),
+	lifecycle({
+		componentDidMount() {
+			this.props.loadSchema().then(() => this.props.loadCollections(this.props.schema));
+		}
+	})
+);
 
-	componentDidMount() {
-		this.props.loadSchema().then(() => this.props.loadCollections(this.props.schema));
-	}
+const App = () => (
+	<BrowserRouter basename="/admin">
+		<div>
+			<Header />
+			<Switch>
+				<Route exact path="/" component={Home} />
+				<Route path="/model" component={Model} />
+				<Route path="/structure" component={Structure} />
+				<Route path="/content" component={Content} />
+				<Route component={NoMatch} />
+			</Switch>
+		</div>
+	</BrowserRouter>
+);
 
-	render() {
-		return (
-			<div className="App">
-				<div className="App-header">
-					<Link to="/">
-						<img src="/logo.svg" className="App-logo" alt="logo" />
-						<h2>Citation Admin</h2>
-					</Link>
-				</div>
-				<div className="App-layout">
-					<Menu collections={this.props.collections} />
-					<div className="App-content">
-						<Switch>
-							<Route exact path="/" component={Home} />
-							<Route exact path="/schema" component={Schema} />
-							<Route exact path="/compose/:id" component={Compose} />
-							<Route exact path="/sitemap" component={Sitemap} />
-							<Route exact path="/object/:type" component={ObjectComponent} />
-							<Route path="/object/:type/:id" component={ObjectComponent} />
-							<Route component={NoMatch} />
-						</Switch>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}
-
-const mapStateToProps = state => {
-	return {
-		collections: state.collections,
-		schema: state.schema
-	};
-};
-
-const mapDispatchToProps = dispatch => {
-	return {
-		loadSchema: () => Promise.all([dispatch(loadSchema())]),
-		loadCollections: schema => Promise.all([dispatch(loadCollection(schema.data))])
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default enhancer(App);

@@ -10,7 +10,7 @@ const styles = {
 	title: {}
 };
 
-const Empty = () =>
+const Empty = () => (
 	<main style={styles.container}>
 		<h1>Welcome to Citation!</h1>
 		<p>Your site configuration seems empty.</p>
@@ -18,6 +18,7 @@ const Empty = () =>
 		<p>
 			<a href="/admin">Administration</a>
 		</p>
-	</main>;
+	</main>
+);
 
 export default Empty;

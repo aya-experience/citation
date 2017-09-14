@@ -11,7 +11,7 @@ const computePositionFromRoot = (i, size, position) => {
 	const halfI = Math.floor(i / 2);
 	const halfSize = Math.floor(size / 2) + (i % 2 === 0 ? size % 2 : 0);
 	const childrenHeight = (halfSize - 1) * childSpaceY;
-	const direction = i % 2 * -2 + 1;
+	const direction = (i % 2) * -2 + 1;
 	return {
 		from: {
 			x: position.x + direction * blockWidth / 2,
@@ -60,15 +60,17 @@ const Child = ({ child, direction, color, i, size, position }) => {
 				strokeWidth={linkWidth}
 				strokeLinecap="round"
 			/>
-			{isEmpty(child.children)
-				? <LeafPage page={child} direction={positions.direction} position={positions.to} from={positions.from} />
-				: <NodePage
-						page={child}
-						direction={positions.direction}
-						color={color}
-						position={positions.to}
-						from={positions.from}
-					/>}
+			{isEmpty(child.children) ? (
+				<LeafPage page={child} direction={positions.direction} position={positions.to} from={positions.from} />
+			) : (
+				<NodePage
+					page={child}
+					direction={positions.direction}
+					color={color}
+					position={positions.to}
+					from={positions.from}
+				/>
+			)}
 		</g>
 	);
 };

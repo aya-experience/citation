@@ -8,12 +8,7 @@ let Banner;
 const image = { image: 'myImage' };
 const children = ['children1'];
 
-const setup = () =>
-	shallow(
-		<Banner image={image}>
-			{children}
-		</Banner>
-	);
+const setup = () => shallow(<Banner image={image}>{children}</Banner>);
 
 let banner;
 
@@ -27,5 +22,11 @@ test('Banner components should have a child with image name', t => {
 });
 
 test('Banner components should have a child with children', t => {
-	t.deepEqual(banner.childAt(1).find('.Banner-CTA').text(), children[0]);
+	t.deepEqual(
+		banner
+			.childAt(1)
+			.find('.Banner-CTA')
+			.text(),
+		children[0]
+	);
 });

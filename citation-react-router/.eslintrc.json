@@ -2,5 +2,8 @@
 	"extends": ["xo/browser", "xo-react", "prettier", "prettier/react"],
 	"rules": {
 		"react/require-default-props": "off"
+	},
+	"globals": {
+		"propTypes": true
 	}
 }

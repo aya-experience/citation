@@ -40,7 +40,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, parent, m
 			<Control index={index} diabled={!draggable} content={content} parent={parent}>
 				<Component {...parsedProps} pages={routesProps.pages} childPage={childPage}>
 					<ComponentListControl content={content} useDragHandle onSortEnd={sortHandler(content, refresh)}>
-						{children.map((child, i) =>
+						{children.map((child, i) => (
 							<ComponentTree
 								key={child.__id__}
 								index={i}
@@ -52,7 +52,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, parent, m
 								matchProps={matchProps}
 								refresh={refresh}
 							/>
-						)}
+						))}
 					</ComponentListControl>
 				</Component>
 			</Control>
@@ -61,7 +61,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, parent, m
 
 	return (
 		<Component {...parsedProps} pages={routesProps.pages} childPage={childPage}>
-			{children.map(child =>
+			{children.map(child => (
 				<ComponentTree
 					key={child.__id__}
 					routesProps={routesProps}
@@ -69,7 +69,7 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, parent, m
 					content={child}
 					matchProps={matchProps}
 				/>
-			)}
+			))}
 		</Component>
 	);
 };

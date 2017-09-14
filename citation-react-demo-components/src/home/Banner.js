@@ -14,12 +14,8 @@ const BannerContainer = styled.div`
 const Banner = ({ image, children }) => {
 	return (
 		<BannerContainer>
-			<p>
-				{image.image}
-			</p>
-			<div className="Banner-CTA">
-				{children}
-			</div>
+			<p>{image.image}</p>
+			<div className="Banner-CTA">{children}</div>
 		</BannerContainer>
 	);
 };

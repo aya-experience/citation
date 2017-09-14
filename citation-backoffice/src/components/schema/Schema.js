@@ -1,73 +1,76 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
-import { array, object, func } from 'prop-types';
+import { cloneDeep, keys, get } from 'lodash';
+import React from 'react';
+import { string, object, func, array } from 'prop-types';
 import { connect } from 'react-redux';
+import { compose, withHandlers } from 'recompose';
+
 import SchemaForm from './SchemaForm';
+import { filterSchemaFields } from '../../utils/filters';
+import { Breadcrumb } from '../common/Breadcrumb';
+import { Link } from '../common/Link';
 
-class SchemaComponent extends Component {
-	static propTypes = {
-		schema: array.isRequired,
-		fields: object.isRequired,
-		onSubmit: func.isRequired
+const enhancer = compose(
+	connect((state, ownProps) => {
+		return {
+			collections: state.schema.data,
+			schema: ownProps.match.params.id,
+			fields: get(filterSchemaFields(state.fields), ownProps.match.params.id, null)
+		};
+	}),
+	withHandlers({
+		handleSubmit: ({ onSubmit }) => values =>
+			onSubmit({
+				name: values.__name__,
+				fields: keys(values.__fields__).map(key => {
+					const field = values.__fields__[key];
+					if (field.kind === 'OBJECT') {
+						return { name: field.name, type: ['link', field.typeName] };
+					} else if (field.kind === 'LIST') {
+						return { name: field.name, type: ['links', field.typeName] };
+					}
+					return { name: field.name, type: field.kind.toLowerCase() };
+				})
+			})
+	})
+);
+
+const Schema = ({ fields, schema, collections, handleSubmit }) => {
+	if (fields === null) {
+		return null;
+	}
+
+	const actualValues = cloneDeep(fields);
+	const initialValues = {
+		__name__: schema,
+		__fields__: keys(actualValues).map(field => {
+			actualValues[field].name = field;
+			actualValues[field].kind =
+				actualValues[field].kind === 'SCALAR' ? actualValues[field].typeName : actualValues[field].kind;
+			return actualValues[field];
+		})
 	};
 
-	constructor() {
-		super();
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	handleSubmit(values) {
-		const result = _.clone(values);
-		const schema = { schema: {} };
-		schema.schema.types = Object.keys(result.data).map(type => {
-			const field = { name: result.data[type].__name__ };
-			delete result.data[type].__name__;
-			field.fields = Object.keys(result.data[type].__fields__).map(key => {
-				const field = result.data[type].__fields__[key];
-				if (field.kind === 'OBJECT') {
-					return { name: field.name, type: ['link', field.typeName] };
-				} else if (field.kind === 'LIST') {
-					return { name: field.name, type: ['links', field.typeName] };
-				}
-				return { name: field.name, type: field.kind.toLowerCase() };
-			});
-			return field;
-		});
-		this.props.onSubmit(schema);
-	}
-
-	render() {
-		const actualValues = _.cloneDeep(this.props.fields);
-		const initialValues = {
-			data: Object.keys(actualValues)
-				.filter(key => key !== 'Page' && key !== 'Component' && key !== 'Content' && key !== 'Schema')
-				.map(key => ({
-					__name__: key,
-					__fields__: Object.keys(actualValues[key]).map(field => {
-						actualValues[key][field].name = field;
-						actualValues[key][field].kind =
-							actualValues[key][field].kind === 'SCALAR'
-								? actualValues[key][field].typeName
-								: actualValues[key][field].kind;
-						return actualValues[key][field];
-					})
-				}))
-		};
-		const formProps = {
-			onSubmit: this.handleSubmit,
-			fields: this.props.fields,
-			initialValues,
-			schema: this.props.schema
-		};
-		return <SchemaForm {...formProps} />;
-	}
-}
-
-export const mapStateToProps = (state, ownProps) => {
-	return {
-		schema: ownProps.schema,
-		fields: ownProps.fields
-	};
+	return (
+		<div>
+			<Breadcrumb>
+				<Link to="/model">MODEL</Link> / <Link to={`/model/schema/${schema}`}>{schema}</Link>
+			</Breadcrumb>
+			<SchemaForm
+				fields={fields}
+				initialValues={initialValues}
+				schema={schema}
+				onSubmit={handleSubmit}
+				collections={collections}
+			/>
+		</div>
+	);
 };
 
-export default connect(mapStateToProps)(SchemaComponent);
+Schema.propTypes = {
+	schema: string.isRequired,
+	fields: object,
+	collections: array,
+	handleSubmit: func.isRequired
+};
+
+export default enhancer(Schema);

@@ -20,18 +20,16 @@ const HomePlusContent = styled.div`width: 60%;`;
 const HomePlus = ({ plus }) => {
 	return (
 		<HomePlusContainer>
-			{plus.map(homePlus =>
+			{plus.map(homePlus => (
 				<HomePlusBlock key={homePlus.title} align={homePlus.align}>
 					<p>IMAGE</p>
-					<p>
-						{homePlus.image}
-					</p>
+					<p>{homePlus.image}</p>
 					<HomePlusContent>
 						{homePlus.title}
 						{homePlus.content}
 					</HomePlusContent>
 				</HomePlusBlock>
-			)}
+			))}
 		</HomePlusContainer>
 	);
 };

@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom';
 const CTA = ({ cta }) => {
 	return (
 		<div className="CTA">
-			<Link to={`${cta.target}`}>
-				{cta.title}
-			</Link>
+			<Link to={`${cta.target}`}>{cta.title}</Link>
 		</div>
 	);
 };

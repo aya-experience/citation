@@ -11,7 +11,7 @@ const enhancer = compose(
 	reduxForm({ form: 'page' })
 );
 
-const PageForm = ({ handleSubmit }) =>
+const PageForm = ({ handleSubmit }) => (
 	<form onSubmit={handleSubmit}>
 		<div>
 			<label htmlFor="__id__">Id</label>
@@ -26,7 +26,8 @@ const PageForm = ({ handleSubmit }) =>
 			<Field name="title" component="input" type="text" />
 		</div>
 		<button>Submit</button>
-	</form>;
+	</form>
+);
 
 PageForm.propTypes = {
 	handleSubmit: func.isRequired

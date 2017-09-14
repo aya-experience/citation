@@ -93,7 +93,10 @@ export async function inspectObject(type, id, modelTypes, stack = []) {
 export function graphqlQuerySerialize(query) {
 	try {
 		if (isArray(query)) {
-			return query.map(graphqlQuerySerialize).filter(value => value !== '').join(', ');
+			return query
+				.map(graphqlQuerySerialize)
+				.filter(value => value !== '')
+				.join(', ');
 		}
 
 		if (isObject(query)) {
