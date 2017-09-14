@@ -37,7 +37,8 @@ after_success:
 - if [ "$TRAVIS_BRANCH" == "master" -a "$TRAVIS_PULL_REQUEST" == "false" ]; then
   rm -rf node_modules;
   rm -rf citation-backoffice/node_modules;
-  rm -rf citation-demo/node_modules;
+  rm -rf citation-react-demo/node_modules;
+  rm -rf citation-react-demo-components/node_modules;
   rm -rf citation-react-renderer/node_modules;
   rm -rf citation-react-router/node_modules;
   rm -rf citation-server/node_modules;
