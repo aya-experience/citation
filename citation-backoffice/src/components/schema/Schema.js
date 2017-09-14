@@ -1,4 +1,4 @@
-import { clone, cloneDeep, keys, get } from 'lodash';
+import { cloneDeep, keys, get } from 'lodash';
 import React from 'react';
 import { string, object, func, array } from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,25 +18,19 @@ const enhancer = compose(
 		};
 	}),
 	withHandlers({
-		handleSubmit: ({ onSubmit }) => values => {
-			const result = clone(values);
-			const schema = { schema: {} };
-			schema.schema.types = keys(result.data).map(type => {
-				const field = { name: result.data[type].__name__ };
-				delete result.data[type].__name__;
-				field.fields = keys(result.data[type].__fields__).map(key => {
-					const field = result.data[type].__fields__[key];
+		handleSubmit: ({ onSubmit }) => values =>
+			onSubmit({
+				name: values.__name__,
+				fields: keys(values.__fields__).map(key => {
+					const field = values.__fields__[key];
 					if (field.kind === 'OBJECT') {
 						return { name: field.name, type: ['link', field.typeName] };
 					} else if (field.kind === 'LIST') {
 						return { name: field.name, type: ['links', field.typeName] };
 					}
 					return { name: field.name, type: field.kind.toLowerCase() };
-				});
-				return field;
-			});
-			onSubmit(schema);
-		}
+				})
+			})
 	})
 );
 

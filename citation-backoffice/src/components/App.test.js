@@ -24,24 +24,12 @@ test.beforeEach(() => {
 	}).default;
 });
 
-const setup = () => shallow(<App />, { context: { store } }).find('App').shallow();
-
-test('has a "Citation Admin" title', t => {
-	store.getState.returns({ collections: {} });
-	t.is(setup().find('h2').text(), 'Citation Admin');
-});
-
-test('pass the collections from the state to the Menu', t => {
-	const collections = {};
-	store.getState.returns({ collections });
-	t.is(setup().find('Menu').prop('collections'), collections);
-});
+const setup = () => shallow(<App />, { context: { store } }).dive();
 
 test('componentDidMount should load schema and collections', async t => {
 	const loadCollectionsSpy = sinon.spy();
 	const loadSchemaMock = sinon.stub().returns(Promise.resolve(true));
-	const collections = {};
-	store.getState.returns({ collections });
+	store.getState.returns({ collections: {}, schema: { data: [] } });
 	const app = setup();
 	app.setProps({
 		loadCollections: loadCollectionsSpy,

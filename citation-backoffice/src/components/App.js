@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { compose, lifecycle } from 'recompose';
 
 import { loadCollection } from '../logic/collections';

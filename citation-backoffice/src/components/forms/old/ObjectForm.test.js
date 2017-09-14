@@ -5,6 +5,8 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import { store } from './../../reduxMock';
+
 const testProps = sinon.stub().returns(null);
 
 class testComponent extends Component {
@@ -59,7 +61,7 @@ const properties = {
 let ObjectForm;
 let objectForm;
 
-const setup = () => shallow(<ObjectForm {...properties} />);
+const setup = () => shallow(<ObjectForm {...properties} />, { context: { store } }).dive().dive().dive();
 
 test.beforeEach(() => {
 	ObjectForm = proxyquire('./ObjectForm', {
@@ -76,16 +78,15 @@ test.beforeEach(() => {
 		'./KeyValueField': {
 			default: 'KeyValueField'
 		}
-	}).GenericObjectForm;
+	}).default;
 	objectForm = setup();
-	objectForm.html();
 });
 
 test.afterEach(() => {
 	testProps.reset();
 });
 
-test('If fields[type] is empty, there wwill be only an __id__', t => {
+test('If fields[type] is empty, there will be only an __id__', t => {
 	testProps.reset();
 	const emptyFieldsProperties = {
 		handleSubmit,

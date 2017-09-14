@@ -4,7 +4,8 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { store } from './../reduxMock';
+import { Breadcrumb } from '../common/Breadcrumb';
+import { store } from '../../reduxMock';
 
 let ObjectComponent;
 let loadObject;
@@ -13,7 +14,7 @@ let writeObject;
 let deleteObject;
 
 const type = 'TEST';
-const id = 'id';
+let id;
 
 const schemaFieldsReturned = { schema: 'loadSchemaFields returned' };
 const objectReturned = { object: 'loadObject returned' };
@@ -23,17 +24,19 @@ const setup = () =>
 	shallow(<ObjectComponent match={{ params: { type, id } }} />, {
 		context: { store }
 	})
-		.find('ObjectComponent')
-		.shallow();
+		.dive()
+		.dive()
+		.dive();
 
 test.beforeEach(() => {
+	id = 'id';
 	loadObject = sinon.stub().returns(objectReturned);
 	loadSchemaFields = sinon.stub().returns(schemaFieldsReturned);
 	writeObject = sinon.stub().returns(writeObjectReturned);
 	deleteObject = sinon.stub().returns(null);
 	ObjectComponent = proxyquire('./Object', {
-		'../logic/objects': { loadObject, writeObject, deleteObject },
-		'../logic/schema': { loadSchemaFields }
+		'../../logic/objects': { loadObject, writeObject, deleteObject },
+		'../../logic/schema': { loadSchemaFields }
 	}).default;
 });
 
@@ -72,18 +75,29 @@ test('componentWillReceiveProps should not call lodafFields if fields are alread
 	t.false(loadFieldsSpy.called);
 });
 
-test('title shoud be Edit if thre is an id', t => {
-	t.is(setup().find('h1').text(), `Edit ${type} ${id}`);
+test.only('title should be Edit if thre is an id', t => {
+	const objects = {};
+	const fields = { test: { fields: 'fields' } };
+	store.getState.returns({ objects, fields });
+	const breadcrumb = setup().find(Breadcrumb);
+	const firstLink = breadcrumb.childAt(0);
+	const secondLink = breadcrumb.childAt(2);
+	const label = breadcrumb.childAt(5);
+	t.is(firstLink.prop('to'), '/content');
+	t.is(firstLink.prop('children'), 'CONTENT');
+	t.is(secondLink.prop('to'), `/content/type/${type}`);
+	t.is(secondLink.prop('children'), type);
+	t.is(label.text(), id);
 });
 
 test('title shoud be Add if there is no id', t => {
-	const setup = () =>
-		shallow(<ObjectComponent match={{ params: { type } }} />, {
-			context: { store }
-		})
-			.find('ObjectComponent')
-			.shallow();
-	t.is(setup().find('h1').text(), `Add ${type} `);
+	id = null;
+	const objects = {};
+	const fields = { test: { fields: 'fields' } };
+	store.getState.returns({ objects, fields });
+	const breadcrumb = setup().find(Breadcrumb);
+	const label = breadcrumb.childAt(5);
+	t.is(label.text(), 'New object...');
 });
 
 test('mapDispatchToProps should dispatch loadSchemaFields', t => {
@@ -132,6 +146,6 @@ test('handleDelete should call delete with good args', t => {
 	const objects = {};
 	store.getState.returns({ objects, fields });
 	const objectComponent = setup();
-	objectComponent.instance().handleDelete();
+	objectComponent.instance().props.handleDelete();
 	t.true(deleteObject.calledWith(type, id));
 });
