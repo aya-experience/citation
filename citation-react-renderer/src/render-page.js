@@ -30,8 +30,6 @@ export default async function renderPage(url, context, options) {
 			)
 		);
 
-		// TODO Handle context errors and redirects
-
 		const replacementStyle = `</head>${sheet.getStyleTags()}`;
 
 		const replacementMarkup = `
