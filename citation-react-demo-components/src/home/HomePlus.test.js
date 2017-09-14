@@ -38,5 +38,11 @@ test('HomePlus should have image name', t => {
 });
 
 test('HomePlus should have image name', t => {
-	t.deepEqual(homePlusBlock.childAt(2).shallow().text(), `${plus.title}${plus.content}`);
+	t.deepEqual(
+		homePlusBlock
+			.childAt(2)
+			.shallow()
+			.text(),
+		`${plus.title}${plus.content}`
+	);
 });

@@ -6,7 +6,7 @@ import TypeList from './TypeList';
 import ObjectList from './ObjectList';
 import ObjectComponent from './Object';
 
-const Content = ({ match }) =>
+const Content = ({ match }) => (
 	<main>
 		<Switch>
 			<Route exact path={`${match.url}`} component={TypeList} />
@@ -14,7 +14,8 @@ const Content = ({ match }) =>
 			<Route path={`${match.url}/object/:type/:id`} component={ObjectComponent} />
 			<Route path={`${match.url}/object/:type`} component={ObjectComponent} />
 		</Switch>
-	</main>;
+	</main>
+);
 
 Content.propTypes = {
 	match: object.isRequired

@@ -32,14 +32,14 @@ const enhancer = compose(
 );
 
 const PageMetadata = ({ page, submit }) =>
-	page
-		? <div>
-				<Breadcrumb>
-					<Link to="/structure">STRUCTURE</Link> / {page.__id__}
-				</Breadcrumb>
-				<PageForm initialValues={page} onSubmit={submit} />
-			</div>
-		: null;
+	page ? (
+		<div>
+			<Breadcrumb>
+				<Link to="/structure">STRUCTURE</Link> / {page.__id__}
+			</Breadcrumb>
+			<PageForm initialValues={page} onSubmit={submit} />
+		</div>
+	) : null;
 
 PageMetadata.propTypes = {
 	page: object,

@@ -19,7 +19,7 @@ const enhancer = compose(
 	})
 );
 
-const ButtonGroup = ({ position, add, edit, compose }) =>
+const ButtonGroup = ({ position, add, edit, compose }) => (
 	<g>
 		<rect
 			x={position.x - blockHeight * 2}
@@ -55,7 +55,8 @@ const ButtonGroup = ({ position, add, edit, compose }) =>
 			icon="edit"
 			onClick={compose}
 		/>
-	</g>;
+	</g>
+);
 
 ButtonGroup.propTypes = {
 	position: object.isRequired,

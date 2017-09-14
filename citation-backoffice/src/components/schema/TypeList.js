@@ -9,22 +9,19 @@ import { filterSchemaEditable } from '../../utils/filters';
 
 const enhancer = connect(state => ({ fields: state.fields }));
 
-const TypeList = ({ fields }) =>
+const TypeList = ({ fields }) => (
 	<div>
 		<Breadcrumb>MODEL / Choose a type...</Breadcrumb>
 		<TableList>
-			{map(filterSchemaEditable(fields), (value, key) =>
+			{map(filterSchemaEditable(fields), (value, key) => (
 				<TableListLinkRow key={key} to={`/model/schema/${key}`}>
-					<TableListCell>
-						{key}
-					</TableListCell>
-					<TableListCell>
-						{keys(value).length} fields
-					</TableListCell>
+					<TableListCell>{key}</TableListCell>
+					<TableListCell>{keys(value).length} fields</TableListCell>
 				</TableListLinkRow>
-			)}
+			))}
 		</TableList>
-	</div>;
+	</div>
+);
 
 TypeList.propTypes = {
 	fields: object

@@ -27,7 +27,7 @@ const enhancer = compose(
 	})
 );
 
-const EditPanel = ({ edition, close, submit }) =>
+const EditPanel = ({ edition, close, submit }) => (
 	<div
 		style={{
 			top: `calc(${edition.position}px - 5rem + 8rem)`,
@@ -39,7 +39,8 @@ const EditPanel = ({ edition, close, submit }) =>
 		<a onClick={close}>X</a>
 		<h1>Component form</h1>
 		<ComponentForm onSubmit={submit} />
-	</div>;
+	</div>
+);
 
 EditPanel.propTypes = {
 	edition: object.isRequired,

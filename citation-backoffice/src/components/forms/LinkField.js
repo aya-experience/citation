@@ -9,20 +9,21 @@ const LinkField = ({ type, input, collections }) => {
 	const values = get(collections, type ? type : input.value.__type__, []);
 	return (
 		<InputLine>
-			{!type &&
+			{!type && (
 				<Field name={`${input.name}.__type__`} component="select">
-					{map(collections, (_, type) =>
+					{map(collections, (_, type) => (
 						<option key={type} value={type}>
 							{type}
 						</option>
-					)}
-				</Field>}
+					))}
+				</Field>
+			)}
 			<Field name={`${input.name}.__id__`} component="select">
-				{values.map((value, i) =>
+				{values.map((value, i) => (
 					<option key={i} value={value.__id__}>
 						{value.__id__}
 					</option>
-				)}
+				))}
 			</Field>
 		</InputLine>
 	);

@@ -33,8 +33,8 @@ export const FieldContainer = styled.div`
 	}
 
 	select {
-		border-left: .5rem solid ${lightGray};
-		border-right: .5rem solid ${lightGray};
+		border-left: 0.5rem solid ${lightGray};
+		border-right: 0.5rem solid ${lightGray};
 	}
 `;
 
@@ -58,7 +58,7 @@ export const InputLine = styled.div`
 	}
 
 	${ButtonContainer} {
-		margin: .5rem 0 0 .5rem;
+		margin: 0.5rem 0 0 0.5rem;
 	}
 `;
 

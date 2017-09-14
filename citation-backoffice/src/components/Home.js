@@ -22,7 +22,7 @@ const TextBody = styled.p`
 
 const BigLogo = styled.img`width: 50%;`;
 
-const Home = () =>
+const Home = () => (
 	<HomeContainer>
 		<Welcome>Welcome to Citation!</Welcome>
 		<BigLogo src="/assets/logo-vertical.png" />
@@ -34,6 +34,7 @@ const Home = () =>
 			{' and your data content in '}
 			<Link to="/content">CONTENT</Link>
 		</TextBody>
-	</HomeContainer>;
+	</HomeContainer>
+);
 
 export default Home;

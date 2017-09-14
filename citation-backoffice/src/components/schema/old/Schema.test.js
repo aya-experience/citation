@@ -15,7 +15,10 @@ const schemaFieldsReturned = { schema: 'loadSchemaFields returned' };
 const schemaReturned = { object: 'loadSchema returned' };
 const writeSchemaReturned = { object: 'writeSchema returned' };
 
-const setup = () => shallow(<SchemaComponent />, { context: { store } }).find('Schema').shallow();
+const setup = () =>
+	shallow(<SchemaComponent />, { context: { store } })
+		.find('Schema')
+		.shallow();
 
 test.beforeEach(() => {
 	loadSchemaFields = sinon.stub().returns(schemaFieldsReturned);

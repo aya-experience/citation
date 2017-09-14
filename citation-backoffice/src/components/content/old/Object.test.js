@@ -8,7 +8,10 @@ import { store } from './../../reduxMock';
 
 let ObjectComponent;
 
-const setup = () => shallow(<ObjectComponent />, { context: { store } }).find('GenericObject').shallow();
+const setup = () =>
+	shallow(<ObjectComponent />, { context: { store } })
+		.find('GenericObject')
+		.shallow();
 
 test.beforeEach(() => {
 	ObjectComponent = proxyquire('./Object', {}).default;

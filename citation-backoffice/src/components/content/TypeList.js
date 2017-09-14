@@ -8,22 +8,19 @@ import { TableList, TableListLinkRow, TableListCell } from '../common/TableList'
 
 const enhancer = connect(state => ({ collections: state.collections }));
 
-const TypeList = ({ collections }) =>
+const TypeList = ({ collections }) => (
 	<div>
 		<Breadcrumb>CONTENT / Choose a type...</Breadcrumb>
 		<TableList>
-			{map(collections, (value, key) =>
+			{map(collections, (value, key) => (
 				<TableListLinkRow key={key} to={`/content/type/${key}`}>
-					<TableListCell>
-						{key}
-					</TableListCell>
-					<TableListCell>
-						{value.length} items
-					</TableListCell>
+					<TableListCell>{key}</TableListCell>
+					<TableListCell>{value.length} items</TableListCell>
 				</TableListLinkRow>
-			)}
+			))}
 		</TableList>
-	</div>;
+	</div>
+);
 
 TypeList.propTypes = {
 	collections: object

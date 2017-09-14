@@ -61,7 +61,11 @@ const properties = {
 let ObjectForm;
 let objectForm;
 
-const setup = () => shallow(<ObjectForm {...properties} />, { context: { store } }).dive().dive().dive();
+const setup = () =>
+	shallow(<ObjectForm {...properties} />, { context: { store } })
+		.dive()
+		.dive()
+		.dive();
 
 test.beforeEach(() => {
 	ObjectForm = proxyquire('./ObjectForm', {

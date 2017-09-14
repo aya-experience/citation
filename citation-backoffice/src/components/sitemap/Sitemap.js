@@ -21,8 +21,8 @@ const SitemapContainer = styled.div`
 const ActionBar = styled.div`
 	display: flex;
 	position: absolute;
-	top: .5rem;
-	right: .5rem;
+	top: 0.5rem;
+	right: 0.5rem;
 `;
 
 const enhancer = compose(
@@ -54,9 +54,9 @@ const Sitemap = ({ sitemap, undo, redo, save, reset, containerWidth }) => {
 					className="Sitemap"
 					viewBox={`${(100 - containerWidth / 10) / 2} 0 ${containerWidth / 10} ${20 + pageTree.length * 20}`}
 				>
-					{pageTree.map((page, i) =>
+					{pageTree.map((page, i) => (
 						<RootPage key={page.__id__ + i} page={page} position={{ x: 50, y: 20 + i * 20 }} />
-					)}
+					))}
 				</svg>
 				<ActionBar>
 					<Button icon="recycle" onClick={reset} />

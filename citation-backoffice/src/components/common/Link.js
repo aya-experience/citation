@@ -7,7 +7,7 @@ export const A = styled.a`
 	cursor: pointer;
 	color: ${darkBlue};
 	text-decoration: none;
-	transition: color .5s ease;
+	transition: color 0.5s ease;
 
 	&:hover {
 		color: ${green};

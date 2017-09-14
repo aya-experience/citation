@@ -14,13 +14,17 @@ export function filterSchemaEditable(values) {
 
 export function filterFields(values, reservedNames) {
 	const response = {};
-	keys(values).filter(type => !reservedNames.includes(type)).map(type => {
-		response[type] = {};
-		return Object.keys(values[type]).filter(field => !nameRegex.test(field)).map(field => {
-			response[type][field] = values[type][field];
-			return response;
+	keys(values)
+		.filter(type => !reservedNames.includes(type))
+		.map(type => {
+			response[type] = {};
+			return Object.keys(values[type])
+				.filter(field => !nameRegex.test(field))
+				.map(field => {
+					response[type][field] = values[type][field];
+					return response;
+				});
 		});
-	});
 	return response;
 }
 

@@ -27,20 +27,21 @@ const enhancer = withHandlers({
 	handleDown: ({ fields }) => index => () => fields.swap(index, index + 1)
 });
 
-const LinksField = ({ type, fields, collections, handleAdd, handleRemove, handleUp, handleDown }) =>
+const LinksField = ({ type, fields, collections, handleAdd, handleRemove, handleUp, handleDown }) => (
 	<FieldArrayContainer>
-		{fields.map((link, i) =>
+		{fields.map((link, i) => (
 			<LinksInputLine key={i}>
 				<Field name={link} component={LinkField} props={{ collections, type }} />
 				<Button icon="delete" onClick={handleRemove(i)} color={red} />
 				{i > 0 && <Button icon="up" onClick={handleUp(i)} />}
 				{i + 1 < fields.length && <Button icon="down" onClick={handleDown(i)} />}
 			</LinksInputLine>
-		)}
+		))}
 		<ControlLine>
 			<Button icon="plus" onClick={handleAdd} />
 		</ControlLine>
-	</FieldArrayContainer>;
+	</FieldArrayContainer>
+);
 
 LinksField.propTypes = {
 	fields: object.isRequired,

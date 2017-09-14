@@ -8,7 +8,7 @@ import ButtonGroup from './ButtonGroup';
 
 const enhancer = pageControls();
 
-const LeafPage = ({ page, direction, position, drag }) =>
+const LeafPage = ({ page, direction, position, drag }) => (
 	<g>
 		<DraggableContainer onDrag={drag}>
 			<text
@@ -29,7 +29,8 @@ const LeafPage = ({ page, direction, position, drag }) =>
 				page={page}
 			/>
 		</DraggableContainer>
-	</g>;
+	</g>
+);
 
 LeafPage.propTypes = {
 	page: object.isRequired,

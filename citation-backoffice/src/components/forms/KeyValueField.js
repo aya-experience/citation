@@ -23,18 +23,19 @@ const enhancer = compose(
 	})
 );
 
-const KeyValueField = ({ collections, fields, handleAdd, handleRemove }) =>
+const KeyValueField = ({ collections, fields, handleAdd, handleRemove }) => (
 	<FieldArrayContainer>
-		{fields.map((link, i) =>
+		{fields.map((link, i) => (
 			<InputLine key={i}>
 				<Field name={link} component={ValueOrListField} props={{ collections }} />
 				<Button icon="delete" color={red} onClick={handleRemove(i)} />
 			</InputLine>
-		)}
+		))}
 		<ControlLine>
 			<Button icon="plus" onClick={handleAdd} />
 		</ControlLine>
-	</FieldArrayContainer>;
+	</FieldArrayContainer>
+);
 
 KeyValueField.propTypes = {
 	handleAdd: func.isRequired,

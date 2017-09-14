@@ -8,8 +8,8 @@
 
 .ActionBar {
 	position: absolute;
-	top: .5rem;
-	right: .5rem;
+	top: 0.5rem;
+	right: 0.5rem;
 }
 
 .Draggable {
@@ -37,5 +37,5 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: .2rem;
+	padding: 0.2rem;
 }

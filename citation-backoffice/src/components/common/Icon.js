@@ -45,10 +45,11 @@ const icons = {
 	)
 };
 
-export const Icon = ({ icon, position, size }) =>
+export const Icon = ({ icon, position, size }) => (
 	<svg x={position.x} y={position.y} width={size} height={size} viewBox="0 0 100 100">
 		{icons[icon]}
-	</svg>;
+	</svg>
+);
 
 Icon.propTypes = {
 	icon: string.isRequired,

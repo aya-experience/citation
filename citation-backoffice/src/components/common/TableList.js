@@ -14,10 +14,10 @@ export const TableList = styled.div`
 
 export const TableListRow = styled.div`
 	display: table-row;
-	border-bottom: .1rem solid ${gray};
+	border-bottom: 0.1rem solid ${gray};
 
 	&:first-child {
-		border-top: .1rem solid ${gray};
+		border-top: 0.1rem solid ${gray};
 	}
 `;
 

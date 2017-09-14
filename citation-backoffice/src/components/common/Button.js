@@ -19,16 +19,16 @@ export const ButtonContainer = styled.button`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: .1rem solid ${({ color }) => color};
+	border: 0.1rem solid ${({ color }) => color};
 	border-radius: 50%;
-	margin: 0 .5rem .5rem .5rem;
+	margin: 0 0.5rem 0.5rem 0.5rem;
 	cursor: pointer;
 	background-color: transparent;
-	transition: .5s color, background-color ease;
+	transition: 0.5s color, background-color ease;
 
 	svg {
 		fill: ${({ color }) => color};
-		transition: .5s fill, color, background-color ease;
+		transition: 0.5s fill, color, background-color ease;
 	}
 
 	&:hover {
@@ -48,12 +48,12 @@ export const ButtonSvgContainer = styled.g`
 	& > circle {
 		fill: white;
 		stroke: ${({ color }) => color};
-		stroke-width: .1px;
+		stroke-width: 0.1px;
 	}
 
 	svg {
 		fill: ${({ color }) => color};
-		transition: .5s fill, color, background-color ease;
+		transition: 0.5s fill, color, background-color ease;
 	}
 
 	&:hover {
@@ -70,17 +70,19 @@ export const ButtonSvgContainer = styled.g`
 // eslint-disable-next-line no-use-before-define
 const omitProps = props => omit(props, Object.keys(Button.propTypes));
 
-export const Button = props =>
+export const Button = props => (
 	<ButtonContainer {...omitProps(props)} type={props.type} color={props.color} size={props.size}>
 		<Icon icon={props.icon} size={`${sizes[props.size] / 2}rem`} />
-	</ButtonContainer>;
+	</ButtonContainer>
+);
 
-export const ButtonLink = props =>
+export const ButtonLink = props => (
 	<ButtonLinkContainer {...omitProps(props)} type={props.type} color={props.color} size={props.size}>
 		<Icon icon={props.icon} size={`${sizes[props.size] / 2}rem`} />
-	</ButtonLinkContainer>;
+	</ButtonLinkContainer>
+);
 
-export const ButtonSvg = ({ icon, color, position, onClick, size }) =>
+export const ButtonSvg = ({ icon, color, position, onClick, size }) => (
 	<ButtonSvgContainer onClick={onClick} color={color}>
 		<circle cx={position.x} cy={position.y} r={size / 2} />
 		<Icon
@@ -91,7 +93,8 @@ export const ButtonSvg = ({ icon, color, position, onClick, size }) =>
 			}}
 			size={`${size * 0.6}px`}
 		/>
-	</ButtonSvgContainer>;
+	</ButtonSvgContainer>
+);
 
 Button.propTypes = {
 	icon: string.isRequired,

@@ -9,10 +9,10 @@ const MainMenuIndicatorContainer = styled.div`
 	height: 100%;
 	left: ${({ left }) => left}px;
 	width: ${({ width }) => width}px;
-	border-bottom: .2rem solid ${({ color }) => color};
-	border-top: .2rem solid ${({ color }) => color};
+	border-bottom: 0.2rem solid ${({ color }) => color};
+	border-top: 0.2rem solid ${({ color }) => color};
 	z-index: -1;
-	transition: all .5s ease;
+	transition: all 0.5s ease;
 `;
 
 const active = items => {

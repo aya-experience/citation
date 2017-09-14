@@ -20,28 +20,29 @@ const MainMenuItemContainer = styled(InnerLink)`
 		background-color: ${({ color }) => color};
 		position: absolute;
 		border-radius: 50%;
-		top: .8rem;
+		top: 0.8rem;
 		left: 3rem;
 	}
 
 	display: block;
 	position: relative;
 	font-size: 1.8rem;
-	padding: .4rem 4rem .4rem 6rem;
+	padding: 0.4rem 4rem 0.4rem 6rem;
 	text-transform: uppercase;
 	text-decoration: none;
 	color: ${({ color }) => color};
-	border-left: .2rem solid ${gray};
+	border-left: 0.2rem solid ${gray};
 
 	&:last-child {
-		border-right: .2rem solid ${gray};
+		border-right: 0.2rem solid ${gray};
 	}
 `;
 
-const MainMenuItem = ({ to, title, color, isActive, innerRef }) =>
+const MainMenuItem = ({ to, title, color, isActive, innerRef }) => (
 	<MainMenuItemContainer to={to} color={color} isActive={isActive} linkRef={innerRef}>
 		{title}
-	</MainMenuItemContainer>;
+	</MainMenuItemContainer>
+);
 
 MainMenuItem.propTypes = {
 	to: string.isRequired,

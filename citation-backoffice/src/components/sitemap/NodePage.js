@@ -13,7 +13,7 @@ const NodePage = ({ page, direction, color, position, drag }) => {
 	const children = page.children === null ? [] : page.children;
 	return (
 		<g>
-			{children.map((child, i) =>
+			{children.map((child, i) => (
 				<Child
 					key={`child-${child.__id__}-${i}`}
 					child={child}
@@ -23,7 +23,7 @@ const NodePage = ({ page, direction, color, position, drag }) => {
 					size={page.children.length}
 					position={position}
 				/>
-			)}
+			))}
 			<DraggableContainer onDrag={drag}>
 				<text
 					x={position.x}

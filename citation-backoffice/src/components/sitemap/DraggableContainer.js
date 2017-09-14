@@ -10,7 +10,7 @@ export const DraggableGroup = styled.g`
 	${ButtonSvgContainer} {
 		display: none;
 		opacity: 0;
-		transition: .5s opacity ease;
+		transition: 0.5s opacity ease;
 	}
 
 	&:hover ${ButtonSvgContainer} {
@@ -19,12 +19,11 @@ export const DraggableGroup = styled.g`
 	}
 `;
 
-const DraggableContainer = ({ onDrag, children }) =>
+const DraggableContainer = ({ onDrag, children }) => (
 	<DraggableCore onDrag={onDrag}>
-		<DraggableGroup>
-			{children}
-		</DraggableGroup>
-	</DraggableCore>;
+		<DraggableGroup>{children}</DraggableGroup>
+	</DraggableCore>
+);
 
 DraggableContainer.propTypes = {
 	onDrag: func.isRequired,

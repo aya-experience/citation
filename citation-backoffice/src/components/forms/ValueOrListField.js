@@ -57,7 +57,7 @@ const enhancer = compose(
 	})
 );
 
-const ValueOrListField = ({ input, collections, isArray, handleToggle }) =>
+const ValueOrListField = ({ input, collections, isArray, handleToggle }) => (
 	<ValueOrListContainer>
 		<PropNameContainer>
 			<Field name={`${input.name}.__key__`} component="input" />
@@ -66,10 +66,13 @@ const ValueOrListField = ({ input, collections, isArray, handleToggle }) =>
 				<input type="checkbox" value={isArray} onClick={handleToggle} />
 			</ArrayCheckboxContainer>
 		</PropNameContainer>
-		{isArray
-			? <FieldArray name={`${input.name}.__list__`} component={LinksField} props={{ collections }} />
-			: <Field name={`${input.name}.__value__`} component={LinkField} props={{ collections }} />}
-	</ValueOrListContainer>;
+		{isArray ? (
+			<FieldArray name={`${input.name}.__list__`} component={LinksField} props={{ collections }} />
+		) : (
+			<Field name={`${input.name}.__value__`} component={LinkField} props={{ collections }} />
+		)}
+	</ValueOrListContainer>
+);
 
 ValueOrListField.propTypes = {
 	input: object.isRequired,

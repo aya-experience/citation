@@ -14,7 +14,7 @@ const RootPage = ({ page, position, drag }) => {
 	const children = page.children === null ? [] : page.children;
 	return (
 		<g>
-			{children.map((child, i) =>
+			{children.map((child, i) => (
 				<Child
 					key={`child-${child.__id__}-${i}`}
 					child={child}
@@ -24,7 +24,7 @@ const RootPage = ({ page, position, drag }) => {
 					size={page.children.length}
 					position={position}
 				/>
-			)}
+			))}
 			<DraggableContainer onDrag={drag}>
 				<rect
 					x={position.x - blockWidth / 2}

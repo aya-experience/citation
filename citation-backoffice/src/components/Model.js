@@ -25,13 +25,14 @@ const enhancer = compose(
 	})
 );
 
-const Content = ({ match }) =>
+const Content = ({ match }) => (
 	<main>
 		<Switch>
 			<Route exact path={`${match.url}`} component={TypeList} />
 			<Route path={`${match.url}/schema/:id`} component={Schema} />
 		</Switch>
-	</main>;
+	</main>
+);
 
 Content.propTypes = {
 	match: object.isRequired

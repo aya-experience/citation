@@ -8,7 +8,7 @@ import { Button, ButtonLink } from '../common/Button';
 
 const enhancer = compose(reduxForm({ form: 'page' }));
 
-const PageForm = ({ handleSubmit }) =>
+const PageForm = ({ handleSubmit }) => (
 	<Form onSubmit={handleSubmit}>
 		<FieldContainer>
 			<Label htmlFor="__id__">ID</Label>
@@ -26,7 +26,8 @@ const PageForm = ({ handleSubmit }) =>
 			<ButtonLink icon="left" to="/structure" size="big" />
 			<Button icon="check" type="submit" size="big" />
 		</ActionContainer>
-	</Form>;
+	</Form>
+);
 
 PageForm.propTypes = {
 	handleSubmit: func.isRequired

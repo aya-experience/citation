@@ -66,10 +66,7 @@ class Fields extends Component {
 						+
 					</button>
 				</li>
-				{this.props.meta.error &&
-					<li className="error">
-						{this.props.meta.error}
-					</li>}
+				{this.props.meta.error && <li className="error">{this.props.meta.error}</li>}
 			</ul>
 		);
 	}

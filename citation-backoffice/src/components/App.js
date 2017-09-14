@@ -13,10 +13,11 @@ import Structure from './Structure';
 
 import './style/global';
 
-const NoMatch = () =>
+const NoMatch = () => (
 	<div>
 		<h1>Oups!</h1>
-	</div>;
+	</div>
+);
 
 const enhancer = compose(
 	connect(
@@ -40,7 +41,7 @@ const enhancer = compose(
 	})
 );
 
-const App = () =>
+const App = () => (
 	<BrowserRouter basename="/admin">
 		<div>
 			<Header />
@@ -52,6 +53,7 @@ const App = () =>
 				<Route component={NoMatch} />
 			</Switch>
 		</div>
-	</BrowserRouter>;
+	</BrowserRouter>
+);
 
 export default enhancer(App);

@@ -13,7 +13,7 @@ import { Link } from '../common/Link';
 import { darkBlue } from '../style/colors';
 
 const Iframe = styled.iframe`
-	border: solid .1rem ${darkBlue};
+	border: solid 0.1rem ${darkBlue};
 	display: block;
 	width: 80rem;
 	margin: auto;
@@ -46,14 +46,15 @@ const enhancer = compose(
 	})
 );
 
-const Page = ({ compose, url }) =>
+const Page = ({ compose, url }) => (
 	<div>
 		<Breadcrumb>
 			<Link to="/structure">STRUCTURE</Link> / {compose.page.__id__}
 		</Breadcrumb>
 		{compose.edition.component === null ? undefined : <EditPanel />}
 		<Iframe src={url} title="edition" />
-	</div>;
+	</div>
+);
 
 Page.propTypes = {
 	compose: object,

@@ -54,7 +54,7 @@ const enhancer = compose(
 	})
 );
 
-const ObjectComponent = ({ id, type, object, fields, collections, handleSubmit, handleDelete }) =>
+const ObjectComponent = ({ id, type, object, fields, collections, handleSubmit, handleDelete }) => (
 	<div>
 		<Breadcrumb>
 			<Link to="/content">CONTENT</Link> / <Link to={`/content/type/${type}`}>{type}</Link> /{' '}
@@ -68,7 +68,8 @@ const ObjectComponent = ({ id, type, object, fields, collections, handleSubmit, 
 			onSubmit={handleSubmit}
 			onDelete={handleDelete}
 		/>
-	</div>;
+	</div>
+);
 
 ObjectComponent.propTypes = {
 	id: string.isRequired,

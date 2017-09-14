@@ -8,7 +8,7 @@ const publicUrl = process.env.PUBLIC_URL;
 
 const HeaderContainer = styled.header`
 	position: relative;
-	padding: .1rem;
+	padding: 0.1rem;
 	height: 4rem;
 	width: 100%;
 	display: flex;
@@ -17,7 +17,7 @@ const HeaderContainer = styled.header`
 `;
 
 const LogoLink = styled(Link)`
-	padding: .5rem;
+	padding: 0.5rem;
 	height: 100%;
 
 	img {
@@ -27,10 +27,10 @@ const LogoLink = styled(Link)`
 
 const ExternalLink = A.extend`
 	font-size: 1.5rem;
-	padding: .5rem;
+	padding: 0.5rem;
 `;
 
-const Header = () =>
+const Header = () => (
 	<HeaderContainer>
 		<LogoLink to={publicUrl}>
 			<img src={`${publicUrl}/assets/logo.png`} alt="Citation" />
@@ -42,6 +42,7 @@ const Header = () =>
 		<ExternalLink href={publicUrl} target="_blank">
 			Production
 		</ExternalLink>
-	</HeaderContainer>;
+	</HeaderContainer>
+);
 
 export default Header;

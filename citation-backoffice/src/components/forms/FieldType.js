@@ -27,14 +27,15 @@ const FieldType = ({ input, kindName, typeName, collections }) => {
 					Objects List
 				</option>
 			</Field>
-			{!scalarTypes.includes(kind) &&
+			{!scalarTypes.includes(kind) && (
 				<Field name={typeName} component="select">
-					{collections.map((field, i) =>
+					{collections.map((field, i) => (
 						<option key={i} value={field}>
 							{field}
 						</option>
-					)}
-				</Field>}
+					))}
+				</Field>
+			)}
 		</div>
 	);
 };

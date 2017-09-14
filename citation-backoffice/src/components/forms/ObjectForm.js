@@ -45,9 +45,7 @@ const getCustomFieldsComponents = (fields, collections) => {
 			}
 			return (
 				<FieldContainer key={field}>
-					<Label htmlFor={field}>
-						{field}
-					</Label>
+					<Label htmlFor={field}>{field}</Label>
 					{fieldComponent}
 				</FieldContainer>
 			);
@@ -56,7 +54,7 @@ const getCustomFieldsComponents = (fields, collections) => {
 	return null;
 };
 
-const ObjectForm = ({ type, fields, collections, onSubmit, onDelete }) =>
+const ObjectForm = ({ type, fields, collections, onSubmit, onDelete }) => (
 	<Form onSubmit={onSubmit}>
 		<FieldContainer>
 			<Label htmlFor="__id__">ID</Label>
@@ -68,7 +66,8 @@ const ObjectForm = ({ type, fields, collections, onSubmit, onDelete }) =>
 			<Button icon="delete" onClick={onDelete} size="big" color={red} />
 			<Button icon="check" type="submit" size="big" />
 		</ActionContainer>
-	</Form>;
+	</Form>
+);
 
 ObjectForm.propTypes = {
 	onSubmit: func.isRequired,

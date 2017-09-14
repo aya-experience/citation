@@ -21,5 +21,11 @@ test('CTA should have a link to with given target', t => {
 });
 
 test('CTA should have a link to with given title', t => {
-	t.deepEqual(ctaShallow.children().children().text(), cta.title);
+	t.deepEqual(
+		ctaShallow
+			.children()
+			.children()
+			.text(),
+		cta.title
+	);
 });

@@ -11,7 +11,10 @@ let onSubmit = sinon.spy();
 
 const match = { params: { id: 'TestType' } };
 
-const setup = () => shallow(<Schema match={match} onSubmit={onSubmit} />, { context: { store } }).dive().dive();
+const setup = () =>
+	shallow(<Schema match={match} onSubmit={onSubmit} />, { context: { store } })
+		.dive()
+		.dive();
 
 test.beforeEach(() => {
 	Schema = proxyquire('./Schema', {}).default;

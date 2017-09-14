@@ -76,14 +76,13 @@ const items = [
 	}
 ];
 
-const MainMenu = () =>
+const MainMenu = () => (
 	<MainMenuContainer>
-		<MainMenuNav>
-			{items.map(item => item.menu)}
-		</MainMenuNav>
+		<MainMenuNav>{items.map(item => item.menu)}</MainMenuNav>
 		<MainMenuIndicatorContainer>
 			<MainMenuIndicator items={items} />
 		</MainMenuIndicatorContainer>
-	</MainMenuContainer>;
+	</MainMenuContainer>
+);
 
 export default MainMenu;
