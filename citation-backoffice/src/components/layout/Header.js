@@ -32,7 +32,7 @@ const ExternalLink = A.extend`
 
 const Header = () => (
 	<HeaderContainer>
-		<LogoLink to={publicUrl}>
+		<LogoLink to="/">
 			<img src={`${publicUrl}/assets/logo.png`} alt="Citation" />
 		</LogoLink>
 		<MainMenu />

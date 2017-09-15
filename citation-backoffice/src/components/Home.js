@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { Link } from './common/Link';
 
+const publicUrl = process.env.PUBLIC_URL;
+
 const HomeContainer = styled.main`
 	width: 80rem;
 	margin: auto;
@@ -25,7 +27,7 @@ const BigLogo = styled.img`width: 50%;`;
 const Home = () => (
 	<HomeContainer>
 		<Welcome>Welcome to Citation!</Welcome>
-		<BigLogo src="/assets/logo-vertical.png" />
+		<BigLogo src={`${publicUrl}/assets/logo-vertical.png`} />
 		<TextBody>
 			{"You're in the administration part. Use the top menu to configure your pages in "}
 			<Link to="/structure">STRUCTURE</Link>
