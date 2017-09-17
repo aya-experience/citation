@@ -7,7 +7,6 @@ import { query, mutation } from './graphql-client';
 
 export const loadPageSuccess = createAction('load page success');
 export const loadComponentsSuccess = createAction('load components success');
-export const editComponent = createAction('edit component');
 export const editComponentSuccess = createAction('edit component success');
 export const addComponent = createAction('add component');
 export const addComponentSuccess = createAction('add component success');
@@ -126,13 +125,8 @@ const reducer = createReducer(
 			...state,
 			components
 		}),
-		[editComponent]: (state, { component, position }) => ({
-			...state,
-			edition: { component, position, parent: null }
-		}),
 		[editComponentSuccess]: (state, { oldId, component }) => ({
 			...state,
-			edition: { component: null, position: null, parent: null },
 			components: updateComponents(state.components, [oldId], [component])
 		}),
 		[addComponent]: (state, { parent, position }) => ({
@@ -155,8 +149,7 @@ const reducer = createReducer(
 	},
 	{
 		page: {},
-		components: [],
-		edition: { component: null, position: null, parent: null }
+		components: []
 	}
 );
 
