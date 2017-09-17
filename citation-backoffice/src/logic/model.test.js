@@ -5,24 +5,39 @@ import sinon from 'sinon';
 import { winston } from './../winstonMock';
 
 let query;
-let schema;
+let model;
 
 test.beforeEach(() => {
 	query = sinon.stub();
-	schema = proxyquire('./schema', {
+	model = proxyquire('./model', {
 		'./graphql-client': { query },
 		winston
 	});
 });
 
-test('queryExistingTypes should return query result for existing types', async t => {
-	const returnedValue = { data: { __schema: { types: { Page: 'OBJECT' } } } };
-	query.returns(returnedValue);
-	t.deepEqual(await schema.queryExistingTypes(), returnedValue);
+test('queryExistingTypes should query and parse data', async t => {
+	const data = {
+		data: {
+			__schema: {
+				types: [{ name: 'Page', kind: 'OBJECT', fields: [{ name: 'test' }] }]
+			}
+		}
+	};
+	const expected = {
+		Page: {
+			name: 'Page',
+			kind: 'OBJECT',
+			fields: {
+				test: { name: 'test' }
+			}
+		}
+	};
+	query.returns(data);
+	t.deepEqual(await model.queryExistingTypes(), expected);
 });
 
-test('queryCustomTypes should return data for type', async t => {
-	const returnedValue = {
+test('queryTypeFields should return fields object', async t => {
+	const data = {
 		data: {
 			__type: {
 				name: 'TEST',
@@ -30,9 +45,9 @@ test('queryCustomTypes should return data for type', async t => {
 			}
 		}
 	};
-	query.returns(returnedValue);
-	const expectedValue = {
-		__type: { id: { typeName: 'ID', kind: 'SCALAR', ofType: undefined } }
+	const expected = {
+		id: { name: 'id', typeName: 'ID', kind: 'SCALAR', ofType: undefined }
 	};
-	t.deepEqual(await schema.queryCustomTypes(['TEST']), expectedValue);
+	query.returns(data);
+	t.deepEqual(await model.queryTypeFields('TEST'), expected);
 });

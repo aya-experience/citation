@@ -56,7 +56,7 @@ export function deleteObject(type, id) {
 }
 
 export function writeObject(type, id, data, fields) {
-	const types = generateTypes(fields[type]);
+	const types = generateTypes(fields);
 	return dispatch => {
 		return mutation(
 			`
