@@ -5,12 +5,12 @@ import { lifecycle, compose } from 'recompose';
 import { ActionCreators } from 'redux-undo';
 import { buildPageTree } from 'citation-react-router';
 import styled from 'styled-components';
-import dimensions from 'react-dimensions';
 
 import { loadPages, savePages } from '../../logic/sitemap';
 import RootPage from './RootPage';
 import { Button } from '../common/Button';
 import { Breadcrumb } from '../common/Breadcrumb';
+import dimensions from '../../utils/dimensions';
 
 const SitemapContainer = styled.div`
 	position: relative;
