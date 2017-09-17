@@ -5,7 +5,7 @@ import { lifecycle, withProps, compose } from 'recompose';
 import styled from 'styled-components';
 
 import { loadPage, loadComponents } from '../../logic/compose';
-import { loadSchemaFields } from '../../logic/schema';
+import { loadTypeFields } from '../../logic/model';
 import { startIframeMessageListener, stopIframeMessageListener } from './iframe-comunication';
 import EditPanel from './EditPanel';
 import { Breadcrumb } from '../common/Breadcrumb';
@@ -27,7 +27,7 @@ const enhancer = compose(
 			load: () => {
 				dispatch(loadPage(match.params.id));
 				dispatch(loadComponents());
-				dispatch(loadSchemaFields(['Component']));
+				dispatch(loadTypeFields('Component'));
 			}
 		})
 	),

@@ -1,22 +1,22 @@
-import { map, keys } from 'lodash';
+import { map, values } from 'lodash';
 import React from 'react';
-import { object } from 'prop-types';
+import { array } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { Breadcrumb } from '../common/Breadcrumb';
 import { TableList, TableListLinkRow, TableListCell } from '../common/TableList';
-import { filterSchemaEditable } from '../../utils/filters';
+import { testEditableName, testFieldName } from '../../utils/filters';
 
-const enhancer = connect(state => ({ fields: state.fields }));
+const enhancer = connect(state => ({ types: values(state.model) }));
 
-const TypeList = ({ fields }) => (
+const TypeList = ({ types }) => (
 	<div>
 		<Breadcrumb>MODEL / Choose a type...</Breadcrumb>
 		<TableList>
-			{map(filterSchemaEditable(fields), (value, key) => (
-				<TableListLinkRow key={key} to={`/model/schema/${key}`}>
-					<TableListCell>{key}</TableListCell>
-					<TableListCell>{keys(value).length} fields</TableListCell>
+			{map(types.filter(testEditableName), type => (
+				<TableListLinkRow key={type.name} to={`/model/type/${type.name}`}>
+					<TableListCell>{type.name}</TableListCell>
+					<TableListCell>{values(type.fields).filter(testFieldName).length} fields</TableListCell>
 				</TableListLinkRow>
 			))}
 		</TableList>
@@ -24,7 +24,7 @@ const TypeList = ({ fields }) => (
 );
 
 TypeList.propTypes = {
-	fields: object
+	types: array
 };
 
 export default enhancer(TypeList);

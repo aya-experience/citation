@@ -6,18 +6,18 @@ import { shallow } from 'enzyme';
 
 import { store } from './../../reduxMock';
 
-let Schema;
+let Type;
 let onSubmit = sinon.spy();
 
 const match = { params: { id: 'TestType' } };
 
 const setup = () =>
-	shallow(<Schema match={match} onSubmit={onSubmit} />, { context: { store } })
+	shallow(<Type match={match} onSubmit={onSubmit} />, { context: { store } })
 		.dive()
 		.dive();
 
 test.beforeEach(() => {
-	Schema = proxyquire('./Schema', {}).default;
+	Type = proxyquire('./Type', {}).default;
 });
 
 test('handleSubmit should call onSubmit with good args', async t => {

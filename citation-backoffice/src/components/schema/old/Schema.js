@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { array, object, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { loadSchemaFields, loadSchema, writeSchema } from '../logic/schema';
+import { loadSchemaFields, loadSchema, writeSchema } from '../logic/model';
 import SchemaComponent from './schema/Schema';
 import { filterSchemaFields } from './../utils/filters';
 

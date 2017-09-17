@@ -1,4 +1,4 @@
-import { map } from 'lodash';
+import { map, keys } from 'lodash';
 import React from 'react';
 import { object } from 'prop-types';
 import { connect } from 'react-redux';
@@ -6,16 +6,16 @@ import { connect } from 'react-redux';
 import { Breadcrumb } from '../common/Breadcrumb';
 import { TableList, TableListLinkRow, TableListCell } from '../common/TableList';
 
-const enhancer = connect(state => ({ collections: state.collections }));
+const enhancer = connect(state => ({ types: state.content }));
 
-const TypeList = ({ collections }) => (
+const TypeList = ({ types }) => (
 	<div>
 		<Breadcrumb>CONTENT / Choose a type...</Breadcrumb>
 		<TableList>
-			{map(collections, (value, key) => (
-				<TableListLinkRow key={key} to={`/content/type/${key}`}>
-					<TableListCell>{key}</TableListCell>
-					<TableListCell>{value.length} items</TableListCell>
+			{map(types, (entries, typeName) => (
+				<TableListLinkRow key={typeName} to={`/content/type/${typeName}`}>
+					<TableListCell>{typeName}</TableListCell>
+					<TableListCell>{keys(entries).length} items</TableListCell>
 				</TableListLinkRow>
 			))}
 		</TableList>
@@ -23,7 +23,7 @@ const TypeList = ({ collections }) => (
 );
 
 TypeList.propTypes = {
-	collections: object
+	types: object.isRequired
 };
 
 export default enhancer(TypeList);

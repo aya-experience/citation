@@ -7,8 +7,8 @@ import { shallow } from 'enzyme';
 import { store } from './../reduxMock';
 
 let App;
-let loadCollection;
-let loadSchema;
+let loadContentTypes;
+let loadModelTypes;
 
 const collectionReturned = 'loadCollection returned';
 const schemaReturned = 'loadSchema returned';
@@ -16,11 +16,11 @@ const schemaReturned = 'loadSchema returned';
 test.beforeEach(() => {
 	// eslint-disable-next-line no-undef
 	global.window = { location: { hostname: 'localhost' } };
-	loadCollection = sinon.stub().returns(collectionReturned);
-	loadSchema = sinon.stub().returns(schemaReturned);
+	loadContentTypes = sinon.stub().returns(collectionReturned);
+	loadModelTypes = sinon.stub().returns(schemaReturned);
 	App = proxyquire('./App', {
-		'../logic/collections': { loadCollection },
-		'../logic/schema': { loadSchema }
+		'../logic/content': { loadTypes: loadContentTypes },
+		'../logic/model': { loadTypes: loadModelTypes }
 	}).default;
 });
 

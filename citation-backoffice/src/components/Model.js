@@ -5,22 +5,16 @@ import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 
 import TypeList from './schema/TypeList';
-import Schema from './schema/Schema';
-import { loadSchema, loadSchemaFields } from '../logic/schema';
+import Type from './schema/Type';
+import { loadTypes } from '../logic/model';
 
 const enhancer = compose(
-	connect(
-		state => ({
-			schema: state.schema.data ? state.schema.data : []
-		}),
-		dispatch => ({
-			loadSchema: () => dispatch(loadSchema()),
-			loadFields: schema => dispatch(loadSchemaFields(schema))
-		})
-	),
+	connect(null, dispatch => ({
+		loadSchema: () => dispatch(loadTypes())
+	})),
 	lifecycle({
 		componentDidMount() {
-			return this.props.loadSchema().then(() => this.props.loadFields(this.props.schema));
+			return this.props.loadSchema();
 		}
 	})
 );
@@ -29,7 +23,7 @@ const Content = ({ match }) => (
 	<main>
 		<Switch>
 			<Route exact path={`${match.url}`} component={TypeList} />
-			<Route path={`${match.url}/schema/:id`} component={Schema} />
+			<Route path={`${match.url}/type/:id`} component={Type} />
 		</Switch>
 	</main>
 );

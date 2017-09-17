@@ -1,10 +1,11 @@
+import { values } from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { compose, lifecycle } from 'recompose';
 
-import { loadCollection } from '../logic/collections';
-import { loadSchema } from '../logic/schema';
+import { loadTypes as loadModelTypes } from '../logic/model';
+import { loadTypes as loadContentTypes } from '../logic/content';
 import Header from './layout/Header';
 import Home from './Home';
 import Model from './Model';
@@ -21,22 +22,17 @@ const NoMatch = () => (
 
 const enhancer = compose(
 	connect(
-		state => {
-			return {
-				collections: state.collections,
-				schema: state.schema
-			};
-		},
-		dispatch => {
-			return {
-				loadSchema: () => dispatch(loadSchema()),
-				loadCollections: schema => dispatch(loadCollection(schema.data))
-			};
-		}
+		state => ({
+			types: values(state.model)
+		}),
+		dispatch => ({
+			loadModelTypes: () => dispatch(loadModelTypes()),
+			loadContentTypes: types => dispatch(loadContentTypes(types))
+		})
 	),
 	lifecycle({
 		componentDidMount() {
-			this.props.loadSchema().then(() => this.props.loadCollections(this.props.schema));
+			this.props.loadModelTypes().then(() => this.props.loadContentTypes(this.props.types));
 		}
 	})
 );
