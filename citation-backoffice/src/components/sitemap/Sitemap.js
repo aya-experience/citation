@@ -52,7 +52,8 @@ const Sitemap = ({ sitemap, undo, redo, save, reset, containerWidth }) => {
 			<SitemapContainer>
 				<svg
 					className="Sitemap"
-					viewBox={`${(100 - containerWidth / 10) / 2} 0 ${containerWidth / 10} ${20 + pageTree.length * 20}`}
+					viewBox={`${(100 - containerWidth / 10) / 2} 0 ${containerWidth / 10} ${20 +
+						pageTree.length * 20}`}
 				>
 					{pageTree.map((page, i) => (
 						<RootPage key={page.__id__ + i} page={page} position={{ x: 50, y: 20 + i * 20 }} />

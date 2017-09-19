@@ -61,7 +61,9 @@ test('loadObject should dispatch result after querying the server ', async t => 
 	const getState = sinon.spy();
 	const dispatchSpy = sinon.spy();
 	const queryReturn = { data: { TEST: ['test success'] } };
-	query.withArgs(`{TEST(id: "test") {__id__, ${formatedFields.join(', ')}}}`).returns(Promise.resolve(queryReturn));
+	query
+		.withArgs(`{TEST(id: "test") {__id__, ${formatedFields.join(', ')}}}`)
+		.returns(Promise.resolve(queryReturn));
 	get.withArgs(getState(), `objects.Test.test`).returns('state');
 	isUndefined.withArgs('state').returns(true);
 	await objects.loadObject('TEST', 'test', fields)(dispatchSpy, getState);

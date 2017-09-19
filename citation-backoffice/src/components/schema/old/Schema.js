@@ -31,7 +31,11 @@ class Schema extends Component {
 		return (
 			<div>
 				<h1>Edit Schema</h1>
-				<SchemaComponent schema={this.props.schema} fields={this.props.fields} onSubmit={this.handleSubmit} />
+				<SchemaComponent
+					schema={this.props.schema}
+					fields={this.props.fields}
+					onSubmit={this.handleSubmit}
+				/>
 			</div>
 		);
 	}

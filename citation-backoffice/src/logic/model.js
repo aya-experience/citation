@@ -70,7 +70,9 @@ export function loadTypes() {
 
 export function loadTypeFields(type) {
 	return dispatch => {
-		return queryTypeFields(type).then(response => dispatch(loadFieldsSuccess({ type, fields: response })));
+		return queryTypeFields(type).then(response =>
+			dispatch(loadFieldsSuccess({ type, fields: response }))
+		);
 	};
 }
 

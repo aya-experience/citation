@@ -25,14 +25,28 @@ const getCustomFieldsComponents = (fields, collections) => {
 					if (field.typeName === '*') {
 						return <Field name={field.name} component={LinkField} props={{ collections }} />;
 					}
-					return <Field name={field.name} component={LinkField} props={{ collections, type: field.typeName }} />;
+					return (
+						<Field
+							name={field.name}
+							component={LinkField}
+							props={{ collections, type: field.typeName }}
+						/>
+					);
 				} else if (field.kind === 'LIST') {
 					if (field.ofType === 'KeyValuePair') {
-						return <FieldArray name={field.name} component={KeyValueField} props={{ collections }} />;
+						return (
+							<FieldArray name={field.name} component={KeyValueField} props={{ collections }} />
+						);
 					} else if (field.typeName === '*') {
 						return <FieldArray name={field.name} component={LinksField} props={{ collections }} />;
 					}
-					return <FieldArray name={field.name} component={LinksField} props={{ collections, type: field.typeName }} />;
+					return (
+						<FieldArray
+							name={field.name}
+							component={LinksField}
+							props={{ collections, type: field.typeName }}
+						/>
+					);
 				} else if (fields[field.name].typeName === 'JSON') {
 					const format = value => JSON.stringify(value, null, 2);
 					const parse = value => JSON.parse(value);
@@ -40,7 +54,7 @@ const getCustomFieldsComponents = (fields, collections) => {
 				} else if (field.typeName === 'RichText') {
 					return <Field name={field.name} component="textarea" />;
 				}
-				// eslint-disable-next-line "react/jsx-key"
+				// eslint-disable-next-line react/jsx-key
 				return <Field name={field.name} component="input" type="text" />;
 			})
 			.map(fieldComponent => (

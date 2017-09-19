@@ -15,7 +15,10 @@ test('should work with one page and a child', t => {
 		}
 	];
 	const result = getPaths(pages);
-	t.deepEqual(result, [{ url: '/1', pages: [pages[0]] }, { url: '/1/2', pages: [pages[0], pages[0].children[0]] }]);
+	t.deepEqual(result, [
+		{ url: '/1', pages: [pages[0]] },
+		{ url: '/1/2', pages: [pages[0], pages[0].children[0]] }
+	]);
 });
 
 test('should work with an home and one page', t => {
@@ -26,5 +29,8 @@ test('should work with an home and one page', t => {
 		}
 	];
 	const result = getPaths(pages);
-	t.deepEqual(result, [{ url: '', pages: [pages[0]] }, { url: '/1', pages: [pages[0], pages[0].children[0]] }]);
+	t.deepEqual(result, [
+		{ url: '', pages: [pages[0]] },
+		{ url: '/1', pages: [pages[0], pages[0].children[0]] }
+	]);
 });

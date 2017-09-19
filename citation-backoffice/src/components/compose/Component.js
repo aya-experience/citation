@@ -39,8 +39,8 @@ const Component = ({ page, component, submit }) =>
 	component ? (
 		<div>
 			<Breadcrumb>
-				<Link to="/structure">STRUCTURE</Link> / <Link to={`/structure/compose/${page.__id__}`}>{page.__id__}</Link> /{' '}
-				{component.__id__}
+				<Link to="/structure">STRUCTURE</Link> /{' '}
+				<Link to={`/structure/compose/${page.__id__}`}>{page.__id__}</Link> / {component.__id__}
 			</Breadcrumb>
 			<ComponentForm initialValues={component} onSubmit={submit} page={page} />
 		</div>

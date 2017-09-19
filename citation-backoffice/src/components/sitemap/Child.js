@@ -50,18 +50,27 @@ const Child = ({ child, direction, color, i, size, position }) => {
 	}
 	return (
 		<g key={`child-${child.__id__}-${i}`}>
-			{direction === 0 ? undefined : <circle cx={positions.from.x} cy={positions.from.y} r={linkWidth} fill="white" />}
+			{direction === 0 ? (
+				undefined
+			) : (
+				<circle cx={positions.from.x} cy={positions.from.y} r={linkWidth} fill="white" />
+			)}
 			<path
-				d={`M${positions.from.x},${positions.from.y} C${positions.from.x + positions.direction * linkCurv},${positions
-					.from.y} ${positions.to.x - positions.direction * linkCurv},${positions.to.y} ${positions.to.x},${positions.to
-					.y}`}
+				d={`M${positions.from.x},${positions.from.y} C${positions.from.x +
+					positions.direction * linkCurv},${positions.from.y} ${positions.to.x -
+					positions.direction * linkCurv},${positions.to.y} ${positions.to.x},${positions.to.y}`}
 				fill="transparent"
 				stroke={color}
 				strokeWidth={linkWidth}
 				strokeLinecap="round"
 			/>
 			{isEmpty(child.children) ? (
-				<LeafPage page={child} direction={positions.direction} position={positions.to} from={positions.from} />
+				<LeafPage
+					page={child}
+					direction={positions.direction}
+					position={positions.to}
+					from={positions.from}
+				/>
 			) : (
 				<NodePage
 					page={child}

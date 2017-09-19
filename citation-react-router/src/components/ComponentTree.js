@@ -13,7 +13,16 @@ const sortHandler = (content, refresh) => ({ oldIndex, newIndex }) => {
 	refresh();
 };
 
-const ComponentTree = ({ index, draggable, routesProps, page, content, parent, matchProps, refresh }) => {
+const ComponentTree = ({
+	index,
+	draggable,
+	routesProps,
+	page,
+	content,
+	parent,
+	matchProps,
+	refresh
+}) => {
 	const { type, props } = content;
 	const children = content.children ? content.children : [];
 	let Component = routesProps.components[type];
@@ -39,7 +48,11 @@ const ComponentTree = ({ index, draggable, routesProps, page, content, parent, m
 		return (
 			<Control index={index} diabled={!draggable} content={content} parent={parent}>
 				<Component {...parsedProps} pages={routesProps.pages} childPage={childPage}>
-					<ComponentListControl content={content} useDragHandle onSortEnd={sortHandler(content, refresh)}>
+					<ComponentListControl
+						content={content}
+						useDragHandle
+						onSortEnd={sortHandler(content, refresh)}
+					>
 						{children.map((child, i) => (
 							<ComponentTree
 								key={child.__id__}

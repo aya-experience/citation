@@ -13,7 +13,10 @@ function linkIsValid(link, stack, modelTypes) {
 	if (!modelTypes.includes(link.collection)) {
 		return true;
 	}
-	return stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id).length > 0;
+	return (
+		stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id)
+			.length > 0
+	);
 }
 
 async function inspectLink(link, stack, modelTypes) {
@@ -36,7 +39,9 @@ async function inspectLinks(links, stack, modelTypes) {
 
 async function inspectMap(map, stack, modelTypes) {
 	const [listOfLinks, listOfLink] = partition(values(map), isArray);
-	const linksInspections = await Promise.all(listOfLinks.map(async links => inspectLinks(links, stack, modelTypes)));
+	const linksInspections = await Promise.all(
+		listOfLinks.map(async links => inspectLinks(links, stack, modelTypes))
+	);
 	const linkInspections = await Promise.all(
 		listOfLink.map(async link => {
 			const inspection = await inspectLink(link, stack, modelTypes);

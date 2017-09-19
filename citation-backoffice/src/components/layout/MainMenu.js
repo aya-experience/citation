@@ -55,7 +55,14 @@ const items = [
 	},
 	{
 		menu: (
-			<MainMenuItem key="model" isActive={isActive(1)} innerRef={refNode(1)} to="/model" title="Model" color={green} />
+			<MainMenuItem
+				key="model"
+				isActive={isActive(1)}
+				innerRef={refNode(1)}
+				to="/model"
+				title="Model"
+				color={green}
+			/>
 		),
 		node: null,
 		match: null

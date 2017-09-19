@@ -77,7 +77,12 @@ export const Button = props => (
 );
 
 export const ButtonLink = props => (
-	<ButtonLinkContainer {...omitProps(props)} type={props.type} color={props.color} size={props.size}>
+	<ButtonLinkContainer
+		{...omitProps(props)}
+		type={props.type}
+		color={props.color}
+		size={props.size}
+	>
 		<Icon icon={props.icon} size={`${sizes[props.size] / 2}rem`} />
 	</ButtonLinkContainer>
 );
@@ -103,7 +108,12 @@ Button.propTypes = {
 	size: oneOf(['big', 'medium', 'small'])
 };
 
-ButtonLink.propTypes = Button.propTypes;
+ButtonLink.propTypes = {
+	icon: string.isRequired,
+	type: string,
+	color: string,
+	size: oneOf(['big', 'medium', 'small'])
+};
 
 ButtonSvg.propTypes = {
 	...Button.propTypes,

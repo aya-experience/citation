@@ -18,7 +18,11 @@ export async function getComponentsPaths() {
 			return path.join(conf.work.components, i.toString());
 		}
 		if (components.dependency) {
-			const dependencyLinkedPath = path.join(conf.work.root, '../node_modules', components.dependency);
+			const dependencyLinkedPath = path.join(
+				conf.work.root,
+				'../node_modules',
+				components.dependency
+			);
 			return fs.realpath(dependencyLinkedPath);
 		}
 		return components.directory;
@@ -30,7 +34,9 @@ async function createComponentsJs() {
 	const componentsPaths = await getComponentsPaths();
 
 	await mapSeries(componentsPaths, async (componentsPath, i) => {
-		const moduleName = conf.components[i].dependency ? conf.components[i].dependency : `citation-components-${i}`;
+		const moduleName = conf.components[i].dependency
+			? conf.components[i].dependency
+			: `citation-components-${i}`;
 		const destination = path.join(builderNodeModulesPath, moduleName);
 		await fs.ensureSymlink(componentsPath, destination);
 	});

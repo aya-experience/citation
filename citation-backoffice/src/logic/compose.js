@@ -32,7 +32,9 @@ export const loadComponents = () => dispatch => {
 	const loadQuery = `{
 		Component ${componentFields}
 	}`;
-	return query(loadQuery).then(response => dispatch(loadComponentsSuccess(response.data.Component)));
+	return query(loadQuery).then(response =>
+		dispatch(loadComponentsSuccess(response.data.Component))
+	);
 };
 
 export const editComponentSave = component => (dispatch, getState) => {
@@ -108,7 +110,9 @@ export const sortComponentSave = ({ parent, oldIndex, newIndex }) => (dispatch, 
 		editComponent(component: {${data2query(parent.__id__, parentData)}})
 		${componentFields}
 	}`;
-	return mutation(saveMutation).then(response => dispatch(sortComponentsSuccess(response.data.editComponent)));
+	return mutation(saveMutation).then(response =>
+		dispatch(sortComponentsSuccess(response.data.editComponent))
+	);
 };
 
 function updateComponents(components, removeIds, additions) {
@@ -136,7 +140,11 @@ const reducer = createReducer(
 		[addComponentSuccess]: (state, { parent, component }) => ({
 			...state,
 			edition: { component: null, position: null, parent: null },
-			components: updateComponents(state.components, [parent.__id__, component.__id__], [parent, component])
+			components: updateComponents(
+				state.components,
+				[parent.__id__, component.__id__],
+				[parent, component]
+			)
 		}),
 		[removeComponentSuccess]: (state, { parent, component }) => ({
 			...state,

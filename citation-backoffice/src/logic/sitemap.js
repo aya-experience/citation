@@ -124,6 +124,11 @@ const reducer = createReducer(
 );
 
 export default undoable(reducer, {
-	filter: includeAction([loadPagesSuccess.toString(), movePage.toString(), addPage.toString(), editPage.toString()]),
+	filter: includeAction([
+		loadPagesSuccess.toString(),
+		movePage.toString(),
+		addPage.toString(),
+		editPage.toString()
+	]),
 	groupBy: groupByActionTypes(movePage.toString())
 });

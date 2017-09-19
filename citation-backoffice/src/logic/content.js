@@ -14,7 +14,9 @@ export function loadTypes(types) {
 	return dispatch => {
 		const queries = types.filter(testTypeName).map(type => `${type.name} {__id__}`);
 		return query(`{${queries}}`).then(response => {
-			const formatedData = mapValues(response.data, entries => fromPairs(entries.map(entry => [entry.__id__, entry])));
+			const formatedData = mapValues(response.data, entries =>
+				fromPairs(entries.map(entry => [entry.__id__, entry]))
+			);
 			return dispatch(loadTypesSuccess(formatedData));
 		});
 	};

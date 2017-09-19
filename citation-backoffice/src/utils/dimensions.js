@@ -15,7 +15,10 @@ function dimensions({ getDimensions = defaultGetDimensions } = {}) {
 			updateDimensionsImmediate = () => {
 				const dimensions = getDimensions(this._parent);
 
-				if (dimensions[0] !== this.state.containerWidth || dimensions[1] !== this.state.containerHeight) {
+				if (
+					dimensions[0] !== this.state.containerWidth ||
+					dimensions[1] !== this.state.containerHeight
+				) {
 					this.setState({
 						containerWidth: dimensions[0],
 						containerHeight: dimensions[1]
@@ -39,7 +42,9 @@ function dimensions({ getDimensions = defaultGetDimensions } = {}) {
 			// contains the component.
 			// Depends on `defaultView` which is not supported <IE9
 			getWindow() {
-				return this.refs.container ? this.refs.container.ownerDocument.defaultView || window : window;
+				return this.refs.container
+					? this.refs.container.ownerDocument.defaultView || window
+					: window;
 			}
 
 			componentDidMount() {
@@ -71,7 +76,11 @@ function dimensions({ getDimensions = defaultGetDimensions } = {}) {
 				return (
 					<div ref="wrapper">
 						{(containerWidth || containerHeight) && (
-								<ComposedComponent {...this.state} {...this.props} updateDimensions={this.updateDimensions} />
+								<ComposedComponent
+									{...this.state}
+									{...this.props}
+									updateDimensions={this.updateDimensions}
+								/>
 							)}
 					</div>
 				);
