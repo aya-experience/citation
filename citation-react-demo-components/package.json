@@ -1,6 +1,6 @@
 {
   "name": "citation-react-demo-components",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "scripts": {
     "lint": "../node_modules/.bin/eslint src",
@@ -34,12 +34,22 @@
     "sinon": "^3.2.0"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register", "babel-polyfill"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["react-app"],
-    "plugins": ["transform-es2015-modules-commonjs", "styled-components"]
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      "transform-es2015-modules-commonjs",
+      "styled-components"
+    ]
   }
 }

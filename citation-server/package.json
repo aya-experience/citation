@@ -1,6 +1,6 @@
 {
   "name": "citation-server",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "lib/index.js",
   "bin": {
@@ -18,9 +18,9 @@
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.0",
     "boom": "^5.2.0",
-    "citation-backoffice": "^0.2.0",
-    "citation-react-builder": "^0.2.0",
-    "citation-react-renderer": "^0.2.0",
+    "citation-backoffice": "^0.3.0",
+    "citation-react-builder": "^0.3.0",
+    "citation-react-renderer": "^0.3.0",
     "fs-extra": "^4.0.1",
     "graphql": "^0.7.2",
     "graphql-type-json": "^0.1.4",
@@ -54,11 +54,14 @@
   },
   "babel": {
     "presets": [
-      ["env", {
-        "targets": {
-          "node": 6
+      [
+        "env",
+        {
+          "targets": {
+            "node": 6
+          }
         }
-      }]
+      ]
     ],
     "plugins": [
       "transform-object-rest-spread"

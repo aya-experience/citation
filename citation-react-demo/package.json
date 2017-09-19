@@ -1,12 +1,12 @@
 {
   "name": "citation-demo",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "start": "citation-server"
   },
   "dependencies": {
-    "citation-server": "^0.2.0",
-    "citation-react-demo-components": "^0.2.0",
+    "citation-react-demo-components": "^0.3.0",
+    "citation-server": "^0.3.0",
     "react-particles-js": "^1.5.0"
   }
 }

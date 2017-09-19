@@ -1,6 +1,6 @@
 {
   "name": "citation-react-builder",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "citation-react-router": "^0.2.0",
+    "citation-react-router": "^0.3.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2"
@@ -19,11 +19,17 @@
     "react-scripts": "1.0.11"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "citation-react-router",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
@@ -33,8 +33,13 @@
     "react-test-renderer": "^1.0.3"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register", "babel-polyfill"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
     "babel": "inherit"
   },
   "babel": {
@@ -43,7 +48,9 @@
         "env",
         {
           "targets": {
-            "browsers": ["last 2 versions"],
+            "browsers": [
+              "last 2 versions"
+            ],
             "node": 6
           }
         }
@@ -53,7 +60,13 @@
     "plugins": [
       "transform-class-properties",
       "transform-object-rest-spread",
-      ["transform-runtime", { "polyfill": false, "regenerator": true }]
+      [
+        "transform-runtime",
+        {
+          "polyfill": false,
+          "regenerator": true
+        }
+      ]
     ]
   }
 }
