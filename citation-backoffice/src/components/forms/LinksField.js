@@ -27,7 +27,15 @@ const enhancer = withHandlers({
 	handleDown: ({ fields }) => index => () => fields.swap(index, index + 1)
 });
 
-const LinksField = ({ type, fields, collections, handleAdd, handleRemove, handleUp, handleDown }) => (
+const LinksField = ({
+	type,
+	fields,
+	collections,
+	handleAdd,
+	handleRemove,
+	handleUp,
+	handleDown
+}) => (
 	<FieldArrayContainer>
 		{fields.map((link, i) => (
 			<LinksInputLine key={i}>

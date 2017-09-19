@@ -1,7 +1,13 @@
 /* eslint no-use-before-define: 0 */
 
 import { isString, fromPairs } from 'lodash';
-import { GraphQLObjectType, GraphQLInputObjectType, GraphQLID, GraphQLList, GraphQLString } from 'graphql';
+import {
+	GraphQLObjectType,
+	GraphQLInputObjectType,
+	GraphQLID,
+	GraphQLList,
+	GraphQLString
+} from 'graphql';
 import GraphQLJSON from 'graphql-type-json';
 import winston from 'winston';
 
@@ -101,7 +107,10 @@ async function buildInputs() {
 				if (structure.type) {
 					resultFields.__value__ = buildInput(structure);
 				} else {
-					Object.assign(resultFields, fromPairs(structure.fields.map(field => [field.name, buildInput(field)])));
+					Object.assign(
+						resultFields,
+						fromPairs(structure.fields.map(field => [field.name, buildInput(field)]))
+					);
 				}
 				return resultFields;
 			}

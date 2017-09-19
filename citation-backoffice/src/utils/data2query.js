@@ -21,6 +21,5 @@ export default function data2query(oldId, data) {
 	} else {
 		delete data.__id__;
 	}
-	console.log('data2query', oldId, data.__newId__, data.__id__);
 	return formatData(data);
 }

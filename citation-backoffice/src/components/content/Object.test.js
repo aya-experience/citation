@@ -9,7 +9,7 @@ import { store } from '../../reduxMock';
 
 let ObjectComponent;
 let loadObject;
-let loadSchemaFields;
+let loadTypeFields;
 let writeObject;
 let deleteObject;
 
@@ -31,12 +31,12 @@ const setup = () =>
 test.beforeEach(() => {
 	id = 'id';
 	loadObject = sinon.stub().returns(objectReturned);
-	loadSchemaFields = sinon.stub().returns(schemaFieldsReturned);
+	loadTypeFields = sinon.stub().returns(schemaFieldsReturned);
 	writeObject = sinon.stub().returns(writeObjectReturned);
 	deleteObject = sinon.stub().returns(null);
 	ObjectComponent = proxyquire('./Object', {
-		'../../logic/objects': { loadObject, writeObject, deleteObject },
-		'../../logic/schema': { loadSchemaFields }
+		'../../logic/content': { loadObject, writeObject, deleteObject },
+		'../../logic/model': { loadTypeFields }
 	}).default;
 });
 

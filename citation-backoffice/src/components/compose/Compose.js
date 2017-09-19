@@ -3,11 +3,11 @@ import { object, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { lifecycle, withProps, compose } from 'recompose';
 import styled from 'styled-components';
+import { withRouter } from 'react-router';
 
 import { loadPage, loadComponents } from '../../logic/compose';
-import { loadSchemaFields } from '../../logic/schema';
+import { loadTypeFields } from '../../logic/model';
 import { startIframeMessageListener, stopIframeMessageListener } from './iframe-comunication';
-import EditPanel from './EditPanel';
 import { Breadcrumb } from '../common/Breadcrumb';
 import { Link } from '../common/Link';
 import { darkBlue } from '../style/colors';
@@ -27,14 +27,15 @@ const enhancer = compose(
 			load: () => {
 				dispatch(loadPage(match.params.id));
 				dispatch(loadComponents());
-				dispatch(loadSchemaFields(['Component']));
+				dispatch(loadTypeFields('Component'));
 			}
 		})
 	),
+	withRouter,
 	lifecycle({
 		componentDidMount() {
 			this.props.load();
-			startIframeMessageListener();
+			startIframeMessageListener(this.props.history);
 		},
 		componentWillUnmount() {
 			stopIframeMessageListener();
@@ -51,7 +52,6 @@ const Page = ({ compose, url }) => (
 		<Breadcrumb>
 			<Link to="/structure">STRUCTURE</Link> / {compose.page.__id__}
 		</Breadcrumb>
-		{compose.edition.component === null ? undefined : <EditPanel />}
 		<Iframe src={url} title="edition" />
 	</div>
 );

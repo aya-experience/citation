@@ -1,4 +1,4 @@
-import { get, map } from 'lodash';
+import { get, map, values } from 'lodash';
 import React from 'react';
 import { object, string } from 'prop-types';
 import { Field } from 'redux-form';
@@ -6,7 +6,7 @@ import { Field } from 'redux-form';
 import { InputLine } from '../common/Form';
 
 const LinkField = ({ type, input, collections }) => {
-	const values = get(collections, type ? type : input.value.__type__, []);
+	const options = values(get(collections, type ? type : input.value.__type__, {}));
 	return (
 		<InputLine>
 			{!type && (
@@ -19,9 +19,9 @@ const LinkField = ({ type, input, collections }) => {
 				</Field>
 			)}
 			<Field name={`${input.name}.__id__`} component="select">
-				{values.map((value, i) => (
-					<option key={i} value={value.__id__}>
-						{value.__id__}
+				{options.map(({ __id__ }) => (
+					<option key={__id__} value={__id__}>
+						{__id__}
 					</option>
 				))}
 			</Field>

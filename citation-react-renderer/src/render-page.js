@@ -40,7 +40,9 @@ export default async function renderPage(url, context, options) {
 			</script>
 		`.replace(/[\t\n]/g, '');
 
-		return context.indexContent.replace('</head>', replacementStyle).replace(options.anchor, replacementMarkup);
+		return context.indexContent
+			.replace('</head>', replacementStyle)
+			.replace(options.anchor, replacementMarkup);
 	} catch (error) {
 		logger.error(`Error while rendering ${url} ${error}`);
 		throw error;

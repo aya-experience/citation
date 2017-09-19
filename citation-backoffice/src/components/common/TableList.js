@@ -35,7 +35,7 @@ export const TableListCell = styled.div`
 	}
 
 	& ${ButtonContainer}, & ${ButtonLinkContainer} {
-		margin: -.9rem 0;
+		margin: -0.9rem 0;
 	}
 `;
 

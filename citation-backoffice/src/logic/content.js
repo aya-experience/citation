@@ -1,11 +1,26 @@
-import _ from 'lodash';
+import { merge, get, isUndefined, fromPairs, mapValues } from 'lodash';
 import { createAction, createReducer } from 'redux-act';
 
 import data2query from '../utils/data2query';
 import { query, mutation } from './graphql-client';
 
+import { testTypeName } from '../utils/filters';
+
+export const loadTypesSuccess = createAction('load types success');
 export const loadObjectStarted = createAction('load object started');
 export const loadObjectSuccess = createAction('load object success');
+
+export function loadTypes(types) {
+	return dispatch => {
+		const queries = types.filter(testTypeName).map(type => `${type.name} {__id__}`);
+		return query(`{${queries}}`).then(response => {
+			const formatedData = mapValues(response.data, entries =>
+				fromPairs(entries.map(entry => [entry.__id__, entry]))
+			);
+			return dispatch(loadTypesSuccess(formatedData));
+		});
+	};
+}
 
 export function generateTypes(fields) {
 	const requiredFields = Object.keys(fields).map(field => {
@@ -25,10 +40,10 @@ export function generateTypes(fields) {
 }
 
 export function loadObject(type, id, fields) {
-	const types = generateTypes(fields[type]);
+	const types = generateTypes(fields);
 	return (dispatch, getState) => {
-		const stateObject = _.get(getState(), `objects.${type}.${id}`);
-		if (!_.isUndefined(stateObject)) {
+		const stateObject = get(getState(), `objects.${type}.${id}`);
+		if (!isUndefined(stateObject)) {
 			return;
 		}
 		dispatch(loadObjectStarted({ type, id }));
@@ -43,7 +58,7 @@ export function deleteObject(type, id) {
 }
 
 export function writeObject(type, id, data, fields) {
-	const types = generateTypes(fields[type]);
+	const types = generateTypes(fields);
 	return dispatch => {
 		return mutation(
 			`
@@ -64,6 +79,7 @@ export function writeObject(type, id, data, fields) {
 
 export const reducer = createReducer(
 	{
+		[loadTypesSuccess]: (state, types) => merge({}, state, types),
 		[loadObjectStarted]: (state, payload) => ({
 			...state,
 			[payload.type]: {

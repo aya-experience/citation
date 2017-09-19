@@ -25,12 +25,12 @@ const FieldInputLine = InputLine.extend`
 
 		select {
 			margin-left: 1rem;
-			height: 100%;
 		}
 	}
 
 	& > ${ControlLine} {
 		width: 5rem;
+		margin-top: 0;
 	}
 `;
 

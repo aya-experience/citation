@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { array, object, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { loadSchemaFields, loadSchema, writeSchema } from '../logic/schema';
+import { loadSchemaFields, loadSchema, writeSchema } from '../logic/model';
 import SchemaComponent from './schema/Schema';
 import { filterSchemaFields } from './../utils/filters';
 
@@ -31,7 +31,11 @@ class Schema extends Component {
 		return (
 			<div>
 				<h1>Edit Schema</h1>
-				<SchemaComponent schema={this.props.schema} fields={this.props.fields} onSubmit={this.handleSubmit} />
+				<SchemaComponent
+					schema={this.props.schema}
+					fields={this.props.fields}
+					onSubmit={this.handleSubmit}
+				/>
 			</div>
 		);
 	}

@@ -7,7 +7,6 @@ import { query, mutation } from './graphql-client';
 
 export const loadPageSuccess = createAction('load page success');
 export const loadComponentsSuccess = createAction('load components success');
-export const editComponent = createAction('edit component');
 export const editComponentSuccess = createAction('edit component success');
 export const addComponent = createAction('add component');
 export const addComponentSuccess = createAction('add component success');
@@ -33,7 +32,9 @@ export const loadComponents = () => dispatch => {
 	const loadQuery = `{
 		Component ${componentFields}
 	}`;
-	return query(loadQuery).then(response => dispatch(loadComponentsSuccess(response.data.Component)));
+	return query(loadQuery).then(response =>
+		dispatch(loadComponentsSuccess(response.data.Component))
+	);
 };
 
 export const editComponentSave = component => (dispatch, getState) => {
@@ -109,7 +110,9 @@ export const sortComponentSave = ({ parent, oldIndex, newIndex }) => (dispatch, 
 		editComponent(component: {${data2query(parent.__id__, parentData)}})
 		${componentFields}
 	}`;
-	return mutation(saveMutation).then(response => dispatch(sortComponentsSuccess(response.data.editComponent)));
+	return mutation(saveMutation).then(response =>
+		dispatch(sortComponentsSuccess(response.data.editComponent))
+	);
 };
 
 function updateComponents(components, removeIds, additions) {
@@ -126,13 +129,8 @@ const reducer = createReducer(
 			...state,
 			components
 		}),
-		[editComponent]: (state, { component, position }) => ({
-			...state,
-			edition: { component, position, parent: null }
-		}),
 		[editComponentSuccess]: (state, { oldId, component }) => ({
 			...state,
-			edition: { component: null, position: null, parent: null },
 			components: updateComponents(state.components, [oldId], [component])
 		}),
 		[addComponent]: (state, { parent, position }) => ({
@@ -142,7 +140,11 @@ const reducer = createReducer(
 		[addComponentSuccess]: (state, { parent, component }) => ({
 			...state,
 			edition: { component: null, position: null, parent: null },
-			components: updateComponents(state.components, [parent.__id__, component.__id__], [parent, component])
+			components: updateComponents(
+				state.components,
+				[parent.__id__, component.__id__],
+				[parent, component]
+			)
 		}),
 		[removeComponentSuccess]: (state, { parent, component }) => ({
 			...state,
@@ -155,8 +157,7 @@ const reducer = createReducer(
 	},
 	{
 		page: {},
-		components: [],
-		edition: { component: null, position: null, parent: null }
+		components: []
 	}
 );
 

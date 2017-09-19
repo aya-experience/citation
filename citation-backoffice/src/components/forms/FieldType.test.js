@@ -23,7 +23,14 @@ class testComponent extends Component {
 
 const input = {};
 const setup = () =>
-	shallow(<FieldType input={input} kindName="Kind" typeName="Type" collections={['collection1', 'collection2']} />);
+	shallow(
+		<FieldType
+			input={input}
+			kindName="Kind"
+			typeName="Type"
+			collections={['collection1', 'collection2']}
+		/>
+	);
 
 test.beforeEach(() => {
 	FieldType = proxyquire('./FieldType', {

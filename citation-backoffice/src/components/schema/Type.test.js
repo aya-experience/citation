@@ -4,20 +4,21 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { store } from './../../reduxMock';
+import { store } from '../../reduxMock';
 
-let Schema;
+let Type;
 let onSubmit = sinon.spy();
 
 const match = { params: { id: 'TestType' } };
 
 const setup = () =>
-	shallow(<Schema match={match} onSubmit={onSubmit} />, { context: { store } })
+	shallow(<Type match={match} onSubmit={onSubmit} />, { context: { store } })
+		.dive()
 		.dive()
 		.dive();
 
 test.beforeEach(() => {
-	Schema = proxyquire('./Schema', {}).default;
+	Type = proxyquire('./Type', {}).default;
 });
 
 test('handleSubmit should call onSubmit with good args', async t => {
@@ -92,7 +93,7 @@ test('handleSubmit should call onSubmit with good args', async t => {
 	};
 	store.getState.returns({ schema, fields });
 
-	const schemaComponent = setup();
-	schemaComponent.instance().props.handleSubmit(fields.TestType);
+	const typeComponent = setup();
+	typeComponent.instance().props.handleSubmit(fields.TestType);
 	t.deepEqual(onSubmit.firstCall.args[0], expectedValues);
 });

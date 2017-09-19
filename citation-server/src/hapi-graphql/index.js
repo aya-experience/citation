@@ -4,7 +4,15 @@
 import { Stream } from 'stream';
 import Joi from 'joi';
 import Boom from 'boom';
-import { Source, parse, validate, execute, formatError, getOperationAST, specifiedRules } from 'graphql';
+import {
+	Source,
+	parse,
+	validate,
+	execute,
+	formatError,
+	getOperationAST,
+	specifiedRules
+} from 'graphql';
 // Import accepts from 'accepts';
 import { version } from '../../package.json';
 // Import renderGraphiQL from './renderGraphiQL';
@@ -38,7 +46,9 @@ const optionsSchema = {
  */
 const getOptions = async (options, request) => {
 	// Get options
-	const optionsData = await Promise.resolve(typeof options === 'function' ? options(request) : options);
+	const optionsData = await Promise.resolve(
+		typeof options === 'function' ? options(request) : options
+	);
 
 	// Validate options
 	const validation = Joi.validate(optionsData, optionsSchema.query);
@@ -168,7 +178,9 @@ const createResult = async ({
 			}
 
 			// Otherwise, report a 405: Method Not Allowed error.
-			throw Boom.methodNotAllowed(`Can only perform a ${operationAST.operation} operation from a POST request.`);
+			throw Boom.methodNotAllowed(
+				`Can only perform a ${operationAST.operation} operation from a POST request.`
+			);
 		}
 	}
 

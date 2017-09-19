@@ -63,7 +63,10 @@ export async function buildObjects() {
 				type = field.type[1] === '*' ? ObjectInterface : ObjectTypes[field.type[1]];
 				return { type, resolve: root => readChild(root[field.name]) };
 			case 'links':
-				type = field.type[1] === '*' ? new GraphQLList(ObjectInterface) : new GraphQLList(ObjectTypes[field.type[1]]);
+				type =
+					field.type[1] === '*'
+						? new GraphQLList(ObjectInterface)
+						: new GraphQLList(ObjectTypes[field.type[1]]);
 				return {
 					type,
 					resolve: root => readChildren(root[field.name], modelTypes)

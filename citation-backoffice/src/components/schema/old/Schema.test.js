@@ -7,9 +7,9 @@ import { shallow } from 'enzyme';
 import { store } from './../reduxMock';
 
 let SchemaComponent;
-let loadSchemaFields;
-let loadSchema;
-let writeSchema;
+let loadTypeFields;
+let loadTypes;
+let writeType;
 
 const schemaFieldsReturned = { schema: 'loadSchemaFields returned' };
 const schemaReturned = { object: 'loadSchema returned' };
@@ -21,11 +21,11 @@ const setup = () =>
 		.shallow();
 
 test.beforeEach(() => {
-	loadSchemaFields = sinon.stub().returns(schemaFieldsReturned);
-	loadSchema = sinon.stub().returns(schemaReturned);
-	writeSchema = sinon.stub().returns(writeSchemaReturned);
+	loadTypeFields = sinon.stub().returns(schemaFieldsReturned);
+	loadTypes = sinon.stub().returns(schemaReturned);
+	writeType = sinon.stub().returns(writeSchemaReturned);
 	SchemaComponent = proxyquire('./Schema', {
-		'../logic/schema': { loadSchemaFields, loadSchema, writeSchema }
+		'../logic/model': { loadTypeFields, loadTypes, writeType }
 	}).default;
 });
 
@@ -85,12 +85,12 @@ test('mapDispatchToProps should dispatch writeSchema', t => {
 });
 
 test('handleSubmit should call write with good args', t => {
-	writeSchema.reset();
+	writeType.reset();
 	const schema = {};
 	const fields = {};
 	const myData = 'myData';
 	store.getState.returns({ schema, fields });
 	const schemaComponent = setup();
 	schemaComponent.instance().handleSubmit(myData);
-	t.true(writeSchema.calledWith(myData));
+	t.true(writeType.calledWith(myData));
 });

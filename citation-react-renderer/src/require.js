@@ -3,7 +3,9 @@
 import _ from 'lodash';
 
 export default function requireComponents(componentsPathsSource) {
-	const componentsPaths = _.isArray(componentsPathsSource) ? componentsPathsSource : [componentsPathsSource];
+	const componentsPaths = _.isArray(componentsPathsSource)
+		? componentsPathsSource
+		: [componentsPathsSource];
 
 	return Object.assign(
 		{},

@@ -7,52 +7,50 @@ import { shallow } from 'enzyme';
 import { store } from './../reduxMock';
 
 let App;
-let loadCollection;
-let loadSchema;
+let loadContentTypes;
+let loadModelTypes;
 
-const collectionReturned = 'loadCollection returned';
-const schemaReturned = 'loadSchema returned';
+const contentTypesReturned = 'loadContentTypes returned';
+const modelTypesReturned = 'loadModelTypes returned';
 
 test.beforeEach(() => {
 	// eslint-disable-next-line no-undef
 	global.window = { location: { hostname: 'localhost' } };
-	loadCollection = sinon.stub().returns(collectionReturned);
-	loadSchema = sinon.stub().returns(schemaReturned);
+	loadContentTypes = sinon.stub().returns(contentTypesReturned);
+	loadModelTypes = sinon.stub().returns(modelTypesReturned);
 	App = proxyquire('./App', {
-		'../logic/collections': { loadCollection },
-		'../logic/schema': { loadSchema }
+		'../logic/content': { loadTypes: loadContentTypes },
+		'../logic/model': { loadTypes: loadModelTypes }
 	}).default;
+	store.dispatch.reset();
 });
 
 const setup = () => shallow(<App />, { context: { store } }).dive();
 
-test('componentDidMount should load schema and collections', async t => {
-	const loadCollectionsSpy = sinon.spy();
-	const loadSchemaMock = sinon.stub().returns(Promise.resolve(true));
-	store.getState.returns({ collections: {}, schema: { data: [] } });
+test('componentDidMount should load model and content', async t => {
+	store.getState.returns({ model: {} });
+	const loadContentTypes = sinon.spy();
+	const loadModelTypes = sinon.stub().returns(Promise.resolve());
 	const app = setup();
 	app.setProps({
-		loadCollections: loadCollectionsSpy,
-		loadSchema: loadSchemaMock
+		loadContentTypes,
+		loadModelTypes
 	});
 	await app.instance().componentDidMount();
-	t.is(loadCollectionsSpy.called, true);
+	t.is(loadModelTypes.called, true);
+	t.is(loadContentTypes.called, true);
 });
 
 test('mapDispatchToProps should dispatch loadSchema', t => {
-	store.dispatch.reset();
-	const collections = {};
-	store.getState.returns({ collections });
+	store.getState.returns({ model: {} });
 	const app = setup();
-	app.instance().props.loadSchema();
-	t.is(store.dispatch.args[0][0], schemaReturned);
+	app.instance().props.loadModelTypes();
+	t.is(store.dispatch.args[0][0], modelTypesReturned);
 });
 
 test('mapDispatchToProps should dispatch loadCollections()', t => {
-	store.dispatch.reset();
-	const collections = {};
-	store.getState.returns({ collections });
+	store.getState.returns({ model: {} });
 	const app = setup();
-	app.instance().props.loadCollections({ data: [test] });
-	t.is(store.dispatch.args[0][0], collectionReturned);
+	app.instance().props.loadContentTypes('test');
+	t.is(store.dispatch.args[0][0], contentTypesReturned);
 });

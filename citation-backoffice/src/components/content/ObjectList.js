@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, values } from 'lodash';
 import React from 'react';
 import { string, array } from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import { ButtonLink } from '../common/Button';
 
 const enhancer = connect((state, ownProps) => ({
 	type: ownProps.match.params.id,
-	objects: get(state.collections, ownProps.match.params.id, [])
+	objects: values(get(state.content, ownProps.match.params.id, {}))
 }));
 
 const ObjectList = ({ type, objects }) => (

@@ -1,11 +1,12 @@
 import { find } from 'lodash';
 
 import { store } from '../../logic/store';
-import { editComponent, removeComponentSave, addComponent, sortComponentSave } from '../../logic/compose';
+import { removeComponentSave, addComponent, sortComponentSave } from '../../logic/compose';
 
 const context = {
 	iframe: null,
-	messageListener: null
+	messageListener: null,
+	history: null
 };
 
 export const askReload = () => {
@@ -21,7 +22,7 @@ const iframeMessageDispatcher = event => {
 	console.log('message from iframe', event.data, component);
 	switch (event.data.type) {
 		case 'EDIT':
-			store.dispatch(editComponent({ component, position: event.data.position }));
+			context.history.push(`/structure/component/${component.__id__}`);
 			break;
 		case 'DELETE': {
 			const parent = find(store.getState().compose.components, {
@@ -48,7 +49,8 @@ const iframeMessageDispatcher = event => {
 	}
 };
 
-export const startIframeMessageListener = () => {
+export const startIframeMessageListener = history => {
+	context.history = history;
 	context.iframe = document.querySelector('iframe[title=edition]');
 	context.messageListener = event => {
 		if (event.source === context.iframe.contentWindow) {

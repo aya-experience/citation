@@ -1,7 +1,8 @@
 import React from 'react';
 import { array } from 'prop-types';
 import styled from 'styled-components';
-import dimensions from 'react-dimensions';
+
+import dimensions from '../../utils/dimensions';
 
 const MainMenuIndicatorContainer = styled.div`
 	position: absolute;
