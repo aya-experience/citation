@@ -1,7 +1,7 @@
 import { find } from 'lodash';
 
 import { store } from '../../logic/store';
-import { removeComponentSave, addComponent, sortComponentSave } from '../../logic/compose';
+import { removeComponentSave, sortComponentSave } from '../../logic/compose';
 
 const context = {
 	iframe: null,
@@ -22,7 +22,7 @@ const iframeMessageDispatcher = event => {
 	console.log('message from iframe', event.data, component);
 	switch (event.data.type) {
 		case 'EDIT':
-			context.history.push(`/structure/component/${component.__id__}`);
+			context.history.push(`/structure/compose/${context.pageId}/component/${component.__id__}`);
 			break;
 		case 'DELETE': {
 			const parent = find(store.getState().compose.components, {
@@ -32,7 +32,9 @@ const iframeMessageDispatcher = event => {
 			break;
 		}
 		case 'ADD_CHILD':
-			store.dispatch(addComponent({ parent: component, position: event.data.position }));
+			context.history.push(
+				`/structure/compose/${context.pageId}/component/parent/${component.__id__}`
+			);
 			break;
 		case 'SORT_CHILDREN':
 			store
@@ -49,11 +51,13 @@ const iframeMessageDispatcher = event => {
 	}
 };
 
-export const startIframeMessageListener = history => {
+export const startIframeMessageListener = (pageId, history) => {
+	console.log('start', pageId);
+	context.pageId = pageId;
 	context.history = history;
 	context.iframe = document.querySelector('iframe[title=edition]');
 	context.messageListener = event => {
-		if (event.source === context.iframe.contentWindow) {
+		if (context.iframe && event.source === context.iframe.contentWindow) {
 			iframeMessageDispatcher(event);
 		}
 	};

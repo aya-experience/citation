@@ -8,7 +8,6 @@ import { query, mutation } from './graphql-client';
 export const loadPageSuccess = createAction('load page success');
 export const loadComponentsSuccess = createAction('load components success');
 export const editComponentSuccess = createAction('edit component success');
-export const addComponent = createAction('add component');
 export const addComponentSuccess = createAction('add component success');
 export const removeComponentSuccess = createAction('remove component success');
 export const sortComponentsSuccess = createAction('sort components success');
@@ -55,7 +54,7 @@ export const editComponentSave = component => (dispatch, getState) => {
 
 export const addComponentSave = component => (dispatch, getState) => {
 	const parent = getState().compose.edition.parent;
-	const fields = getState().fields.Component;
+	const fields = getState().model.Component.fields;
 	if (!isArray(parent.children)) {
 		parent.children = [];
 	}
@@ -79,7 +78,7 @@ export const addComponentSave = component => (dispatch, getState) => {
 
 export const removeComponentSave = ({ parent, component }) => (dispatch, getState) => {
 	parent.children = parent.children.filter(child => child.__id__ !== component.__id__);
-	const fields = getState().fields.Component;
+	const fields = getState().model.Component.fields;
 	const parentData = form2data(parent, fields);
 	const componentData = form2data(component, fields);
 	const saveMutation = `{
@@ -104,7 +103,7 @@ export const sortComponentSave = ({ parent, oldIndex, newIndex }) => (dispatch, 
 	children[oldIndex] = children[newIndex];
 	children[newIndex] = temp;
 	parent.children = children;
-	const fields = getState().fields.Component;
+	const fields = getState().model.Component.fields;
 	const parentData = form2data(parent, fields);
 	const saveMutation = `{
 		editComponent(component: {${data2query(parent.__id__, parentData)}})
@@ -133,13 +132,8 @@ const reducer = createReducer(
 			...state,
 			components: updateComponents(state.components, [oldId], [component])
 		}),
-		[addComponent]: (state, { parent, position }) => ({
-			...state,
-			edition: { component: {}, position, parent }
-		}),
 		[addComponentSuccess]: (state, { parent, component }) => ({
 			...state,
-			edition: { component: null, position: null, parent: null },
 			components: updateComponents(
 				state.components,
 				[parent.__id__, component.__id__],

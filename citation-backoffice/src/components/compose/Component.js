@@ -35,16 +35,16 @@ const enhancer = compose(
 	})
 );
 
-const Component = ({ page, component, submit }) =>
-	component ? (
-		<div>
-			<Breadcrumb>
-				<Link to="/structure">STRUCTURE</Link> /{' '}
-				<Link to={`/structure/compose/${page.__id__}`}>{page.__id__}</Link> / {component.__id__}
-			</Breadcrumb>
-			<ComponentForm initialValues={component} onSubmit={submit} page={page} />
-		</div>
-	) : null;
+const Component = ({ page, component, submit }) => (
+	<div>
+		<Breadcrumb>
+			<Link to="/structure">STRUCTURE</Link> /{' '}
+			<Link to={`/structure/compose/${page.__id__}`}>{page.__id__}</Link> /{' '}
+			{component ? component.__id__ : 'New...'}
+		</Breadcrumb>
+		<ComponentForm initialValues={component ? component : null} onSubmit={submit} page={page} />
+	</div>
+);
 
 Component.propTypes = {
 	page: object.isRequired,

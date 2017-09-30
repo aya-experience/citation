@@ -1,50 +1,62 @@
 import React from 'react';
 import { array } from 'prop-types';
 import { Link } from 'react-router-dom';
-import styled, { injectGlobal } from 'styled-components';
+import styled from 'styled-components';
 
 // eslint-disable-next-line no-unused-expressions
-injectGlobal`
-	@import url('https://fonts.googleapis.com/css?family=Lato');
-
-	body {
-		margin: 0;
-		padding: 0;
-		font-family: 'Lato', sans-serif;
-	}
-`;
+// injectGlobal`
+// 	@import url('https://fonts.googleapis.com/css?family=Lato');
+//
+// 	body {
+// 		margin: 0;
+// 		padding: 0;
+// 		font-family: 'Lato', sans-serif;
+// 	}
+// `;
 
 const TopMenuContainer = styled.header`
+	position: relative;
+	padding: 0.1rem;
+	height: 4rem;
+	width: 100%;
 	display: flex;
+	flex-direction: row;
 	align-items: center;
-	justify-content: center;
-	color: white;
-	background-color: black;
+	justify-content: space-between;
+`;
 
-	& ul {
-		display: flex;
-		align-items: center;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-	}
+const LogoLink = styled(Link)`
+	padding: 0.5rem;
+	height: 100%;
 
-	& li {
-		padding: 0.5rem;
-	}
-
-	& a {
-		color: white;
+	img {
+		height: 100%;
 	}
 `;
 
-const TopMenu = ({ pages, links }) => {
-	const home = pages.filter(page => page.__id__ === 'home')[0];
-	const docs = home.children.filter(page => page.__id__ === 'docs')[0];
-	const others = home.children.filter(page => page.__id__ !== 'docs');
+const MediaLinks = styled.ul`
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	margin: 0;
+	padding: 0;
+`;
+
+const MediaLink = styled.a`margin: 1rem;`;
+
+const TopMenu = ({ links }) => {
+	// Const home = pages.filter(page => page.__id__ === 'home')[0];
+	// const docs = home.children.filter(page => page.__id__ === 'docs')[0];
+	// const others = home.children.filter(page => page.__id__ !== 'docs');
+
+	console.log('links', links);
 
 	return (
 		<TopMenuContainer>
+			<LogoLink to="/">
+				<img src="/admin/assets/logo.png" alt="Citation" />
+			</LogoLink>
+			{/*
 			<ul>
 				{docs.children.map(doc => (
 					<Link key={doc.id} to={`/docs/${doc.slug}`}>
@@ -59,19 +71,24 @@ const TopMenu = ({ pages, links }) => {
 					</Link>
 				))}
 			</ul>
-			<ul>
+			*/}
+			<MediaLinks>
 				{links.map(links => (
-					<a key={links.id} href={links.content} target="_blank" rel="noopener noreferrer">
+					<MediaLink
+						key={links.__id__}
+						href={links.content}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<li>{links.title}</li>
-					</a>
+					</MediaLink>
 				))}
-			</ul>
+			</MediaLinks>
 		</TopMenuContainer>
 	);
 };
 
 TopMenu.propTypes = {
-	pages: array.isRequired,
 	links: array.isRequired
 };
 

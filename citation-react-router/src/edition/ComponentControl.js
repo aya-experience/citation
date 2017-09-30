@@ -64,12 +64,11 @@ class ComponentControl extends Component {
 		this.handleDelete = this.handleDelete.bind(this);
 	}
 
-	handleEdit(event) {
+	handleEdit() {
 		window.parent.postMessage(
 			{
 				type: 'EDIT',
-				content: this.props.content,
-				position: event.pageY
+				content: this.props.content
 			},
 			'*'
 		);

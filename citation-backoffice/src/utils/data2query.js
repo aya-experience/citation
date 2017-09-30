@@ -1,5 +1,8 @@
 import { isString, isObject, isArray, map } from 'lodash';
 
+import { filterByKeys } from './objects';
+import { testFieldName } from './filters';
+
 function formatData(data) {
 	return map(data, (value, key) => {
 		let formatedData;
@@ -15,11 +18,13 @@ function formatData(data) {
 }
 
 export default function data2query(oldId, data) {
-	data.__newId__ = data.__id__;
+	const newId = data.__id__;
+	const newData = filterByKeys(data, testFieldName);
+	newData.__newId__ = newId;
+
 	if (isString(oldId)) {
-		data.__id__ = oldId;
-	} else {
-		delete data.__id__;
+		newData.__id__ = oldId;
 	}
-	return formatData(data);
+
+	return formatData(newData);
 }

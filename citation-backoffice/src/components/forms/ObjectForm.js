@@ -67,8 +67,8 @@ const getCustomFieldsComponents = (fields, collections) => {
 	return null;
 };
 
-const ObjectForm = ({ type, fields, collections, onSubmit, onDelete }) => (
-	<Form onSubmit={onSubmit}>
+const ObjectForm = ({ type, fields, collections, handleSubmit, onDelete }) => (
+	<Form onSubmit={handleSubmit}>
 		<FieldContainer>
 			<Label htmlFor="__id__">ID</Label>
 			<Field name="__id__" component="input" type="text" />
@@ -83,7 +83,7 @@ const ObjectForm = ({ type, fields, collections, onSubmit, onDelete }) => (
 );
 
 ObjectForm.propTypes = {
-	onSubmit: func.isRequired,
+	handleSubmit: func.isRequired,
 	onDelete: func.isRequired,
 	collections: object.isRequired,
 	fields: object.isRequired,

@@ -41,8 +41,7 @@ const enhancer = compose(
 		}
 	}),
 	withHandlers({
-		handleSubmit: ({ type, fields, write }) => values =>
-			write(form2data(values, fields[type]), fields[type]),
+		handleSubmit: ({ fields, write }) => values => write(form2data(values, fields), fields),
 		handleDelete: ({ del }) => () => del()
 	})
 );

@@ -1,3 +1,5 @@
+import './style/Global';
+
 import ComponentList from './common/ComponentList';
 import PageOrComponent from './common/PageOrComponent';
 import Banner from './home/Banner';

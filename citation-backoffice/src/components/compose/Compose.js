@@ -1,64 +1,41 @@
 import React from 'react';
-import { object, string } from 'prop-types';
+import { object } from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { lifecycle, withProps, compose } from 'recompose';
-import styled from 'styled-components';
-import { withRouter } from 'react-router';
+import { lifecycle, compose } from 'recompose';
 
 import { loadPage, loadComponents } from '../../logic/compose';
 import { loadTypeFields } from '../../logic/model';
-import { startIframeMessageListener, stopIframeMessageListener } from './iframe-comunication';
-import { Breadcrumb } from '../common/Breadcrumb';
-import { Link } from '../common/Link';
-import { darkBlue } from '../style/colors';
-
-const Iframe = styled.iframe`
-	border: solid 0.1rem ${darkBlue};
-	display: block;
-	width: 80rem;
-	margin: auto;
-	height: 80vh;
-`;
+import Page from './Page';
+import Component from './Component';
 
 const enhancer = compose(
-	connect(
-		state => ({ compose: state.compose }),
-		(dispatch, { match }) => ({
-			load: () => {
-				dispatch(loadPage(match.params.id));
-				dispatch(loadComponents());
-				dispatch(loadTypeFields('Component'));
-			}
-		})
-	),
-	withRouter,
+	connect(null, (dispatch, { match }) => ({
+		load: () => {
+			dispatch(loadPage(match.params.id));
+			dispatch(loadComponents());
+			dispatch(loadTypeFields('Component'));
+		}
+	})),
 	lifecycle({
 		componentDidMount() {
 			this.props.load();
-			startIframeMessageListener(this.props.history);
-		},
-		componentWillUnmount() {
-			stopIframeMessageListener();
 		}
-	}),
-	withProps(({ match }) => {
-		const host = window.location.hostname === 'localhost' ? 'http://localhost:4000' : '';
-		return { url: `${host}/edition/${match.params.id}` };
 	})
 );
 
-const Page = ({ compose, url }) => (
-	<div>
-		<Breadcrumb>
-			<Link to="/structure">STRUCTURE</Link> / {compose.page.__id__}
-		</Breadcrumb>
-		<Iframe src={url} title="edition" />
-	</div>
+const Compose = ({ match }) => (
+	<main>
+		<Switch>
+			<Route exact path={`${match.url}`} component={Page} />
+			<Route path={`${match.url}/component/parent/:parentId`} component={Component} />
+			<Route path={`${match.url}/component/:id`} component={Component} />
+		</Switch>
+	</main>
 );
 
-Page.propTypes = {
-	compose: object,
-	url: string
+Compose.propTypes = {
+	match: object.isRequired
 };
 
-export default enhancer(Page);
+export default enhancer(Compose);

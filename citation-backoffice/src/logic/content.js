@@ -70,7 +70,7 @@ export function writeObject(type, id, data, fields) {
 				loadObjectSuccess({
 					type,
 					id: response.data[`edit${type}`].__id__,
-					data: response.data.editObject
+					data: response.data[`edit${type}`]
 				})
 			)
 		);

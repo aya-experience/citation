@@ -23,12 +23,11 @@ class ComponentListControl extends Component {
 		this.handleAdd = this.handleAdd.bind(this);
 	}
 
-	handleAdd(event) {
+	handleAdd() {
 		window.parent.postMessage(
 			{
 				type: 'ADD_CHILD',
-				content: this.props.content,
-				position: event.pageY
+				content: this.props.content
 			},
 			'*'
 		);
@@ -38,9 +37,9 @@ class ComponentListControl extends Component {
 		return (
 			<div>
 				{this.props.children}
-				<div style={styles.lastElement}>
-					<div onClick={this.handleAdd}>Add an element</div>
-				</div>
+				<a style={styles.lastElement} onClick={this.handleAdd}>
+					<div>Add an element</div>
+				</a>
 			</div>
 		);
 	}
