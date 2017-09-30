@@ -17,7 +17,7 @@ const LeafPage = ({ page, direction, position, drag }) => (
 				fontSize={fontSize}
 				fill="black"
 				textAnchor={direction > 0 ? 'start' : 'end'}
-				alignmentBaseline="central"
+				dominantBaseline="central"
 			>
 				{page.__id__}
 			</text>

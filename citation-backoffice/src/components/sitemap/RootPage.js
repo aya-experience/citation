@@ -41,7 +41,7 @@ const RootPage = ({ page, position, drag }) => {
 					fontSize={fontSize}
 					fill="white"
 					textAnchor="middle"
-					alignmentBaseline="central"
+					dominantBaseline="central"
 				>
 					{page.__id__}
 				</text>

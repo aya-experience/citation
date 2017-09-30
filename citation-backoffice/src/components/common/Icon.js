@@ -1,5 +1,11 @@
 import React from 'react';
 import { string, object } from 'prop-types';
+import styled from 'styled-components';
+
+const Svg = styled.svg`
+	width: ${({ size }) => size};
+	height: ${({ size }) => size};
+`;
 
 const icons = {
 	edit: (
@@ -46,9 +52,9 @@ const icons = {
 };
 
 export const Icon = ({ icon, position, size }) => (
-	<svg x={position.x} y={position.y} width={size} height={size} viewBox="0 0 100 100">
+	<Svg x={position.x} y={position.y} width={size} height={size} size={size} viewBox="0 0 100 100">
 		{icons[icon]}
-	</svg>
+	</Svg>
 );
 
 Icon.propTypes = {

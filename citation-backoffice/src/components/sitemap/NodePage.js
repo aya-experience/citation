@@ -31,7 +31,7 @@ const NodePage = ({ page, direction, color, position, drag }) => {
 					fontSize={fontSize}
 					fill="black"
 					textAnchor="middle"
-					alignmentBaseline="baseline"
+					dominantBaseline="baseline"
 				>
 					{page.__id__}
 				</text>
