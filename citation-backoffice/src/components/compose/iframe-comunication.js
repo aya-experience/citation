@@ -52,7 +52,6 @@ const iframeMessageDispatcher = event => {
 };
 
 export const startIframeMessageListener = (pageId, history) => {
-	console.log('start', pageId);
 	context.pageId = pageId;
 	context.history = history;
 	context.iframe = document.querySelector('iframe[title=edition]');

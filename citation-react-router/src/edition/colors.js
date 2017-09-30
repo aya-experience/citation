@@ -10,7 +10,6 @@ const colors = [
 ];
 
 export function chooseColorForComponents(component, pointer) {
-	// Console.log('chooseColorForComponents', colors, component);
 	component.__color__ = colors[pointer];
 	pointer = (pointer + 1) % colors.length;
 	if (Array.isArray(component.children)) {
