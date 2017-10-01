@@ -26,5 +26,5 @@ export default function data2query(oldId, data) {
 		newData.__id__ = oldId;
 	}
 
-	return formatData(newData);
+	return formatData(newData).join(',');
 }

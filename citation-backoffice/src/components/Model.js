@@ -10,11 +10,11 @@ import { loadTypes } from '../logic/model';
 
 const enhancer = compose(
 	connect(null, dispatch => ({
-		loadSchema: () => dispatch(loadTypes())
+		load: () => dispatch(loadTypes())
 	})),
 	lifecycle({
 		componentDidMount() {
-			return this.props.loadSchema();
+			return this.props.load();
 		}
 	})
 );

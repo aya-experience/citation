@@ -28,7 +28,7 @@ const setup = () =>
 			input={input}
 			kindName="Kind"
 			typeName="Type"
-			collections={['collection1', 'collection2']}
+			types={['collection1', 'collection2']}
 		/>
 	);
 

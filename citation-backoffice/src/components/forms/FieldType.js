@@ -2,7 +2,7 @@ import React from 'react';
 import { object, array, string } from 'prop-types';
 import { Field } from 'redux-form';
 
-const FieldType = ({ input, kindName, typeName, collections }) => {
+const FieldType = ({ input, kindName, typeName, types }) => {
 	const kind = input.value;
 	const scalarTypes = ['String', 'RichText', 'Image', 'JSON'];
 	return (
@@ -29,7 +29,7 @@ const FieldType = ({ input, kindName, typeName, collections }) => {
 			</Field>
 			{!scalarTypes.includes(kind) && (
 				<Field name={typeName} component="select">
-					{collections.map((field, i) => (
+					{types.map((field, i) => (
 						<option key={i} value={field}>
 							{field}
 						</option>
@@ -44,7 +44,7 @@ FieldType.propTypes = {
 	input: object.isRequired,
 	typeName: string.isRequired,
 	kindName: string.isRequired,
-	collections: array.isRequired
+	types: array.isRequired
 };
 
 export default FieldType;

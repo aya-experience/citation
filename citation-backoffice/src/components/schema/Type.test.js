@@ -4,26 +4,41 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { store } from '../../reduxMock';
+import { store } from '../../utils/mocks/store.mock';
 
 let Type;
 let onSubmit = sinon.spy();
+let loadTypeFields = sinon.spy();
 
 const match = { params: { id: 'TestType' } };
 
+const innerSetup = () =>
+	shallow(<Type match={match} onSubmit={onSubmit} />, { context: { store } });
+
 const setup = () =>
-	shallow(<Type match={match} onSubmit={onSubmit} />, { context: { store } })
+	innerSetup()
 		.dive()
 		.dive()
 		.dive();
 
 test.beforeEach(() => {
-	Type = proxyquire('./Type', {}).default;
+	store.reset();
+	loadTypeFields = sinon.spy();
+	Type = proxyquire('./Type', {
+		'../../logic/model': { loadTypeFields }
+	}).default;
+});
+
+// Serial is needed to prevent messing with loadTypeFields spy
+test.serial('componentDidMount should call the loadTypeFields method with good args', async t => {
+	store.getState.returns({ model: {} });
+	const typeComponent = innerSetup().dive();
+	await typeComponent.instance().componentDidMount();
+	t.true(loadTypeFields.calledWith(match.params.id));
 });
 
 test('handleSubmit should call onSubmit with good args', async t => {
 	onSubmit = sinon.stub().returns(true);
-	const schema = { data: [] };
 	const fields = {
 		TestType: {
 			__name__: 'TestType',
@@ -91,7 +106,7 @@ test('handleSubmit should call onSubmit with good args', async t => {
 			}
 		]
 	};
-	store.getState.returns({ schema, fields });
+	store.getState.returns({ model: {} });
 
 	const typeComponent = setup();
 	typeComponent.instance().props.handleSubmit(fields.TestType);

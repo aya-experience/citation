@@ -11,7 +11,7 @@ const enhancer = reduxForm({
 	enableReinitialize: true
 });
 
-const SchemaForm = ({ collections, handleSubmit }) => {
+const SchemaForm = ({ types, handleSubmit }) => {
 	return (
 		<Form onSubmit={handleSubmit}>
 			<FieldContainer>
@@ -20,7 +20,7 @@ const SchemaForm = ({ collections, handleSubmit }) => {
 			</FieldContainer>
 			<FieldContainer>
 				<Label htmlFor="__fields__">fields</Label>
-				<FieldArray name="__fields__" component={SchemaFields} props={{ collections }} />
+				<FieldArray name="__fields__" component={SchemaFields} props={{ types }} />
 			</FieldContainer>
 			<ActionContainer>
 				<Button icon="check" type="submit" size="big" />
@@ -30,7 +30,7 @@ const SchemaForm = ({ collections, handleSubmit }) => {
 };
 
 SchemaForm.propTypes = {
-	collections: array.isRequired,
+	types: array.isRequired,
 	handleSubmit: func.isRequired
 };
 

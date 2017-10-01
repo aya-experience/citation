@@ -10,12 +10,12 @@ import KeyValueField from '../forms/KeyValueField';
 
 const enhancer = compose(
 	connect(state => ({
-		collections: state.content
+		types: state.content
 	})),
 	reduxForm({ form: 'page' })
 );
 
-const ComponentForm = ({ page, handleSubmit, collections }) => (
+const ComponentForm = ({ page, handleSubmit, types }) => (
 	<Form onSubmit={handleSubmit}>
 		<FieldContainer>
 			<Label htmlFor="__id__">Id</Label>
@@ -27,7 +27,7 @@ const ComponentForm = ({ page, handleSubmit, collections }) => (
 		</FieldContainer>
 		<FieldContainer>
 			<Label htmlFor="props">Props</Label>
-			<FieldArray name="props" component={KeyValueField} props={{ collections }} />
+			<FieldArray name="props" component={KeyValueField} props={{ types }} />
 		</FieldContainer>
 		<ActionContainer>
 			<ButtonLink icon="left" to={`/structure/compose/${page.__id__}`} size="big" />
@@ -39,7 +39,7 @@ const ComponentForm = ({ page, handleSubmit, collections }) => (
 ComponentForm.propTypes = {
 	page: object.isRequired,
 	handleSubmit: func.isRequired,
-	collections: object.isRequired
+	types: object.isRequired
 };
 
 export default enhancer(ComponentForm);

@@ -4,7 +4,7 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { store } from './../../reduxMock';
+import { store } from '../../utils/mocks/store.mock';
 
 let LinksField;
 const swap = sinon.stub().returns(null);

@@ -5,49 +5,47 @@ import { Field, FieldArray, reduxForm } from 'redux-form';
 
 import { Form, FieldContainer, Label, ActionContainer } from '../common/Form';
 import { Button, ButtonLink } from '../common/Button';
-import LinkField from './LinkField';
-import LinksField from './LinksField';
-import KeyValueField from './KeyValueField';
+import LinkField from '../forms/LinkField';
+import LinksField from '../forms/LinksField';
+import KeyValueField from '../forms/KeyValueField';
 import { red } from '../style/colors';
 import { testFieldName } from '../../utils/filters';
 
 const enhancer = reduxForm({
-	form: 'GenericObject',
+	form: 'Entry',
 	enableReinitialize: true
 });
 
-const getCustomFieldsComponents = (fields, collections) => {
+const getCustomFieldsComponents = (fields, types) => {
 	if (fields) {
 		return values(fields)
 			.filter(testFieldName)
 			.map(field => {
 				if (field.kind === 'OBJECT') {
 					if (field.typeName === '*') {
-						return <Field name={field.name} component={LinkField} props={{ collections }} />;
+						return <Field name={field.name} component={LinkField} props={{ types }} />;
 					}
 					return (
 						<Field
 							name={field.name}
 							component={LinkField}
-							props={{ collections, type: field.typeName }}
+							props={{ types, type: field.typeName }}
 						/>
 					);
 				} else if (field.kind === 'LIST') {
 					if (field.ofType === 'KeyValuePair') {
-						return (
-							<FieldArray name={field.name} component={KeyValueField} props={{ collections }} />
-						);
+						return <FieldArray name={field.name} component={KeyValueField} props={{ types }} />;
 					} else if (field.typeName === '*') {
-						return <FieldArray name={field.name} component={LinksField} props={{ collections }} />;
+						return <FieldArray name={field.name} component={LinksField} props={{ types }} />;
 					}
 					return (
 						<FieldArray
 							name={field.name}
 							component={LinksField}
-							props={{ collections, type: field.typeName }}
+							props={{ types, type: field.typeName }}
 						/>
 					);
-				} else if (fields[field.name].typeName === 'JSON') {
+				} else if (field.typeName === 'JSON') {
 					const format = value => JSON.stringify(value, null, 2);
 					const parse = value => JSON.parse(value);
 					return <Field name={field.name} component="textarea" format={format} parse={parse} />;
@@ -67,13 +65,13 @@ const getCustomFieldsComponents = (fields, collections) => {
 	return null;
 };
 
-const ObjectForm = ({ type, fields, collections, handleSubmit, onDelete }) => (
+const EntryForm = ({ type, fields, types, handleSubmit, onDelete }) => (
 	<Form onSubmit={handleSubmit}>
 		<FieldContainer>
 			<Label htmlFor="__id__">ID</Label>
 			<Field name="__id__" component="input" type="text" />
 		</FieldContainer>
-		{getCustomFieldsComponents(fields, collections)}
+		{getCustomFieldsComponents(fields, types)}
 		<ActionContainer>
 			<ButtonLink icon="left" to={`/content/type/${type}`} size="big" />
 			<Button icon="delete" onClick={onDelete} size="big" color={red} />
@@ -82,12 +80,12 @@ const ObjectForm = ({ type, fields, collections, handleSubmit, onDelete }) => (
 	</Form>
 );
 
-ObjectForm.propTypes = {
+EntryForm.propTypes = {
 	handleSubmit: func.isRequired,
 	onDelete: func.isRequired,
-	collections: object.isRequired,
+	types: object.isRequired,
 	fields: object.isRequired,
 	type: string.isRequired
 };
 
-export default enhancer(ObjectForm);
+export default enhancer(EntryForm);

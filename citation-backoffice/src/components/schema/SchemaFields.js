@@ -55,7 +55,7 @@ const enhancer = withHandlers({
 	handleRemove: ({ fields }) => index => () => fields.remove(index)
 });
 
-const SchemaFields = ({ fields, collections, handleRemove, handleAdd }) => {
+const SchemaFields = ({ fields, types, handleRemove, handleAdd }) => {
 	return (
 		<FieldArrayContainer>
 			{fields.map((link, i) => {
@@ -71,7 +71,7 @@ const SchemaFields = ({ fields, collections, handleRemove, handleAdd }) => {
 							props={{
 								kindName,
 								typeName,
-								collections
+								types
 							}}
 						/>
 						<ControlLine>
@@ -89,7 +89,7 @@ const SchemaFields = ({ fields, collections, handleRemove, handleAdd }) => {
 
 SchemaFields.propTypes = {
 	fields: object.isRequired,
-	collections: array.isRequired,
+	types: array.isRequired,
 	handleRemove: func.isRequired,
 	handleAdd: func.isRequired
 };

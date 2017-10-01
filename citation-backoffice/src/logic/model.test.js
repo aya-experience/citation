@@ -2,16 +2,13 @@ import test from 'ava';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
-import { winston } from './../winstonMock';
-
 let query;
 let model;
 
 test.beforeEach(() => {
 	query = sinon.stub();
 	model = proxyquire('./model', {
-		'./graphql-client': { query },
-		winston
+		'./graphql-client': { query }
 	});
 });
 

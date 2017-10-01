@@ -57,7 +57,7 @@ const enhancer = compose(
 	})
 );
 
-const ValueOrListField = ({ input, collections, isArray, handleToggle }) => (
+const ValueOrListField = ({ input, types, isArray, handleToggle }) => (
 	<ValueOrListContainer>
 		<PropNameContainer>
 			<Field name={`${input.name}.__key__`} component="input" />
@@ -67,9 +67,9 @@ const ValueOrListField = ({ input, collections, isArray, handleToggle }) => (
 			</ArrayCheckboxContainer>
 		</PropNameContainer>
 		{isArray ? (
-			<FieldArray name={`${input.name}.__list__`} component={LinksField} props={{ collections }} />
+			<FieldArray name={`${input.name}.__list__`} component={LinksField} props={{ types }} />
 		) : (
-			<Field name={`${input.name}.__value__`} component={LinkField} props={{ collections }} />
+			<Field name={`${input.name}.__value__`} component={LinkField} props={{ types }} />
 		)}
 	</ValueOrListContainer>
 );
@@ -78,7 +78,7 @@ ValueOrListField.propTypes = {
 	input: object.isRequired,
 	isArray: bool.isRequired,
 	handleToggle: func.isRequired,
-	collections: object.isRequired
+	types: object.isRequired
 };
 
 export default enhancer(ValueOrListField);

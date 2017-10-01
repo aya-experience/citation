@@ -2,13 +2,13 @@ import test from 'ava';
 import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 
-import { winston } from './../winstonMock';
+const type = 'TEST';
+const id = 'test';
 
-let objects;
+let content;
 let mutation;
 let query;
-let get;
-let isUndefined;
+let fields2query;
 
 const fields = {
 	field1: {
@@ -44,144 +44,78 @@ const formatedFields = [
 test.beforeEach(() => {
 	mutation = sinon.stub();
 	query = sinon.stub();
-	get = sinon.stub().returns(Promise.resolve([]));
-	isUndefined = sinon.stub().returns(Promise.resolve([]));
-	objects = proxyquire('./content', {
+	fields2query = sinon.stub();
+	content = proxyquire('./content', {
 		'./graphql-client': { query, mutation },
-		lodash: { get, isUndefined },
-		winston
+		fields2query
 	});
 });
 
-test('generateTypes should return formatted custom fields only', async t => {
-	t.deepEqual(objects.generateTypes(fields), formatedFields);
+test('loadEntry should dispatch result after querying the server ', async t => {
+	const getState = sinon.stub().returns({ content: { [type]: { [id]: 'state' } } });
+	const dispatchSpy = sinon.spy();
+	query.returns(Promise.resolve({ data: { [type]: ['test success'] } }));
+	await content.loadEntry(type, id, fields)(dispatchSpy, getState);
+	t.deepEqual(dispatchSpy.args[0][0].payload, { type, id });
 });
 
-test('loadObject should dispatch result after querying the server ', async t => {
-	const getState = sinon.spy();
+test('loadEntry should return if existingEntry is not empty', async t => {
+	fields2query.returns(formatedFields);
+	const getState = sinon
+		.stub()
+		.returns({ content: { [type]: { [id]: { __id__: id, field: 'value' } } } });
 	const dispatchSpy = sinon.spy();
-	const queryReturn = { data: { TEST: ['test success'] } };
-	query
-		.withArgs(`{TEST(id: "test") {__id__, ${formatedFields.join(', ')}}}`)
-		.returns(Promise.resolve(queryReturn));
-	get.withArgs(getState(), `objects.Test.test`).returns('state');
-	isUndefined.withArgs('state').returns(true);
-	await objects.loadObject('TEST', 'test', fields)(dispatchSpy, getState);
-	t.deepEqual(dispatchSpy.args[0][0].payload, { type: 'TEST', id: 'test' });
-});
-
-test('loadObject should return if stateObject is undefined', async t => {
-	const generateTypes = sinon.stub(objects, 'generateTypes');
-	const getState = sinon.spy();
-	const dispatchSpy = sinon.spy();
-	generateTypes.withArgs(fields).returns(formatedFields);
-	get.withArgs(getState(), `objects.Test.test`).returns();
-	isUndefined.withArgs().returns(false);
-	await objects.loadObject('TEST', 'test', fields)(dispatchSpy, getState);
+	await content.loadEntry(type, id, fields)(dispatchSpy, getState);
 	t.is(dispatchSpy.called, false);
 });
 
-test.only('writeObject should dispatch result after sending mutation to the server', async t => {
+test('writeEntry should dispatch result after sending mutation to the server', async t => {
 	const dispatchSpy = sinon.spy();
 	const data = {
 		__id__: 'id',
 		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
 	};
-	const generateTypes = sinon.stub(objects, 'generateTypes');
-	generateTypes.withArgs(fields).returns(formatedFields);
-	const mutationReturn = {
-		data: { editTEST: { __id__: 'id' }, editObject: 'myData' }
-	};
-
-	mutation
-		.withArgs(
-			`
-			{editTEST(test: {__id__: "id",data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"})
-			{${formatedFields.join(', ')}}}
-			`
-		)
-		.returns(Promise.resolve(mutationReturn));
-	await objects.writeObject('TEST', 'id', data, fields)(dispatchSpy);
+	fields2query.returns(formatedFields);
+	mutation.returns(
+		Promise.resolve({
+			data: { editTEST: { __id__: 'id' } }
+		})
+	);
+	await content.writeEntry('TEST', 'id', data, fields)(dispatchSpy);
 	t.deepEqual(dispatchSpy.args[0][0].payload, {
 		type: 'TEST',
-		data: 'myData',
+		data: { __id__: 'id' },
 		id: 'id'
 	});
 });
 
-test('if there is no id, writeObject should delete the property data.__id__', t => {
-	mutation.reset();
-	const dispatchSpy = sinon.spy();
-	const data = {
-		__id__: 'id',
-		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
-	};
-	const generateTypes = sinon.stub(objects, 'generateTypes');
-	generateTypes.withArgs(fields).returns(formatedFields);
-	const mutationReturn = {
-		data: { editTEST: { __id__: 'id' }, editObject: 'myData' }
-	};
-	mutation.returns(Promise.resolve(mutationReturn));
-	objects.writeObject('TEST', undefined, data, fields)(dispatchSpy);
-	t.is(
-		mutation.args[0][0],
-		`
-			{editTEST(test: {data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"})
-			{${formatedFields.join(', ')}}}
-			`
-	);
-});
-
-test('if there is an id, writeObject should put the id value for both data.__id__ and data.__newId__', t => {
-	mutation.reset();
-	const dispatchSpy = sinon.spy();
-	const data = {
-		__id__: 'id',
-		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
-	};
-	const generateTypes = sinon.stub(objects, 'generateTypes');
-	generateTypes.withArgs(fields).returns(formatedFields);
-	const mutationReturn = {
-		data: { editTEST: { __id__: 'id' }, editObject: 'myData' }
-	};
-	mutation.returns(Promise.resolve(mutationReturn));
-	objects.writeObject('TEST', 'id', data, fields)(dispatchSpy);
-	t.is(
-		mutation.args[0][0],
-		`
-			{editTEST(test: {__id__: "id",data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"})
-			{${formatedFields.join(', ')}}}
-			`
-	);
-});
-
 test('reducer for loadOjectStarted should return reduceResult', t => {
-	const reduceResult = objects.reducer(
+	const reduceResult = content.reducer(
 		{},
 		{
-			type: objects.loadObjectStarted.toString(),
+			type: content.loadEntryStarted.toString(),
 			payload: { type: 'TEST', id: 'id' }
 		}
 	);
 	t.deepEqual(reduceResult, { TEST: { id: null } });
 });
 
-test('reducer for loadObjectSuccess should return reduceResult', t => {
-	const reduceResult = objects.reducer(
+test('reducer for loadEntrySuccess should return reduceResult', t => {
+	const reduceResult = content.reducer(
 		{},
 		{
-			type: objects.loadObjectSuccess.toString(),
+			type: content.loadEntrySuccess.toString(),
 			payload: { type: 'TEST', id: 'id', data: 'myData' }
 		}
 	);
 	t.deepEqual(reduceResult, { TEST: { id: 'myData' } });
 });
 
-test('deleteObject should call mutation with good args', t => {
+test('deleteEntry should call mutation with good args', t => {
 	mutation.reset();
 	const type = 'type';
 	const id = 'id';
 	const expectedResult = `{delete${type}(${type.toLowerCase()}: {__id__: "${id}"}) {__id__, message}}`;
-	objects.deleteObject(type, id);
+	content.deleteEntry(type, id);
 	t.true(mutation.calledWith(expectedResult));
 });

@@ -15,11 +15,11 @@ const LinksInputLine = InputLine.extend`
 `;
 
 const enhancer = withHandlers({
-	handleAdd: ({ fields, collections }) => () => {
-		const keys = Object.keys(collections);
+	handleAdd: ({ fields, types }) => () => {
+		const keys = Object.keys(types);
 		fields.push({
 			__type__: keys[0],
-			__id__: collections[keys[0]][0].__id__
+			__id__: types[keys[0]][0].__id__
 		});
 	},
 	handleRemove: ({ fields }) => index => () => fields.remove(index),
@@ -27,19 +27,11 @@ const enhancer = withHandlers({
 	handleDown: ({ fields }) => index => () => fields.swap(index, index + 1)
 });
 
-const LinksField = ({
-	type,
-	fields,
-	collections,
-	handleAdd,
-	handleRemove,
-	handleUp,
-	handleDown
-}) => (
+const LinksField = ({ type, fields, types, handleAdd, handleRemove, handleUp, handleDown }) => (
 	<FieldArrayContainer>
 		{fields.map((link, i) => (
 			<LinksInputLine key={i}>
-				<Field name={link} component={LinkField} props={{ collections, type }} />
+				<Field name={link} component={LinkField} props={{ types, type }} />
 				<Button icon="delete" onClick={handleRemove(i)} color={red} />
 				{i > 0 && <Button icon="up" onClick={handleUp(i)} />}
 				{i + 1 < fields.length && <Button icon="down" onClick={handleDown(i)} />}
@@ -53,7 +45,7 @@ const LinksField = ({
 
 LinksField.propTypes = {
 	fields: object.isRequired,
-	collections: object.isRequired,
+	types: object.isRequired,
 	type: string,
 	handleAdd: func.isRequired,
 	handleRemove: func.isRequired,

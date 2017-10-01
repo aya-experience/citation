@@ -6,21 +6,21 @@ import { compose, lifecycle, withHandlers } from 'recompose';
 
 import { Link } from '../common/Link';
 import { Breadcrumb } from '../common/Breadcrumb';
-import { loadObject, writeObject, deleteObject } from '../../logic/content';
+import { loadEntry, writeEntry, deleteEntry } from '../../logic/content';
 import { loadTypeFields } from '../../logic/model';
-import ObjectForm from '../forms/ObjectForm';
+import EntryForm from './EntryForm';
 import form2data from '../../utils/form2data';
 
 const enhancer = compose(
 	connect(
 		(state, ownProps) => {
 			const { type, id } = ownProps.match.params;
-			let object = get(state.content, `${type}.${id}`, {});
-			object = object === null ? {} : object;
+			let entry = get(state.content, `${type}.${id}`, {});
+			entry = entry === null ? {} : entry;
 			return {
 				type,
 				id,
-				object,
+				entry,
 				fields: get(state.model, `${type}.fields`, {}),
 				types: state.content
 			};
@@ -29,9 +29,9 @@ const enhancer = compose(
 			const { type, id } = ownProps.match.params;
 			return {
 				loadFields: type => dispatch(loadTypeFields(type)),
-				load: fields => dispatch(loadObject(type, id, fields)),
-				write: (data, fields) => dispatch(writeObject(type, id, data, fields)),
-				del: () => deleteObject(type, id) // Delete is a reserved keyword
+				load: fields => dispatch(loadEntry(type, id, fields)),
+				write: (data, fields) => dispatch(writeEntry(type, id, data, fields)),
+				del: () => deleteEntry(type, id) // Delete is a reserved keyword
 			};
 		}
 	),
@@ -46,31 +46,31 @@ const enhancer = compose(
 	})
 );
 
-const ObjectComponent = ({ id, type, object, fields, types, handleSubmit, handleDelete }) => (
+const Entry = ({ id, type, entry, fields, types, handleSubmit, handleDelete }) => (
 	<div>
 		<Breadcrumb>
 			<Link to="/content">CONTENT</Link> / <Link to={`/content/type/${type}`}>{type}</Link> /{' '}
-			{id ? id : 'New object...'}
+			{id ? id : 'New entry...'}
 		</Breadcrumb>
-		<ObjectForm
+		<EntryForm
 			type={type}
-			initialValues={object}
+			initialValues={entry}
 			fields={fields}
-			collections={types}
+			types={types}
 			onSubmit={handleSubmit}
 			onDelete={handleDelete}
 		/>
 	</div>
 );
 
-ObjectComponent.propTypes = {
+Entry.propTypes = {
 	id: string.isRequired,
 	type: string.isRequired,
-	object: object.isRequired,
+	entry: object.isRequired,
 	fields: object.isRequired,
 	types: object.isRequired,
 	handleSubmit: func.isRequired,
 	handleDelete: func.isRequired
 };
 
-export default enhancer(ObjectComponent);
+export default enhancer(Entry);

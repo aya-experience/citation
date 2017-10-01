@@ -3,16 +3,16 @@ import { object } from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
 
 import TypeList from './TypeList';
-import ObjectList from './ObjectList';
-import ObjectComponent from './Object';
+import EntryList from './EntryList';
+import Entry from './Entry';
 
 const Content = ({ match }) => (
 	<main>
 		<Switch>
 			<Route exact path={`${match.url}`} component={TypeList} />
-			<Route path={`${match.url}/type/:id`} component={ObjectList} />
-			<Route path={`${match.url}/object/:type/:id`} component={ObjectComponent} />
-			<Route path={`${match.url}/object/:type`} component={ObjectComponent} />
+			<Route path={`${match.url}/type/:id`} component={EntryList} />
+			<Route path={`${match.url}/entry/:type/:id`} component={Entry} />
+			<Route path={`${match.url}/entry/:type`} component={Entry} />
 		</Switch>
 	</main>
 );

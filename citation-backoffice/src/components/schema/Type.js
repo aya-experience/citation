@@ -69,7 +69,7 @@ const Type = ({ type, types, handleSubmit }) => {
 				initialValues={initialValues}
 				schema={type.name}
 				onSubmit={handleSubmit}
-				collections={types}
+				types={types}
 			/>
 		</div>
 	);

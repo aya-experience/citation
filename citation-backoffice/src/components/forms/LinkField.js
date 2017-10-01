@@ -5,13 +5,13 @@ import { Field } from 'redux-form';
 
 import { InputLine } from '../common/Form';
 
-const LinkField = ({ type, input, collections }) => {
-	const options = values(get(collections, type ? type : input.value.__type__, {}));
+const LinkField = ({ type, input, types }) => {
+	const options = values(get(types, type ? type : input.value.__type__, {}));
 	return (
 		<InputLine>
 			{!type && (
 				<Field name={`${input.name}.__type__`} component="select">
-					{map(collections, (_, type) => (
+					{map(types, (_, type) => (
 						<option key={type} value={type}>
 							{type}
 						</option>
@@ -31,7 +31,7 @@ const LinkField = ({ type, input, collections }) => {
 
 LinkField.propTypes = {
 	input: object.isRequired,
-	collections: object.isRequired,
+	types: object.isRequired,
 	type: string
 };
 

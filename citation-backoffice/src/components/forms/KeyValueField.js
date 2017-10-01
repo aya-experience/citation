@@ -23,11 +23,11 @@ const enhancer = compose(
 	})
 );
 
-const KeyValueField = ({ collections, fields, handleAdd, handleRemove }) => (
+const KeyValueField = ({ types, fields, handleAdd, handleRemove }) => (
 	<FieldArrayContainer>
 		{fields.map((link, i) => (
 			<InputLine key={i}>
-				<Field name={link} component={ValueOrListField} props={{ collections }} />
+				<Field name={link} component={ValueOrListField} props={{ types }} />
 				<Button icon="delete" color={red} onClick={handleRemove(i)} />
 			</InputLine>
 		))}
@@ -41,7 +41,7 @@ KeyValueField.propTypes = {
 	handleAdd: func.isRequired,
 	handleRemove: func.isRequired,
 	fields: object.isRequired,
-	collections: object.isRequired
+	types: object.isRequired
 };
 
 export default enhancer(KeyValueField);

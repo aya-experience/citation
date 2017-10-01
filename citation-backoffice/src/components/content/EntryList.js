@@ -10,20 +10,20 @@ import { ButtonLink } from '../common/Button';
 
 const enhancer = connect((state, ownProps) => ({
 	type: ownProps.match.params.id,
-	objects: values(get(state.content, ownProps.match.params.id, {}))
+	entries: values(get(state.content, ownProps.match.params.id, {}))
 }));
 
-const ObjectList = ({ type, objects }) => (
+const EntryList = ({ type, entries }) => (
 	<div>
 		<Breadcrumb>
-			<Link to="/content">CONTENT</Link> / {type} / Choose an object...
+			<Link to="/content">CONTENT</Link> / {type} / Choose an entry...
 		</Breadcrumb>
 		<TableList>
-			{objects.map(({ __id__ }) => (
+			{entries.map(({ __id__ }) => (
 				<TableListRow key={__id__}>
-					<TableListLinkCell to={`/content/object/${type}/${__id__}`}>{__id__}</TableListLinkCell>
+					<TableListLinkCell to={`/content/entry/${type}/${__id__}`}>{__id__}</TableListLinkCell>
 					<TableListCell>
-						<ButtonLink icon="plus" to={`/content/object/${type}`} />
+						<ButtonLink icon="plus" to={`/content/entry/${type}`} />
 					</TableListCell>
 				</TableListRow>
 			))}
@@ -31,9 +31,9 @@ const ObjectList = ({ type, objects }) => (
 	</div>
 );
 
-ObjectList.propTypes = {
+EntryList.propTypes = {
 	type: string,
-	objects: array
+	entries: array
 };
 
-export default enhancer(ObjectList);
+export default enhancer(EntryList);

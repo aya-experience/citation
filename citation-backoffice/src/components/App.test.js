@@ -4,7 +4,7 @@ import proxyquire from 'proxyquire';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { store } from './../reduxMock';
+import { store } from '../utils/mocks/store.mock';
 
 let App;
 let loadContentTypes;
@@ -41,14 +41,14 @@ test('componentDidMount should load model and content', async t => {
 	t.is(loadContentTypes.called, true);
 });
 
-test('mapDispatchToProps should dispatch loadSchema', t => {
+test('mapDispatchToProps should dispatch loadModelTypes', t => {
 	store.getState.returns({ model: {} });
 	const app = setup();
 	app.instance().props.loadModelTypes();
 	t.is(store.dispatch.args[0][0], modelTypesReturned);
 });
 
-test('mapDispatchToProps should dispatch loadCollections()', t => {
+test('mapDispatchToProps should dispatch loadContentTypes()', t => {
 	store.getState.returns({ model: {} });
 	const app = setup();
 	app.instance().props.loadContentTypes('test');
