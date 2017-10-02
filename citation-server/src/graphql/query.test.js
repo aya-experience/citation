@@ -76,8 +76,8 @@ test('buildObjects should return in the fields field4 which is GraphQL named Jso
 	t.is(result.Type._typeConfig.fields().field4.type.name, 'JSON');
 });
 
-test('buildObjects should return in the fields field5 which is GraphQL named Object Interface Type', t => {
-	t.is(result.Type._typeConfig.fields().field5.type.name, 'Object');
+test('buildObjects should return in the fields field5 which is GraphQL named Entry Interface Type', t => {
+	t.is(result.Type._typeConfig.fields().field5.type.name, 'Entry');
 });
 
 test('buildObjects should return in the fields field6 which is GraphQL named Type Object Type', t => {
@@ -85,7 +85,7 @@ test('buildObjects should return in the fields field6 which is GraphQL named Typ
 });
 
 test('buildObjects should return in the fields field7 which is GraphQL named Object ObjectList Type', t => {
-	t.is(result.Type._typeConfig.fields().field7.type.ofType.name, 'Object');
+	t.is(result.Type._typeConfig.fields().field7.type.ofType.name, 'Entry');
 });
 
 test('buildObjects should return in the fields field8 which is GraphQL named Type ObjectList Type', t => {

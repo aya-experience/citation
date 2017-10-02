@@ -21,26 +21,26 @@ const values = {
 };
 const expected = {
 	test: {
-		links: [{ collection: 'testType', id: 'myTest' }],
+		links: [{ type: 'testType', id: 'myTest' }],
 		__role__: 'links'
 	},
 	secondTest: 'mySecondTest',
 	thirdTest: {
-		link: { collection: 'test', id: 'myThirdTest' },
+		link: { type: 'test', id: 'myThirdTest' },
 		__role__: 'link'
 	},
 	fourthTest: {
-		links: [{ collection: 'TEST', id: 'myFourthTest' }],
+		links: [{ type: 'TEST', id: 'myFourthTest' }],
 		__role__: 'links'
 	},
 	fifthTest: {
-		link: { collection: 'testType', id: 'myFifthTest' },
+		link: { type: 'testType', id: 'myFifthTest' },
 		__role__: 'link'
 	},
 	sixthTest: {
 		map: {
 			mySixthTest: {
-				collection: 'type',
+				type: 'type',
 				id: 'id'
 			}
 		},

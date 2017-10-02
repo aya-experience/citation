@@ -7,42 +7,42 @@ import conf from '../conf';
 
 const logger = winston.loggers.get('GitAsDb');
 
-export async function readCollection(type) {
+export async function readType(type) {
 	try {
-		logger.debug(`read collection ${type}`);
-		const collectionPath = path.resolve(conf.work.content, conf.content.branch, type);
-		const collectionFolders = await fs.readdir(collectionPath);
-		return await Promise.all(collectionFolders.map(folder => readObject(type, folder)));
+		logger.debug(`read type ${type}`);
+		const typePath = path.resolve(conf.work.content, conf.content.branch, type);
+		const typeFolders = await fs.readdir(typePath);
+		return await Promise.all(typeFolders.map(folder => readEntry(type, folder)));
 	} catch (error) {
-		logger.debug('GitAsDb read collection', error);
+		logger.debug('GitAsDb read type', error);
 		return [];
 	}
 }
 
-export async function readObject(type, id) {
+export async function readEntry(type, id) {
 	if (id === 'undefined') {
 		return null;
 	}
 	try {
-		logger.debug(`read object ${type} ${id}`);
-		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
-		const objectFiles = await fs.readdir(objectPath);
-		const objectFields = await Promise.all(
-			objectFiles.map(async file => {
+		logger.debug(`read entry ${type} ${id}`);
+		const entryPath = path.resolve(conf.work.content, conf.content.branch, type, id);
+		const entryFiles = await fs.readdir(entryPath);
+		const entryFields = await Promise.all(
+			entryFiles.map(async file => {
 				const ext = path.extname(file);
 				const key = path.basename(file, ext);
-				const contentString = (await fs.readFile(path.resolve(objectPath, file))).toString();
+				const contentString = (await fs.readFile(path.resolve(entryPath, file))).toString();
 				const content = ext === '.json' ? JSON.parse(contentString) : contentString.trim();
 				return { key, content };
 			})
 		);
-		const object = { __id__: id, __type__: type };
-		objectFields.forEach(field => {
-			object[field.key] = field.content;
+		const entry = { __id__: id, __type__: type };
+		entryFields.forEach(field => {
+			entry[field.key] = field.content;
 		});
-		return object;
+		return entry;
 	} catch (error) {
-		logger.debug('GitAsDb read object', error);
+		logger.debug('GitAsDb read entry', error);
 		return null;
 	}
 }

@@ -5,68 +5,28 @@ import { shallow } from 'enzyme';
 
 let TopMenu;
 
-const docs = {
-	__id__: 'docs',
-	children: [{ id: 'doc1', slug: 'slugDoc1', title: 'doc 1' }]
-};
-const other = { id: 'other', slug: 'other', title: 'other doc' };
-const pages = [
-	{
-		__id__: 'home',
-		children: [docs, other]
-	}
-];
-const link = { id: 'link', title: 'link', content: 'myLink' };
+const link = { __id__: 'link', title: 'link', content: 'myLink' };
 const links = [link];
 
-const setup = () => shallow(<TopMenu pages={pages} links={links} />);
+const setup = () => shallow(<TopMenu links={links} />);
 
 let topMenu;
-
-let docsUl;
-let othersUl;
-let linksUl;
 
 test.beforeEach(() => {
 	TopMenu = proxyquire('./TopMenu', {}).default;
 	topMenu = setup();
-	docsUl = topMenu.childAt(0).childAt(0);
-	othersUl = topMenu.childAt(1).childAt(0);
-	linksUl = topMenu.childAt(2).childAt(0);
 });
 
-test('Top Menu docs children should be display in a Link with id as key', t => {
-	t.deepEqual(docsUl.node.key, docs.children[0].id);
+test('Top Menu contains the Citation logo', t => {
+	const imgProps = topMenu.find('img').props();
+	t.true(imgProps.src.endsWith('logo.png'));
+	t.is(imgProps.alt, 'Citation');
 });
 
-test('Top Menu docs children should be display in a Link with slug as target', t => {
-	t.deepEqual(docsUl.node.props.to, `/docs/${docs.children[0].slug}`);
-});
-
-test('Top Menu docs children should be display in a Link with title', t => {
-	t.deepEqual(docsUl.children().text(), docs.children[0].title);
-});
-
-test('Top Menu other children should be display in a Link with id as key', t => {
-	t.deepEqual(othersUl.node.key, other.id);
-});
-
-test('Top Menu other children should be display in a Link with slug as target', t => {
-	t.deepEqual(othersUl.node.props.to, `/${other.slug}`);
-});
-
-test('Top Menu other children should be display in a Link with title', t => {
-	t.deepEqual(othersUl.children().text(), other.title);
-});
-
-test('Top Menu link should be display in a Link with id as key', t => {
-	t.deepEqual(linksUl.node.key, link.id);
-});
-
-test('Top Menu link should be display in a Link with content as target', t => {
-	t.deepEqual(linksUl.node.props.href, link.content);
-});
-
-test('Top Menu link should be display in a Link with title', t => {
-	t.deepEqual(linksUl.children().text(), link.title);
+test('Top Menu show all links with content as href and title as text', t => {
+	const mediaLink = topMenu.find('TopMenu__MediaLink');
+	const mediaLinkLi = mediaLink.find('li');
+	t.is(mediaLink.length, 1);
+	t.is(mediaLink.props().href, link.content);
+	t.is(mediaLinkLi.text(), link.title);
 });

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "babel-preset-react-app": "^3.0.2",
     "citation-react-router": "^0.3.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
@@ -19,17 +20,11 @@
     "react-scripts": "1.0.11"
   },
   "ava": {
-    "files": [
-      "src/**/*.test.js"
-    ],
-    "require": [
-      "babel-register"
-    ],
+    "files": ["src/**/*.test.js"],
+    "require": ["babel-register"],
     "babel": "inherit"
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ]
+    "presets": ["react-app"]
   }
 }

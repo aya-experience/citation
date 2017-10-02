@@ -5,7 +5,7 @@ function toLinkInput(input, type) {
 	return {
 		__role__: 'link',
 		link: {
-			collection: type === '*' ? link.__type__ : type,
+			type: type === '*' ? link.__type__ : type,
 			id: link.__id__
 		}
 	};
@@ -16,7 +16,7 @@ function toLinksInput(inputs, type) {
 	return {
 		__role__: 'links',
 		links: links.map(link => ({
-			collection: type === '*' ? link.__type__ : type,
+			type: type === '*' ? link.__type__ : type,
 			id: link.__id__
 		}))
 	};
@@ -31,10 +31,10 @@ function toKeyValueInput(inputPairs) {
 				pair.__key__,
 				pair.__value__ === null
 					? pair.__list__.map(link => ({
-							collection: link.__type__,
+							type: link.__type__,
 							id: link.__id__
 						}))
-					: { collection: pair.__value__.__type__, id: pair.__value__.__id__ }
+					: { type: pair.__value__.__type__, id: pair.__value__.__id__ }
 			])
 		)
 	};

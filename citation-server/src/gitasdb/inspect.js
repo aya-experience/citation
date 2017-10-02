@@ -10,12 +10,11 @@ import conf from '../conf';
 const logger = winston.loggers.get('GitAsDb');
 
 function linkIsValid(link, stack, modelTypes) {
-	if (!modelTypes.includes(link.collection)) {
+	if (!modelTypes.includes(link.type)) {
 		return true;
 	}
 	return (
-		stack.filter(stackLink => stackLink.collection === link.collection && stackLink.id === link.id)
-			.length > 0
+		stack.filter(stackLink => stackLink.type === link.type && stackLink.id === link.id).length > 0
 	);
 }
 
@@ -23,15 +22,15 @@ async function inspectLink(link, stack, modelTypes) {
 	if (linkIsValid(link, stack, modelTypes)) {
 		return {};
 	}
-	const { collection, id } = link;
-	return inspectObject(collection, id, modelTypes, [...stack, link]);
+	const { type, id } = link;
+	return inspectEntry(type, id, modelTypes, [...stack, link]);
 }
 
 async function inspectLinks(links, stack, modelTypes) {
 	const inspections = await Promise.all(
 		links.map(async link => {
 			const inspection = await inspectLink(link, stack, modelTypes);
-			return { [`... on ${link.collection}`]: inspection };
+			return { [`... on ${link.type}`]: inspection };
 		})
 	);
 	return mergeDeep({}, ...inspections);
@@ -45,7 +44,7 @@ async function inspectMap(map, stack, modelTypes) {
 	const linkInspections = await Promise.all(
 		listOfLink.map(async link => {
 			const inspection = await inspectLink(link, stack, modelTypes);
-			return { [`... on ${link.collection}`]: inspection };
+			return { [`... on ${link.type}`]: inspection };
 		})
 	);
 	return {
@@ -54,19 +53,19 @@ async function inspectMap(map, stack, modelTypes) {
 	};
 }
 
-export async function inspectObject(type, id, modelTypes, stack = []) {
+export async function inspectEntry(type, id, modelTypes, stack = []) {
 	try {
-		logger.debug(`inspect object ${type} ${id}`);
-		const objectPath = path.resolve(conf.work.content, conf.content.branch, type, id);
-		const objectFiles = await fs.readdir(objectPath);
-		const objectFields = [
+		logger.debug(`inspect entry ${type} ${id}`);
+		const entryPath = path.resolve(conf.work.content, conf.content.branch, type, id);
+		const entryFiles = await fs.readdir(entryPath);
+		const entryFields = [
 			'__id__',
 			...(await Promise.all(
-				objectFiles.map(async file => {
+				entryFiles.map(async file => {
 					const ext = path.extname(file);
 					const key = path.basename(file, ext);
 					if (ext === '.json') {
-						const contentBuffer = await fs.readFile(path.resolve(objectPath, file));
+						const contentBuffer = await fs.readFile(path.resolve(entryPath, file));
 						const content = JSON.parse(contentBuffer.toString());
 						if (content.__role__ === 'link') {
 							return {
@@ -88,7 +87,7 @@ export async function inspectObject(type, id, modelTypes, stack = []) {
 				})
 			))
 		];
-		return objectFields.filter(x => !_.isEmpty(x));
+		return entryFields.filter(x => !_.isEmpty(x));
 	} catch (error) {
 		logger.debug(`Gitasdb inspect error ${error}`);
 		return [];

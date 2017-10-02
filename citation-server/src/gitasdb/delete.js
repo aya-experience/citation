@@ -8,15 +8,15 @@ import conf from '../conf';
 
 const logger = winston.loggers.get('GitAsDb');
 
-export async function deleteObject(type, data) {
+export async function deleteEntry(type, data) {
 	try {
 		const repositoryPath = path.resolve(conf.work.content, conf.content.branch);
 		const repository = await create(repositoryPath);
 		const id = data.__id__;
-		const objectPath = path.resolve(repositoryPath, type, id);
+		const entryPath = path.resolve(repositoryPath, type, id);
 
-		if (await fs.existsSync(objectPath)) {
-			await fs.remove(objectPath);
+		if (await fs.existsSync(entryPath)) {
+			await fs.remove(entryPath);
 			const oid = await repository.add(path.join(type, id));
 			await repository.commit(oid);
 			await repository.push(conf.content.branch);

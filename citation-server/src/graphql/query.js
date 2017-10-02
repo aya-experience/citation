@@ -35,8 +35,8 @@ export async function buildObjects() {
 	const model = await readModel();
 	const modelTypes = getTypesNames(model);
 
-	const ObjectInterface = new GraphQLInterfaceType({
-		name: 'Object',
+	const EntryInterface = new GraphQLInterfaceType({
+		name: 'Entry',
 		fields: {
 			__id__: { type: GraphQLID },
 			__newId__: { type: GraphQLID },
@@ -50,8 +50,8 @@ export async function buildObjects() {
 		name: 'KeyValuePair',
 		fields: () => ({
 			__key__: { type: GraphQLString },
-			__value__: { type: ObjectInterface },
-			__list__: { type: new GraphQLList(ObjectInterface) }
+			__value__: { type: EntryInterface },
+			__list__: { type: new GraphQLList(EntryInterface) }
 		})
 	});
 
@@ -60,12 +60,12 @@ export async function buildObjects() {
 		let type;
 		switch (fieldType) {
 			case 'link':
-				type = field.type[1] === '*' ? ObjectInterface : ObjectTypes[field.type[1]];
+				type = field.type[1] === '*' ? EntryInterface : ObjectTypes[field.type[1]];
 				return { type, resolve: root => readChild(root[field.name]) };
 			case 'links':
 				type =
 					field.type[1] === '*'
-						? new GraphQLList(ObjectInterface)
+						? new GraphQLList(EntryInterface)
 						: new GraphQLList(ObjectTypes[field.type[1]]);
 				return {
 					type,
@@ -92,7 +92,7 @@ export async function buildObjects() {
 				structure.name,
 				new GraphQLObjectType({
 					name: structure.name,
-					interfaces: [ObjectInterface],
+					interfaces: [EntryInterface],
 					fields: () => ({
 						__id__: { type: GraphQLID },
 						__newId__: { type: GraphQLID },
