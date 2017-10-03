@@ -25,7 +25,11 @@ test.beforeEach(() => {
 	store.dispatch.reset();
 });
 
-const setup = () => shallow(<App />, { context: { store } }).dive();
+const setup = () =>
+	shallow(<App />, {
+		context: { store },
+		disableLifecycleMethods: true
+	}).dive();
 
 test('componentDidMount should load model and content', async t => {
 	store.getState.returns({ model: {} });

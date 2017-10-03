@@ -25,7 +25,8 @@ const writeEntryReturned = { entry: 'writeEntry returned' };
 
 const setup = () =>
 	shallow(<Entry match={{ params: { type, id } }} />, {
-		context: { store }
+		context: { store },
+		disableLifecycleMethods: true
 	});
 
 test.beforeEach(() => {

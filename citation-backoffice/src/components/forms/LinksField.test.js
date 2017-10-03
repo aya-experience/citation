@@ -12,7 +12,7 @@ const swap = sinon.stub().returns(null);
 const setup = () =>
 	shallow(<LinksField fields={{ map: () => {}, swap }} meta={{ error: '' }} />, {
 		context: { store }
-	}).dive();
+	});
 
 test.beforeEach(() => {
 	LinksField = proxyquire('./LinksField', {}).default;
@@ -20,12 +20,12 @@ test.beforeEach(() => {
 
 test('handleUp should call swap function with the given index and the index just before', t => {
 	const linksField = setup();
-	linksField.instance().props.handleUp(1)();
+	linksField.props().handleUp(1)();
 	t.true(swap.calledWith(1, 0));
 });
 
 test('handleDown should call swap function with the given index and the index just after', t => {
 	const linksField = setup();
-	linksField.instance().props.handleDown(1)();
+	linksField.props().handleDown(1)();
 	t.true(swap.calledWith(1, 2));
 });

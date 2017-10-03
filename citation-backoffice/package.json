@@ -13,10 +13,9 @@
     "babel-polyfill": "^6.26.0",
     "citation-react-router": "^0.3.0",
     "lodash": "^4.16.6",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dimensions": "^1.3.0",
-    "react-dom": "^15.6.1",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-draggable": "^2.2.6",
     "react-redux": "^4.4.5",
     "react-router": "^4.2.0",
@@ -35,7 +34,8 @@
     "babel-plugin-transform-require-ignore": "0.0.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react-app": "^3.0.2",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.4.1",
     "eslint-config-xo": "^0.18.2",
     "eslint-config-xo-react": "^0.13.0",
@@ -44,23 +44,33 @@
     "eslint-plugin-react": "^7.2.1",
     "proxyquire": "^1.8.0",
     "react-scripts": "1.0.11",
-    "react-test-renderer": "^1.0.3",
+    "react-test-renderer": "^16.0.0",
     "sinon": "^3.2.1"
   },
   "ava": {
-    "files": ["src/**/*.test.js", "!src/**/old/*.test.js"],
-    "require": ["babel-register"],
+    "files": [
+      "src/**/*.test.js",
+      "!src/**/old/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "./src/utils/mocks/enzyme.setup"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["react-app"],
+    "presets": [
+      "react-app"
+    ],
     "env": {
       "test": {
         "plugins": [
           [
             "babel-plugin-transform-require-ignore",
             {
-              "extensions": [".css"]
+              "extensions": [
+                ".css"
+              ]
             }
           ]
         ]

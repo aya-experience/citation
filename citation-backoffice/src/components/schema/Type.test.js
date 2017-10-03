@@ -12,14 +12,7 @@ let loadTypeFields = sinon.spy();
 
 const match = { params: { id: 'TestType' } };
 
-const innerSetup = () =>
-	shallow(<Type match={match} onSubmit={onSubmit} />, { context: { store } });
-
-const setup = () =>
-	innerSetup()
-		.dive()
-		.dive()
-		.dive();
+const setup = () => shallow(<Type match={match} onSubmit={onSubmit} />, { context: { store } });
 
 test.beforeEach(() => {
 	store.reset();
@@ -32,7 +25,7 @@ test.beforeEach(() => {
 // Serial is needed to prevent messing with loadTypeFields spy
 test.serial('componentDidMount should call the loadTypeFields method with good args', async t => {
 	store.getState.returns({ model: {} });
-	const typeComponent = innerSetup().dive();
+	const typeComponent = setup().dive();
 	await typeComponent.instance().componentDidMount();
 	t.true(loadTypeFields.calledWith(match.params.id));
 });
@@ -108,7 +101,9 @@ test('handleSubmit should call onSubmit with good args', async t => {
 	};
 	store.getState.returns({ model: {} });
 
-	const typeComponent = setup();
-	typeComponent.instance().props.handleSubmit(fields.TestType);
+	const typeComponent = setup()
+		.dive()
+		.dive();
+	typeComponent.props().handleSubmit(fields.TestType);
 	t.deepEqual(onSubmit.firstCall.args[0], expectedValues);
 });
