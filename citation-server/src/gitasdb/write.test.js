@@ -24,7 +24,7 @@ test('writeEntry should throw error with code 409 if the id is unavailable', asy
 	const type = 'type';
 	const repositoryPath = path.resolve(workingDirectory, 'master');
 	const dataPath = path.resolve(repositoryPath, type, 'foo');
-	const data = { __newId__: 'foo' };
+	const data = { _newId_: 'foo' };
 	create.withArgs(repositoryPath).returns(Promise.resolve(null));
 	existsSync.withArgs(dataPath).returns(Promise.resolve(true));
 	const err = await t.throws(write.writeEntry(type, data));
@@ -40,13 +40,13 @@ test('emptyField should return false if field is a string', t => {
 });
 
 test('emptyField should return false if field is an entry with a role and a non empty correspondance to this role', t => {
-	t.false(write.emptyField({ __role__: 'test', test: 'myTest' }));
+	t.false(write.emptyField({ _role_: 'test', test: 'myTest' }));
 });
 
 test('emptyField should return true if field is an entry with a role and an empty array as correspondance to this role', t => {
-	t.true(write.emptyField({ __role__: 'test', test: [] }));
+	t.true(write.emptyField({ _role_: 'test', test: [] }));
 });
 
 test('emptyField should return true if field is an entry with a role and an empty entry as correspondance to this role', t => {
-	t.true(write.emptyField({ __role__: 'test', test: {} }));
+	t.true(write.emptyField({ _role_: 'test', test: {} }));
 });

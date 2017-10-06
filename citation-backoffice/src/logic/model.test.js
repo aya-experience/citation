@@ -15,7 +15,7 @@ test.beforeEach(() => {
 test('queryExistingTypes should query and parse data', async t => {
 	const data = {
 		data: {
-			__schema: {
+			_schema: {
 				types: [{ name: 'Page', kind: 'OBJECT', fields: [{ name: 'test' }] }]
 			}
 		}
@@ -36,7 +36,7 @@ test('queryExistingTypes should query and parse data', async t => {
 test('queryTypeFields should return fields object', async t => {
 	const data = {
 		data: {
-			__type: {
+			_type: {
 				name: 'TEST',
 				fields: [{ name: 'id', type: { name: 'ID', kind: 'SCALAR' } }]
 			}

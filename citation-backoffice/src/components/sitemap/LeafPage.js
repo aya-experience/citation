@@ -19,7 +19,7 @@ const LeafPage = ({ page, direction, position, drag }) => (
 				textAnchor={direction > 0 ? 'start' : 'end'}
 				dominantBaseline="central"
 			>
-				{page.__id__}
+				{page._id_}
 			</text>
 			<ButtonGroup
 				position={{

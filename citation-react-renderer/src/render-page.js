@@ -16,8 +16,8 @@ export default async function renderPage(url, context, options) {
 		const sheet = new ServerStyleSheet();
 
 		global.window = {
-			__pages__: context.pages,
-			__contents__: context.preparedContents
+			_pages_: context.pages,
+			_contents_: context.preparedContents
 		};
 
 		const markup = renderToString(
@@ -35,8 +35,8 @@ export default async function renderPage(url, context, options) {
 		const replacementMarkup = `
 			<div id="root">${markup}</div>
 			<script>
-				window.__pages__=${JSON.stringify(global.window.__pages__)};
-				window.__contents__=${JSON.stringify(global.window.__contents__)};
+				window._pages_=${JSON.stringify(global.window._pages_)};
+				window._contents_=${JSON.stringify(global.window._contents_)};
 			</script>
 		`.replace(/[\t\n]/g, '');
 

@@ -15,12 +15,12 @@ const SchemaForm = ({ types, handleSubmit }) => {
 	return (
 		<Form onSubmit={handleSubmit}>
 			<FieldContainer>
-				<Label htmlFor="__name__">ID</Label>
-				<Field name="__name__" component="input" type="text" />
+				<Label htmlFor="_name_">ID</Label>
+				<Field name="_name_" component="input" type="text" />
 			</FieldContainer>
 			<FieldContainer>
-				<Label htmlFor="__fields__">fields</Label>
-				<FieldArray name="__fields__" component={SchemaFields} props={{ types }} />
+				<Label htmlFor="_fields_">fields</Label>
+				<FieldArray name="_fields_" component={SchemaFields} props={{ types }} />
 			</FieldContainer>
 			<ActionContainer>
 				<Button icon="check" type="submit" size="big" />

@@ -36,7 +36,7 @@ export async function readEntry(type, id) {
 				return { key, content };
 			})
 		);
-		const entry = { __id__: id, __type__: type };
+		const entry = { _id_: id, _type_: type };
 		entryFields.forEach(field => {
 			entry[field.key] = field.content;
 		});

@@ -38,20 +38,20 @@ export async function buildObjects() {
 	const EntryInterface = new GraphQLInterfaceType({
 		name: 'Entry',
 		fields: {
-			__id__: { type: GraphQLID },
-			__newId__: { type: GraphQLID },
-			__type__: { type: GraphQLString },
-			__tree__: { type: GraphQLString }
+			_id_: { type: GraphQLID },
+			_newId_: { type: GraphQLID },
+			_type_: { type: GraphQLString },
+			_tree_: { type: GraphQLString }
 		},
-		resolveType: value => ObjectTypes[value.__type__]
+		resolveType: value => ObjectTypes[value._type_]
 	});
 
 	const KeyValuePair = new GraphQLObjectType({
 		name: 'KeyValuePair',
 		fields: () => ({
-			__key__: { type: GraphQLString },
-			__value__: { type: EntryInterface },
-			__list__: { type: new GraphQLList(EntryInterface) }
+			_key_: { type: GraphQLString },
+			_value_: { type: EntryInterface },
+			_list_: { type: new GraphQLList(EntryInterface) }
 		})
 	});
 
@@ -94,10 +94,10 @@ export async function buildObjects() {
 					name: structure.name,
 					interfaces: [EntryInterface],
 					fields: () => ({
-						__id__: { type: GraphQLID },
-						__newId__: { type: GraphQLID },
-						__type__: { type: GraphQLString },
-						__tree__: {
+						_id_: { type: GraphQLID },
+						_newId_: { type: GraphQLID },
+						_type_: { type: GraphQLString },
+						_tree_: {
 							type: GraphQLString,
 							resolve: root => inspect(root, modelTypes)
 						},

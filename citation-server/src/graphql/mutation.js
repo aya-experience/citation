@@ -28,7 +28,7 @@ export const LinkDataInputType = new GraphQLInputObjectType({
 export const LinkInputType = new GraphQLInputObjectType({
 	name: 'LinkInput',
 	fields: () => ({
-		__role__: { type: GraphQLString },
+		_role_: { type: GraphQLString },
 		link: { type: LinkDataInputType }
 	})
 });
@@ -36,7 +36,7 @@ export const LinkInputType = new GraphQLInputObjectType({
 export const LinksInputType = new GraphQLInputObjectType({
 	name: 'LinksInput',
 	fields: () => ({
-		__role__: { type: GraphQLString },
+		_role_: { type: GraphQLString },
 		links: { type: new GraphQLList(LinkDataInputType) }
 	})
 });
@@ -44,7 +44,7 @@ export const LinksInputType = new GraphQLInputObjectType({
 export const MapInputType = new GraphQLInputObjectType({
 	name: 'MapInput',
 	fields: () => ({
-		__role__: { type: GraphQLString },
+		_role_: { type: GraphQLString },
 		map: { type: GraphQLJSON }
 	})
 });
@@ -100,12 +100,12 @@ async function buildInputs() {
 			name: `${structure.name}Input`,
 			fields: () => {
 				const resultFields = {
-					__id__: { type: GraphQLID },
-					__newId__: { type: GraphQLID }
+					_id_: { type: GraphQLID },
+					_newId_: { type: GraphQLID }
 				};
 
 				if (structure.type) {
-					resultFields.__value__ = buildInput(structure);
+					resultFields._value_ = buildInput(structure);
 				} else {
 					Object.assign(
 						resultFields,
@@ -122,9 +122,9 @@ async function buildInputs() {
 
 export const buildDeleteObject = key =>
 	new GraphQLObjectType({
-		name: `__DeleteObject${key}__`,
+		name: `_DeleteObject${key}_`,
 		fields: {
-			__id__: { type: GraphQLID },
+			_id_: { type: GraphQLID },
 			message: { type: GraphQLString }
 		}
 	});

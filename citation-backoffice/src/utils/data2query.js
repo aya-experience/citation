@@ -18,12 +18,12 @@ function formatData(data) {
 }
 
 export default function data2query(oldId, data) {
-	const newId = data.__id__;
+	const newId = data._id_;
 	const newData = filterByKeys(data, testFieldName);
-	newData.__newId__ = newId;
+	newData._newId_ = newId;
 
 	if (isString(oldId)) {
-		newData.__id__ = oldId;
+		newData._id_ = oldId;
 	}
 
 	return formatData(newData).join(',');

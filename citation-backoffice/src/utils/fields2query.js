@@ -2,16 +2,16 @@ import { map } from 'lodash';
 
 export default function fields2query(fields) {
 	return [
-		'__id__',
+		'_id_',
 		...map(fields, (field, fieldId) => {
 			if (field.kind === 'OBJECT' || field.kind === 'LIST') {
 				if (field.ofType === 'KeyValuePair') {
-					return `${fieldId} {__key__, __value__ {__id__, __type__}, __list__ {__id__, __type__}}`;
+					return `${fieldId} {_key_, _value_ {_id_, _type_}, _list_ {_id_, _type_}}`;
 				}
 				if (field.typeName === '*') {
-					return `${fieldId} {__id__, __type__}`;
+					return `${fieldId} {_id_, _type_}`;
 				}
-				return `${fieldId} {__id__}`;
+				return `${fieldId} {_id_}`;
 			}
 			return `${fieldId}`;
 		})

@@ -7,7 +7,7 @@ export const loadFieldsSuccess = createAction('load schema fields success');
 
 export async function queryExistingTypes() {
 	const response = await query(`{
-		__schema {
+		_schema {
 			types {
 				name
 				kind
@@ -19,7 +19,7 @@ export async function queryExistingTypes() {
 	}`);
 
 	return fromPairs(
-		response.data.__schema.types
+		response.data._schema.types
 			.filter(type => type.kind === 'OBJECT')
 			.map(type => {
 				type.fields = fromPairs(type.fields.map(field => [field.name, field]));
@@ -31,7 +31,7 @@ export async function queryExistingTypes() {
 
 export async function queryTypeFields(type) {
 	const response = await query(`{
-		__type(name: "${type}") {
+		_type(name: "${type}") {
 			name
 			fields {
 				name
@@ -48,7 +48,7 @@ export async function queryTypeFields(type) {
 	}`);
 
 	return fromPairs(
-		response.data.__type.fields.map(field => {
+		response.data._type.fields.map(field => {
 			return [
 				field.name,
 				{

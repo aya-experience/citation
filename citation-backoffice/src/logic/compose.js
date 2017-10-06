@@ -13,15 +13,15 @@ export const removeComponentSuccess = createAction('remove component success');
 export const sortComponentsSuccess = createAction('sort components success');
 
 const componentFields = `{
-	__id__, type,
-	children {__id__},
-	props {__key__, __value__ {__id__, __type__}, __list__ {__id__, __type__}}
+	_id_, type,
+	children {_id_},
+	props {_key_, _value_ {_id_, _type_}, _list_ {_id_, _type_}}
 }`;
 
 export const loadPage = id => dispatch => {
 	const loadQuery = `{
 		Page(id: "${id}") {
-			__id__, slug, title
+			_id_, slug, title
 		}
 	}`;
 	return query(loadQuery).then(response => dispatch(loadPageSuccess(response.data.Page[0])));
@@ -37,7 +37,7 @@ export const loadComponents = () => dispatch => {
 };
 
 export const editComponentSave = component => (dispatch, getState) => {
-	const oldId = getState().compose.edition.component.__id__;
+	const oldId = getState().compose.edition.component._id_;
 	const saveMutation = `{
 		editComponent(component: {${data2query(oldId, component)}})
 		${componentFields}
@@ -58,12 +58,12 @@ export const addComponentSave = component => (dispatch, getState) => {
 	if (!isArray(parent.children)) {
 		parent.children = [];
 	}
-	parent.children.push({ __id__: component.__id__ });
+	parent.children.push({ _id_: component._id_ });
 	const parentData = form2data(parent, fields);
 	const saveMutation = `{
-		component: editComponent(component: {${data2query(component.__id__, component)}})
+		component: editComponent(component: {${data2query(component._id_, component)}})
 		${componentFields}
-		parent: editComponent(component: {${data2query(parent.__id__, parentData)}})
+		parent: editComponent(component: {${data2query(parent._id_, parentData)}})
 		${componentFields}
 	}`;
 	return mutation(saveMutation).then(response =>
@@ -77,15 +77,15 @@ export const addComponentSave = component => (dispatch, getState) => {
 };
 
 export const removeComponentSave = ({ parent, component }) => (dispatch, getState) => {
-	parent.children = parent.children.filter(child => child.__id__ !== component.__id__);
+	parent.children = parent.children.filter(child => child._id_ !== component._id_);
 	const fields = getState().model.Component.fields;
 	const parentData = form2data(parent, fields);
 	const componentData = form2data(component, fields);
 	const saveMutation = `{
-		editComponent(component: {${data2query(parent.__id__, parentData)}})
+		editComponent(component: {${data2query(parent._id_, parentData)}})
 		${componentFields}
-		deleteComponent(component: {${data2query(component.__id__, componentData)}})
-		{__id__, message}
+		deleteComponent(component: {${data2query(component._id_, componentData)}})
+		{_id_, message}
 	}`;
 	return mutation(saveMutation).then(response =>
 		dispatch(
@@ -106,7 +106,7 @@ export const sortComponentSave = ({ parent, oldIndex, newIndex }) => (dispatch, 
 	const fields = getState().model.Component.fields;
 	const parentData = form2data(parent, fields);
 	const saveMutation = `{
-		editComponent(component: {${data2query(parent.__id__, parentData)}})
+		editComponent(component: {${data2query(parent._id_, parentData)}})
 		${componentFields}
 	}`;
 	return mutation(saveMutation).then(response =>
@@ -115,7 +115,7 @@ export const sortComponentSave = ({ parent, oldIndex, newIndex }) => (dispatch, 
 };
 
 function updateComponents(components, removeIds, additions) {
-	return [...components.filter(component => removeIds.includes(component.__id__)), ...additions];
+	return [...components.filter(component => removeIds.includes(component._id_)), ...additions];
 }
 
 const reducer = createReducer(
@@ -136,17 +136,17 @@ const reducer = createReducer(
 			...state,
 			components: updateComponents(
 				state.components,
-				[parent.__id__, component.__id__],
+				[parent._id_, component._id_],
 				[parent, component]
 			)
 		}),
 		[removeComponentSuccess]: (state, { parent, component }) => ({
 			...state,
-			components: updateComponents(state.components, [parent.__id__, component.__id__], [parent])
+			components: updateComponents(state.components, [parent._id_, component._id_], [parent])
 		}),
 		[sortComponentsSuccess]: (state, parent) => ({
 			...state,
-			components: updateComponents(state.components, [parent.__id__], [parent])
+			components: updateComponents(state.components, [parent._id_], [parent])
 		})
 	},
 	{

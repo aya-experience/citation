@@ -12,26 +12,26 @@ test.beforeEach(() => {
 	}).default;
 });
 
-test('if there is no id, data2query should delete the property data.__id__', t => {
+test('if there is no id, data2query should delete the property data._id_', t => {
 	const data = {
-		__id__: 'id',
+		_id_: 'id',
 		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
 	};
 	filterByKeys.returns({ data: data.data });
 	t.is(
 		data2query(undefined, data),
-		'data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id"'
+		'data: {links: [{value: "data1"}, {value: "data2"}]},_newId_: "id"'
 	);
 });
 
-test('if there is an id, data2query should put the id value for both data.__id__ and data.__newId__', t => {
+test('if there is an id, data2query should put the id value for both data._id_ and data._newId_', t => {
 	const data = {
-		__id__: 'id',
+		_id_: 'id',
 		data: { links: [{ value: 'data1' }, { value: 'data2' }] }
 	};
 	filterByKeys.returns({ data: data.data });
 	t.is(
-		data2query(data.__id__, data),
-		'data: {links: [{value: "data1"}, {value: "data2"}]},__newId__: "id",__id__: "id"'
+		data2query(data._id_, data),
+		'data: {links: [{value: "data1"}, {value: "data2"}]},_newId_: "id",_id_: "id"'
 	);
 });

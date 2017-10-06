@@ -14,8 +14,8 @@ let page1;
 let page2;
 
 test.beforeEach(() => {
-	page1 = { component: { __id__: componentId1 } };
-	page2 = { component: { __id__: componentId2 } };
+	page1 = { component: { _id_: componentId1 } };
+	page2 = { component: { _id_: componentId2 } };
 	queryComponentTree = sinon.stub().returns(Promise.resolve([]));
 	queryComponentTree.withArgs(serverUrl, page1.component).returns(content1);
 	queryComponentTree.withArgs(serverUrl, page2.component).returns(content2);

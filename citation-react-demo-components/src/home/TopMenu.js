@@ -42,7 +42,7 @@ const TopMenu = ({ links }) => {
 			<MediaLinks>
 				{links.map(links => (
 					<MediaLink
-						key={links.__id__}
+						key={links._id_}
 						href={links.content}
 						target="_blank"
 						rel="noopener noreferrer"

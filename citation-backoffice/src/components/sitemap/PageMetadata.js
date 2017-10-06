@@ -13,7 +13,7 @@ const enhancer = compose(
 	connect(
 		(state, ownProps) => ({
 			page: find(state.sitemap.present.pages, {
-				__id__: ownProps.match.params.id
+				_id_: ownProps.match.params.id
 			})
 		}),
 		dispatch => ({
@@ -35,7 +35,7 @@ const PageMetadata = ({ page, submit }) =>
 	page ? (
 		<div>
 			<Breadcrumb>
-				<Link to="/structure">STRUCTURE</Link> / {page.__id__}
+				<Link to="/structure">STRUCTURE</Link> / {page._id_}
 			</Breadcrumb>
 			<PageForm initialValues={page} onSubmit={submit} />
 		</div>

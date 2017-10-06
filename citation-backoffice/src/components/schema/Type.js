@@ -30,9 +30,9 @@ const enhancer = compose(
 	withHandlers({
 		handleSubmit: ({ onSubmit }) => values =>
 			onSubmit({
-				name: values.__name__,
-				fields: keys(values.__fields__).map(key => {
-					const field = values.__fields__[key];
+				name: values._name_,
+				fields: keys(values._fields_).map(key => {
+					const field = values._fields_[key];
 					if (field.kind === 'OBJECT') {
 						return { name: field.name, type: ['link', field.typeName] };
 					} else if (field.kind === 'LIST') {
@@ -50,8 +50,8 @@ const Type = ({ type, types, handleSubmit }) => {
 	}
 
 	const initialValues = {
-		__name__: type.name,
-		__fields__: values(type.fields)
+		_name_: type.name,
+		_fields_: values(type.fields)
 			.filter(testFieldName)
 			.map(field => ({
 				name: field.name,

@@ -24,7 +24,7 @@ const fields = {
 	}
 };
 const formatedFields =
-	'__id__,field1 {__id__, __type__},field2 {__id__},field3 {__id__, __type__},field4 {__id__},field5';
+	'_id_,field1 {_id_, _type_},field2 {_id_},field3 {_id_, _type_},field4 {_id_},field5';
 
 test('fields2query should return formatted custom fields only', async t => {
 	t.deepEqual(fields2query(fields), formatedFields);

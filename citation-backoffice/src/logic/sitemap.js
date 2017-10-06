@@ -13,8 +13,8 @@ export const editPage = createAction('edit page');
 export const loadPages = () => dispatch => {
 	const loadQuery = `{
 		Page {
-			__id__, slug, title, position,
-			children {__id__}
+			_id_, slug, title, position,
+			children {_id_}
 		}
 	}`;
 	return query(loadQuery).then(response => dispatch(loadPagesSuccess(response.data.Page)));
@@ -24,17 +24,17 @@ export const savePages = () => (dispatch, getState) => {
 	const pagesToSave = getState().sitemap.present.pagesToSave;
 	const mutationQuery = `{
 		${pagesToSave.map(
-			page => `${page.__id__}: editPage(page: {
-				__id__: "${page.__id__}",
+			page => `${page._id_}: editPage(page: {
+				_id_: "${page._id_}",
 				${page.slug ? `slug: "${page.slug}",` : ''}
 				title: "${page.title}",
 				children: {
-					__role__: "links",
+					_role_: "links",
 					links: [${isArray(page.children)
 						? page.children.map(
 								child => `{
 						collection: "Page",
-						id: "${child.__id__}"
+						id: "${child._id_}"
 					}`
 							)
 						: ''}]
@@ -43,7 +43,7 @@ export const savePages = () => (dispatch, getState) => {
 					x: ${page.position.x},
 					y: ${page.position.y}
 				}
-			}) {__id__}
+			}) {_id_}
 		`
 		)}
 	}`;
@@ -56,7 +56,7 @@ export const savePages = () => (dispatch, getState) => {
 const createId = pages => {
 	let newId = 0;
 	pages.forEach(page => {
-		if (page.__id__ === `newPage${newId}`) {
+		if (page._id_ === `newPage${newId}`) {
 			newId++;
 		}
 	});
@@ -65,14 +65,14 @@ const createId = pages => {
 
 const updatePage = (pages, pageId, newPage) => {
 	const result = [...pages];
-	const index = findIndex(result, page => page.__id__ === pageId);
+	const index = findIndex(result, page => page._id_ === pageId);
 	result[index] = newPage;
 	return result;
 };
 
 const addToSave = (pagesToSave, ...newPagesToSave) => {
 	const result = pagesToSave.filter(
-		page => newPagesToSave.filter(pageToSave => page.__id__ === pageToSave.__id__).length === 0
+		page => newPagesToSave.filter(pageToSave => page._id_ === pageToSave._id_).length === 0
 	);
 	result.push(...newPagesToSave);
 	return result;
@@ -88,13 +88,13 @@ const reducer = createReducer(
 			const updatedPage = { ...page, position };
 			return {
 				...state,
-				pages: updatePage(state.pages, page.__id__, updatedPage),
+				pages: updatePage(state.pages, page._id_, updatedPage),
 				pagesToSave: addToSave(state.pagesToSave, updatedPage)
 			};
 		},
 		[addPage]: (state, page) => {
 			const newPage = {
-				__id__: createId(state.pages),
+				_id_: createId(state.pages),
 				slug: 'slug',
 				title: 'New Page',
 				component: null,
@@ -106,13 +106,13 @@ const reducer = createReducer(
 			};
 			return {
 				...state,
-				pages: [...updatePage(state.pages, page.__id__, parentPage), newPage],
+				pages: [...updatePage(state.pages, page._id_, parentPage), newPage],
 				pagesToSave: addToSave(state.pagesToSave, parentPage, newPage)
 			};
 		},
 		[editPage]: (state, { oldPage, page }) => ({
 			...state,
-			pages: updatePage(state.pages, oldPage.__id__, page),
+			pages: updatePage(state.pages, oldPage._id_, page),
 			pagesToSave: addToSave(state.pagesToSave, page)
 		}),
 		[savePagesSuccess]: state => ({

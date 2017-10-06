@@ -6,11 +6,11 @@ import { Field } from 'redux-form';
 import { InputLine } from '../common/Form';
 
 const LinkField = ({ type, input, types }) => {
-	const options = values(get(types, type ? type : input.value.__type__, {}));
+	const options = values(get(types, type ? type : input.value._type_, {}));
 	return (
 		<InputLine>
 			{!type && (
-				<Field name={`${input.name}.__type__`} component="select">
+				<Field name={`${input.name}._type_`} component="select">
 					{map(types, (_, type) => (
 						<option key={type} value={type}>
 							{type}
@@ -18,10 +18,10 @@ const LinkField = ({ type, input, types }) => {
 					))}
 				</Field>
 			)}
-			<Field name={`${input.name}.__id__`} component="select">
-				{options.map(({ __id__ }) => (
-					<option key={__id__} value={__id__}>
-						{__id__}
+			<Field name={`${input.name}._id_`} component="select">
+				{options.map(({ _id_ }) => (
+					<option key={_id_} value={_id_}>
+						{_id_}
 					</option>
 				))}
 			</Field>

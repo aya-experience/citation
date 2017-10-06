@@ -18,12 +18,12 @@ test.beforeEach(() => {
 
 test('inspectEntry should return empty array for an empty entry folder', async t => {
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
-	const expected = ['__id__'];
+	const expected = ['_id_'];
 	t.deepEqual(result, expected);
 });
 
 test('inspectEntry should return field list when no links', async t => {
-	const expected = ['__id__', 'one', 'two'];
+	const expected = ['_id_', 'one', 'two'];
 	readdir.returns(Promise.resolve(['one', 'two']));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
 	t.deepEqual(result, expected);
@@ -31,7 +31,7 @@ test('inspectEntry should return field list when no links', async t => {
 
 test('inspectEntry should follow unique link', async t => {
 	const link = {
-		__role__: 'link',
+		_role_: 'link',
 		link: {
 			type: 'LinkedType',
 			id: 'LinkedId'
@@ -41,12 +41,12 @@ test('inspectEntry should follow unique link', async t => {
 	readdir.onCall(1).returns(Promise.resolve(['three', 'four']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(link))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
-	t.deepEqual(result, ['__id__', 'one', { two: ['__id__', 'three', 'four'] }]);
+	t.deepEqual(result, ['_id_', 'one', { two: ['_id_', 'three', 'four'] }]);
 });
 
 test('inspectEntry should ignore link if type is not in the model', async t => {
 	const links = {
-		__role__: 'link',
+		_role_: 'link',
 		link: {
 			type: 'LinkedType3',
 			id: 'LinkedId'
@@ -55,12 +55,12 @@ test('inspectEntry should ignore link if type is not in the model', async t => {
 	readdir.onCall(0).returns(Promise.resolve(['one.md', 'two.json']));
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
-	t.deepEqual(result, ['__id__', 'one', { two: {} }]);
+	t.deepEqual(result, ['_id_', 'one', { two: {} }]);
 });
 
 test('inspectEntry should follow multiple links', async t => {
 	const links = {
-		__role__: 'links',
+		_role_: 'links',
 		links: [
 			{
 				type: 'LinkedType1',
@@ -78,12 +78,12 @@ test('inspectEntry should follow multiple links', async t => {
 	readFile.onCall(0).returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
 	t.deepEqual(result, [
-		'__id__',
+		'_id_',
 		'one',
 		{
 			two: {
-				'... on LinkedType1': ['__id__', 'three', 'four'],
-				'... on LinkedType2': ['__id__', 'five', 'six']
+				'... on LinkedType1': ['_id_', 'three', 'four'],
+				'... on LinkedType2': ['_id_', 'five', 'six']
 			}
 		}
 	]);
@@ -91,7 +91,7 @@ test('inspectEntry should follow multiple links', async t => {
 
 test('inspectEntry should ignore loops in link', async t => {
 	const link = {
-		__role__: 'link',
+		_role_: 'link',
 		link: {
 			type: 'LinkedType',
 			id: 'LinkedId'
@@ -101,17 +101,17 @@ test('inspectEntry should ignore loops in link', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(link))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
 	t.deepEqual(result, [
-		'__id__',
+		'_id_',
 		'one',
 		{
-			two: ['__id__', 'one', { two: {} }]
+			two: ['_id_', 'one', { two: {} }]
 		}
 	]);
 });
 
 test('inspectEntry should ignore loops in links', async t => {
 	const links = {
-		__role__: 'links',
+		_role_: 'links',
 		links: [
 			{
 				type: 'LinkedType1',
@@ -127,18 +127,18 @@ test('inspectEntry should ignore loops in links', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(links))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
 	t.deepEqual(result, [
-		'__id__',
+		'_id_',
 		'one',
 		{
 			two: {
 				'... on LinkedType1': [
-					'__id__',
+					'_id_',
 					'one',
 					{
 						two: {
 							'... on LinkedType1': {},
 							'... on LinkedType2': [
-								'__id__',
+								'_id_',
 								'one',
 								{
 									two: {
@@ -151,12 +151,12 @@ test('inspectEntry should ignore loops in links', async t => {
 					}
 				],
 				'... on LinkedType2': [
-					'__id__',
+					'_id_',
 					'one',
 					{
 						two: {
 							'... on LinkedType1': [
-								'__id__',
+								'_id_',
 								'one',
 								{
 									two: {
@@ -182,7 +182,7 @@ test('inspectEntry should not fail on a broken link', async t => {
 
 test('inspectEntry should follow a map with single link', async t => {
 	const map = {
-		__role__: 'map',
+		_role_: 'map',
 		map: {
 			prop1: {
 				type: 'LinkedType1',
@@ -200,16 +200,16 @@ test('inspectEntry should follow a map with single link', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(map))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
 	t.deepEqual(result, [
-		'__id__',
+		'_id_',
 		{
 			one: [
-				'__key__',
+				'_key_',
 				{
-					__value__: {
-						'... on LinkedType1': ['__id__', 'two', 'three'],
-						'... on LinkedType2': ['__id__', 'four', 'five']
+					_value_: {
+						'... on LinkedType1': ['_id_', 'two', 'three'],
+						'... on LinkedType2': ['_id_', 'four', 'five']
 					},
-					__list__: {}
+					_list_: {}
 				}
 			]
 		}
@@ -218,7 +218,7 @@ test('inspectEntry should follow a map with single link', async t => {
 
 test('inspectEntry should follow a map with a link array', async t => {
 	const map = {
-		__role__: 'map',
+		_role_: 'map',
 		map: {
 			prop: [
 				{
@@ -238,15 +238,15 @@ test('inspectEntry should follow a map with a link array', async t => {
 	readFile.returns(Promise.resolve(new Buffer(JSON.stringify(map))));
 	const result = await inspect.inspectEntry('Type', 'id', modelTypes);
 	t.deepEqual(result, [
-		'__id__',
+		'_id_',
 		{
 			one: [
-				'__key__',
+				'_key_',
 				{
-					__value__: {},
-					__list__: {
-						'... on LinkedType1': ['__id__', 'two', 'three'],
-						'... on LinkedType2': ['__id__', 'four', 'five']
+					_value_: {},
+					_list_: {
+						'... on LinkedType1': ['_id_', 'two', 'three'],
+						'... on LinkedType2': ['_id_', 'four', 'five']
 					}
 				}
 			]

@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 
 let TopMenu;
 
-const link = { __id__: 'link', title: 'link', content: 'myLink' };
+const link = { _id_: 'link', title: 'link', content: 'myLink' };
 const links = [link];
 
 const setup = () => shallow(<TopMenu links={links} />);

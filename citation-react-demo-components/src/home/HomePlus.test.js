@@ -26,7 +26,7 @@ test.beforeEach(() => {
 });
 
 test('HomePlus should have a div with HomePlus title as key', t => {
-	t.deepEqual(homePlusDiv.nodes[0].key, plus.title);
+	t.deepEqual(homePlusDiv.key(), plus.title);
 });
 
 test('HomePlus should have a div with align className', t => {

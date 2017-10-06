@@ -13,10 +13,10 @@ export const loadEntrySuccess = createAction('load entry success');
 
 export function loadTypes(types) {
 	return dispatch => {
-		const queries = types.filter(testTypeName).map(type => `${type.name} {__id__}`);
+		const queries = types.filter(testTypeName).map(type => `${type.name} {_id_}`);
 		return query(`{${queries}}`).then(response => {
 			const formatedData = mapValues(response.data, entries =>
-				fromPairs(entries.map(entry => [entry.__id__, entry]))
+				fromPairs(entries.map(entry => [entry._id_, entry]))
 			);
 			return dispatch(loadTypesSuccess(formatedData));
 		});
@@ -37,7 +37,7 @@ export function loadEntry(type, id, fields) {
 }
 
 export function deleteEntry(type, id) {
-	mutation(`{delete${type}(${type.toLowerCase()}: {__id__: "${id}"}) {__id__, message}}`);
+	mutation(`{delete${type}(${type.toLowerCase()}: {_id_: "${id}"}) {_id_, message}}`);
 }
 
 export function writeEntry(type, id, data, fields) {
@@ -51,7 +51,7 @@ export function writeEntry(type, id, data, fields) {
 			dispatch(
 				loadEntrySuccess({
 					type,
-					id: response.data[`edit${type}`].__id__,
+					id: response.data[`edit${type}`]._id_,
 					data: response.data[`edit${type}`]
 				})
 			)

@@ -49,7 +49,7 @@ const Child = ({ child, direction, color, i, size, position }) => {
 		};
 	}
 	return (
-		<g key={`child-${child.__id__}-${i}`}>
+		<g key={`child-${child._id_}-${i}`}>
 			{direction === 0 ? (
 				undefined
 			) : (

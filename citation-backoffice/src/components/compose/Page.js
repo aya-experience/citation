@@ -22,11 +22,11 @@ const Iframe = styled.iframe`
 
 const enhancer = compose(
 	connect(state => ({ compose: state.compose })),
-	hideIf(({ compose }) => !get(compose, 'page.__id__')),
+	hideIf(({ compose }) => !get(compose, 'page._id_')),
 	withRouter,
 	lifecycle({
 		componentDidMount() {
-			startIframeMessageListener(this.props.compose.page.__id__, this.props.history);
+			startIframeMessageListener(this.props.compose.page._id_, this.props.history);
 		},
 		componentWillUnmount() {
 			stopIframeMessageListener();
@@ -41,7 +41,7 @@ const enhancer = compose(
 const Page = ({ compose, url }) => (
 	<div>
 		<Breadcrumb>
-			<Link to="/structure">STRUCTURE</Link> / {compose.page.__id__}
+			<Link to="/structure">STRUCTURE</Link> / {compose.page._id_}
 		</Breadcrumb>
 		<Iframe src={url} title="edition" />
 	</div>

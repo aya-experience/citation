@@ -86,12 +86,12 @@ class ComponentControl extends Component {
 	}
 
 	render() {
-		const styles = stylesFn(this.props.content.__color__);
+		const styles = stylesFn(this.props.content._color_);
 		return (
 			<div style={styles.container}>
 				<div style={styles.header}>
 					<DragHandle />
-					{this.props.content.__id__} ({this.props.content.type})
+					{this.props.content._id_} ({this.props.content.type})
 					<a style={styles.delete} onClick={this.handleDelete}>
 						delete
 					</a>

@@ -15,7 +15,7 @@ const NodePage = ({ page, direction, color, position, drag }) => {
 		<g>
 			{children.map((child, i) => (
 				<Child
-					key={`child-${child.__id__}-${i}`}
+					key={`child-${child._id_}-${i}`}
 					child={child}
 					direction={direction}
 					color={color}
@@ -33,7 +33,7 @@ const NodePage = ({ page, direction, color, position, drag }) => {
 					textAnchor="middle"
 					dominantBaseline="baseline"
 				>
-					{page.__id__}
+					{page._id_}
 				</text>
 				<ButtonGroup position={position} page={page} />
 			</DraggableContainer>

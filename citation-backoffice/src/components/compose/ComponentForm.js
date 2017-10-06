@@ -18,8 +18,8 @@ const enhancer = compose(
 const ComponentForm = ({ page, handleSubmit, types }) => (
 	<Form onSubmit={handleSubmit}>
 		<FieldContainer>
-			<Label htmlFor="__id__">Id</Label>
-			<Field name="__id__" component="input" type="text" />
+			<Label htmlFor="_id_">Id</Label>
+			<Field name="_id_" component="input" type="text" />
 		</FieldContainer>
 		<FieldContainer>
 			<Label htmlFor="type">Type</Label>
@@ -30,7 +30,7 @@ const ComponentForm = ({ page, handleSubmit, types }) => (
 			<FieldArray name="props" component={KeyValueField} props={{ types }} />
 		</FieldContainer>
 		<ActionContainer>
-			<ButtonLink icon="left" to={`/structure/compose/${page.__id__}`} size="big" />
+			<ButtonLink icon="left" to={`/structure/compose/${page._id_}`} size="big" />
 			<Button icon="check" type="submit" size="big" />
 		</ActionContainer>
 	</Form>

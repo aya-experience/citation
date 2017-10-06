@@ -17,7 +17,7 @@ const enhancer = compose(
 			fields: get(state.model, 'Component.fields', {}),
 			page: get(state.compose, 'page', {}),
 			component: find(get(state.compose, 'components', []), {
-				__id__: ownProps.match.params.id
+				_id_: ownProps.match.params.id
 			})
 		}),
 		dispatch => ({
@@ -39,8 +39,8 @@ const Component = ({ page, component, submit }) => (
 	<div>
 		<Breadcrumb>
 			<Link to="/structure">STRUCTURE</Link> /{' '}
-			<Link to={`/structure/compose/${page.__id__}`}>{page.__id__}</Link> /{' '}
-			{component ? component.__id__ : 'New...'}
+			<Link to={`/structure/compose/${page._id_}`}>{page._id_}</Link> /{' '}
+			{component ? component._id_ : 'New...'}
 		</Breadcrumb>
 		<ComponentForm initialValues={component ? component : null} onSubmit={submit} page={page} />
 	</div>

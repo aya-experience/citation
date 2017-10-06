@@ -68,8 +68,8 @@ const getCustomFieldsComponents = (fields, types) => {
 const EntryForm = ({ type, fields, types, handleSubmit, onDelete }) => (
 	<Form onSubmit={handleSubmit}>
 		<FieldContainer>
-			<Label htmlFor="__id__">ID</Label>
-			<Field name="__id__" component="input" type="text" />
+			<Label htmlFor="_id_">ID</Label>
+			<Field name="_id_" component="input" type="text" />
 		</FieldContainer>
 		{getCustomFieldsComponents(fields, types)}
 		<ActionContainer>

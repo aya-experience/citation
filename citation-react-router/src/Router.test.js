@@ -30,9 +30,9 @@ test('should init pages if not present in window', t => {
 });
 
 test('should find pages in window if present', t => {
-	global.window.__pages__ = [];
+	global.window._pages_ = [];
 	const router = setup();
-	t.is(router.state('pages'), global.window.__pages__);
+	t.is(router.state('pages'), global.window._pages_);
 });
 
 test.serial('should not load pages if not empty', async t => {
@@ -63,5 +63,5 @@ test('should render Routes with all props added with pages', t => {
 });
 
 test.afterEach(() => {
-	delete global.window.__pages__;
+	delete global.window._pages_;
 });

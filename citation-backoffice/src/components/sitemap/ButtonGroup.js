@@ -14,8 +14,8 @@ const enhancer = compose(
 	})),
 	withRouter,
 	withHandlers({
-		edit: ({ history, page }) => () => history.push(`/structure/metadata/${page.__id__}`),
-		compose: ({ history, page }) => () => history.push(`/structure/compose/${page.__id__}`)
+		edit: ({ history, page }) => () => history.push(`/structure/metadata/${page._id_}`),
+		compose: ({ history, page }) => () => history.push(`/structure/compose/${page._id_}`)
 	})
 );
 

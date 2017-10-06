@@ -18,8 +18,8 @@ const enhancer = withHandlers({
 	handleAdd: ({ fields, types }) => () => {
 		const keys = Object.keys(types);
 		fields.push({
-			__type__: keys[0],
-			__id__: types[keys[0]][0].__id__
+			_type_: keys[0],
+			_id_: types[keys[0]][0]._id_
 		});
 	},
 	handleRemove: ({ fields }) => index => () => fields.remove(index),

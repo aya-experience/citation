@@ -9,7 +9,7 @@ export function read(type, id = null) {
 }
 
 export async function inspect(root, modelTypes) {
-	const inspection = await inspectEntry(root.__type__, root.__id__, modelTypes);
+	const inspection = await inspectEntry(root._type_, root._id_, modelTypes);
 	return graphqlQuerySerialize(inspection);
 }
 
@@ -42,9 +42,9 @@ export function readMap(map, modelTypes) {
 		pair =>
 			isArray(pair[1])
 				? {
-						__key__: pair[0],
-						__list__: readChildren({ links: pair[1] }, modelTypes)
+						_key_: pair[0],
+						_list_: readChildren({ links: pair[1] }, modelTypes)
 					}
-				: { __key__: pair[0], __value__: readChild({ link: pair[1] }) }
+				: { _key_: pair[0], _value_: readChild({ link: pair[1] }) }
 	);
 }

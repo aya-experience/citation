@@ -17,23 +17,23 @@ export const askReload = () => {
 
 const iframeMessageDispatcher = event => {
 	const component = find(store.getState().compose.components, {
-		__id__: event.data.content.__id__
+		_id_: event.data.content._id_
 	});
 	console.log('message from iframe', event.data, component);
 	switch (event.data.type) {
 		case 'EDIT':
-			context.history.push(`/structure/compose/${context.pageId}/component/${component.__id__}`);
+			context.history.push(`/structure/compose/${context.pageId}/component/${component._id_}`);
 			break;
 		case 'DELETE': {
 			const parent = find(store.getState().compose.components, {
-				__id__: event.data.parent.__id__
+				_id_: event.data.parent._id_
 			});
 			store.dispatch(removeComponentSave({ parent, component })).then(askReload);
 			break;
 		}
 		case 'ADD_CHILD':
 			context.history.push(
-				`/structure/compose/${context.pageId}/component/parent/${component.__id__}`
+				`/structure/compose/${context.pageId}/component/parent/${component._id_}`
 			);
 			break;
 		case 'SORT_CHILDREN':

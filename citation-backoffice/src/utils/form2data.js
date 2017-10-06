@@ -3,10 +3,10 @@ import { mapValues, fromPairs } from 'lodash';
 function toLinkInput(input, type) {
 	const link = input ? input : {};
 	return {
-		__role__: 'link',
+		_role_: 'link',
 		link: {
-			type: type === '*' ? link.__type__ : type,
-			id: link.__id__
+			type: type === '*' ? link._type_ : type,
+			id: link._id_
 		}
 	};
 }
@@ -14,10 +14,10 @@ function toLinkInput(input, type) {
 function toLinksInput(inputs, type) {
 	const links = inputs ? inputs : [];
 	return {
-		__role__: 'links',
+		_role_: 'links',
 		links: links.map(link => ({
-			type: type === '*' ? link.__type__ : type,
-			id: link.__id__
+			type: type === '*' ? link._type_ : type,
+			id: link._id_
 		}))
 	};
 }
@@ -25,16 +25,16 @@ function toLinksInput(inputs, type) {
 function toKeyValueInput(inputPairs) {
 	const pairs = inputPairs ? inputPairs : [];
 	return {
-		__role__: 'map',
+		_role_: 'map',
 		map: fromPairs(
 			pairs.map(pair => [
-				pair.__key__,
-				pair.__value__ === null
-					? pair.__list__.map(link => ({
-							type: link.__type__,
-							id: link.__id__
+				pair._key_,
+				pair._value_ === null
+					? pair._list_.map(link => ({
+							type: link._type_,
+							id: link._id_
 						}))
-					: { type: pair.__value__.__type__, id: pair.__value__.__id__ }
+					: { type: pair._value_._type_, id: pair._value_._id_ }
 			])
 		)
 	};

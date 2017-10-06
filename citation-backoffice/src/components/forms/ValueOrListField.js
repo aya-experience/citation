@@ -51,7 +51,7 @@ const ArrayCheckboxContainer = styled.div`
 `;
 
 const enhancer = compose(
-	withState('isArray', 'toggle', ({ input }) => isArray(input.value.__list__)),
+	withState('isArray', 'toggle', ({ input }) => isArray(input.value._list_)),
 	withHandlers({
 		handleToggle: props => () => props.toggle(!props.isArray)
 	})
@@ -60,16 +60,16 @@ const enhancer = compose(
 const ValueOrListField = ({ input, types, isArray, handleToggle }) => (
 	<ValueOrListContainer>
 		<PropNameContainer>
-			<Field name={`${input.name}.__key__`} component="input" />
+			<Field name={`${input.name}._key_`} component="input" />
 			<ArrayCheckboxContainer>
 				<label htmlFor={`isArray-${input.name}`}>Array</label>
 				<input type="checkbox" value={isArray} onClick={handleToggle} />
 			</ArrayCheckboxContainer>
 		</PropNameContainer>
 		{isArray ? (
-			<FieldArray name={`${input.name}.__list__`} component={LinksField} props={{ types }} />
+			<FieldArray name={`${input.name}._list_`} component={LinksField} props={{ types }} />
 		) : (
-			<Field name={`${input.name}.__value__`} component={LinkField} props={{ types }} />
+			<Field name={`${input.name}._value_`} component={LinkField} props={{ types }} />
 		)}
 	</ValueOrListContainer>
 );

@@ -34,8 +34,8 @@ test('handleSubmit should call onSubmit with good args', async t => {
 	onSubmit = sinon.stub().returns(true);
 	const fields = {
 		TestType: {
-			__name__: 'TestType',
-			__fields__: [
+			_name_: 'TestType',
+			_fields_: [
 				{
 					kind: 'String',
 					name: 'test1',

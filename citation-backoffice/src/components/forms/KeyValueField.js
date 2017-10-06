@@ -12,9 +12,9 @@ const enhancer = compose(
 	withHandlers({
 		handleAdd: props => () => {
 			props.fields.push({
-				__key__: '',
-				__value__: null,
-				__list__: null
+				_key_: '',
+				_value_: null,
+				_list_: null
 			});
 		},
 		handleRemove: ({ fields }) => index => () => {

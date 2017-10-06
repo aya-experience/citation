@@ -56,7 +56,7 @@ const Sitemap = ({ sitemap, undo, redo, save, reset, containerWidth }) => {
 						pageTree.length * 20}`}
 				>
 					{pageTree.map((page, i) => (
-						<RootPage key={page.__id__ + i} page={page} position={{ x: 50, y: 20 + i * 20 }} />
+						<RootPage key={page._id_ + i} page={page} position={{ x: 50, y: 20 + i * 20 }} />
 					))}
 				</svg>
 				<ActionBar>

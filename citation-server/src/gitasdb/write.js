@@ -11,7 +11,7 @@ import { readEntry } from './read';
 const logger = winston.loggers.get('GitAsDb');
 
 export function emptyField(field) {
-	const role = field.__role__;
+	const role = field._role_;
 	return _.isEmpty(field) || _.isUndefined(role) !== _.isEmpty(field[role]);
 }
 
@@ -20,10 +20,10 @@ export async function writeEntry(type, data) {
 		// Opening repository
 		const repositoryPath = path.resolve(conf.work.content, conf.content.branch);
 		const repository = await create(repositoryPath);
-		let id = data.__id__;
-		const newId = data.__newId__;
-		delete data.__id__;
-		delete data.__newId__;
+		let id = data._id_;
+		const newId = data._newId_;
+		delete data._id_;
+		delete data._newId_;
 		let entryPath;
 		// FS delete
 		if (newId && newId !== id) {

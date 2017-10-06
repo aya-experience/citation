@@ -11,31 +11,31 @@ const fields = {
 	seventhTest: { typename: 'String', kind: 'SCALAR' }
 };
 const values = {
-	test: [{ __id__: 'myTest', __type__: 'testType' }],
+	test: [{ _id_: 'myTest', _type_: 'testType' }],
 	secondTest: 'mySecondTest',
-	thirdTest: { __id__: 'myThirdTest' },
-	fourthTest: [{ __id__: 'myFourthTest' }],
-	fifthTest: { __id__: 'myFifthTest', __type__: 'testType' },
-	sixthTest: [{ __key__: 'mySixthTest', __value__: { __id__: 'id', __type__: 'type' } }],
+	thirdTest: { _id_: 'myThirdTest' },
+	fourthTest: [{ _id_: 'myFourthTest' }],
+	fifthTest: { _id_: 'myFifthTest', _type_: 'testType' },
+	sixthTest: [{ _key_: 'mySixthTest', _value_: { _id_: 'id', _type_: 'type' } }],
 	seventhTest: null
 };
 const expected = {
 	test: {
 		links: [{ type: 'testType', id: 'myTest' }],
-		__role__: 'links'
+		_role_: 'links'
 	},
 	secondTest: 'mySecondTest',
 	thirdTest: {
 		link: { type: 'test', id: 'myThirdTest' },
-		__role__: 'link'
+		_role_: 'link'
 	},
 	fourthTest: {
 		links: [{ type: 'TEST', id: 'myFourthTest' }],
-		__role__: 'links'
+		_role_: 'links'
 	},
 	fifthTest: {
 		link: { type: 'testType', id: 'myFifthTest' },
-		__role__: 'link'
+		_role_: 'link'
 	},
 	sixthTest: {
 		map: {
@@ -44,7 +44,7 @@ const expected = {
 				id: 'id'
 			}
 		},
-		__role__: 'map'
+		_role_: 'map'
 	},
 	seventhTest: ''
 };

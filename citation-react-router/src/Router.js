@@ -15,8 +15,8 @@ export default class Router extends Component {
 		super();
 
 		let pages = [];
-		if (window && window.__pages__) {
-			pages = window.__pages__;
+		if (window && window._pages_) {
+			pages = window._pages_;
 		}
 		this.state = { pages, context: this.getContext(), key: 0 };
 	}

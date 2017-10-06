@@ -38,8 +38,8 @@ const ComponentTree = ({
 	if (Array.isArray(props)) {
 		// eslint-disable-next-line react/prop-types
 		props.forEach(prop => {
-			const value = prop.__value__ ? prop.__value__ : prop.__list__;
-			parsedProps[prop.__key__] = value;
+			const value = prop._value_ ? prop._value_ : prop._list_;
+			parsedProps[prop._key_] = value;
 		});
 	}
 
@@ -55,7 +55,7 @@ const ComponentTree = ({
 					>
 						{children.map((child, i) => (
 							<ComponentTree
-								key={child.__id__}
+								key={child._id_}
 								index={i}
 								draggable
 								routesProps={routesProps}
@@ -76,7 +76,7 @@ const ComponentTree = ({
 		<Component {...parsedProps} pages={routesProps.pages} childPage={childPage}>
 			{children.map(child => (
 				<ComponentTree
-					key={child.__id__}
+					key={child._id_}
 					routesProps={routesProps}
 					page={page}
 					content={child}

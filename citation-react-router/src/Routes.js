@@ -25,26 +25,26 @@ export default class Routes extends Component {
 	}
 
 	componentWillMount() {
-		if (window && window.__contents__) {
-			this.setState({ contents: window.__contents__ });
+		if (window && window._contents_) {
+			this.setState({ contents: window._contents_ });
 		}
 	}
 
 	async loadPageContent(page) {
-		if (page !== undefined && this.state.contents[page.component.__id__] === undefined) {
+		if (page !== undefined && this.state.contents[page.component._id_] === undefined) {
 			await Promise.resolve();
-			this.setState({ contents: { [page.component.__id__]: null } });
+			this.setState({ contents: { [page.component._id_]: null } });
 			const content = await queryComponentTree(this.props.serverUrl, page.component);
 			if (this.props.context === '/edition') {
 				chooseColorForComponents(content, 0);
 			}
-			this.setState({ contents: { [page.component.__id__]: content } });
+			this.setState({ contents: { [page.component._id_]: content } });
 		}
 	}
 
 	matchRenderer(page) {
 		return matchProps => {
-			const content = this.state.contents[page.component.__id__];
+			const content = this.state.contents[page.component._id_];
 			if (content === undefined || content === null) {
 				this.loadPageContent(page);
 				return <span />;

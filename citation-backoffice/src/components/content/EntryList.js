@@ -19,9 +19,9 @@ const EntryList = ({ type, entries }) => (
 			<Link to="/content">CONTENT</Link> / {type} / Choose an entry...
 		</Breadcrumb>
 		<TableList>
-			{entries.map(({ __id__ }) => (
-				<TableListRow key={__id__}>
-					<TableListLinkCell to={`/content/entry/${type}/${__id__}`}>{__id__}</TableListLinkCell>
+			{entries.map(({ _id_ }) => (
+				<TableListRow key={_id_}>
+					<TableListLinkCell to={`/content/entry/${type}/${_id_}`}>{_id_}</TableListLinkCell>
 					<TableListCell>
 						<ButtonLink icon="plus" to={`/content/entry/${type}`} />
 					</TableListCell>

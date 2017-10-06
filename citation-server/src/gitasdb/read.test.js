@@ -27,7 +27,7 @@ test('readType should map readEntry on each folder of a type', async t => {
 	const type = 'type';
 	const typePath = path.resolve(workingDirectory, branch, type);
 	const folders = ['one', 'two', 'three'];
-	const expected = folders.map(folder => ({ __id__: folder, __type__: type }));
+	const expected = folders.map(folder => ({ _id_: folder, _type_: type }));
 
 	readdir.withArgs(typePath).returns(Promise.resolve(folders));
 	t.deepEqual(await read.readType(type), expected);

@@ -33,8 +33,8 @@ test('deleteEntry should return the expected datas', async t => {
 	const push = () => Promise.resolve(null);
 	create.withArgs(repositoryPath).returns(Promise.resolve({ add, commit, push }));
 	existsSync.withArgs(dataPath).returns(true);
-	t.deepEqual(await deleteEntry.deleteEntry(type, { __id__: id }), {
-		__id__: id,
+	t.deepEqual(await deleteEntry.deleteEntry(type, { _id_: id }), {
+		_id_: id,
 		message: `${type} ${id} was successfully deleted`
 	});
 });
@@ -49,7 +49,7 @@ test.serial('deleteEntry should call remove if the folder exists', async t => {
 	const push = () => Promise.resolve(null);
 	create.withArgs(repositoryPath).returns(Promise.resolve({ add, commit, push }));
 	existsSync.withArgs(dataPath).returns(true);
-	await deleteEntry.deleteEntry(type, { __id__: id });
+	await deleteEntry.deleteEntry(type, { _id_: id });
 	t.true(remove.called);
 });
 
@@ -60,7 +60,7 @@ test.serial('deleteEntry should not call remove if the folder does not exist', a
 	const dataPath = path.resolve(repositoryPath, type, id);
 	create.withArgs(repositoryPath).returns(Promise.resolve([]));
 	existsSync.withArgs(dataPath).returns(false);
-	await deleteEntry.deleteEntry(type, { __id__: id });
+	await deleteEntry.deleteEntry(type, { _id_: id });
 	t.false(remove.called);
 });
 
@@ -71,5 +71,5 @@ test('deleteEntry should throw error if repository is not found', async t => {
 	const dataPath = path.resolve(repositoryPath, type, id);
 	create.withArgs(repositoryPath).returns(Promise.resolve([]));
 	existsSync.withArgs(dataPath).returns(true);
-	await t.throws(deleteEntry.deleteEntry(type, { __id__: id }));
+	await t.throws(deleteEntry.deleteEntry(type, { _id_: id }));
 });

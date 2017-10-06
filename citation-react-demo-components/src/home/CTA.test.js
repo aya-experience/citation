@@ -17,7 +17,7 @@ test.beforeEach(() => {
 });
 
 test('CTA should have a link to with given target', t => {
-	t.deepEqual(ctaShallow.children().node.props.to, cta.target);
+	t.deepEqual(ctaShallow.childAt(0).props().to, cta.target);
 });
 
 test('CTA should have a link to with given title', t => {

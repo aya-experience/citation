@@ -18,15 +18,15 @@ const propValueArray = [
 ];
 const componentId = 'componentId';
 const component = {
-	__id__: 'componentId',
+	_id_: 'componentId',
 	props: [
 		{
-			__key__: propName,
-			__value__: propValue
+			_key_: propName,
+			_value_: propValue
 		},
 		{
-			__key__: propNameArray,
-			__list__: propValueArray
+			_key_: propNameArray,
+			_list_: propValueArray
 		}
 	]
 };
@@ -47,13 +47,13 @@ test('should init contents if not present in window', t => {
 });
 
 test('should add contents in state', t => {
-	global.window.__contents__ = { [componentId]: component };
+	global.window._contents_ = { [componentId]: component };
 	const routes = shallow(<Routes {...props} />);
-	t.is(routes.state('contents'), global.window.__contents__);
+	t.is(routes.state('contents'), global.window._contents_);
 });
 
 test('should use component data in state if present', t => {
-	global.window.__contents__ = { [componentId]: component };
+	global.window._contents_ = { [componentId]: component };
 	const routes = shallow(<Routes {...props} />);
 	const route = routes.instance().matchRenderer(page)({ url: `/${page.slug}` });
 	t.is(route.props.content, component);

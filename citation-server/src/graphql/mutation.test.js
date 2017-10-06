@@ -29,13 +29,13 @@ test.beforeEach(() => {
 test('buildDeleteObject should return a graphQL Object with the given key in the name', t => {
 	const type = 'Type';
 	const result = mutation.buildDeleteObject(type);
-	t.is(result.name, '__DeleteObjectType__');
+	t.is(result.name, '_DeleteObjectType_');
 });
 
-test('buildDeleteObject should return a graphQL Object with an __id__ as a field', t => {
+test('buildDeleteObject should return a graphQL Object with an _id_ as a field', t => {
 	const type = 'Type';
 	const result = mutation.buildDeleteObject(type);
-	t.true(Object.keys(result._typeConfig.fields).includes('__id__'));
+	t.true(Object.keys(result._typeConfig.fields).includes('_id_'));
 });
 
 test('buildDeleteObject should return a graphQL Object with a message as a field', t => {

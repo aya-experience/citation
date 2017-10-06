@@ -48,8 +48,8 @@ async function inspectMap(map, stack, modelTypes) {
 		})
 	);
 	return {
-		__value__: mergeDeep({}, ...linkInspections),
-		__list__: mergeDeep({}, ...linksInspections)
+		_value_: mergeDeep({}, ...linkInspections),
+		_list_: mergeDeep({}, ...linksInspections)
 	};
 }
 
@@ -59,7 +59,7 @@ export async function inspectEntry(type, id, modelTypes, stack = []) {
 		const entryPath = path.resolve(conf.work.content, conf.content.branch, type, id);
 		const entryFiles = await fs.readdir(entryPath);
 		const entryFields = [
-			'__id__',
+			'_id_',
 			...(await Promise.all(
 				entryFiles.map(async file => {
 					const ext = path.extname(file);
@@ -67,19 +67,19 @@ export async function inspectEntry(type, id, modelTypes, stack = []) {
 					if (ext === '.json') {
 						const contentBuffer = await fs.readFile(path.resolve(entryPath, file));
 						const content = JSON.parse(contentBuffer.toString());
-						if (content.__role__ === 'link') {
+						if (content._role_ === 'link') {
 							return {
 								[key]: await inspectLink(content.link, stack, modelTypes)
 							};
 						}
-						if (content.__role__ === 'links') {
+						if (content._role_ === 'links') {
 							return {
 								[key]: await inspectLinks(content.links, stack, modelTypes)
 							};
 						}
-						if (content.__role__ === 'map') {
+						if (content._role_ === 'map') {
 							return {
-								[key]: ['__key__', await inspectMap(content.map, stack, modelTypes)]
+								[key]: ['_key_', await inspectMap(content.map, stack, modelTypes)]
 							};
 						}
 					}

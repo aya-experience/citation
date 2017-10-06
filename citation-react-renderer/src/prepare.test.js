@@ -3,8 +3,8 @@ import prepareContents from './prepare';
 
 const componentId1 = 'componentId1';
 const componentId2 = 'componentId2';
-const page1 = { component: { __id__: componentId1 } };
-const page2 = { component: { __id__: componentId2 } };
+const page1 = { component: { _id_: componentId1 } };
+const page2 = { component: { _id_: componentId2 } };
 const content1 = 'content1';
 const content2 = 'content2';
 const contents = {

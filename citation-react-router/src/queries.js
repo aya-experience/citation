@@ -15,20 +15,20 @@ export async function graphqlQuery(url, body) {
 export function buildPageTree(pages) {
 	const ref = {};
 	pages.forEach(page => {
-		ref[page.__id__] = page;
+		ref[page._id_] = page;
 	});
 
 	pages.forEach(page => {
 		if (Array.isArray(page.children)) {
-			page.children = page.children.filter(page => page !== null).map(({ __id__ }) => {
-				const child = ref[__id__];
-				child.__child__ = true;
+			page.children = page.children.filter(page => page !== null).map(({ _id_ }) => {
+				const child = ref[_id_];
+				child._child_ = true;
 				return child;
 			});
 		}
 	});
 
-	pages = pages.filter(page => !page.__child__);
+	pages = pages.filter(page => !page._child_);
 	sanitizeTree(pages);
 
 	return pages;
@@ -48,12 +48,12 @@ export async function queryPages(url) {
 		url,
 		`query Query {
 			Page {
-				__id__, slug, title,
+				_id_, slug, title,
 				children {
-					__id__
+					_id_
 				},
 				component {
-					__id__, __tree__
+					_id_, _tree_
 				}
 			}
 		}`
@@ -65,10 +65,10 @@ export async function queryComponentTree(url, component) {
 	const response = await graphqlQuery(
 		url,
 		`query Query {
-			Component(id: "${component.__id__}") {
-				${component.__tree__}
+			Component(id: "${component._id_}") {
+				${component._tree_}
 			}
 		}`
 	);
-	return { __id__: component.__id__, ...response.Component[0] };
+	return { _id_: component._id_, ...response.Component[0] };
 }

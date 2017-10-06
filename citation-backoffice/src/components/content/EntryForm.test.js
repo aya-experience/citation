@@ -60,7 +60,7 @@ test.beforeEach(() => {
 	}).default;
 });
 
-test('should render only an __id__ if there is no fields', t => {
+test('should render only an _id_ if there is no fields', t => {
 	const props = {
 		handleSubmit,
 		onDelete,

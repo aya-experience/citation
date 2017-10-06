@@ -12,7 +12,7 @@ export async function deleteEntry(type, data) {
 	try {
 		const repositoryPath = path.resolve(conf.work.content, conf.content.branch);
 		const repository = await create(repositoryPath);
-		const id = data.__id__;
+		const id = data._id_;
 		const entryPath = path.resolve(repositoryPath, type, id);
 
 		if (await fs.existsSync(entryPath)) {
@@ -21,7 +21,7 @@ export async function deleteEntry(type, data) {
 			await repository.commit(oid);
 			await repository.push(conf.content.branch);
 		}
-		return { __id__: id, message: `${type} ${id} was successfully deleted` };
+		return { _id_: id, message: `${type} ${id} was successfully deleted` };
 	} catch (error) {
 		logger.error(`Gitasdb delete error ${JSON.stringify(error)}`);
 		throw error;
