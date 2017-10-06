@@ -19,7 +19,10 @@ test.beforeEach(() => {
 
 const serverUrl = 'url';
 const components = {};
-const setup = () => shallow(<Router serverUrl={serverUrl} components={components} />);
+const setup = () =>
+	shallow(<Router serverUrl={serverUrl} components={components} />, {
+		disableLifecycleMethods: true
+	});
 
 test('should init pages if not present in window', t => {
 	const router = setup();
