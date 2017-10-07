@@ -1,6 +1,7 @@
 {
   "name": "citation-react-renderer",
   "version": "0.3.0",
+  "license": "MIT",
   "description": "",
   "main": "lib/index.js",
   "bin": {
@@ -40,13 +41,8 @@
     "sinon": "^3.2.0"
   },
   "ava": {
-    "files": [
-      "src/**/*.test.js"
-    ],
-    "require": [
-      "babel-register",
-      "babel-polyfill"
-    ],
+    "files": ["src/**/*.test.js"],
+    "require": ["babel-register", "babel-polyfill"],
     "babel": "inherit"
   },
   "babel": {

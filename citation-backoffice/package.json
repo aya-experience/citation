@@ -1,8 +1,8 @@
 {
   "name": "citation-backoffice",
   "version": "0.3.0",
-  "homepage": "/admin",
   "license": "MIT",
+  "homepage": "/admin",
   "scripts": {
     "dev": "react-scripts start",
     "lint": "../node_modules/.bin/eslint src",
@@ -31,7 +31,6 @@
   "devDependencies": {
     "ava": "^0.22.0",
     "babel-eslint": "^7.1.0",
-    "babel-plugin-transform-require-ignore": "0.0.2",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react-app": "^3.0.2",
     "enzyme": "^3.1.0",
@@ -48,33 +47,11 @@
     "sinon": "^3.2.1"
   },
   "ava": {
-    "files": [
-      "src/**/*.test.js",
-      "!src/**/old/*.test.js"
-    ],
-    "require": [
-      "babel-register",
-      "./src/utils/mocks/enzyme.setup"
-    ],
+    "files": ["src/**/*.test.js", "!src/**/old/*.test.js"],
+    "require": ["babel-register", "./src/utils/mocks/enzyme.setup"],
     "babel": "inherit"
   },
   "babel": {
-    "presets": [
-      "react-app"
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          [
-            "babel-plugin-transform-require-ignore",
-            {
-              "extensions": [
-                ".css"
-              ]
-            }
-          ]
-        ]
-      }
-    }
+    "presets": ["react-app"]
   }
 }

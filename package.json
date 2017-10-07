@@ -5,13 +5,17 @@
   "license": "MIT",
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "postbootstrap": "rm -rf citation-react-demo-components/node_modules/styled-components && ln -s ../../citation-react-renderer/node_modules/styled-components citation-react-demo-components/node_modules/styled-components",
+    "postbootstrap":
+      "rm -rf citation-react-demo-components/node_modules/styled-components && ln -s ../../citation-react-renderer/node_modules/styled-components citation-react-demo-components/node_modules/styled-components",
     "lint": "lerna run lint",
     "build": "lerna run build",
-    "test": "nyc lerna run test && nyc report --reporter=text-lcov > coverage.lcov",
+    "test":
+      "nyc lerna run test && nyc report --reporter=text-lcov > coverage.lcov",
     "codecov": "./node_modules/.bin/codecov",
-    "dev": "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:react-demo-components\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server\"",
-    "dev-dev": "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:react-demo-components\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server-dev\"",
+    "dev":
+      "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:react-demo-components\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server\"",
+    "dev-dev":
+      "concurrently \"npm run dev:react-router\" \"npm run dev:react-renderer\" \"npm run dev:react-demo-components\" \"npm run dev:server\" \"sleep 5 && npm run nodemon:server-dev\"",
     "test:react-router": "cd citation-react-router && npm test",
     "test:react-renderer": "cd citation-react-renderer && npm test",
     "test:server": "cd citation-server && npm test",
@@ -19,10 +23,13 @@
     "test:demo": "cd citation-react-demo && CI=true npm test",
     "dev:react-router": "cd citation-react-router && npm run dev",
     "dev:react-renderer": "cd citation-react-renderer && npm run dev",
-    "dev:react-demo-components": "cd citation-react-demo-components && npm run dev",
+    "dev:react-demo-components":
+      "cd citation-react-demo-components && npm run dev",
     "dev:server": "cd citation-server && npm run dev",
-    "nodemon:server": "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib --watch ../citation-react-renderer/lib --watch ../citation-react-router/lib",
-    "nodemon:server-dev": "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib --watch ../citation-react-renderer/lib --watch ../citation-react-router/lib -- --conf citation.conf.dev.json"
+    "nodemon:server":
+      "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib --watch ../citation-react-renderer/lib --watch ../citation-react-router/lib",
+    "nodemon:server-dev":
+      "cd citation-react-demo && nodemon ../citation-server/lib/cli.js --watch ../citation-server/lib --watch ../citation-react-renderer/lib --watch ../citation-react-router/lib -- --conf citation.conf.dev.json"
   },
   "devDependencies": {
     "ava": "^0.22.0",
@@ -41,8 +48,5 @@
     "nodemon": "^1.11.0",
     "nyc": "^10.1.2",
     "prettier": "^1.7.0"
-  },
-  "dependencies": {
-    "react-dimensions": "^1.3.0"
   }
 }

@@ -1,6 +1,7 @@
 {
   "name": "citation-react-builder",
   "version": "0.3.0",
+  "license": "MIT",
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
