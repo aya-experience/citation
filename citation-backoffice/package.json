@@ -1,6 +1,6 @@
 {
   "name": "citation-backoffice",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "homepage": "/admin",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "citation-react-router": "^0.3.0",
+    "citation-react-router": "^0.4.0",
     "lodash": "^4.16.6",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
@@ -47,11 +47,19 @@
     "sinon": "^3.2.1"
   },
   "ava": {
-    "files": ["src/**/*.test.js", "!src/**/old/*.test.js"],
-    "require": ["babel-register", "./src/utils/mocks/enzyme.setup"],
+    "files": [
+      "src/**/*.test.js",
+      "!src/**/old/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "./src/utils/mocks/enzyme.setup"
+    ],
     "babel": "inherit"
   },
   "babel": {
-    "presets": ["react-app"]
+    "presets": [
+      "react-app"
+    ]
   }
 }

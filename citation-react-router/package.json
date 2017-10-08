@@ -1,6 +1,6 @@
 {
   "name": "citation-react-router",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "",
   "main": "lib/index.js",
@@ -10,7 +10,6 @@
     "build": "babel src -d lib",
     "test": "ava --verbose"
   },
-  "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "prop-types": "^15.5.10",
@@ -35,8 +34,14 @@
     "react-test-renderer": "^16.0.0"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register", "babel-polyfill", "./src/tests/enzyme.setup"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill",
+      "./src/tests/enzyme.setup"
+    ],
     "babel": "inherit"
   },
   "babel": {
@@ -45,7 +50,9 @@
         "env",
         {
           "targets": {
-            "browsers": ["last 2 versions"],
+            "browsers": [
+              "last 2 versions"
+            ],
             "node": 6
           }
         }

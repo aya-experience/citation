@@ -1,6 +1,6 @@
 {
   "name": "citation-server",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "",
   "main": "lib/index.js",
@@ -13,15 +13,14 @@
     "build": "babel src -d lib",
     "test": "ava --verbose"
   },
-  "license": "MIT",
   "dependencies": {
     "assign-deep": "^0.4.5",
     "babel-polyfill": "^6.26.0",
     "bluebird": "^3.5.0",
     "boom": "^5.2.0",
-    "citation-backoffice": "^0.3.0",
-    "citation-react-builder": "^0.3.0",
-    "citation-react-renderer": "^0.3.0",
+    "citation-backoffice": "^0.4.0",
+    "citation-react-builder": "^0.4.0",
+    "citation-react-renderer": "^0.4.0",
     "fs-extra": "^4.0.1",
     "graphql": "^0.11.7",
     "graphql-type-json": "^0.1.4",
@@ -45,8 +44,12 @@
     "sinon": "^3.2.1"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ],
     "babel": "inherit"
   },
   "babel": {
@@ -60,6 +63,8 @@
         }
       ]
     ],
-    "plugins": ["transform-object-rest-spread"]
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
   }
 }

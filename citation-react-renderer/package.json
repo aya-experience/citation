@@ -1,6 +1,6 @@
 {
   "name": "citation-react-renderer",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "description": "",
   "main": "lib/index.js",
@@ -13,11 +13,10 @@
     "build": "babel src -d lib",
     "test": "ava --verbose"
   },
-  "license": "MIT",
   "dependencies": {
     "babel-plugin-styled-components": "^1.1.7",
     "babel-polyfill": "^6.26.0",
-    "citation-react-router": "^0.3.0",
+    "citation-react-router": "^0.4.0",
     "fs-extra": "^4.0.1",
     "ignore-styles": "^5.0.1",
     "isomorphic-fetch": "^2.2.1",
@@ -41,8 +40,13 @@
     "sinon": "^3.2.0"
   },
   "ava": {
-    "files": ["src/**/*.test.js"],
-    "require": ["babel-register", "babel-polyfill"],
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register",
+      "babel-polyfill"
+    ],
     "babel": "inherit"
   },
   "babel": {
