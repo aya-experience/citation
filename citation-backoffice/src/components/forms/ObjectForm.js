@@ -3,6 +3,7 @@ import { Field, FieldArray, reduxForm } from 'redux-form';
 import LinkField from './LinkField';
 import LinksField from './LinksField';
 import KeyValueField from './KeyValueField';
+import ImageField from './ImageField';
 
 import './ObjectForm.css';
 
@@ -75,6 +76,12 @@ export class GenericObjectForm extends Component {
 						<div key={field}>
 							{label}
 							<Field name={field} component="textarea" />
+						</div>
+					);
+				} else if (fields[field].typeName === 'Image') {
+					return (
+						<div key={field}>
+							<Field name={field} component={ImageField} />
 						</div>
 					);
 				}
